@@ -1,0 +1,17 @@
+"","GEOID","locality","estimate","moe","total_pop","percent","sex","age_group","disability_status","year"
+"1","51540","Charlottesville city, Virginia",3367,150.083310198036,45914,7.33,"Female","17 and under","No disability",2022
+"2","51540","Charlottesville city, Virginia",104,97.1236325515062,45914,0.23,"Female","17 and under","With a disability",2022
+"3","51540","Charlottesville city, Virginia",9010,110,45914,19.62,"Female","18 to 34 years","No disability",2022
+"4","51540","Charlottesville city, Virginia",177,73,45914,0.39,"Female","18 to 34 years","With a disability",2022
+"5","51540","Charlottesville city, Virginia",6875,268,45914,14.97,"Female","35 to 64 years","No disability",2022
+"6","51540","Charlottesville city, Virginia",929,217,45914,2.02,"Female","35 to 64 years","With a disability",2022
+"7","51540","Charlottesville city, Virginia",2251,195.207581819969,45914,4.9,"Female","65 and over","No disability",2022
+"8","51540","Charlottesville city, Virginia",931,178.103902259327,45914,2.03,"Female","65 and over","With a disability",2022
+"9","51540","Charlottesville city, Virginia",3644,227.84643951574,45914,7.94,"Male","17 and under","No disability",2022
+"10","51540","Charlottesville city, Virginia",65,54.7083174663597,45914,0.14,"Male","17 and under","With a disability",2022
+"11","51540","Charlottesville city, Virginia",8514,157,45914,18.54,"Male","18 to 34 years","No disability",2022
+"12","51540","Charlottesville city, Virginia",291,128,45914,0.63,"Male","18 to 34 years","With a disability",2022
+"13","51540","Charlottesville city, Virginia",6516,253,45914,14.19,"Male","35 to 64 years","No disability",2022
+"14","51540","Charlottesville city, Virginia",755,203,45914,1.64,"Male","35 to 64 years","With a disability",2022
+"15","51540","Charlottesville city, Virginia",1599,172.817823154905,45914,3.48,"Male","65 and over","No disability",2022
+"16","51540","Charlottesville city, Virginia",886,171.330090760497,45914,1.93,"Male","65 and over","With a disability",2022

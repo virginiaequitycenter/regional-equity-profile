@@ -1,0 +1,27 @@
+"","GEOID","locality","estimate","moe","total_pop","percent","sex","label","year"
+"1","51540","Charlottesville city, Virginia",918,161,46289,1.98,"Female","10 to 14 years",2022
+"2","51540","Charlottesville city, Virginia",1549,177.859495107796,46289,3.35,"Female","15 to 19 years",2022
+"3","51540","Charlottesville city, Virginia",3873,423.307217042186,46289,8.37,"Female","20 to 24 years",2022
+"4","51540","Charlottesville city, Virginia",4261,92.6984358012583,46289,9.21,"Female","25 to 34 years",2022
+"5","51540","Charlottesville city, Virginia",3046,368.575636742311,46289,6.58,"Female","35 to 44 years",2022
+"6","51540","Charlottesville city, Virginia",2348,193.341666487077,46289,5.07,"Female","45 to 54 years",2022
+"7","51540","Charlottesville city, Virginia",1060,165,46289,2.29,"Female","5 to 9 years",2022
+"8","51540","Charlottesville city, Virginia",1383,164,46289,2.99,"Female","55 to 59 years",2022
+"9","51540","Charlottesville city, Virginia",1037,216.002314802411,46289,2.24,"Female","60 to 64 years",2022
+"10","51540","Charlottesville city, Virginia",1963,276.036229506201,46289,4.24,"Female","65 to 74 years",2022
+"11","51540","Charlottesville city, Virginia",927,188.002659555656,46289,2,"Female","75 to 84 years",2022
+"12","51540","Charlottesville city, Virginia",391,152,46289,0.84,"Female","85 years and over",2022
+"13","51540","Charlottesville city, Virginia",1005,94,46289,2.17,"Female","Under 5 years",2022
+"14","51540","Charlottesville city, Virginia",917,183,46289,1.98,"Male","10 to 14 years",2022
+"15","51540","Charlottesville city, Virginia",1197,143.422452914458,46289,2.59,"Male","15 to 19 years",2022
+"16","51540","Charlottesville city, Virginia",3916,416.117771790631,46289,8.46,"Male","20 to 24 years",2022
+"17","51540","Charlottesville city, Virginia",4125,116.82893477217,46289,8.91,"Male","25 to 34 years",2022
+"18","51540","Charlottesville city, Virginia",2867,374.476968584184,46289,6.19,"Male","35 to 44 years",2022
+"19","51540","Charlottesville city, Virginia",2200,168.121979526771,46289,4.75,"Male","45 to 54 years",2022
+"20","51540","Charlottesville city, Virginia",1034,129,46289,2.23,"Male","5 to 9 years",2022
+"21","51540","Charlottesville city, Virginia",1158,183,46289,2.5,"Male","55 to 59 years",2022
+"22","51540","Charlottesville city, Virginia",1138,226.631860072674,46289,2.46,"Male","60 to 64 years",2022
+"23","51540","Charlottesville city, Virginia",1687,244.891812848041,46289,3.64,"Male","65 to 74 years",2022
+"24","51540","Charlottesville city, Virginia",682,175.786802690077,46289,1.47,"Male","75 to 84 years",2022
+"25","51540","Charlottesville city, Virginia",203,85,46289,0.44,"Male","85 years and over",2022
+"26","51540","Charlottesville city, Virginia",1404,155,46289,3.03,"Male","Under 5 years",2022
