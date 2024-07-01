@@ -1,27 +1,27 @@
-"","locality","estimate","moe","total_pop","percent","sex","age_group","year"
-"1","Combined Region",4056,368.978319146261,158802,2.55,"Female","10 to 14 years",2022
-"2","Combined Region",6830,321.779427558693,158802,4.3,"Female","15 to 19 years",2022
-"3","Combined Region",7588,565.481211005282,158802,4.78,"Female","20 to 24 years",2022
-"4","Combined Region",11358,215.930544388699,158802,7.15,"Female","25 to 34 years",2022
-"5","Combined Region",9873,619.084000762417,158802,6.22,"Female","35 to 44 years",2022
-"6","Combined Region",8833,198.778771502392,158802,5.56,"Female","45 to 54 years",2022
-"7","Combined Region",3980,370.741149590924,158802,2.51,"Female","5 to 9 years",2022
-"8","Combined Region",5359,393.776586404017,158802,3.37,"Female","55 to 59 years",2022
-"9","Combined Region",4778,515.632621155799,158802,3.01,"Female","60 to 64 years",2022
-"10","Combined Region",8741,522.869008452404,158802,5.5,"Female","65 to 74 years",2022
-"11","Combined Region",4807,426.293326243797,158802,3.03,"Female","75 to 84 years",2022
-"12","Combined Region",2184,335.417650102078,158802,1.38,"Female","85 years and over",2022
-"13","Combined Region",3819,96.7729300992793,158802,2.4,"Female","Under 5 years",2022
-"14","Combined Region",4227,386.120447529006,158802,2.66,"Male","10 to 14 years",2022
-"15","Combined Region",6721,424.714021430892,158802,4.23,"Male","15 to 19 years",2022
-"16","Combined Region",6870,570.259590011426,158802,4.33,"Male","20 to 24 years",2022
-"17","Combined Region",11051,120.888378266895,158802,6.96,"Male","25 to 34 years",2022
-"18","Combined Region",9648,619.776572645336,158802,6.08,"Male","35 to 44 years",2022
-"19","Combined Region",8490,239.426397876258,158802,5.35,"Male","45 to 54 years",2022
-"20","Combined Region",4103,360.846227637203,158802,2.58,"Male","5 to 9 years",2022
-"21","Combined Region",4307,383.481420671198,158802,2.71,"Male","55 to 59 years",2022
-"22","Combined Region",4665,438.227110069653,158802,2.94,"Male","60 to 64 years",2022
-"23","Combined Region",7454,573.939021151202,158802,4.69,"Male","65 to 74 years",2022
-"24","Combined Region",3604,335.47131024873,158802,2.27,"Male","75 to 84 years",2022
-"25","Combined Region",1200,217.313138121007,158802,0.76,"Male","85 years and over",2022
-"26","Combined Region",4256,155.157984003402,158802,2.68,"Male","Under 5 years",2022
+locality,estimate,moe,total_pop,percent,sex,age_group,year
+Combined Region,4056,368.97831914626096,158802,2.55,Female,10 to 14 years,2022
+Combined Region,6830,321.77942755869276,158802,4.3,Female,15 to 19 years,2022
+Combined Region,7588,565.4812110052818,158802,4.78,Female,20 to 24 years,2022
+Combined Region,11358,215.93054438869922,158802,7.15,Female,25 to 34 years,2022
+Combined Region,9873,619.0840007624167,158802,6.22,Female,35 to 44 years,2022
+Combined Region,8833,198.77877150239158,158802,5.56,Female,45 to 54 years,2022
+Combined Region,3980,370.7411495909242,158802,2.51,Female,5 to 9 years,2022
+Combined Region,5359,393.77658640401665,158802,3.37,Female,55 to 59 years,2022
+Combined Region,4778,515.6326211557993,158802,3.01,Female,60 to 64 years,2022
+Combined Region,8741,522.8690084524039,158802,5.5,Female,65 to 74 years,2022
+Combined Region,4807,426.29332624379657,158802,3.03,Female,75 to 84 years,2022
+Combined Region,2184,335.41765010207797,158802,1.38,Female,85 years and over,2022
+Combined Region,3819,96.772930099279307,158802,2.4,Female,Under 5 years,2022
+Combined Region,4227,386.1204475290062,158802,2.66,Male,10 to 14 years,2022
+Combined Region,6721,424.71402143089176,158802,4.23,Male,15 to 19 years,2022
+Combined Region,6870,570.2595900114263,158802,4.33,Male,20 to 24 years,2022
+Combined Region,11051,120.88837826689544,158802,6.96,Male,25 to 34 years,2022
+Combined Region,9648,619.7765726453364,158802,6.08,Male,35 to 44 years,2022
+Combined Region,8490,239.42639787625757,158802,5.35,Male,45 to 54 years,2022
+Combined Region,4103,360.84622763720284,158802,2.58,Male,5 to 9 years,2022
+Combined Region,4307,383.48142067119755,158802,2.71,Male,55 to 59 years,2022
+Combined Region,4665,438.2271100696533,158802,2.94,Male,60 to 64 years,2022
+Combined Region,7454,573.939021151202,158802,4.69,Male,65 to 74 years,2022
+Combined Region,3604,335.4713102487305,158802,2.27,Male,75 to 84 years,2022
+Combined Region,1200,217.3131381210073,158802,0.76,Male,85 years and over,2022
+Combined Region,4256,155.15798400340216,158802,2.68,Male,Under 5 years,2022

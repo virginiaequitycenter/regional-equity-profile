@@ -1,5 +1,5 @@
-"","GEOID","locality","disability_status","year","total_disability","total_dis_moe","total_pop","total_dis_per"
-"1","51003","Albemarle County, Virginia","No disability",2022,100752,763.011795452731,111091,90.69
-"2","51003","Albemarle County, Virginia","With a disability",2022,10339,702.583091171429,111091,9.31
-"3","51540","Charlottesville city, Virginia","No disability",2022,41776,561.242371885801,45914,90.99
-"4","51540","Charlottesville city, Virginia","With a disability",2022,4138,428.383006198892,45914,9.01
+GEOID,locality,disability_status,year,total_disability,total_dis_moe,total_pop,total_dis_per
+51003,"Albemarle County, Virginia",No disability,2022,100752,763.0117954527309,111091,90.69
+51003,"Albemarle County, Virginia",With a disability,2022,10339,702.5830911714286,111091,9.31
+51540,"Charlottesville city, Virginia",No disability,2022,41776,561.2423718858013,45914,90.99
+51540,"Charlottesville city, Virginia",With a disability,2022,4138,428.3830061988921,45914,9.01

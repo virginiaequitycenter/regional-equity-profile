@@ -1,19 +1,19 @@
-"","GEOID","locality","estimate","moe","total_foreign_born","percent","year","label"
-"1","51003","Albemarle County, Virginia",476,147,11342,4.2,2022,"Northern Europe"
-"2","51003","Albemarle County, Virginia",509,192,11342,4.49,2022,"Western Europe"
-"3","51003","Albemarle County, Virginia",175,100,11342,1.54,2022,"Southern Europe"
-"4","51003","Albemarle County, Virginia",655,182,11342,5.77,2022,"Eastern Europe"
-"5","51003","Albemarle County, Virginia",1840,327,11342,16.22,2022,"Eastern Asia"
-"6","51003","Albemarle County, Virginia",1945,409,11342,17.15,2022,"South Central Asia"
-"7","51003","Albemarle County, Virginia",680,207,11342,6,2022,"South Eastern Asia"
-"8","51003","Albemarle County, Virginia",393,229,11342,3.46,2022,"Western Asia"
-"9","51003","Albemarle County, Virginia",76,94,11342,0.67,2022,"Eastern Africa"
-"10","51003","Albemarle County, Virginia",207,125,11342,1.83,2022,"Middle Africa"
-"11","51003","Albemarle County, Virginia",108,84,11342,0.95,2022,"Northern Africa"
-"12","51003","Albemarle County, Virginia",0,31,11342,0,2022,"Southern Africa"
-"13","51003","Albemarle County, Virginia",299,203,11342,2.64,2022,"Western Africa"
-"14","51003","Albemarle County, Virginia",110,105,11342,0.97,2022,"Oceania"
-"15","51003","Albemarle County, Virginia",296,164,11342,2.61,2022,"Latin America, Caribbean"
-"16","51003","Albemarle County, Virginia",2734,468,11342,24.11,2022,"Latin America, Central America"
-"17","51003","Albemarle County, Virginia",561,194,11342,4.95,2022,"Latin America, South America"
-"18","51003","Albemarle County, Virginia",278,111,11342,2.45,2022,"Northern America"
+GEOID,locality,estimate,moe,total_foreign_born,percent,year,label
+51003,"Albemarle County, Virginia",476,147,11342,4.2,2022,Northern Europe
+51003,"Albemarle County, Virginia",509,192,11342,4.49,2022,Western Europe
+51003,"Albemarle County, Virginia",175,100,11342,1.54,2022,Southern Europe
+51003,"Albemarle County, Virginia",655,182,11342,5.77,2022,Eastern Europe
+51003,"Albemarle County, Virginia",1840,327,11342,16.22,2022,Eastern Asia
+51003,"Albemarle County, Virginia",1945,409,11342,17.15,2022,South Central Asia
+51003,"Albemarle County, Virginia",680,207,11342,6,2022,South Eastern Asia
+51003,"Albemarle County, Virginia",393,229,11342,3.46,2022,Western Asia
+51003,"Albemarle County, Virginia",76,94,11342,0.67,2022,Eastern Africa
+51003,"Albemarle County, Virginia",207,125,11342,1.83,2022,Middle Africa
+51003,"Albemarle County, Virginia",108,84,11342,0.95,2022,Northern Africa
+51003,"Albemarle County, Virginia",0,31,11342,0,2022,Southern Africa
+51003,"Albemarle County, Virginia",299,203,11342,2.64,2022,Western Africa
+51003,"Albemarle County, Virginia",110,105,11342,0.97,2022,Oceania
+51003,"Albemarle County, Virginia",296,164,11342,2.61,2022,"Latin America, Caribbean"
+51003,"Albemarle County, Virginia",2734,468,11342,24.11,2022,"Latin America, Central America"
+51003,"Albemarle County, Virginia",561,194,11342,4.95,2022,"Latin America, South America"
+51003,"Albemarle County, Virginia",278,111,11342,2.45,2022,Northern America

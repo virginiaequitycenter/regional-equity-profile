@@ -1,17 +1,17 @@
-"","locality","estimate","moe","total_pop","percent","sex","age_group","disability_status","year"
-"1","Combined Region",13908,228.083318109852,157005,8.86,"Female","17 and under","No disability",2022
-"2","Combined Region",336,139.867794720586,157005,0.21,"Female","17 and under","With a disability",2022
-"3","Combined Region",22398,283.233119532303,157005,14.27,"Female","18 to 34 years","No disability",2022
-"4","Combined Region",896,254.686081284392,157005,0.57,"Female","18 to 34 years","With a disability",2022
-"5","Combined Region",26371,443.207626288177,157005,16.8,"Female","35 to 64 years","No disability",2022
-"6","Combined Region",2340,388.294990954043,157005,1.49,"Female","35 to 64 years","With a disability",2022
-"7","Combined Region",11081,386.082892653896,157005,7.06,"Female","65 and over","No disability",2022
-"8","Combined Region",4305,369.99189180305,157005,2.74,"Female","65 and over","With a disability",2022
-"9","Combined Region",14435,295.655204588047,157005,9.19,"Male","17 and under","No disability",2022
-"10","Combined Region",470,171.458449777198,157005,0.3,"Male","17 and under","With a disability",2022
-"11","Combined Region",21127,253.475837112732,157005,13.46,"Male","18 to 34 years","No disability",2022
-"12","Combined Region",830,229.923900454042,157005,0.53,"Male","18 to 34 years","With a disability",2022
-"13","Combined Region",24209,399.361991180934,157005,15.42,"Male","35 to 64 years","No disability",2022
-"14","Combined Region",2309,353.171346516107,157005,1.47,"Male","35 to 64 years","With a disability",2022
-"15","Combined Region",8999,329.077498471105,157005,5.73,"Male","65 and over","No disability",2022
-"16","Combined Region",2991,313.124575848016,157005,1.91,"Male","65 and over","With a disability",2022
+locality,estimate,moe,total_pop,percent,sex,age_group,disability_status,year
+Combined Region,13908,228.08331810985212,157005,8.86,Female,17 and under,No disability,2022
+Combined Region,336,139.86779472058606,157005,0.21,Female,17 and under,With a disability,2022
+Combined Region,22398,283.2331195323033,157005,14.27,Female,18 to 34 years,No disability,2022
+Combined Region,896,254.68608128439215,157005,0.57,Female,18 to 34 years,With a disability,2022
+Combined Region,26371,443.2076262881766,157005,16.8,Female,35 to 64 years,No disability,2022
+Combined Region,2340,388.2949909540426,157005,1.49,Female,35 to 64 years,With a disability,2022
+Combined Region,11081,386.0828926538963,157005,7.06,Female,65 and over,No disability,2022
+Combined Region,4305,369.9918918030502,157005,2.74,Female,65 and over,With a disability,2022
+Combined Region,14435,295.6552045880471,157005,9.19,Male,17 and under,No disability,2022
+Combined Region,470,171.4584497771982,157005,0.3,Male,17 and under,With a disability,2022
+Combined Region,21127,253.4758371127315,157005,13.46,Male,18 to 34 years,No disability,2022
+Combined Region,830,229.92390045404153,157005,0.53,Male,18 to 34 years,With a disability,2022
+Combined Region,24209,399.3619911809335,157005,15.42,Male,35 to 64 years,No disability,2022
+Combined Region,2309,353.17134651610684,157005,1.47,Male,35 to 64 years,With a disability,2022
+Combined Region,8999,329.07749847110483,157005,5.73,Male,65 and over,No disability,2022
+Combined Region,2991,313.12457584801615,157005,1.91,Male,65 and over,With a disability,2022

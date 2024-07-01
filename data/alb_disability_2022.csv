@@ -1,17 +1,17 @@
-"","GEOID","locality","estimate","moe","total_pop","percent","sex","age_group","disability_status","year"
-"1","51003","Albemarle County, Virginia",10541,171.746906813485,111091,9.49,"Female","17 and under","No disability",2022
-"2","51003","Albemarle County, Virginia",232,100.647901120689,111091,0.21,"Female","17 and under","With a disability",2022
-"3","51003","Albemarle County, Virginia",13388,261,111091,12.05,"Female","18 to 34 years","No disability",2022
-"4","51003","Albemarle County, Virginia",719,244,111091,0.65,"Female","18 to 34 years","With a disability",2022
-"5","51003","Albemarle County, Virginia",19496,353,111091,17.55,"Female","35 to 64 years","No disability",2022
-"6","51003","Albemarle County, Virginia",1411,322,111091,1.27,"Female","35 to 64 years","With a disability",2022
-"7","51003","Albemarle County, Virginia",8830,333.097583299549,111091,7.95,"Female","65 and over","No disability",2022
-"8","51003","Albemarle County, Virginia",3374,324.303869850484,111091,3.04,"Female","65 and over","With a disability",2022
-"9","51003","Albemarle County, Virginia",10791,188.409129290488,111091,9.71,"Male","17 and under","No disability",2022
-"10","51003","Albemarle County, Virginia",405,162.496153800636,111091,0.36,"Male","17 and under","With a disability",2022
-"11","51003","Albemarle County, Virginia",12613,199,111091,11.35,"Male","18 to 34 years","No disability",2022
-"12","51003","Albemarle County, Virginia",539,191,111091,0.49,"Male","18 to 34 years","With a disability",2022
-"13","51003","Albemarle County, Virginia",17693,309,111091,15.93,"Male","35 to 64 years","No disability",2022
-"14","51003","Albemarle County, Virginia",1554,289,111091,1.4,"Male","35 to 64 years","With a disability",2022
-"15","51003","Albemarle County, Virginia",7400,280.046424722759,111091,6.66,"Male","65 and over","No disability",2022
-"16","51003","Albemarle County, Virginia",2105,262.093494768565,111091,1.89,"Male","65 and over","With a disability",2022
+GEOID,locality,estimate,moe,total_pop,percent,sex,age_group,disability_status,year
+51003,"Albemarle County, Virginia",10541,171.74690681348528,111091,9.49,Female,17 and under,No disability,2022
+51003,"Albemarle County, Virginia",232,100.64790112068906,111091,0.21,Female,17 and under,With a disability,2022
+51003,"Albemarle County, Virginia",13388,261,111091,12.05,Female,18 to 34 years,No disability,2022
+51003,"Albemarle County, Virginia",719,244,111091,0.65,Female,18 to 34 years,With a disability,2022
+51003,"Albemarle County, Virginia",19496,353,111091,17.55,Female,35 to 64 years,No disability,2022
+51003,"Albemarle County, Virginia",1411,322,111091,1.27,Female,35 to 64 years,With a disability,2022
+51003,"Albemarle County, Virginia",8830,333.097583299549,111091,7.95,Female,65 and over,No disability,2022
+51003,"Albemarle County, Virginia",3374,324.3038698504845,111091,3.04,Female,65 and over,With a disability,2022
+51003,"Albemarle County, Virginia",10791,188.40912929048847,111091,9.71,Male,17 and under,No disability,2022
+51003,"Albemarle County, Virginia",405,162.49615380063616,111091,0.36,Male,17 and under,With a disability,2022
+51003,"Albemarle County, Virginia",12613,199,111091,11.35,Male,18 to 34 years,No disability,2022
+51003,"Albemarle County, Virginia",539,191,111091,0.49,Male,18 to 34 years,With a disability,2022
+51003,"Albemarle County, Virginia",17693,309,111091,15.93,Male,35 to 64 years,No disability,2022
+51003,"Albemarle County, Virginia",1554,289,111091,1.4,Male,35 to 64 years,With a disability,2022
+51003,"Albemarle County, Virginia",7400,280.0464247227591,111091,6.66,Male,65 and over,No disability,2022
+51003,"Albemarle County, Virginia",2105,262.0934947685654,111091,1.89,Male,65 and over,With a disability,2022

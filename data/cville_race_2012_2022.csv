@@ -1,78 +1,78 @@
-"","GEOID","locality","estimate","moe","total_pop","percent","year","label"
-"1","51540","Charlottesville city, Virginia",31716,435,46289,68.52,2022,"White alone"
-"2","51540","Charlottesville city, Virginia",7945,350,46289,17.16,2022,"Black or African American alone"
-"3","51540","Charlottesville city, Virginia",70,42,46289,0.15,2022,"American Indian and Alaska Native alone"
-"4","51540","Charlottesville city, Virginia",3237,201,46289,6.99,2022,"Asian alone"
-"5","51540","Charlottesville city, Virginia",0,28,46289,0,2022,"Native Hawaiian and Other Pacific Islander alone"
-"6","51540","Charlottesville city, Virginia",577,257,46289,1.25,2022,"Some Other Race alone"
-"7","51540","Charlottesville city, Virginia",2744,471,46289,5.93,2022,"Two or More Races"
-"8","51540","Charlottesville city, Virginia",32472,304,46597,69.69,2021,"White alone"
-"9","51540","Charlottesville city, Virginia",8404,300,46597,18.04,2021,"Black or African American alone"
-"10","51540","Charlottesville city, Virginia",76,47,46597,0.16,2021,"American Indian and Alaska Native alone"
-"11","51540","Charlottesville city, Virginia",3257,229,46597,6.99,2021,"Asian alone"
-"12","51540","Charlottesville city, Virginia",5,9,46597,0.01,2021,"Native Hawaiian and Other Pacific Islander alone"
-"13","51540","Charlottesville city, Virginia",419,183,46597,0.9,2021,"Some Other Race alone"
-"14","51540","Charlottesville city, Virginia",1964,443,46597,4.21,2021,"Two or More Races"
-"15","51540","Charlottesville city, Virginia",33046,253,47217,69.99,2020,"White alone"
-"16","51540","Charlottesville city, Virginia",8760,240,47217,18.55,2020,"Black or African American alone"
-"17","51540","Charlottesville city, Virginia",147,63,47217,0.31,2020,"American Indian and Alaska Native alone"
-"18","51540","Charlottesville city, Virginia",3313,214,47217,7.02,2020,"Asian alone"
-"19","51540","Charlottesville city, Virginia",5,8,47217,0.01,2020,"Native Hawaiian and Other Pacific Islander alone"
-"20","51540","Charlottesville city, Virginia",336,183,47217,0.71,2020,"Some Other Race alone"
-"21","51540","Charlottesville city, Virginia",1610,345,47217,3.41,2020,"Two or More Races"
-"22","51540","Charlottesville city, Virginia",33247,202,47096,70.59,2019,"White alone"
-"23","51540","Charlottesville city, Virginia",8844,281,47096,18.78,2019,"Black or African American alone"
-"24","51540","Charlottesville city, Virginia",115,59,47096,0.24,2019,"American Indian and Alaska Native alone"
-"25","51540","Charlottesville city, Virginia",3327,184,47096,7.06,2019,"Asian alone"
-"26","51540","Charlottesville city, Virginia",31,42,47096,0.07,2019,"Native Hawaiian and Other Pacific Islander alone"
-"27","51540","Charlottesville city, Virginia",186,118,47096,0.39,2019,"Some Other Race alone"
-"28","51540","Charlottesville city, Virginia",1346,364,47096,2.86,2019,"Two or More Races"
-"29","51540","Charlottesville city, Virginia",33128,137,47042,70.42,2018,"White alone"
-"30","51540","Charlottesville city, Virginia",8820,213,47042,18.75,2018,"Black or African American alone"
-"31","51540","Charlottesville city, Virginia",145,65,47042,0.31,2018,"American Indian and Alaska Native alone"
-"32","51540","Charlottesville city, Virginia",3362,239,47042,7.15,2018,"Asian alone"
-"33","51540","Charlottesville city, Virginia",23,28,47042,0.05,2018,"Native Hawaiian and Other Pacific Islander alone"
-"34","51540","Charlottesville city, Virginia",169,85,47042,0.36,2018,"Some Other Race alone"
-"35","51540","Charlottesville city, Virginia",1395,327,47042,2.97,2018,"Two or More Races"
-"36","51540","Charlottesville city, Virginia",32565,177,46487,70.05,2017,"White alone"
-"37","51540","Charlottesville city, Virginia",8782,270,46487,18.89,2017,"Black or African American alone"
-"38","51540","Charlottesville city, Virginia",141,52,46487,0.3,2017,"American Indian and Alaska Native alone"
-"39","51540","Charlottesville city, Virginia",3370,192,46487,7.25,2017,"Asian alone"
-"40","51540","Charlottesville city, Virginia",17,20,46487,0.04,2017,"Native Hawaiian and Other Pacific Islander alone"
-"41","51540","Charlottesville city, Virginia",169,94,46487,0.36,2017,"Some Other Race alone"
-"42","51540","Charlottesville city, Virginia",1443,324,46487,3.1,2017,"Two or More Races"
-"43","51540","Charlottesville city, Virginia",32001,146,45538,70.27,2016,"White alone"
-"44","51540","Charlottesville city, Virginia",8501,226,45538,18.67,2016,"Black or African American alone"
-"45","51540","Charlottesville city, Virginia",163,50,45538,0.36,2016,"American Indian and Alaska Native alone"
-"46","51540","Charlottesville city, Virginia",3164,182,45538,6.95,2016,"Asian alone"
-"47","51540","Charlottesville city, Virginia",66,82,45538,0.14,2016,"Native Hawaiian and Other Pacific Islander alone"
-"48","51540","Charlottesville city, Virginia",176,91,45538,0.39,2016,"Some Other Race alone"
-"49","51540","Charlottesville city, Virginia",1467,290,45538,3.22,2016,"Two or More Races"
-"50","51540","Charlottesville city, Virginia",31887,137,45084,70.73,2015,"White alone"
-"51","51540","Charlottesville city, Virginia",8673,237,45084,19.24,2015,"Black or African American alone"
-"52","51540","Charlottesville city, Virginia",88,73,45084,0.2,2015,"American Indian and Alaska Native alone"
-"53","51540","Charlottesville city, Virginia",3004,172,45084,6.66,2015,"Asian alone"
-"54","51540","Charlottesville city, Virginia",71,87,45084,0.16,2015,"Native Hawaiian and Other Pacific Islander alone"
-"55","51540","Charlottesville city, Virginia",140,83,45084,0.31,2015,"Some Other Race alone"
-"56","51540","Charlottesville city, Virginia",1221,255,45084,2.71,2015,"Two or More Races"
-"57","51540","Charlottesville city, Virginia",31415,157,44505,70.59,2014,"White alone"
-"58","51540","Charlottesville city, Virginia",8743,179,44505,19.64,2014,"Black or African American alone"
-"59","51540","Charlottesville city, Virginia",109,76,44505,0.24,2014,"American Indian and Alaska Native alone"
-"60","51540","Charlottesville city, Virginia",3038,157,44505,6.83,2014,"Asian alone"
-"61","51540","Charlottesville city, Virginia",59,68,44505,0.13,2014,"Native Hawaiian and Other Pacific Islander alone"
-"62","51540","Charlottesville city, Virginia",130,90,44505,0.29,2014,"Some Other Race alone"
-"63","51540","Charlottesville city, Virginia",1011,227,44505,2.27,2014,"Two or More Races"
-"64","51540","Charlottesville city, Virginia",30602,226,43663,70.09,2013,"White alone"
-"65","51540","Charlottesville city, Virginia",8646,249,43663,19.8,2013,"Black or African American alone"
-"66","51540","Charlottesville city, Virginia",220,134,43663,0.5,2013,"American Indian and Alaska Native alone"
-"67","51540","Charlottesville city, Virginia",2947,137,43663,6.75,2013,"Asian alone"
-"68","51540","Charlottesville city, Virginia",37,44,43663,0.08,2013,"Native Hawaiian and Other Pacific Islander alone"
-"69","51540","Charlottesville city, Virginia",266,142,43663,0.61,2013,"Some Other Race alone"
-"70","51540","Charlottesville city, Virginia",945,240,43663,2.16,2013,"Two or More Races"
-"71","51540","Charlottesville city, Virginia",29970,302,43223,69.34,2012,"White alone"
-"72","51540","Charlottesville city, Virginia",8661,329,43223,20.04,2012,"Black or African American alone"
-"73","51540","Charlottesville city, Virginia",186,114,43223,0.43,2012,"American Indian and Alaska Native alone"
-"74","51540","Charlottesville city, Virginia",2818,109,43223,6.52,2012,"Asian alone"
-"75","51540","Charlottesville city, Virginia",27,34,43223,0.06,2012,"Native Hawaiian and Other Pacific Islander alone"
-"76","51540","Charlottesville city, Virginia",515,254,43223,1.19,2012,"Some Other Race alone"
-"77","51540","Charlottesville city, Virginia",1046,298,43223,2.42,2012,"Two or More Races"
+GEOID,locality,estimate,moe,total_pop,percent,year,label
+51540,"Charlottesville city, Virginia",31716,435,46289,68.52,2022,White alone
+51540,"Charlottesville city, Virginia",7945,350,46289,17.16,2022,Black or African American alone
+51540,"Charlottesville city, Virginia",70,42,46289,0.15,2022,American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3237,201,46289,6.99,2022,Asian alone
+51540,"Charlottesville city, Virginia",0,28,46289,0,2022,Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",577,257,46289,1.25,2022,Some Other Race alone
+51540,"Charlottesville city, Virginia",2744,471,46289,5.93,2022,Two or More Races
+51540,"Charlottesville city, Virginia",32472,304,46597,69.69,2021,White alone
+51540,"Charlottesville city, Virginia",8404,300,46597,18.04,2021,Black or African American alone
+51540,"Charlottesville city, Virginia",76,47,46597,0.16,2021,American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3257,229,46597,6.99,2021,Asian alone
+51540,"Charlottesville city, Virginia",5,9,46597,0.01,2021,Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",419,183,46597,0.9,2021,Some Other Race alone
+51540,"Charlottesville city, Virginia",1964,443,46597,4.21,2021,Two or More Races
+51540,"Charlottesville city, Virginia",33046,253,47217,69.99,2020,White alone
+51540,"Charlottesville city, Virginia",8760,240,47217,18.55,2020,Black or African American alone
+51540,"Charlottesville city, Virginia",147,63,47217,0.31,2020,American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3313,214,47217,7.02,2020,Asian alone
+51540,"Charlottesville city, Virginia",5,8,47217,0.01,2020,Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",336,183,47217,0.71,2020,Some Other Race alone
+51540,"Charlottesville city, Virginia",1610,345,47217,3.41,2020,Two or More Races
+51540,"Charlottesville city, Virginia",33247,202,47096,70.59,2019,White alone
+51540,"Charlottesville city, Virginia",8844,281,47096,18.78,2019,Black or African American alone
+51540,"Charlottesville city, Virginia",115,59,47096,0.24,2019,American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3327,184,47096,7.06,2019,Asian alone
+51540,"Charlottesville city, Virginia",31,42,47096,0.07,2019,Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",186,118,47096,0.39,2019,Some Other Race alone
+51540,"Charlottesville city, Virginia",1346,364,47096,2.86,2019,Two or More Races
+51540,"Charlottesville city, Virginia",33128,137,47042,70.42,2018,White alone
+51540,"Charlottesville city, Virginia",8820,213,47042,18.75,2018,Black or African American alone
+51540,"Charlottesville city, Virginia",145,65,47042,0.31,2018,American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3362,239,47042,7.15,2018,Asian alone
+51540,"Charlottesville city, Virginia",23,28,47042,0.05,2018,Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",169,85,47042,0.36,2018,Some Other Race alone
+51540,"Charlottesville city, Virginia",1395,327,47042,2.97,2018,Two or More Races
+51540,"Charlottesville city, Virginia",32565,177,46487,70.05,2017,White alone
+51540,"Charlottesville city, Virginia",8782,270,46487,18.89,2017,Black or African American alone
+51540,"Charlottesville city, Virginia",141,52,46487,0.3,2017,American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3370,192,46487,7.25,2017,Asian alone
+51540,"Charlottesville city, Virginia",17,20,46487,0.04,2017,Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",169,94,46487,0.36,2017,Some Other Race alone
+51540,"Charlottesville city, Virginia",1443,324,46487,3.1,2017,Two or More Races
+51540,"Charlottesville city, Virginia",32001,146,45538,70.27,2016,White alone
+51540,"Charlottesville city, Virginia",8501,226,45538,18.67,2016,Black or African American alone
+51540,"Charlottesville city, Virginia",163,50,45538,0.36,2016,American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3164,182,45538,6.95,2016,Asian alone
+51540,"Charlottesville city, Virginia",66,82,45538,0.14,2016,Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",176,91,45538,0.39,2016,Some Other Race alone
+51540,"Charlottesville city, Virginia",1467,290,45538,3.22,2016,Two or More Races
+51540,"Charlottesville city, Virginia",31887,137,45084,70.73,2015,White alone
+51540,"Charlottesville city, Virginia",8673,237,45084,19.24,2015,Black or African American alone
+51540,"Charlottesville city, Virginia",88,73,45084,0.2,2015,American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3004,172,45084,6.66,2015,Asian alone
+51540,"Charlottesville city, Virginia",71,87,45084,0.16,2015,Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",140,83,45084,0.31,2015,Some Other Race alone
+51540,"Charlottesville city, Virginia",1221,255,45084,2.71,2015,Two or More Races
+51540,"Charlottesville city, Virginia",31415,157,44505,70.59,2014,White alone
+51540,"Charlottesville city, Virginia",8743,179,44505,19.64,2014,Black or African American alone
+51540,"Charlottesville city, Virginia",109,76,44505,0.24,2014,American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3038,157,44505,6.83,2014,Asian alone
+51540,"Charlottesville city, Virginia",59,68,44505,0.13,2014,Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",130,90,44505,0.29,2014,Some Other Race alone
+51540,"Charlottesville city, Virginia",1011,227,44505,2.27,2014,Two or More Races
+51540,"Charlottesville city, Virginia",30602,226,43663,70.09,2013,White alone
+51540,"Charlottesville city, Virginia",8646,249,43663,19.8,2013,Black or African American alone
+51540,"Charlottesville city, Virginia",220,134,43663,0.5,2013,American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",2947,137,43663,6.75,2013,Asian alone
+51540,"Charlottesville city, Virginia",37,44,43663,0.08,2013,Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",266,142,43663,0.61,2013,Some Other Race alone
+51540,"Charlottesville city, Virginia",945,240,43663,2.16,2013,Two or More Races
+51540,"Charlottesville city, Virginia",29970,302,43223,69.34,2012,White alone
+51540,"Charlottesville city, Virginia",8661,329,43223,20.04,2012,Black or African American alone
+51540,"Charlottesville city, Virginia",186,114,43223,0.43,2012,American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",2818,109,43223,6.52,2012,Asian alone
+51540,"Charlottesville city, Virginia",27,34,43223,0.06,2012,Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",515,254,43223,1.19,2012,Some Other Race alone
+51540,"Charlottesville city, Virginia",1046,298,43223,2.42,2012,Two or More Races

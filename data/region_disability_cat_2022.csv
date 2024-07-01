@@ -1,7 +1,7 @@
-"","locality","estimate","moe","total_count_disabled","percent","label","year"
-"1","Combined Region",5391,566.970898724088,27795,19.4,"With a cognitive difficulty",2022
-"2","Combined Region",4243,444.716763794665,27795,15.27,"With a hearing difficulty",2022
-"3","Combined Region",3178,435.073556999273,27795,11.43,"With a self-care difficulty",2022
-"4","Combined Region",2098,368.416883435056,27795,7.55,"With a vision difficulty",2022
-"5","Combined Region",6874,595.856526355128,27795,24.73,"With an ambulatory difficulty",2022
-"6","Combined Region",6011,570.520814694784,27795,21.63,"With an independent living difficulty",2022
+locality,estimate,moe,total_count_disabled,percent,label,year
+Combined Region,5391,566.970898724088,27795,19.4,With a cognitive difficulty,2022
+Combined Region,4243,444.7167637946651,27795,15.27,With a hearing difficulty,2022
+Combined Region,3178,435.0735569992734,27795,11.43,With a self-care difficulty,2022
+Combined Region,2098,368.41688343505643,27795,7.55,With a vision difficulty,2022
+Combined Region,6874,595.8565263551285,27795,24.73,With an ambulatory difficulty,2022
+Combined Region,6011,570.5208146947839,27795,21.63,With an independent living difficulty,2022
