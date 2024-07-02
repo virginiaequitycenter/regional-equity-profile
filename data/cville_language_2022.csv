@@ -1,0 +1,26 @@
+GEOID,locality,estimate,moe,total_households,percent,year,label
+51540,"Charlottesville city, Virginia",16462,462,19511,84.37,2022,English only
+51540,"Charlottesville city, Virginia",119,100,19511,0.61,2022,Spanish: Limited English speaking household
+51540,"Charlottesville city, Virginia",758,189,19511,3.88,2022,Spanish: Not a limited English speaking household
+51540,"Charlottesville city, Virginia",0,28,19511,0,2022,"French, Haitian, or Cajun: Limited English speaking household"
+51540,"Charlottesville city, Virginia",300,134,19511,1.54,2022,"French, Haitian, or Cajun: Not a limited English speaking household"
+51540,"Charlottesville city, Virginia",0,28,19511,0,2022,German or other West Germanic languages: Limited English speaking household
+51540,"Charlottesville city, Virginia",104,69,19511,0.53,2022,German or other West Germanic languages: Not a limited English speaking household
+51540,"Charlottesville city, Virginia",0,28,19511,0,2022,"Russian, Polish, or other Slavic languages: Limited English speaking household"
+51540,"Charlottesville city, Virginia",160,68,19511,0.82,2022,"Russian, Polish, or other Slavic languages: Not a limited English speaking household"
+51540,"Charlottesville city, Virginia",18,19,19511,0.09,2022,Other Indo-European languages: Limited English speaking household
+51540,"Charlottesville city, Virginia",381,150,19511,1.95,2022,Other Indo-European languages: Not a limited English speaking household
+51540,"Charlottesville city, Virginia",24,27,19511,0.12,2022,Korean: Limited English speaking household
+51540,"Charlottesville city, Virginia",45,33,19511,0.23,2022,Korean: Not a limited English speaking household
+51540,"Charlottesville city, Virginia",12,15,19511,0.06,2022,"Chinese (incl. Mandarin, Cantonese): Limited English speaking household"
+51540,"Charlottesville city, Virginia",429,115,19511,2.2,2022,"Chinese (incl. Mandarin, Cantonese): Not a limited English speaking household"
+51540,"Charlottesville city, Virginia",0,28,19511,0,2022,Vietnamese: Limited English speaking household
+51540,"Charlottesville city, Virginia",49,41,19511,0.25,2022,Vietnamese: Not a limited English speaking household
+51540,"Charlottesville city, Virginia",0,28,19511,0,2022,Tagalog (incl. Filipino): Limited English speaking household
+51540,"Charlottesville city, Virginia",5,8,19511,0.03,2022,Tagalog (incl. Filipino): Not a limited English speaking household
+51540,"Charlottesville city, Virginia",24,29,19511,0.12,2022,Other Asian and Pacific Island languages: Limited English speaking household
+51540,"Charlottesville city, Virginia",202,86,19511,1.04,2022,Other Asian and Pacific Island languages: Not a limited English speaking household
+51540,"Charlottesville city, Virginia",61,67,19511,0.31,2022,Arabic: Limited English speaking household
+51540,"Charlottesville city, Virginia",207,139,19511,1.06,2022,Arabic: Not a limited English speaking household
+51540,"Charlottesville city, Virginia",25,28,19511,0.13,2022,Other and unspecified languages: Limited English speaking household
+51540,"Charlottesville city, Virginia",126,86,19511,0.65,2022,Other and unspecified languages: Not a limited English speaking household

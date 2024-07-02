@@ -1,0 +1,78 @@
+GEOID,locality,estimate,moe,total_pop,percent,year,label
+51003,"Albemarle County, Virginia",88455,636,112513,78.62,2022,White alone
+51003,"Albemarle County, Virginia",9966,419,112513,8.86,2022,Black or African American alone
+51003,"Albemarle County, Virginia",125,86,112513,0.11,2022,American Indian and Alaska Native alone
+51003,"Albemarle County, Virginia",6319,267,112513,5.62,2022,Asian alone
+51003,"Albemarle County, Virginia",34,48,112513,0.03,2022,Native Hawaiian and Other Pacific Islander alone
+51003,"Albemarle County, Virginia",1789,536,112513,1.59,2022,Some Other Race alone
+51003,"Albemarle County, Virginia",5825,808,112513,5.18,2022,Two or More Races
+51003,"Albemarle County, Virginia",89074,509,111438,79.93,2021,White alone
+51003,"Albemarle County, Virginia",9751,354,111438,8.75,2021,Black or African American alone
+51003,"Albemarle County, Virginia",371,109,111438,0.33,2021,American Indian and Alaska Native alone
+51003,"Albemarle County, Virginia",6204,263,111438,5.57,2021,Asian alone
+51003,"Albemarle County, Virginia",61,88,111438,0.05,2021,Native Hawaiian and Other Pacific Islander alone
+51003,"Albemarle County, Virginia",1244,432,111438,1.12,2021,Some Other Race alone
+51003,"Albemarle County, Virginia",4733,565,111438,4.25,2021,Two or More Races
+51003,"Albemarle County, Virginia",87871,424,108819,80.75,2020,White alone
+51003,"Albemarle County, Virginia",10005,338,108819,9.19,2020,Black or African American alone
+51003,"Albemarle County, Virginia",315,107,108819,0.29,2020,American Indian and Alaska Native alone
+51003,"Albemarle County, Virginia",5981,294,108819,5.5,2020,Asian alone
+51003,"Albemarle County, Virginia",48,28,108819,0.04,2020,Native Hawaiian and Other Pacific Islander alone
+51003,"Albemarle County, Virginia",989,426,108819,0.91,2020,Some Other Race alone
+51003,"Albemarle County, Virginia",3610,500,108819,3.32,2020,Two or More Races
+51003,"Albemarle County, Virginia",87831,359,107405,81.78,2019,White alone
+51003,"Albemarle County, Virginia",10245,312,107405,9.54,2019,Black or African American alone
+51003,"Albemarle County, Virginia",271,117,107405,0.25,2019,American Indian and Alaska Native alone
+51003,"Albemarle County, Virginia",5590,231,107405,5.2,2019,Asian alone
+51003,"Albemarle County, Virginia",41,48,107405,0.04,2019,Native Hawaiian and Other Pacific Islander alone
+51003,"Albemarle County, Virginia",822,356,107405,0.77,2019,Some Other Race alone
+51003,"Albemarle County, Virginia",2605,376,107405,2.43,2019,Two or More Races
+51003,"Albemarle County, Virginia",86739,378,106355,81.56,2018,White alone
+51003,"Albemarle County, Virginia",10375,291,106355,9.76,2018,Black or African American alone
+51003,"Albemarle County, Virginia",209,99,106355,0.2,2018,American Indian and Alaska Native alone
+51003,"Albemarle County, Virginia",5626,215,106355,5.29,2018,Asian alone
+51003,"Albemarle County, Virginia",30,37,106355,0.03,2018,Native Hawaiian and Other Pacific Islander alone
+51003,"Albemarle County, Virginia",1131,356,106355,1.06,2018,Some Other Race alone
+51003,"Albemarle County, Virginia",2245,413,106355,2.11,2018,Two or More Races
+51003,"Albemarle County, Virginia",85656,468,105105,81.5,2017,White alone
+51003,"Albemarle County, Virginia",10052,389,105105,9.56,2017,Black or African American alone
+51003,"Albemarle County, Virginia",216,94,105105,0.21,2017,American Indian and Alaska Native alone
+51003,"Albemarle County, Virginia",5218,186,105105,4.96,2017,Asian alone
+51003,"Albemarle County, Virginia",42,46,105105,0.04,2017,Native Hawaiian and Other Pacific Islander alone
+51003,"Albemarle County, Virginia",1357,457,105105,1.29,2017,Some Other Race alone
+51003,"Albemarle County, Virginia",2564,410,105105,2.44,2017,Two or More Races
+51003,"Albemarle County, Virginia",84955,598,104287,81.46,2016,White alone
+51003,"Albemarle County, Virginia",9747,376,104287,9.35,2016,Black or African American alone
+51003,"Albemarle County, Virginia",250,125,104287,0.24,2016,American Indian and Alaska Native alone
+51003,"Albemarle County, Virginia",4733,242,104287,4.54,2016,Asian alone
+51003,"Albemarle County, Virginia",34,35,104287,0.03,2016,Native Hawaiian and Other Pacific Islander alone
+51003,"Albemarle County, Virginia",1627,538,104287,1.56,2016,Some Other Race alone
+51003,"Albemarle County, Virginia",2941,498,104287,2.82,2016,Two or More Races
+51003,"Albemarle County, Virginia",84059,523,103108,81.53,2015,White alone
+51003,"Albemarle County, Virginia",9658,413,103108,9.37,2015,Black or African American alone
+51003,"Albemarle County, Virginia",258,138,103108,0.25,2015,American Indian and Alaska Native alone
+51003,"Albemarle County, Virginia",4578,226,103108,4.44,2015,Asian alone
+51003,"Albemarle County, Virginia",15,17,103108,0.01,2015,Native Hawaiian and Other Pacific Islander alone
+51003,"Albemarle County, Virginia",1389,479,103108,1.35,2015,Some Other Race alone
+51003,"Albemarle County, Virginia",3151,463,103108,3.06,2015,Two or More Races
+51003,"Albemarle County, Virginia",83125,528,101883,81.59,2014,White alone
+51003,"Albemarle County, Virginia",9616,432,101883,9.44,2014,Black or African American alone
+51003,"Albemarle County, Virginia",279,173,101883,0.27,2014,American Indian and Alaska Native alone
+51003,"Albemarle County, Virginia",4415,288,101883,4.33,2014,Asian alone
+51003,"Albemarle County, Virginia",20,24,101883,0.02,2014,Native Hawaiian and Other Pacific Islander alone
+51003,"Albemarle County, Virginia",1283,461,101883,1.26,2014,Some Other Race alone
+51003,"Albemarle County, Virginia",3145,481,101883,3.09,2014,Two or More Races
+51003,"Albemarle County, Virginia",82359,512,100636,81.84,2013,White alone
+51003,"Albemarle County, Virginia",9607,393,100636,9.55,2013,Black or African American alone
+51003,"Albemarle County, Virginia",357,148,100636,0.35,2013,American Indian and Alaska Native alone
+51003,"Albemarle County, Virginia",4210,324,100636,4.18,2013,Asian alone
+51003,"Albemarle County, Virginia",14,22,100636,0.01,2013,Native Hawaiian and Other Pacific Islander alone
+51003,"Albemarle County, Virginia",1155,450,100636,1.15,2013,Some Other Race alone
+51003,"Albemarle County, Virginia",2934,619,100636,2.92,2013,Two or More Races
+51003,"Albemarle County, Virginia",81403,569,99484,81.83,2012,White alone
+51003,"Albemarle County, Virginia",9751,383,99484,9.8,2012,Black or African American alone
+51003,"Albemarle County, Virginia",313,158,99484,0.31,2012,American Indian and Alaska Native alone
+51003,"Albemarle County, Virginia",4240,286,99484,4.26,2012,Asian alone
+51003,"Albemarle County, Virginia",0,29,99484,0,2012,Native Hawaiian and Other Pacific Islander alone
+51003,"Albemarle County, Virginia",1027,442,99484,1.03,2012,Some Other Race alone
+51003,"Albemarle County, Virginia",2750,484,99484,2.76,2012,Two or More Races

@@ -1,0 +1,17 @@
+locality,estimate,moe,total_pop,percent,sex,age_group,disability_status,year
+Combined Region,13908,228.08331810985212,157005,8.86,Female,17 and under,No disability,2022
+Combined Region,336,139.86779472058606,157005,0.21,Female,17 and under,With a disability,2022
+Combined Region,22398,283.2331195323033,157005,14.27,Female,18 to 34 years,No disability,2022
+Combined Region,896,254.68608128439215,157005,0.57,Female,18 to 34 years,With a disability,2022
+Combined Region,26371,443.2076262881766,157005,16.8,Female,35 to 64 years,No disability,2022
+Combined Region,2340,388.2949909540426,157005,1.49,Female,35 to 64 years,With a disability,2022
+Combined Region,11081,386.0828926538963,157005,7.06,Female,65 and over,No disability,2022
+Combined Region,4305,369.9918918030502,157005,2.74,Female,65 and over,With a disability,2022
+Combined Region,14435,295.6552045880471,157005,9.19,Male,17 and under,No disability,2022
+Combined Region,470,171.4584497771982,157005,0.3,Male,17 and under,With a disability,2022
+Combined Region,21127,253.4758371127315,157005,13.46,Male,18 to 34 years,No disability,2022
+Combined Region,830,229.92390045404153,157005,0.53,Male,18 to 34 years,With a disability,2022
+Combined Region,24209,399.3619911809335,157005,15.42,Male,35 to 64 years,No disability,2022
+Combined Region,2309,353.17134651610684,157005,1.47,Male,35 to 64 years,With a disability,2022
+Combined Region,8999,329.07749847110483,157005,5.73,Male,65 and over,No disability,2022
+Combined Region,2991,313.12457584801615,157005,1.91,Male,65 and over,With a disability,2022

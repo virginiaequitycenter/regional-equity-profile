@@ -1,0 +1,27 @@
+GEOID,locality,estimate,moe,total_pop,percent,sex,label,year
+51003,"Albemarle County, Virginia",3138,332,112513,2.79,Female,10 to 14 years,2022
+51003,"Albemarle County, Virginia",5281,268.15667062372324,112513,4.69,Female,15 to 19 years,2022
+51003,"Albemarle County, Virginia",3715,374.9399951992319,112513,3.3,Female,20 to 24 years,2022
+51003,"Albemarle County, Virginia",7097,195.020511741714,112513,6.31,Female,25 to 34 years,2022
+51003,"Albemarle County, Virginia",6827,497.41029341982863,112513,6.07,Female,35 to 44 years,2022
+51003,"Albemarle County, Virginia",6485,46.17358552246078,112513,5.76,Female,45 to 54 years,2022
+51003,"Albemarle County, Virginia",2920,332,112513,2.6,Female,5 to 9 years,2022
+51003,"Albemarle County, Virginia",3976,358,112513,3.53,Female,55 to 59 years,2022
+51003,"Albemarle County, Virginia",3741,468.20935488304804,112513,3.32,Female,60 to 64 years,2022
+51003,"Albemarle County, Virginia",6778,444.0675624271604,112513,6.02,Female,65 to 74 years,2022
+51003,"Albemarle County, Virginia",3880,382.5976999408125,112513,3.45,Female,75 to 84 years,2022
+51003,"Albemarle County, Virginia",1793,299,112513,1.59,Female,85 years and over,2022
+51003,"Albemarle County, Virginia",2814,23,112513,2.5,Female,Under 5 years,2022
+51003,"Albemarle County, Virginia",3310,340,112513,2.94,Male,10 to 14 years,2022
+51003,"Albemarle County, Virginia",5524,399.76493092816435,112513,4.91,Male,15 to 19 years,2022
+51003,"Albemarle County, Virginia",2954,389.925633935498,112513,2.63,Male,20 to 24 years,2022
+51003,"Albemarle County, Virginia",6926,31.064449134018133,112513,6.16,Male,25 to 34 years,2022
+51003,"Albemarle County, Virginia",6781,493.85220461186566,112513,6.03,Male,35 to 44 years,2022
+51003,"Albemarle County, Virginia",6290,170.46993869888027,112513,5.59,Male,45 to 54 years,2022
+51003,"Albemarle County, Virginia",3069,337,112513,2.73,Male,5 to 9 years,2022
+51003,"Albemarle County, Virginia",3149,337,112513,2.8,Male,55 to 59 years,2022
+51003,"Albemarle County, Virginia",3527,375.0746592346649,112513,3.13,Male,60 to 64 years,2022
+51003,"Albemarle County, Virginia",5767,519.0703227887335,112513,5.13,Male,65 to 74 years,2022
+51003,"Albemarle County, Virginia",2922,285.72714256787015,112513,2.6,Male,75 to 84 years,2022
+51003,"Albemarle County, Virginia",997,200,112513,0.89,Male,85 years and over,2022
+51003,"Albemarle County, Virginia",2852,7,112513,2.53,Male,Under 5 years,2022
