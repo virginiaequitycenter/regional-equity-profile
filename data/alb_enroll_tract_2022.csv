@@ -1,0 +1,30 @@
+GEOID,locality,tract,estimate,moe,pop_3_to_24yr,percent,label,year,county,locality_num,tract_num,tractnames
+51003010100,Albemarle County,Census Tract 101,826,229.39921534303468,1035,79.81,3 to 24 year olds enrolled in school,2022,Albemarle,003,010100,Free Union
+51003010201,Albemarle County,Census Tract 102.01,1419,252.54900514553606,1673,84.82,3 to 24 year olds enrolled in school,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010202,Albemarle County,Census Tract 102.02,763,212.34406043023665,788,96.83,3 to 24 year olds enrolled in school,2022,Albemarle,003,010202,Earlysville
+51003010301,Albemarle County,Census Tract 103.01,537,180.0499930574839,770,69.74,3 to 24 year olds enrolled in school,2022,Albemarle,003,010301,Berkmar Drive
+51003010302,Albemarle County,Census Tract 103.02,460,105.41821474489122,489,94.07,3 to 24 year olds enrolled in school,2022,Albemarle,003,010302,Polo Grounds Road
+51003010303,Albemarle County,Census Tract 103.03,1255,256.64177368464397,1392,90.16,3 to 24 year olds enrolled in school,2022,Albemarle,003,010303,Hollymead
+51003010401,Albemarle County,Census Tract 104.01,599,160.70158679988197,804,74.5,3 to 24 year olds enrolled in school,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010402,Albemarle County,Census Tract 104.02,684,271.2729252984897,763,89.65,3 to 24 year olds enrolled in school,2022,Albemarle,003,010402,Village of Rivanna
+51003010501,Albemarle County,Census Tract 105.01,450,133.7497663549361,512,87.89,3 to 24 year olds enrolled in school,2022,Albemarle,003,010501,Darden-Key West
+51003010502,Albemarle County,Census Tract 105.02,238,146.01369798755184,298,79.87,3 to 24 year olds enrolled in school,2022,Albemarle,003,010502,Pantops
+51003010602,Albemarle County,Census Tract 106.02,883,184.05705637111552,946,93.34,3 to 24 year olds enrolled in school,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010603,Albemarle County,Census Tract 106.03,515,397.67323269237016,721,71.43,3 to 24 year olds enrolled in school,2022,Albemarle,003,010603,Branchland
+51003010604,Albemarle County,Census Tract 106.04,752,198.82907232092595,876,85.84,3 to 24 year olds enrolled in school,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010701,Albemarle County,Census Tract 107.01,449,201.50434238497195,797,56.34,3 to 24 year olds enrolled in school,2022,Albemarle,003,010701,Hydraulic
+51003010702,Albemarle County,Census Tract 107.02,440,180.39401320442983,563,78.15,3 to 24 year olds enrolled in school,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010801,Albemarle County,Census Tract 108.01,503,215.8795960715139,692,72.69,3 to 24 year olds enrolled in school,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010802,Albemarle County,Census Tract 108.02,572,200.65143906785218,802,71.32,3 to 24 year olds enrolled in school,2022,Albemarle,003,010802,Albemarle High School
+51003010901,Albemarle County,Census Tract 109.01,708,236.51215613578935,737,96.07,3 to 24 year olds enrolled in school,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010904,Albemarle County,Census Tract 109.04,6628,533.4285331700958,6680,99.22,3 to 24 year olds enrolled in school,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003011000,Albemarle County,Census Tract 110,1481,352.8611624987936,1559,95,3 to 24 year olds enrolled in school,2022,Albemarle,003,011000,Ivy
+51003011101,Albemarle County,Census Tract 111.01,367,154.7611062250461,387,94.83,3 to 24 year olds enrolled in school,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011102,Albemarle County,Census Tract 111.02,801,175.11139311878026,1098,72.95,3 to 24 year olds enrolled in school,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011103,Albemarle County,Census Tract 111.03,1177,292.58503037578663,1269,92.75,3 to 24 year olds enrolled in school,2022,Albemarle,003,011103,Old Trail
+51003011201,Albemarle County,Census Tract 112.01,790,195.0640920313116,976,80.94,3 to 24 year olds enrolled in school,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011202,Albemarle County,Census Tract 112.02,898,176.52478579508318,992,90.52,3 to 24 year olds enrolled in school,2022,Albemarle,003,011202,North Garden
+51003011301,Albemarle County,Census Tract 113.01,710,215.14878572745886,846,83.92,3 to 24 year olds enrolled in school,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011302,Albemarle County,Census Tract 113.02,1257,282.6711870707731,1840,68.32,3 to 24 year olds enrolled in school,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011303,Albemarle County,Census Tract 113.03,651,183.3712082089225,843,77.22,3 to 24 year olds enrolled in school,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011400,Albemarle County,Census Tract 114,826,193.50193797479136,1035,79.81,3 to 24 year olds enrolled in school,2022,Albemarle,003,011400,Southern Albemarle-Scottsville

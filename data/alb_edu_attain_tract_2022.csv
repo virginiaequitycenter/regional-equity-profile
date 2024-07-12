@@ -1,0 +1,88 @@
+GEOID,locality,tract,estimate,moe,pop_25_over,percent,label,year,county,locality_num,tract_num,tractnames
+51003010100,Albemarle County,Census Tract 101,1044,291,3547,29.43,Graduate or professional degree,2022,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,3328,378,3547,93.83,High school graduate or higher,2022,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,2035,336,3547,57.37,Bachelor's degree or higher,2022,Albemarle,003,010100,Free Union
+51003010201,Albemarle County,Census Tract 102.01,1141,258,3991,28.59,Graduate or professional degree,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,3930,493,3991,98.47,High school graduate or higher,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,2377,321,3991,59.56,Bachelor's degree or higher,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010202,Albemarle County,Census Tract 102.02,963,187,2263,42.55,Graduate or professional degree,2022,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,2227,240,2263,98.41,High school graduate or higher,2022,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,1676,201,2263,74.06,Bachelor's degree or higher,2022,Albemarle,003,010202,Earlysville
+51003010301,Albemarle County,Census Tract 103.01,339,146,1423,23.82,Graduate or professional degree,2022,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,1314,335,1423,92.34,High school graduate or higher,2022,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,668,167,1423,46.94,Bachelor's degree or higher,2022,Albemarle,003,010301,Berkmar Drive
+51003010302,Albemarle County,Census Tract 103.02,252,119,929,27.13,Graduate or professional degree,2022,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,905,116,929,97.42,High school graduate or higher,2022,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,625,126,929,67.28,Bachelor's degree or higher,2022,Albemarle,003,010302,Polo Grounds Road
+51003010303,Albemarle County,Census Tract 103.03,983,212,3905,25.17,Graduate or professional degree,2022,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,3789,367,3905,97.03,High school graduate or higher,2022,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,2234,365,3905,57.21,Bachelor's degree or higher,2022,Albemarle,003,010303,Hollymead
+51003010401,Albemarle County,Census Tract 104.01,585,200,3523,16.61,Graduate or professional degree,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,3142,509,3523,89.19,High school graduate or higher,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,1783,527,3523,50.61,Bachelor's degree or higher,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010402,Albemarle County,Census Tract 104.02,882,206,2606,33.84,Graduate or professional degree,2022,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,2502,247,2606,96.01,High school graduate or higher,2022,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,1650,265,2606,63.32,Bachelor's degree or higher,2022,Albemarle,003,010402,Village of Rivanna
+51003010501,Albemarle County,Census Tract 105.01,678,188,2282,29.71,Graduate or professional degree,2022,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,2211,403,2282,96.89,High school graduate or higher,2022,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,1509,354,2282,66.13,Bachelor's degree or higher,2022,Albemarle,003,010501,Darden-Key West
+51003010502,Albemarle County,Census Tract 105.02,616,177,2369,26,Graduate or professional degree,2022,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,2292,336,2369,96.75,High school graduate or higher,2022,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,1489,294,2369,62.85,Bachelor's degree or higher,2022,Albemarle,003,010502,Pantops
+51003010602,Albemarle County,Census Tract 106.02,1328,279,3625,36.63,Graduate or professional degree,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,3564,359,3625,98.32,High school graduate or higher,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,2560,352,3625,70.62,Bachelor's degree or higher,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010603,Albemarle County,Census Tract 106.03,419,154,1619,25.88,Graduate or professional degree,2022,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,1493,261,1619,92.22,High school graduate or higher,2022,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,944,255,1619,58.31,Bachelor's degree or higher,2022,Albemarle,003,010603,Branchland
+51003010604,Albemarle County,Census Tract 106.04,949,209,3135,30.27,Graduate or professional degree,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,2630,403,3135,83.89,High school graduate or higher,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,1788,303,3135,57.03,Bachelor's degree or higher,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010701,Albemarle County,Census Tract 107.01,404,190,1967,20.54,Graduate or professional degree,2022,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,1881,383,1967,95.63,High school graduate or higher,2022,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,992,256,1967,50.43,Bachelor's degree or higher,2022,Albemarle,003,010701,Hydraulic
+51003010702,Albemarle County,Census Tract 107.02,485,150,2426,19.99,Graduate or professional degree,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,2156,346,2426,88.87,High school graduate or higher,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,928,210,2426,38.25,Bachelor's degree or higher,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010801,Albemarle County,Census Tract 108.01,693,206,2632,26.33,Graduate or professional degree,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,2407,352,2632,91.45,High school graduate or higher,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,1462,263,2632,55.55,Bachelor's degree or higher,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010802,Albemarle County,Census Tract 108.02,513,158,1614,31.78,Graduate or professional degree,2022,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,1385,201,1614,85.81,High school graduate or higher,2022,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,780,217,1614,48.33,Bachelor's degree or higher,2022,Albemarle,003,010802,Albemarle High School
+51003010901,Albemarle County,Census Tract 109.01,448,152,1193,37.55,Graduate or professional degree,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,1188,212,1193,99.58,High school graduate or higher,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,1067,209,1193,89.44,Bachelor's degree or higher,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010904,Albemarle County,Census Tract 109.04,361,189,960,37.6,Graduate or professional degree,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,814,308,960,84.79,High school graduate or higher,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,514,248,960,53.54,Bachelor's degree or higher,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003011000,Albemarle County,Census Tract 110,2073,339,4987,41.57,Graduate or professional degree,2022,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,4823,554,4987,96.71,High school graduate or higher,2022,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,3955,537,4987,79.31,Bachelor's degree or higher,2022,Albemarle,003,011000,Ivy
+51003011101,Albemarle County,Census Tract 111.01,567,134,1773,31.98,Graduate or professional degree,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,1640,264,1773,92.5,High school graduate or higher,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,1122,200,1773,63.28,Bachelor's degree or higher,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011102,Albemarle County,Census Tract 111.02,761,247,1944,39.15,Graduate or professional degree,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,1869,247,1944,96.14,High school graduate or higher,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,1468,240,1944,75.51,Bachelor's degree or higher,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011103,Albemarle County,Census Tract 111.03,1139,253,2730,41.72,Graduate or professional degree,2022,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,2668,335,2730,97.73,High school graduate or higher,2022,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,1946,294,2730,71.28,Bachelor's degree or higher,2022,Albemarle,003,011103,Old Trail
+51003011201,Albemarle County,Census Tract 112.01,954,215,3009,31.7,Graduate or professional degree,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,2908,323,3009,96.64,High school graduate or higher,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,1865,290,3009,61.98,Bachelor's degree or higher,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011202,Albemarle County,Census Tract 112.02,1193,196,2747,43.43,Graduate or professional degree,2022,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,2611,238,2747,95.05,High school graduate or higher,2022,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,1899,232,2747,69.13,Bachelor's degree or higher,2022,Albemarle,003,011202,North Garden
+51003011301,Albemarle County,Census Tract 113.01,830,243,4020,20.65,Graduate or professional degree,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,3694,497,4020,91.89,High school graduate or higher,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,1809,383,4020,45,Bachelor's degree or higher,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011302,Albemarle County,Census Tract 113.02,900,258,3071,29.31,Graduate or professional degree,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,2821,491,3071,91.86,High school graduate or higher,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,1783,414,3071,58.06,Bachelor's degree or higher,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011303,Albemarle County,Census Tract 113.03,908,169,3017,30.1,Graduate or professional degree,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,2813,365,3017,93.24,High school graduate or higher,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,1888,359,3017,62.58,Bachelor's degree or higher,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011400,Albemarle County,Census Tract 114,718,242,3629,19.79,Graduate or professional degree,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,3181,390,3629,87.66,High school graduate or higher,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,1446,298,3629,39.85,Bachelor's degree or higher,2022,Albemarle,003,011400,Southern Albemarle-Scottsville

@@ -1,10 +1,19 @@
-# Demographic Visualizations
-# File Created: 6/25/2024
-# Last Updated: 6/25/2024
-# Author: Henry DeMarco
-# Description: Visualizations for demographic section of profile
+---
+title: "Equity Profile Demographics"
+output: html_document
+---
+```{css, echo=FALSE}
+.main-container.container-fluid {
+max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 4.167%;
+}
 
-################################################
+
+```
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
 library(tidycensus)
 library(tidyverse)
@@ -12,21 +21,44 @@ library(scales)
 library(RColorBrewer)
 library("ggspatial")
 library(tigris)
+library(ggrepel)
+library(ggpubr)
 library(readxl)
-library(stringr)
 
-# Table visualizations
-# B02001 (Race)
-# B03003 (Hispanic or Latino Origin)
-# B03002 (Hispanic or Latino Origin by Race)
-# B01001 (Sex by Age)
-# B05001 (Nativity and Citizenship Status in the United States)
-# B16002 (Household Language by Household Limited English Speaking Status)
-# B18102-B18106 (Combined Disability Status Tables)
+color_blind_pal <- c("#1473af",
+"#89c3ef",
+"#ede65a",
+"#e5b039",
+"#ea594e",
+"#193cbc")
 
+color_blind_pal <- c("#b2b8be","#1473af","#ede65a","#e5b039","#ea594e","#193cbc","#43daed","#b69cfd")
+
+c("#b2b8be", "#ff641e", "#009ddc", "#fbb12d", "#b4cd23", "#ee2b75", "#2d5192", "#43daed")
+
+seven_colors_race <- c(
+"#0cc0aa",
+"#58a2ee",
+"#a942be",
+"#E0004E",
+"#ffa600",
+"#2d5192",
+# "#9112B8",
+"#b69cfd"
+)
+
+two_colors_ethn <- c(
+  # "#cf80dd",
+  "#D3D3D3", 
+  "#860967")
+
+```
+
+```{r, echo=FALSE, fig.width=8, fig.height=7}
 # Race over time ----
+
 # Region 1790-2020 ----
-region_sheet <- read_excel("data/regional_profile_raceovertime.xlsx", sheet = "regional_data")
+region_sheet <- read_excel("../data/regional_profile_raceovertime.xlsx", sheet = "regional_data")
 region_1790_2020 <- region_sheet %>% select(!...7) %>% 
   rename("race_white" = "white",
          "race_nonwhite" = "nonwhite",
@@ -39,15 +71,21 @@ region_1790_2020 <- region_sheet %>% select(!...7) %>%
          "estimate" = "race",
          "percent" = "per")
 
-region_1790_2020 %>% 
-  ggplot(aes(x = year, y = percent, color = label)) +
+region_line <- region_1790_2020 %>% 
+  mutate(text = paste0(round(percent, 0), "%"),
+         pos = case_when(percent >= 50 ~ 1,
+                         percent < 50 ~ -1
+                         )) %>% 
+  ggplot(aes(x = year, y = percent, color = label, label = text)) +
   geom_line(linewidth = 1) +
   geom_point() +
+  geom_text(aes(y = (percent + sign(pos) *3)), size = 3, hjust = 0.4, show.legend = FALSE) +
   scale_x_continuous(breaks = seq(from = 1790, to = 2020, by = 10),
                      name = "") +
   scale_y_continuous(limits = c(0,100),
                      labels = label_percent(scale = 1),
                      name = "") +
+    scale_color_manual(values = c("#3B8EA5", "#b2b8be")) +
   labs(color = "", title = "White and non-white populations in the Charlottesville/Albemarle Region, 1790-2020") +
   theme_minimal() +
   theme(legend.title=element_blank(),
@@ -55,24 +93,33 @@ region_1790_2020 %>%
         axis.text.x = element_text(angle = 45, hjust = 1),
         panel.grid.minor.x = element_blank())
 
-region_1790_2020 %>% 
-  mutate(text = paste0(round(percent, 0), "%")) %>% 
-  ggplot(aes(x = year, y = percent, group = year, fill = label, label = text)) +
-  geom_bar(stat = "identity") +
-  geom_text(size = 3, position = position_stack(vjust = 0.5)) +
-  scale_x_continuous(breaks = seq(from = 1790, to = 2020, by = 10),
-                     name = "") +
-  scale_y_continuous(labels = label_percent(scale = 1),
-                     name = "") +
-  labs(color = "", title = "White and non-white populations in the Charlottesville/Albemarle Region, 1790-2020") +
-  theme_minimal() +
-  theme(legend.title=element_blank(),
-        legend.position = "top",
-        axis.text.x = element_text(angle = 45, hjust = 1),
-        panel.grid.minor.x = element_blank())
+region_line
+
+# region_bar <- region_1790_2020 %>% 
+#   mutate(text = paste0(round(percent, 0), "%")) %>% 
+#   ggplot(aes(x = year, y = percent, group = year, fill = label, label = text)) +
+#   geom_bar(stat = "identity") +
+#   geom_text(size = 3, position = position_stack(vjust = 0.5)) +
+#   scale_x_continuous(breaks = seq(from = 1790, to = 2020, by = 10),
+#                      name = "") +
+#   scale_y_continuous(labels = label_percent(scale = 1),
+#                      name = "") +
+#   scale_fill_manual(values = c("#3B8EA5", "#b2b8be")) +
+#   labs(color = "", title = "White and non-white populations in the Charlottesville/Albemarle Region, 1790-2020") +
+#   theme_minimal() +
+#   theme(legend.title=element_blank(),
+#         legend.position = "top",
+#         axis.text.x = element_text(angle = 45, hjust = 1),
+#         panel.grid.minor.x = element_blank())
+# 
+# region_bar
+
+```
+
+```{r, echo=FALSE, fig.width=10}
 
 # Charlottesville, 1900-2020 ----
-cville_sheet <- read_excel("data/regional_profile_raceovertime.xlsx", sheet = "charlottesville_data")
+cville_sheet <- read_excel("../data/regional_profile_raceovertime.xlsx", sheet = "charlottesville_data")
 cville_1900_2020 <- cville_sheet %>% select(!...7) %>% 
   rename("race_white" = "white",
          "race_nonwhite" = "nonwhite",
@@ -85,10 +132,12 @@ cville_1900_2020 <- cville_sheet %>% select(!...7) %>%
          "estimate" = "race",
          "percent" = "per")
 
-cville_1900_2020 %>% 
-  ggplot(aes(x = year, y = round(percent, 0), color = label)) +
+cville_line <- cville_1900_2020 %>% 
+  mutate(text = paste0(round(percent, 0), "%")) %>% 
+  ggplot(aes(x = year, y = round(percent, 0), color = label, label = text)) +
   geom_line(linewidth = 1) +
   geom_point() +
+  geom_text(size = 3, hjust=0.5, vjust=-1, color="black") +
   scale_x_continuous(breaks = seq(from = 1900, to = 2020, by = 10),
                      name = "") +
   scale_y_continuous(limits = c(0,100),
@@ -102,25 +151,27 @@ cville_1900_2020 %>%
         axis.text.x = element_text(angle = 45, hjust = 1),
         panel.grid.minor.x = element_blank())
 
-cville_1900_2020 %>% 
+cville_bar <- cville_1900_2020 %>% 
   mutate(text = paste0(round(percent, 0), "%")) %>% 
   ggplot(aes(x = year, y = round(percent, 0), group = year, fill = label, label = text)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", color = "white") +
   geom_text(size = 3, position = position_stack(vjust = 0.5)) +
   scale_x_continuous(breaks = seq(from = 1900, to = 2020, by = 10),
                      name = "") +
   scale_y_continuous(labels = label_percent(scale = 1),
                      name = "") +
   scale_fill_manual(values = c("#3B8EA5", "#b2b8be")) +
-  labs(color = "", title = "White and non-white populations in Charlottesville, 1900-2020") +
+  labs(color = "", title = "") +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
         axis.text.x = element_text(angle = 45, hjust = 1),
         panel.grid.minor.x = element_blank())
 
+ggarrange(cville_line, cville_bar, nrow=1)
+
 # Albemarle 1900-2020 ----
-alb_sheet <- read_excel("data/regional_profile_raceovertime.xlsx", sheet = "albemarle_data")
+alb_sheet <- read_excel("../data/regional_profile_raceovertime.xlsx", sheet = "albemarle_data")
 alb_1900_2020 <- alb_sheet %>% select(!...7) %>% 
   rename("race_white" = "white",
          "race_nonwhite" = "nonwhite",
@@ -133,10 +184,12 @@ alb_1900_2020 <- alb_sheet %>% select(!...7) %>%
          "estimate" = "race",
          "percent" = "per")
 
-alb_1900_2020 %>% 
-  ggplot(aes(x = year, y = round(percent, 0), color = label)) +
+alb_line <- alb_1900_2020 %>% 
+  mutate(text = paste0(round(percent, 0), "%")) %>% 
+  ggplot(aes(x = year, y = round(percent, 0), color = label, label = text)) +
   geom_line(linewidth = 1) +
   geom_point() +
+    geom_text(size = 3, hjust=0.5, vjust=-1, color="black") +
   scale_x_continuous(breaks = seq(from = 1900, to = 2020, by = 10),
                      name = "") +
   scale_y_continuous(limits = c(0,100),
@@ -150,293 +203,95 @@ alb_1900_2020 %>%
         axis.text.x = element_text(angle = 45, hjust = 1),
         panel.grid.minor.x = element_blank())
 
-alb_1900_2020 %>% 
+alb_bar <- alb_1900_2020 %>% 
   mutate(text = paste0(round(percent, 0), "%")) %>% 
   ggplot(aes(x = year, y = round(percent, 0), group = year, fill = label, label = text)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", color = "white") +
   geom_text(size = 3, position = position_stack(vjust = 0.5)) +
   scale_x_continuous(breaks = seq(from = 1900, to = 2020, by = 10),
                      name = "") +
   scale_y_continuous(labels = label_percent(scale = 1),
                      name = "") +
   scale_fill_manual(values = c("#3B8EA5", "#b2b8be")) +
-  labs(color = "", title = "White and non-white populations in Albemarle, 1900-2020") +
+  labs(color = "", title = "") +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
-        panel.grid.minor.x = element_blank())
+        panel.grid.minor.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+ggarrange(alb_line, alb_bar, nrow=1)
 
 
-# Race: Charlottesville, Albemarle, Combined Region, 2012-2022 ----
-
-# Read in and wrangle data:
-cville_race_2012_2022 <- read_csv("data/cville_race_2012_2022.csv")
-cville_race_2012_2022 <- cville_race_2012_2022 %>% 
-  mutate(label = factor(label, 
-                        levels = c("White alone", "Black or African American alone", "Asian alone", "Two or More Races", "American Indian and Alaska Native alone", "Native Hawaiian and Other Pacific Islander alone", "Some Other Race alone"), 
-                        labels = c("White", "Black", "Asian", "Multiracial", "American Indian/Alaskan Native", "Native Hawaiian/Pacific Islander", "Other Racial Identities")),
-         percent_moe = round(100 * (moe / total_pop), digits = 2)
-         
-  )
-
-alb_race_2012_2022 <- read_csv("data/alb_race_2012_2022.csv")
-alb_race_2012_2022 <- alb_race_2012_2022 %>% 
-  mutate(label = factor(label, 
-                        levels = c("White alone", "Black or African American alone", "Asian alone", "Two or More Races", "American Indian and Alaska Native alone", "Native Hawaiian and Other Pacific Islander alone", "Some Other Race alone"), 
-                        labels = c("White", "Black", "Asian", "Multiracial", "American Indian/Alaskan Native", "Native Hawaiian/Pacific Islander", "Other Racial Identities"))
-  )
+```
 
 
-region_race_2012_2022 <- read_csv("data/region_race_2012_2022.csv")
-region_race_2012_2022 <- region_race_2012_2022 %>% 
-  mutate(label = factor(label, 
-                        levels = c("White alone", "Black or African American alone", "Asian alone", "Two or More Races", "American Indian and Alaska Native alone", "Native Hawaiian and Other Pacific Islander alone", "Some Other Race alone"), 
-                        labels = c("White", "Black", "Asian", "Multiracial", "American Indian/Alaskan Native", "Native Hawaiian/Pacific Islander", "Other Racial Identities"))
-  )
-
-# Race line graph, 2012-2022 ----
-# Charlottesville
-cville_race_plot <- cville_race_2012_2022 %>% 
-  ggplot(aes(x = year, y = percent, color = label)) +
-  geom_line() +
-  geom_point() +
-  scale_x_continuous(breaks = pretty_breaks(),
-                     name = "Year") +
-  scale_y_continuous(limits = c(0,100),
-                     labels = label_percent(scale = 1),
-                     name = "Percent of Popultation") +
-  labs(color = "", title = "Charlottesville: Population by Race, 2012-2022") +
-  theme_minimal() +
-  theme(legend.title=element_blank(),
-        legend.position = "top")
-
-cville_race_plot
-
-# Albemarle
-alb_race_plot <- alb_race_2012_2022 %>% 
-  ggplot(aes(x = year, y = percent, color = label)) +
-  geom_line() +
-  geom_point() +
-  scale_x_continuous(breaks = pretty_breaks(),
-                     name = "Year") +
-  scale_y_continuous(limits = c(0,100),
-                     labels = label_percent(scale = 1),
-                     name = "Percent of Popultation") +
-  labs(color = "", title = "Albemarle: Population by Race, 2012-2022") +
-  theme_minimal() +
-  theme(legend.title=element_blank(),
-        legend.position = "top")
-
-alb_race_plot
-
-# Combined region
-region_race_plot <- region_race_2012_2022 %>% 
-  ggplot(aes(x = year, y = percent, color = label)) +
-  geom_line() +
-  geom_point() +
-  scale_x_continuous(breaks = pretty_breaks(),
-                     name = "Year") +
-  scale_y_continuous(limits = c(0,100),
-                     labels = label_percent(scale = 1),
-                     name = "Percent of Popultation") +
-  labs(color = "", title = "Charlottesville & Albemarle: Population by Race, 2012-2022") +
-  theme_minimal() +
-  theme(legend.title=element_blank(),
-        legend.position = "top")
-
-region_race_plot
-
-# Race bar graph, 2012 and 2022 ----
-# Charlottesville 
-cville_race_bar <- cville_race_2012_2022 %>% 
-  filter(year %in% c("2012", "2022")) %>% 
-  mutate(year = factor(year, levels = c("2022", "2012"))) %>%
-  ggplot(aes(x = percent, y = label, fill = year)) +
-  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.7) +
-  geom_text(aes(label = scales::percent(percent / 100, accuracy = 0.1)), 
-            position = position_dodge2(width = 0.9, preserve = "single"), 
-            vjust = 0.5,
-            hjust = -0.2,
-            size = 3) +
-  scale_x_continuous(labels = scales::percent_format(scale = 1), 
-                     limits = c(0, 100), 
-                     name = "Percent of Population") +
-  scale_y_discrete(limits = rev,
-                   name = "") +
-  scale_fill_manual(values = c("2012" = "#3B8EA5", "2022" = "#AB3428")) +
-  theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold"),
-        legend.position = "top") +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  labs(fill = "Year", title = "Charlottesville: Population by Race, 2012 and 2022")
-
-cville_race_bar
-
-# Albemarle 
-alb_race_bar <- alb_race_2012_2022 %>% 
-  filter(year %in% c("2012", "2022")) %>% 
-  mutate(year = factor(year, levels = c("2022", "2012"))) %>%
-  ggplot(aes(x = percent, y = label, fill = year)) +
-  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.7) +
-  geom_text(aes(label = scales::percent(percent / 100, accuracy = 0.1)), 
-            position = position_dodge2(width = 0.9, preserve = "single"), 
-            vjust = 0.5,
-            hjust = -0.2,
-            size = 3) +
-  scale_x_continuous(labels = scales::percent_format(scale = 1), 
-                     limits = c(0, 100), 
-                     name = "Percent of Population") +
-  scale_y_discrete(limits = rev,
-                   name = "") +
-  scale_fill_manual(values = c("2012" = "#3B8EA5", "2022" = "#AB3428")) +
-  theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold"),
-        legend.position = "top") +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  labs(fill = "Year", title = "Albemarle: Population by Race, 2012 and 2022")
-
-alb_race_bar
-
-# Region 
-region_race_bar <- region_race_2012_2022 %>% 
-  filter(year %in% c("2012", "2022")) %>% 
-  mutate(year = factor(year, levels = c("2022", "2012"))) %>%
-  ggplot(aes(x = percent, y = label, fill = year)) +
-  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.7) +
-  geom_text(aes(label = scales::percent(percent / 100, accuracy = 0.1)), 
-            position = position_dodge2(width = 0.9, preserve = "single"), 
-            vjust = 0.5,
-            hjust = -0.2,
-            size = 3) +
-  scale_x_continuous(labels = scales::percent_format(scale = 1), 
-                     limits = c(0, 100), 
-                     name = "Percent of Population") +
-  scale_y_discrete(limits = rev,
-                   name = "") +
-  scale_fill_manual(values = c("2012" = "#3B8EA5", "2022" = "#AB3428")) +
-  theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold"),
-        legend.position = "top") +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  labs(fill = "Year", title = "Charlottesville & Albemarle: Population by Race, 2012 and 2022")
-
-region_race_bar
-
-# Ethnicity: Hispanic/Not Hispanic ----
-
-# Read and wrangle data
-cville_ethn_2012_2022 <- read_csv("data/cville_ethn_2012_2022.csv")
-cville_ethn_2012_2022 <- cville_ethn_2012_2022 %>% 
-  mutate(label = factor(label, 
-                        levels = c("Hispanic or Latino", "Not Hispanic or Latino"), 
-                        labels = c("Hispanic", "Non-Hispanic"))
-  )
-
-alb_ethn_2012_2022 <- read_csv("data/alb_ethn_2012_2022.csv")
-alb_ethn_2012_2022 <- alb_ethn_2012_2022 %>% 
-  mutate(label = factor(label, 
-                        levels = c("Hispanic or Latino", "Not Hispanic or Latino"), 
-                        labels = c("Hispanic", "Non-Hispanic"))
-  )
-
-
-region_ethn_2012_2022 <- read_csv("data/region_ethn_2012_2022.csv")
-region_ethn_2012_2022 <- region_ethn_2012_2022 %>% 
-  mutate(label = factor(label, 
-                        levels = c("Hispanic or Latino", "Not Hispanic or Latino"), 
-                        labels = c("Hispanic", "Non-Hispanic"))
-  )
-
-
-# Ethnicity line graph, 2012-2022 ----
-# Charlottesville
-cville_ethn_plot <- cville_ethn_2012_2022 %>% 
-  filter(label == "Hispanic") %>% 
-  ggplot(aes(x = year, y = percent, color = label)) +
-  geom_line() +
-  geom_point() +
-  scale_x_continuous(breaks = pretty_breaks(),
-                     name = "Year") +
-  scale_y_continuous(limits = c(0,10),
-                     labels = label_percent(scale = 1),
-                     name = "Percent of Popultation") +
-  labs(color = "", title = "Charlottesville: Population by Ethnicity, 2012-2022") +
-  theme_minimal() +
-  theme(legend.title=element_blank(),
-        legend.position = "top")
-
-cville_ethn_plot
-
-# Ethnicity bar graph, 2012 and 2022 ----
-# Charlottesville 
-cville_ethn_bar <- cville_ethn_2012_2022 %>% 
-  filter(year %in% c("2012", "2022"),
-         label == "Hispanic") %>% 
-  mutate(year = factor(year, levels = c("2022", "2012"))) %>%
-  ggplot(aes(x = percent, y = label, fill = year)) +
-  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.7) +
-  geom_text(aes(label = scales::percent(percent / 100, accuracy = 0.1)), 
-            position = position_dodge2(width = 0.9, preserve = "single"), 
-            vjust = 0.5,
-            hjust = -0.2,
-            size = 3) +
-  scale_x_continuous(labels = scales::percent_format(scale = 1), 
-                     limits = c(0, 10), 
-                     name = "Percent of Population") +
-  scale_y_discrete(limits = rev,
-                   name = "") +
-  scale_fill_manual(values = c("2012" = "#3B8EA5", "2022" = "#AB3428")) +
-  theme_minimal() +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold"),
-        legend.position = "top") +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  labs(fill = "Year", title = "Charlottesville: Population by Ethnicity, 2012 and 2022")
-
-cville_ethn_bar
-
+```{r, echo=FALSE}
 # Ethnicity by Race, 2012-2022 ----
 
-cville_ethn_race_2012_2022 <- read_csv("data/cville_ethn_race_2012_2022.csv")
+cville_ethn_race_2012_2022 <- read_csv("../data/cville_ethn_race_2012_2022.csv")
 cville_ethn_race_2012_2022 <- cville_ethn_race_2012_2022 %>% 
-  mutate(label = factor(label, 
-                        levels = c("Not Hispanic or Latino: White alone", "Not Hispanic or Latino: Black or African American alone", 
-                                   "Not Hispanic or Latino: Asian alone", "Not Hispanic or Latino: Two or more races", "Not Hispanic or Latino: American Indian and Alaska Native alone", "Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone", "Not Hispanic or Latino: Some other race alone",
-                                   "Hispanic or Latino"), 
-                        labels = c("White", "Black", "Asian", "Multiracial", "American Indian/Alaskan Native", "Native Hawaiian/Pacific Islander", "Other Racial Identities", "Hispanic")),
+  mutate(year = factor(year, levels = c("2012","2013","2014","2015","2016",
+                                        "2017","2018","2019","2020","2021","2022")),
+         label = factor(label, 
+                        levels = c("Not Hispanic or Latino: White alone", "Not Hispanic or Latino: Black or African American alone", "Hispanic or Latino", "Not Hispanic or Latino: Two or more races", "Not Hispanic or Latino: Asian alone", "Not Hispanic or Latino: American Indian and Alaska Native alone", "Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone", "Not Hispanic or Latino: Some other race alone"), 
+                        labels = c("White", "Black", "Hispanic", "Multiracial",  "Asian", "American Indian/Alaskan Native", "Native Hawaiian/Pacific Islander", "Other Racial Identities")),
          percent_moe = round(100 * (moe / total_pop), digits = 2),
          text = case_when(percent >= 1 ~ paste0(round(percent, 0), "%"),
                           percent < 1 ~ "")
   )
 
+
 # Stacked bar
 cville_ethn_race_plot <- cville_ethn_race_2012_2022 %>% 
-  # filter(year %in% c("2012", "2017", "2022")) %>%
-  # mutate(year = factor(year, levels = c("2012", "2017", "2022"))) %>%
-  mutate(year = factor(year, levels = c("2012","2013","2014","2015","2016",
-                                        "2017","2018","2019","2020","2021","2022"))) %>%
   ggplot(aes(x = year, y = percent, group = year, fill = label, 
              label = text)) +
-  geom_bar(stat = "identity") + # width = 0.6
+  geom_bar(stat = "identity", width = 0.8) +
   geom_text(size = 3, position = position_stack(vjust = 0.5)) +
   scale_x_discrete(name = "") +
   scale_y_continuous(labels = label_percent(scale = 1),
-                     name = "Percent of Popultation") +
+                     name = "") +
   labs(color = "", title = "Charlottesville: Race/Ethnic Composition, 2012-2022") +
+  # scale_fill_manual(values = color_blind_pal) +
+  # scale_fill_manual(values = c("#b2b8be", "#ff641e", "#009ddc", "#fbb12d", "#b4cd23", "#ee2b75", "#b69cfd", "#43daed")) +
+  scale_fill_manual(values = c("#b2b8be", "#ff641e", "#b4cd23", "#ee2b75","#009ddc", "#fbb12d", "#b69cfd", "#43daed")) +
   theme_minimal() +
   theme(legend.title=element_blank(),
-        legend.position = "top")
+        legend.position = "top",
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_blank())
 
 cville_ethn_race_plot
 
-ggsave("images/cville_ethn_race_stacked_all.png", bg = "white")
+cville_ethn_race_set <- cville_ethn_race_2012_2022 %>% 
+  filter(year %in% c("2012", "2017", "2022")) %>%
+  # filter(year %in% c("2012", "2014", "2016", "2018", "2020", "2022")) %>%
+  ggplot(aes(x = year, y = percent, group = year, fill = label, 
+             label = text)) +
+  geom_bar(stat = "identity", width = 0.5) +
+  geom_text(size = 3, position = position_stack(vjust = 0.5)) +
+  scale_x_discrete(name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     name = "") +
+  labs(color = "", title = "Charlottesville: Race/Ethnic Composition, 2012-2022") +
+  scale_fill_manual(values = c("#b2b8be", "#ff641e", "#b4cd23", "#ee2b75","#009ddc", "#fbb12d", "#b69cfd", "#43daed")) +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_blank())
 
+cville_ethn_race_set
 
+# ggsave("images/cville_ethn_race_stacked_all.png", bg = "white")
 
+```
+```{r, echo=FALSE, fig.height=7}
 # Age Groups: 2012 and 2022 ----
 
 # Charlottesville (Age Groups), 2022
 
-cville_age_2012_2022 <- read_csv("data/cville_age_2012_2022.csv")
+cville_age_2012_2022 <- read_csv("../data/cville_age_2012_2022.csv")
 cville_age_2012_2022 <- cville_age_2012_2022 %>% 
   mutate(label = factor(label,
                         levels = c("Under 5 years", "5 to 9 years", "10 to 14 years", "15 to 19 years",
@@ -446,8 +301,8 @@ cville_age_2012_2022 <- cville_age_2012_2022 %>%
          percent = round(percent, 0))
 
 cville_age_plot <- cville_age_2012_2022 %>% 
-  mutate(year = factor(year, levels = c("2022", "2012"))) %>%
-  ggplot(aes(x = label, y = percent, fill = year)) +  # Convert year to factor here
+  # mutate(year = factor(year, levels = c("2022", "2012"))) %>%
+  ggplot(aes(x = label, y = percent, fill = factor(year))) +  # Convert year to factor here
   geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
   geom_text(aes(label = scales::percent(percent / 100, accuracy = 1)), 
             position = position_dodge2(width = 0.9, preserve = "single"), 
@@ -456,22 +311,25 @@ cville_age_plot <- cville_age_2012_2022 %>%
             size = 3) +
   scale_x_discrete(name = "") +
   scale_y_continuous(labels = scales::percent_format(scale = 1),
-                     limits = c(0,40),
+                     limits = c(0,30),
+                     expand = expansion(mult = c(0, 0)),
                      name = "") +
-  scale_fill_manual(values = c("#C84630", "#FBBA72")) +  # Apply custom colors here
+  scale_fill_manual(values = c("#b2b8be", "#ff641e")) +  # Apply custom colors here
   coord_flip() +
   theme_minimal() +
   theme(legend.position = "top",
         panel.grid.minor.x = element_blank()) +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  labs(fill = "Year", title = "Charlottesville: Age Groups, 2012 and 2022")
+  # guides(fill = guide_legend(reverse = TRUE)) +
+  labs(fill = "", title = "Age of Charlottesville Residents, 2012 v. 2022")
   
-cville_age_plot
 
+cville_age_plot
+```
+```{r, echo=FALSE}
 # Age by Sex, 2022 ----
 # Charlottesville
 
-cville_sex_age_2022 <- read_csv("data/cville_sex_age_2022.csv")
+cville_sex_age_2022 <- read_csv("../data/cville_sex_age_2022.csv")
 cville_sex_age_2022 <- cville_sex_age_2022 %>% 
   mutate(age_group = case_when(
     label %in% c("Under 5 years", "5 to 9 years") ~ "Under 10 years",
@@ -494,23 +352,28 @@ cville_age_sex_plot <- cville_sex_age_2022 %>%
             vjust = 0.5,
             hjust = -0.2,
             size = 3) +
-  scale_x_discrete(name = "") +
+  scale_x_discrete(expand = expansion(mult = c(0, 0)),
+                   name = "") +
   scale_y_continuous(labels = scales::percent_format(scale = 1),
                      limits = c(0,20),
+                     expand = expansion(mult = c(0, 0)),
                      name = "") +
-  scale_fill_manual(values = c("#3B8EA5", "#b2b8be")) +  
+  scale_fill_manual(values = c("#3B8EA5", "#b2b8be")) +  # Apply custom colors here
   coord_flip() +
   theme_minimal() +
   theme(legend.position = "top",
         panel.grid.minor.x = element_blank()) +
   # guides(fill = guide_legend(reverse = TRUE)) +
-  labs(fill = "", title = "Charlottesville: Sex by Age Groups, 2022")
+  labs(fill = "", title = "Sex by Age Groups for Charlottesville, 2022")
 
 cville_age_sex_plot
 
+```
+
+```{r, echo=FALSE, fig.width=10, fig.height=3}
 
 # Charlottesville, Resident Status & Foreign Born, 2022 ----
-cville_nativity_2022 <- read_csv("data/cville_nativity_2022.csv")
+cville_nativity_2022 <- read_csv("../data/cville_nativity_2022.csv")
 cville_nativity_2022 <- cville_nativity_2022 %>% 
   mutate(status = case_when(
     label == "U.S. citizen, born in the United States" ~ "US-born",
@@ -529,28 +392,18 @@ cville_nativity_2022$ymax = cumsum(cville_nativity_2022$fraction)
 # Compute the bottom of each rectangle
 cville_nativity_2022$ymin = c(0, head(cville_nativity_2022$ymax, n=-1))
 
-# Create a color palette for the donut chart
-donut_pal <- sample(brewer.pal(7, "BuPu")[-1], 6, replace = FALSE)
-
-# brewer.pal(n=3,"BuPu")
-# "#E0ECF4" "#9EBCDA" "#8856A7"
-# pal_5 <- c("#EDF8FB" "#B3CDE3" "#8C96C6" "#8856A7" "#810F7C")
-# pal_5 <- c("#EDF8FB" "#BFD3E6" "#9EBCDA" "#8C96C6" "#8C6BB1" "#88419D" "#6E016B")
-
 # Plot the donut chart
 cville_nativity_chart_2022 <- ggplot(cville_nativity_2022, aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = status)) +
-  geom_rect() +
+  geom_rect(color = "white") +
   coord_polar(theta = "y") +
   xlim(c(1.5, 4)) +
-  scale_fill_manual(values = c("#8856A7", "#9EBCDA")) +
+  scale_fill_manual(values = c("#8856A7", "#b2b8be")) +
   geom_text(aes(label = paste0(round(fraction * 100, 0), "%"), x = 3.5, y = (ymin + ymax) / 2)) +
   theme_void() +
   theme(legend.position = c(.525, .5)) +
   theme(legend.title = element_blank()) +
   theme(legend.text = element_text(size = 8)) +
   labs(title = "Nativity of Charlottesville Residents, 2022")
-
-cville_nativity_chart_2022
 
 # stacked bar
 cville_nativity_stacked <- cville_nativity_2022 %>% 
@@ -559,13 +412,13 @@ cville_nativity_stacked <- cville_nativity_2022 %>%
          status = factor(status, levels = c("US-born","Foreign-born"))) %>% 
   arrange(status) %>% 
   ggplot(aes(x = percent, y = locality, group = locality, fill = status, label = text)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", color = "white") +
   geom_text(size = 3, position = position_stack(vjust = 0.5)) +
   scale_x_continuous(labels = label_percent(scale = 1),
                      name = "") +
   scale_y_discrete(name = "") +
   labs(color = "", title = "Nativity of Charlottesville Residents, 2022") +
-  scale_fill_manual(values = c("#9EBCDA", "#8856A7")) +  
+  scale_fill_manual(values = c("#b2b8be", "#8856A7")) +  
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
@@ -573,10 +426,15 @@ cville_nativity_stacked <- cville_nativity_2022 %>%
         panel.grid.major.y = element_blank(),
         axis.text.y = element_blank())
 
-cville_nativity_stacked
+ggarrange(cville_nativity_chart_2022, cville_nativity_stacked, nrow = 1)
+
+```
+
+```{r, echo=FALSE, fig.width=10}
+pal_6 <- c("#BFD3E6", "#9EBCDA", "#8C96C6", "#8C6BB1", "#88419D", "#6E016B")
 
 # Charlottesville, Foreign-born by location, 2022 ----
-cville_foreign_born <- read_csv("data/cville_birth_place_foreign_2022.csv")
+cville_foreign_born <- read_csv("../data/cville_birth_place_foreign_2022.csv")
 cville_foreign_born <- cville_foreign_born %>% 
   mutate(region = case_when(str_detect(label, "Europe") ~ "Europe",
                             str_detect(label, "Asia") ~ "Asia",
@@ -585,28 +443,32 @@ cville_foreign_born <- cville_foreign_born %>%
                             .default = label),
          percent_rnd = round(percent,0))
 
+cville_donut_dat <- cville_foreign_born %>% 
+  group_by(region) %>% 
+  summarise(estimate = sum(estimate),
+            total_foreign_born = first(total_foreign_born))
 # Compute percentages
-cville_foreign_born$fraction = cville_foreign_born$estimate / cville_foreign_born$total_foreign_born
+cville_donut_dat$fraction = cville_donut_dat$estimate / cville_donut_dat$total_foreign_born
 # Compute the cumulative percentages (top of each rectangle)
-cville_foreign_born$ymax = cumsum(cville_foreign_born$fraction)
+cville_donut_dat$ymax = cumsum(cville_donut_dat$fraction)
 # Compute the bottom of each rectangle
-cville_foreign_born$ymin = c(0, head(cville_foreign_born$ymax, n=-1))
+cville_donut_dat$ymin = c(0, head(cville_donut_dat$ymax, n=-1))
 
 # Plot the donut chart
-cville_foreign_born_plot <- cville_foreign_born %>% 
+cville_foreign_born_donut <- cville_donut_dat %>% 
+  filter(round(fraction, 2) >= 0.01) %>% 
   ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = region)) +
-  geom_rect() +
+  geom_rect(color = "white") +
   coord_polar(theta = "y") +
   xlim(c(1.5, 4)) +
-  scale_fill_manual(values = donut_pal) +
+  scale_fill_manual(values = pal_6) +
   geom_text(aes(label = paste0(round(fraction * 100, 0), "%"), x = 3.5, y = (ymin + ymax) / 2)) +
   theme_void() +
   theme(legend.position = c(.525, .5)) +
   theme(legend.title = element_blank()) +
   theme(legend.text = element_text(size = 8)) +
-  labs(title = "Foreign-Born Charlottesville Residents, by Place of birth, 2022")
+  labs(title = "Foreign-Born Charlottesville Residents, by place of birth, 2022")
 
-cville_foreign_born_plot
 
 # Bar chart
 cville_foreign_born_plot <- cville_foreign_born %>% 
@@ -629,19 +491,23 @@ cville_foreign_born_plot <- cville_foreign_born %>%
             size = 3) +
   scale_x_continuous(labels = scales::percent_format(scale = 1),
                      limits = c(0,25),
+                     expand = expansion(mult = c(0, 0)),
                      name = "") +
   scale_y_discrete(name = "") +
-  scale_fill_manual(values = donut_pal) +
+  scale_fill_manual(values = pal_6) +
   theme_minimal() +
   theme(legend.position = "top",
         panel.grid.minor.x = element_blank()) +
-  # guides(fill = guide_legend(reverse = TRUE)) +
-  labs(fill = "", title = "Foreign-Born Charlottesville Residents, by Place of birth, 2022")
+  labs(fill = "", title = "")
 
-cville_foreign_born_plot
+ggarrange(cville_foreign_born_donut, cville_foreign_born_plot, nrow = 1)
+
+```
+
+```{r, echo=FALSE, fig.width=10, fig.height=3}
 
 # Albemarle, Resident Status & Foreign Born, 2022 ----
-alb_nativity_2022 <- read_csv("data/alb_nativity_2022.csv")
+alb_nativity_2022 <- read_csv("../data/alb_nativity_2022.csv")
 alb_nativity_2022 <- alb_nativity_2022 %>% 
   mutate(status = case_when(
     label == "U.S. citizen, born in the United States" ~ "US-born",
@@ -660,28 +526,18 @@ alb_nativity_2022$ymax = cumsum(alb_nativity_2022$fraction)
 # Compute the bottom of each rectangle
 alb_nativity_2022$ymin = c(0, head(alb_nativity_2022$ymax, n=-1))
 
-# Create a color palette for the donut chart
-# donut_pal <- sample(brewer.pal(7, "BuPu")[-1], 6, replace = FALSE)
-
-# brewer.pal(n=3,"BuPu")
-# "#E0ECF4" "#9EBCDA" "#8856A7"
-# pal_5 <- c("#EDF8FB" "#B3CDE3" "#8C96C6" "#8856A7" "#810F7C")
-# pal_5 <- c("#EDF8FB" "#BFD3E6" "#9EBCDA" "#8C96C6" "#8C6BB1" "#88419D" "#6E016B")
-
 # Plot the donut chart
 alb_nativity_chart_2022 <- ggplot(alb_nativity_2022, aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = status)) +
-  geom_rect() +
+  geom_rect(color = "white") +
   coord_polar(theta = "y") +
   xlim(c(1.5, 4)) +
-  scale_fill_manual(values = c("#8856A7", "#9EBCDA")) +
+  scale_fill_manual(values = c("#8856A7", "#b2b8be")) +
   geom_text(aes(label = paste0(round(fraction * 100, 0), "%"), x = 3.5, y = (ymin + ymax) / 2)) +
   theme_void() +
   theme(legend.position = c(.525, .5)) +
   theme(legend.title = element_blank()) +
   theme(legend.text = element_text(size = 8)) +
   labs(title = "Nativity of Albemarle Residents, 2022")
-
-alb_nativity_chart_2022
 
 # stacked bar
 alb_nativity_stacked <- alb_nativity_2022 %>% 
@@ -690,13 +546,13 @@ alb_nativity_stacked <- alb_nativity_2022 %>%
          status = factor(status, levels = c("US-born","Foreign-born"))) %>% 
   arrange(status) %>% 
   ggplot(aes(x = percent, y = locality, group = locality, fill = status, label = text)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", color = "white") +
   geom_text(size = 3, position = position_stack(vjust = 0.5)) +
   scale_x_continuous(labels = label_percent(scale = 1),
                      name = "") +
   scale_y_discrete(name = "") +
   labs(color = "", title = "Nativity of Albemarle Residents, 2022") +
-  scale_fill_manual(values = c("#9EBCDA", "#8856A7")) +  
+  scale_fill_manual(values = c("#b2b8be", "#8856A7")) +  
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
@@ -704,38 +560,49 @@ alb_nativity_stacked <- alb_nativity_2022 %>%
         panel.grid.major.y = element_blank(),
         axis.text.y = element_blank())
 
-alb_nativity_stacked
+ggarrange(alb_nativity_chart_2022, alb_nativity_stacked, nrow = 1)
+
+```
+
+```{r, echo=FALSE, fig.width=10}
+pal_6 <- c("#BFD3E6", "#9EBCDA", "#8C96C6", "#8C6BB1", "#88419D", "#6E016B")
 
 # Albemarle, Foreign-born by location, 2022 ----
-alb_foreign_born <- read_csv("data/alb_birth_place_foreign_2022.csv")
+alb_foreign_born <- read_csv("../data/alb_birth_place_foreign_2022.csv")
 alb_foreign_born <- alb_foreign_born %>% 
   mutate(region = case_when(str_detect(label, "Europe") ~ "Europe",
                             str_detect(label, "Asia") ~ "Asia",
                             str_detect(label, "Africa") ~ "Africa",
                             str_detect(label, "Latin America") ~ "Latin America",
-                            .default = label))
+                            .default = label),
+         percent_rnd = round(percent,0))
 
+alb_donut_dat <- alb_foreign_born %>% 
+  group_by(region) %>% 
+  summarise(estimate = sum(estimate),
+            total_foreign_born = first(total_foreign_born))
 # Compute percentages
-alb_foreign_born$fraction = alb_foreign_born$estimate / alb_foreign_born$total_foreign_born
+alb_donut_dat$fraction = alb_donut_dat$estimate / alb_donut_dat$total_foreign_born
 # Compute the cumulative percentages (top of each rectangle)
-alb_foreign_born$ymax = cumsum(alb_foreign_born$fraction)
+alb_donut_dat$ymax = cumsum(alb_donut_dat$fraction)
 # Compute the bottom of each rectangle
-alb_foreign_born$ymin = c(0, head(alb_foreign_born$ymax, n=-1))
+alb_donut_dat$ymin = c(0, head(alb_donut_dat$ymax, n=-1))
 
 # Plot the donut chart
-alb_foreign_born_plot <- ggplot(alb_foreign_born, aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = region)) +
-  geom_rect() +
+alb_foreign_born_donut <- alb_donut_dat %>% 
+  filter(round(fraction, 2) >= 0.01) %>% 
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = region)) +
+  geom_rect(color = "white") +
   coord_polar(theta = "y") +
   xlim(c(1.5, 4)) +
-  scale_fill_manual(values = donut_pal) +
+  scale_fill_manual(values = pal_6) +
   geom_text(aes(label = paste0(round(fraction * 100, 0), "%"), x = 3.5, y = (ymin + ymax) / 2)) +
   theme_void() +
   theme(legend.position = c(.525, .5)) +
   theme(legend.title = element_blank()) +
   theme(legend.text = element_text(size = 8)) +
-  labs(title = "Foreign-Born Albemarle Residents, by Place of birth, 2022")
+  labs(title = "Foreign-Born Albemarle Residents, by place of birth, 2022")
 
-alb_foreign_born_plot
 
 # Bar chart
 alb_foreign_born_plot <- alb_foreign_born %>% 
@@ -758,19 +625,23 @@ alb_foreign_born_plot <- alb_foreign_born %>%
             size = 3) +
   scale_x_continuous(labels = scales::percent_format(scale = 1),
                      limits = c(0,25),
+                     expand = expansion(mult = c(0, 0)),
                      name = "") +
   scale_y_discrete(name = "") +
-  scale_fill_manual(values = donut_pal) +
+  scale_fill_manual(values = pal_6) +
   theme_minimal() +
   theme(legend.position = "top",
         panel.grid.minor.x = element_blank()) +
-  # guides(fill = guide_legend(reverse = TRUE)) +
-  labs(fill = "", title = "Foreign-Born Albemarle Residents, by Place of birth, 2022")
+  labs(fill = "", title = "")
 
-alb_foreign_born_plot
+ggarrange(alb_foreign_born_donut, alb_foreign_born_plot, nrow = 1)
+
+```
+
+```{r, echo=FALSE, fig.width=10, fig.height=3}
 
 # Region, Resident Status & Foreign Born, 2022 ----
-region_nativity_2022 <- read_csv("data/region_nativity_2022.csv")
+region_nativity_2022 <- read_csv("../data/region_nativity_2022.csv")
 region_nativity_2022 <- region_nativity_2022 %>% 
   mutate(status = case_when(
     label == "U.S. citizen, born in the United States" ~ "US-born",
@@ -789,61 +660,18 @@ region_nativity_2022$ymax = cumsum(region_nativity_2022$fraction)
 # Compute the bottom of each rectangle
 region_nativity_2022$ymin = c(0, head(region_nativity_2022$ymax, n=-1))
 
-# Create a color palette for the donut chart
-# donut_pal <- sample(brewer.pal(7, "BuPu")[-1], 6, replace = FALSE)
-
-# brewer.pal(n=3,"BuPu")
-# "#E0ECF4" "#9EBCDA" "#8856A7"
-# pal_5 <- c("#EDF8FB" "#B3CDE3" "#8C96C6" "#8856A7" "#810F7C")
-# pal_5 <- c("#EDF8FB" "#BFD3E6" "#9EBCDA" "#8C96C6" "#8C6BB1" "#88419D" "#6E016B")
-
 # Plot the donut chart
-region_nativity_chart_2022 <- region_nativity_2022 %>% 
-  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = status)) +
-  geom_rect() +
+region_nativity_chart_2022 <- ggplot(region_nativity_2022, aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = status)) +
+  geom_rect(color = "white") +
   coord_polar(theta = "y") +
   xlim(c(1.5, 4)) +
-  scale_fill_manual(values = c("#8856A7", "#9EBCDA")) +
+  scale_fill_manual(values = c("#8856A7", "#b2b8be")) +
   geom_text(aes(label = paste0(round(fraction * 100, 0), "%"), x = 3.5, y = (ymin + ymax) / 2)) +
   theme_void() +
   theme(legend.position = c(.525, .5)) +
   theme(legend.title = element_blank()) +
   theme(legend.text = element_text(size = 8)) +
-  labs(title = "Nativity of Charlottesville & Albemarle Residents, 2022")
-
-region_nativity_chart_2022
-
-# Region, Foreign-born by location, 2022 ----
-region_foreign_born <- read_csv("data/region_birth_place_foreign_2022.csv")
-region_foreign_born <- region_foreign_born %>% 
-  mutate(region = case_when(str_detect(label, "Europe") ~ "Europe",
-                            str_detect(label, "Asia") ~ "Asia",
-                            str_detect(label, "Africa") ~ "Africa",
-                            str_detect(label, "Latin America") ~ "Latin America",
-                            .default = label))
-
-# Compute percentages
-region_foreign_born$fraction = region_foreign_born$estimate / region_foreign_born$total_foreign_born
-# Compute the cumulative percentages (top of each rectangle)
-region_foreign_born$ymax = cumsum(region_foreign_born$fraction)
-# Compute the bottom of each rectangle
-region_foreign_born$ymin = c(0, head(region_foreign_born$ymax, n=-1))
-
-# Plot the donut chart
-region_foreign_born_plot <- region_foreign_born %>% 
-  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = region)) +
-  geom_rect() +
-  coord_polar(theta = "y") +
-  xlim(c(1.5, 4)) +
-  scale_fill_manual(values = donut_pal) +
-  geom_text(aes(label = paste0(round(fraction * 100, 0), "%"), x = 3.5, y = (ymin + ymax) / 2)) +
-  theme_void() +
-  theme(legend.position = c(.525, .5)) +
-  theme(legend.title = element_blank()) +
-  theme(legend.text = element_text(size = 8)) +
-  labs(title = "Foreign-Born Charlottesville & Albemarle Residents, by Place of birth, 2022")
-
-region_foreign_born_plot
+  labs(title = "Nativity of Albemarle Residents, 2022")
 
 # stacked bar
 region_nativity_stacked <- region_nativity_2022 %>% 
@@ -852,13 +680,13 @@ region_nativity_stacked <- region_nativity_2022 %>%
          status = factor(status, levels = c("US-born","Foreign-born"))) %>% 
   arrange(status) %>% 
   ggplot(aes(x = percent, y = locality, group = locality, fill = status, label = text)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", color = "white") +
   geom_text(size = 3, position = position_stack(vjust = 0.5)) +
   scale_x_continuous(labels = label_percent(scale = 1),
                      name = "") +
   scale_y_discrete(name = "") +
   labs(color = "", title = "Nativity of Charlottesville & Albemarle Residents, 2022") +
-  scale_fill_manual(values = c("#9EBCDA", "#8856A7")) +  
+  scale_fill_manual(values = c("#b2b8be", "#8856A7")) +  
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
@@ -866,7 +694,49 @@ region_nativity_stacked <- region_nativity_2022 %>%
         panel.grid.major.y = element_blank(),
         axis.text.y = element_blank())
 
-region_nativity_stacked
+ggarrange(region_nativity_chart_2022, region_nativity_stacked, nrow = 1)
+
+```
+
+```{r, echo=FALSE, fig.width=10}
+pal_6 <- c("#BFD3E6", "#9EBCDA", "#8C96C6", "#8C6BB1", "#88419D", "#6E016B")
+
+# Region, Foreign-born by location, 2022 ----
+region_foreign_born <- read_csv("../data/region_birth_place_foreign_2022.csv")
+region_foreign_born <- region_foreign_born %>% 
+  mutate(region = case_when(str_detect(label, "Europe") ~ "Europe",
+                            str_detect(label, "Asia") ~ "Asia",
+                            str_detect(label, "Africa") ~ "Africa",
+                            str_detect(label, "Latin America") ~ "Latin America",
+                            .default = label),
+         percent_rnd = round(percent,0))
+
+region_donut_dat <- region_foreign_born %>% 
+  group_by(region) %>% 
+  summarise(estimate = sum(estimate),
+            total_foreign_born = first(total_foreign_born))
+# Compute percentages
+region_donut_dat$fraction = region_donut_dat$estimate / region_donut_dat$total_foreign_born
+# Compute the cumulative percentages (top of each rectangle)
+region_donut_dat$ymax = cumsum(region_donut_dat$fraction)
+# Compute the bottom of each rectangle
+region_donut_dat$ymin = c(0, head(region_donut_dat$ymax, n=-1))
+
+# Plot the donut chart
+region_foreign_born_donut <- region_donut_dat %>% 
+  filter(round(fraction, 2) >= 0.01) %>% 
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = region)) +
+  geom_rect(color = "white") +
+  coord_polar(theta = "y") +
+  xlim(c(1.5, 4)) +
+  scale_fill_manual(values = pal_6) +
+  geom_text(aes(label = paste0(round(fraction * 100, 0), "%"), x = 3.5, y = (ymin + ymax) / 2)) +
+  theme_void() +
+  theme(legend.position = c(.525, .5)) +
+  theme(legend.title = element_blank()) +
+  theme(legend.text = element_text(size = 8)) +
+  labs(title = "Foreign-Born Charlottesville & Albemarle Residents, by place of birth, 2022")
+
 
 # Bar chart
 region_foreign_born_plot <- region_foreign_born %>% 
@@ -889,20 +759,23 @@ region_foreign_born_plot <- region_foreign_born %>%
             size = 3) +
   scale_x_continuous(labels = scales::percent_format(scale = 1),
                      limits = c(0,25),
+                     expand = expansion(mult = c(0, 0)),
                      name = "") +
   scale_y_discrete(name = "") +
-  scale_fill_manual(values = donut_pal) +
+  scale_fill_manual(values = pal_6) +
   theme_minimal() +
   theme(legend.position = "top",
         panel.grid.minor.x = element_blank()) +
-  # guides(fill = guide_legend(reverse = TRUE)) +
-  labs(fill = "", title = "Foreign-Born Charlottesville & Albemarle Residents, by Place of birth, 2022")
+  labs(fill = "", title = "")
 
-region_foreign_born_plot
+ggarrange(region_foreign_born_donut, region_foreign_born_plot, nrow = 1)
 
+```
+
+```{r, echo=FALSE, fig.height=3}
 # Household Language, Limited English Speaking Status ----
 # Charlottesville, 2022
-cville_language <- read_csv("data/cville_language_2022.csv")
+cville_language <- read.csv("../data/cville_language_2022.csv")
 
 # All households summarized
 cville_lang_all <- cville_language %>% 
@@ -914,21 +787,56 @@ cville_lang_all <- cville_language %>%
             total_households = first(total_households),
             percent = round(estimate/total_households *100, 1))
 
+# Compute percentages
+cville_lang_all$fraction = cville_lang_all$estimate / cville_lang_all$total_households
+# Compute the cumulative percentages (top of each rectangle)
+cville_lang_all$ymax = cumsum(cville_lang_all$fraction)
+# Compute the bottom of each rectangle
+cville_lang_all$ymin = c(0, head(cville_lang_all$ymax, n=-1))
+
+# Plot the donut chart
+cville_lang_donut <- cville_lang_all %>%
+  mutate(status = factor(status, levels = c("English only","Multi-lingual houshold, incld. English","Limited English speaking household"))) %>%
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = status)) +
+  geom_rect(color = "white") +
+  coord_polar(theta = "y") +
+  xlim(c(1.5, 4)) +
+  scale_fill_manual(values = c("#b2b8be","#8C96C6", "#6E016B")) +
+  geom_label_repel(aes(label = paste0(round(percent, 0), "%\n", scales::comma(estimate), " households"),
+                       x = 3.5, y = (ymin + ymax) / 2),
+                   size = 3, fontface = "bold", 
+                   show.legend = FALSE,
+                   # min.segment.length = Inf,
+                   # position = position_stack(vjust = 0.5),
+                   # box.padding = 0.5,
+                   # force_pull = 400,
+                   # direction = "x",
+                   color = "white",
+                   seed = 123) +
+  # geom_text(aes(label = paste0(round(percent, 0), "%\n", scales::comma(estimate), " households"), x = 3.5, y = (ymin + ymax) / 2)) +
+  theme_void() +
+  # theme(legend.position = c(.525, .5)) +
+  theme(legend.title = element_blank()) +
+  theme(legend.text = element_text(size = 8)) +
+  labs(title = "Charlottesville household languages, 2022")
+
+cville_lang_donut
+
 # stacked bar
 cville_lang_stacked <- cville_lang_all %>% 
   mutate(text = paste0(round(percent, 0), "%\n", scales::comma(estimate), " households"),
          status = factor(status, levels = c("English only","Multi-lingual houshold, incld. English","Limited English speaking household"))) %>% 
   arrange(status) %>% 
   ggplot(aes(x = percent, y = locality, group = locality, fill = status, label = text)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", color = "white") +
   coord_cartesian(clip = "off") +
   geom_label_repel(aes(label = text),
-                   size = 3.5, fontface = "bold", show.legend = FALSE,
-                   min.segment.length = Inf,
-                   position = position_stack(vjust = 0.45), 
+                   size = 3, fontface = "bold", show.legend = FALSE,
+                   # min.segment.length = Inf,
+                   position = position_stack(vjust = 0.5), 
                    box.padding = 0.1,
-                   force_pull = 100,
-                   # direction = "x",
+                   # force_pull = 100,
+                   # direction = "y",
                    color = "white",
                    seed = 123) +
   # geom_text_repel(
@@ -943,8 +851,9 @@ cville_lang_stacked <- cville_lang_all %>%
   # ) +
   # geom_text(size = 3, position = position_stack(vjust = 0.5)) +
   scale_x_continuous(labels = label_percent(scale = 1),
+                     breaks = pretty_breaks(),
                      name = "",
-                     expand = expansion(mult = c(.075, .1))) +
+                     expand = expansion(mult = c(0, .15))) +
   scale_y_discrete(name = "") +
   labs(color = "", title = "Charlottesville household languages, 2022") +
   scale_fill_manual(values = c("#b2b8be", "#8C96C6", "#6E016B")) +
@@ -956,8 +865,10 @@ cville_lang_stacked <- cville_lang_all %>%
         axis.text.y = element_blank())
 
 cville_lang_stacked
+```
 
-# Household, by language and status
+```{r, echo=FALSE, fig.width=8, fig.height=5}
+# Household, by language and status ---
 cville_lang_stat <- cville_language %>% 
   filter(label != "English only") %>% 
   separate(label, c("group", "status"), sep = ": ")
@@ -979,18 +890,28 @@ cville_lang_stat_stacked <- cville_lang_stat %>%
                                           "Other Indo-European languages","Russian, Polish, or other Slavic languages","German or other West Germanic languages","French, Haitian, or Cajun","Spanish")  )) %>% 
   arrange(group) %>% 
   ggplot(aes(x = estimate, y = group, group = group, fill = status, label = scales::comma(estimate))) +
-  geom_bar(stat = "identity") +
-  geom_label_repel(aes(label = scales::comma(estimate)),
-                   size = 3.5, fontface = "bold", show.legend = FALSE,
-                   min.segment.length = Inf,
-                   position = position_stack(vjust = 0.45),
-                   box.padding = 0.1,
-                   force_pull = 100,
-                   direction = "x",
-                   color = "white",
+  geom_bar(stat = "identity", color = "white") +
+  # geom_label_repel(aes(label = scales::comma(estimate)),
+  #                  size = 3.5, fontface = "bold", show.legend = FALSE,
+  #                  # min.segment.length = Inf,
+  #                  position = position_stack(vjust = 0.5),
+  #                  box.padding = 0.1,
+  #                  # force_pull = 100,
+  #                  direction = "x",
+  #                  color = "white") +
+  geom_label_repel(aes(label = scales::comma(estimate)), 
+                   # position = position_stack(vjust = 0.9),
+            # position = position_dodge2(width = 0.5, preserve = "single"), 
+            vjust = 0.5,
+            # hjust = -0.1,
+            nudge_x = -5,
+            direction = "x",
+            size = 3, fontface = "bold",
+            color = "white",
+            show.legend = FALSE,
                    seed = 123) +
   # geom_text(size = 3, position = position_stack(vjust = 0.5)) +
-  scale_x_continuous(name = "") +
+  scale_x_continuous(name = "Number of Households") +
   scale_y_discrete(name = "") +
   labs(color = "", title = "Charlottesville languages by household and status, 2022") +
   scale_fill_manual(values = c("#6E016B", "#8C96C6")) +
@@ -1002,10 +923,11 @@ cville_lang_stat_stacked <- cville_lang_stat %>%
 
 cville_lang_stat_stacked
 
-
+```
+```{r, echo=FALSE, fig.width=12.5}
 # Disability Status ----
 # Charlottesville, 2022
-cville_disability_age <- read_csv("data/cville_disability_2022.csv")
+cville_disability_age <- read_csv("../data/cville_disability_2022.csv")
 
 # Wrangle by age groups
 cville_disability_dat <- cville_disability_age %>% 
@@ -1020,8 +942,8 @@ cville_disability_stat <- cville_disability_age %>%
 cville_dis <- cville_disability_dat %>% left_join(cville_disability_stat) %>% 
   mutate(per_age_group = round(estimate/total_age * 100, 2))
 
-# Grouped bar chart
-cville_dis_age_stacked <- cville_disability_dat %>% 
+# Grouped bar chart (as percent of total pop)
+cville_dis_age_stacked_a <- cville_disability_dat %>% 
   mutate(percent = case_when(round(estimate/total_pop * 100, 2) < 1 ~ round(estimate/total_pop * 100, 2),
                              round(estimate/total_pop * 100, 2) >= 1 ~ round(estimate/total_pop * 100, 0)),
          label = case_when(percent < 1 ~ paste0(scales::percent(percent / 100, accuracy = 0.1), " (", scales::comma(estimate),")"),
@@ -1037,17 +959,17 @@ cville_dis_age_stacked <- cville_disability_dat %>%
             size = 3) +
   scale_x_continuous(labels = scales::percent_format(scale = 1),
                      limits = c(0,45),
+                     expand = expansion(mult = c(0, 0)),
                      name = "") +
   scale_y_discrete(name = "") +
   scale_fill_manual(values = c("#b2b8be","#3B8EA5")) +
-  labs(color = "", title = "Charlottesville disability status by age, 2022") +
+  labs(color = "", title = "Charlottesville disability status by age, 2022\n(as percent of total population)") +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
         panel.grid.minor.y = element_blank(),
         panel.grid.major.y = element_blank())
 
-cville_dis_age_stacked
 
 # As percents of age group
 cville_dis_by_age_stacked <- cville_dis %>% 
@@ -1056,7 +978,7 @@ cville_dis_by_age_stacked <- cville_dis %>%
          disability_status = factor(disability_status, levels = c("With a disability","No disability"))) %>% 
   arrange(disability_status) %>% 
   ggplot(aes(x = round(per_age_group, .1), y = age_group, group = age_group, fill = disability_status, label = label)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", color = "white") +
   geom_label_repel(aes(label = label),
                    size = 3, fontface = "bold", show.legend = FALSE,
                    # min.segment.length = Inf,
@@ -1075,51 +997,29 @@ cville_dis_by_age_stacked <- cville_dis %>%
                      name = "") +
   scale_y_discrete(name = "") +
   scale_fill_manual(values = c("No disability"="#b2b8be","With a disability"="#3B8EA5")) +
-  labs(color = "", title = "Charlottesville disability status (as percent of age group), 2022") +
+  labs(color = "", title = "Charlottesville disability status, 2022\n (as percent of age group)") +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
         panel.grid.minor.y = element_blank(),
         panel.grid.major.y = element_blank())
 
-cville_dis_by_age_stacked
+ggarrange(cville_dis_age_stacked_a, cville_dis_by_age_stacked, nrow=1)
 
+```
+
+```{r, echo=FALSE, fig.width=11}
 # Disability categories ----
-cville_disability_cat <- read_csv("data/cville_disability_cat_2022.csv")
-
-# Fractions
-# cville_disability_cat$fraction <- cville_disability_cat$estimate / sum(cville_disability_cat$estimate)
-# 
-# # Cumulative fractions; this forms the top of each rectangle
-# cville_disability_cat$ymax <- cumsum(cville_disability_cat$fraction)
-# 
-# # This will the the bottom of the rectangle
-# cville_disability_cat$ymin <- c(0, head(cville_disability_cat$ymax, n = -1))
-# 
-# # Label position - this isn't right
-# cville_disability_cat$labelPosition <- ((cville_disability_cat$ymax + cville_disability_cat$ymin) / 2) 
-
-# Donut chart
-# cville_disability_cat %>% 
-#     mutate(label = str_remove(label, "With a "),
-#            label = str_remove(label, "With an "),
-#            label = str_replace(label, " difficulty", "\ndifficulty"),
-#            label = str_to_title(label)) %>%
-#   ggplot(aes(ymax = ymax, ymin = ymin, xmax = 11, xmin = 9.5, 
-#                    fill = label)) +
-#   geom_rect(color = "white") + 
-#   geom_text(x = 12.1, aes(y = labelPosition, label = label), size = 3) +
-#   coord_polar(theta = "y") + 
-#   xlim(c(7, 12)) + 
-#   theme_void() + 
-#   theme(legend.position = "none")
-
-cville_disability_cat %>%
+cville_disability_cat <- read_csv("../data/cville_disability_cat_2022.csv")
+cville_disability_cat <- cville_disability_cat %>% 
   mutate(label = str_remove(label, "With a "),
          label = str_remove(label, "With an "),
          label = str_replace(label, " difficulty", "\ndifficulty"),
-         label = str_replace(label, " living", "\nliving"),
-         label = str_to_title(label)) %>%
+         # label = str_replace(label, " living", "\nliving"),
+         label = str_to_title(label))
+
+dis_donut <- cville_disability_cat %>%
+  mutate(label = factor(label, levels = c("Vision\nDifficulty", "Self-Care\nDifficulty", "Hearing\nDifficulty", "Cognitive\nDifficulty", "Independent Living\nDifficulty", "Ambulatory\nDifficulty"))) %>% 
 ggplot(aes(x = 2, y = percent, fill = label)) +
   geom_bar(stat = "identity", width = 1, color = "white") +
   coord_polar(theta = "y") +
@@ -1129,11 +1029,12 @@ ggplot(aes(x = 2, y = percent, fill = label)) +
             color = "white", fontface = "bold") +
   # geom_text(aes(label = label, x = 3.15),
   #           position = position_stack(vjust = 0.5)) +
-  geom_text_repel(aes(label = label, x = 3.2),
-                   # size = 3, 
+  geom_label_repel(aes(label = label, x = 3.15),
+                   size = 3, 
+                   fontface = "bold",
                    position = position_stack(vjust = 0.5),
                    force = 0,
-                   # hjust = .5,
+                   color = "white",
                    # nudge_x = 1, 
                    # direction = "x",
                    # min.segment.length = 0,
@@ -1143,21 +1044,25 @@ ggplot(aes(x = 2, y = percent, fill = label)) +
                    # segment.angle = 20,
                    seed = 123
   ) +
+  scale_fill_manual(values = c("#3CA69A", "#3C6DA6", "#3C8FA6", "#3CA676", "#3C4CA6", "#739BA6")) +
   # geom_segment(aes(x = 2.5, xend = 2.8, y = 2, yend = 2.1)) +
-  labs(fill = "Category",title = "Charlottesville Disability Status by Category for 2022") +
+  labs(fill = "Category",title = "Charlottesville Disability Status by type for 2022") +
   theme_void() +
   theme(legend.position = "none")
 
-# Stacked bar chart
-
-cville_disability_cat %>%
-  ggplot(aes(x = reorder(label, -estimate), y = estimate, fill = label)) +
+# bar chart
+dis_bar <- cville_disability_cat %>%
+  mutate(label = factor(label, levels = c("Vision\nDifficulty", "Self-Care\nDifficulty", "Hearing\nDifficulty", "Cognitive\nDifficulty", "Independent Living\nDifficulty", "Ambulatory\nDifficulty"))) %>%
+  ggplot(aes(x = reorder(label, -estimate), y = estimate)) +
   coord_flip() +
-  geom_bar(stat = "identity", width = 0.7) +
+  geom_bar(stat = "identity", width = 0.7, fill = "#3B8EA5") +
   geom_text(aes(label = scales::comma(estimate)), 
-            position = position_stack(vjust = 0.5),
+            # position = position_stack(vjust = 0.5),
+            vjust = 0.5,
+            hjust = -0.2,
             size = 3,
             color = "black") +
+  scale_y_continuous(expand = expansion(mult = c(0, .1))) +
   labs(
     x = "",
     y = "Number of people with a disability",
@@ -1166,27 +1071,7 @@ cville_disability_cat %>%
   theme_minimal() +
   theme(legend.position = "none")
 
-# Donut chart
+ggarrange(dis_donut, dis_bar, nrow = 1)
 
-# Calculate the percentage of each category
-alb_combined_disability_total_2022 <- alb_combined_disability_total_2022 %>%
-  mutate(percentage = estimate / sum(estimate) * 100)
-
-# Create the donut chart
-ggplot(alb_combined_disability_total_2022, aes(x = 2, y = percentage, fill = label)) +
-  geom_bar(stat = "identity", width = 1, color = "white") +
-  coord_polar(theta = "y") +
-  xlim(0.5, 2.5) +  # Adjust to create the donut hole
-  geom_text(aes(label = paste0(round(percentage, 1), "%")), 
-            position = position_stack(vjust = 0.5),
-            color = "white") +
-  labs(
-    fill = "Category",
-    title = "Albemarle Disability Status for 2022"
-  ) +
-  theme_void() +  # Remove background, gridlines, and axis texts
-  theme(
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    legend.position = "right"
-  )
+```
 

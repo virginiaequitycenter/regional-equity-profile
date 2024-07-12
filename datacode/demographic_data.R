@@ -369,15 +369,6 @@ vars_B01001 <-
            mutate(year = .x)
   )
 
-# Remove total variables
-# vars_B01001_filtered <- vars_B01001 %>% 
-#   filter(! variable %in% c("B01001_001", "B01001_002", "B01001_026"))
-# 
-# # Create combined age groups
-# sex_age_groups_df <- vars_B01001_filtered %>% 
-#   group_by(GEOID, NAME, year) %>% 
-#   
-
 # Mapping male and female variables
 # Age groups align with final grouping, not original acs vars
 age_groups <- tibble::tibble(
