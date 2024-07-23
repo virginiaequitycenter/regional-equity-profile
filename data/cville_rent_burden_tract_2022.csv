@@ -1,0 +1,37 @@
+GEOID,locality,tract,estimate,moe,total_units,percent,level,rent_burden,year,county,locality_num,tract_num,tractnames
+51540000201,Charlottesville city,Census Tract 2.01,216,128.37834708392222,898,24.05,Burdened,30% to 49% household income,2022,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,348,138.9280389266328,898,38.75,Not burdened,Less than 30% household income,2022,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,240,123,898,26.73,Severely Burdened,Over 50% household income,2022,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000202,Charlottesville city,Census Tract 2.02,505,224.39696967650877,1725,29.28,Burdened,30% to 49% household income,2022,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,305,135.34031180694095,1725,17.68,Not burdened,Less than 30% household income,2022,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,803,197,1725,46.55,Severely Burdened,Over 50% household income,2022,Charlottesville,540,000202,10th & Page-Venable
+51540000302,Charlottesville city,Census Tract 3.02,225,120.57362895757927,896,25.11,Burdened,30% to 49% household income,2022,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,482,182.5458846427385,896,53.79,Not burdened,Less than 30% household income,2022,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,177,103,896,19.75,Severely Burdened,Over 50% household income,2022,Charlottesville,540,000302,Woolen Mills
+51540000401,Charlottesville city,Census Tract 4.01,170,97.5551126287085,637,26.69,Burdened,30% to 49% household income,2022,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,341,122.57650672131263,637,53.53,Not burdened,Less than 30% household income,2022,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,112,81,637,17.58,Severely Burdened,Over 50% household income,2022,Charlottesville,540,000401,Ridge St.
+51540000402,Charlottesville city,Census Tract 4.02,349,176.8530463407402,1022,34.15,Burdened,30% to 49% household income,2022,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,296,136.37448441699055,1022,28.96,Not burdened,Less than 30% household income,2022,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,333,129,1022,32.58,Severely Burdened,Over 50% household income,2022,Charlottesville,540,000402,Belmont
+51540000501,Charlottesville city,Census Tract 5.01,168,83.60023923410746,960,17.5,Burdened,30% to 49% household income,2022,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,481,141.56623891309678,960,50.1,Not burdened,Less than 30% household income,2022,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,281,123,960,29.27,Severely Burdened,Over 50% household income,2022,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000502,Charlottesville city,Census Tract 5.02,305,145.15508947329405,1135,26.87,Burdened,30% to 49% household income,2022,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,616,198.02777582955378,1135,54.27,Not burdened,Less than 30% household income,2022,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,189,109,1135,16.65,Severely Burdened,Over 50% household income,2022,Charlottesville,540,000502,Fry's Springs
+51540000600,Charlottesville city,Census Tract 6,178,110.57124400132251,983,18.11,Burdened,30% to 49% household income,2022,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,289,111.79445424527998,983,29.4,Not burdened,Less than 30% household income,2022,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,376,110,983,38.25,Severely Burdened,Over 50% household income,2022,Charlottesville,540,000600,JPA-Fontaine
+51540000700,Charlottesville city,Census Tract 7,184,83.20456718233682,836,22.01,Burdened,30% to 49% household income,2022,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,201,78.04485889538144,836,24.04,Not burdened,Less than 30% household income,2022,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,316,114,836,37.8,Severely Burdened,Over 50% household income,2022,Charlottesville,540,000700,Barracks-Rugby
+51540000800,Charlottesville city,Census Tract 8,9,16.583123951777,461,1.95,Burdened,30% to 49% household income,2022,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,244,109.28403360052191,461,52.93,Not burdened,Less than 30% household income,2022,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,194,85,461,42.08,Severely Burdened,Over 50% household income,2022,Charlottesville,540,000800,Greenbrier-Meadows
+51540000900,Charlottesville city,Census Tract 9,60,40.82891132518721,274,21.9,Burdened,30% to 49% household income,2022,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,167,69.75672010638115,274,60.95,Not burdened,Less than 30% household income,2022,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,32,29,274,11.68,Severely Burdened,Over 50% household income,2022,Charlottesville,540,000900,Locust Grove
+51540001000,Charlottesville city,Census Tract 10,381,148.18906842274163,1422,26.79,Burdened,30% to 49% household income,2022,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,801,252.34500193187895,1422,56.33,Not burdened,Less than 30% household income,2022,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,183,100,1422,12.87,Severely Burdened,Over 50% household income,2022,Charlottesville,540,001000,Downtown Area

@@ -1,14 +1,14 @@
 # R Script for pulling and examining access to knowledge data
-# Author: Henry DeMarco, Beth Mitchell
+# Authors: Henry DeMarco, Beth Mitchell
 # Date Created: June 17, 2024
-# Last Updated: July 12, 2024
+# Last Updated: July 17, 2024
 
 # County FIPS Codes
 # 003 -- Albemarle
 # 540 -- Charlottesville
 
 # Access to Knowledge TOC ----
-# ADHI MEASURES, COUNTY & TRACT LEVEL
+# AHDI MEASURES, COUNTY & TRACT LEVEL
 # Educational Attainment, 25 and Over
 # - Source: ACS Table S1501
 # - High school graduate or higher: S1501_C01_014
@@ -20,16 +20,16 @@
 #         S1401_C01_014, S1401_C01_016, 
 #         S1401_C01_018, S1401_C01_020, 
 #         S1401_C01_022, S1401_C01_024
-# OTHER MEASURES, TRACT LEVEL
+# OTHER MEASURES, COUNTY & TRACT LEVEL
 # Educational Attainment by Race/Ethnicity: 
 # - Source: ACS Table S1501
 # OTHER MEASURES, BY DISTRICT
-## Students enrolled in AP classes by race/ethnicity
-  ## Source: VDOE
-## Students suspended by race/ethnicity
-  ## Source: 
-## Students chronically absent by race/ethnicity
-  ## Source: 
+# Students enrolled in AP classes by race/ethnicity
+# - Source: VDOE
+# Students suspended by race/ethnicity (Incomplete)
+# - Source: https://schoolquality.virginia.gov/download-data
+# Students chronically absent by race/ethnicity
+# - Source: https://schoolquality.virginia.gov/download-data
 
 # Packages
 library(tidyverse)
@@ -65,12 +65,12 @@ tract_names <- tract_names %>%
 all_acs_meta <- function(){
   # Gets the list of all variables from all acs5 metadata tables
   vars1 <- load_variables(year, "acs5", cache = TRUE) %>% select(-geography)
-  vars2 <- load_variables(year, "", cache = TRUE)
+  vars2 <- load_variables(year, "acs5/subject", cache = TRUE)
   vars3 <- load_variables(year, "acs5/profile", cache = TRUE)
   
   # Provides column with specific lookup
   vars1$dataset_table <- "acs5"
-  vars2$dataset_table <- ""
+  vars2$dataset_table <- "acs5/subject"
   vars3$dataset_table <- "acs5/profile"
   
   # Combine all table rows
@@ -85,12 +85,12 @@ meta_table <- all_acs_meta()
 # Opens the newly made table
 # View(meta_table)
 
-## ...........................................................
-# Educational Attainment (ADHI MEASURE): S1501 ----
+## ................................................
+# Educational Attainment (AHDI MEASURE): S1501 ----
 
 # Educational Attainment: County & tract ----
 # Get ACS data
-ADHI_vars_S1501 <- c("High school graduate or higher" = "S1501_C01_014",
+AHDI_vars_S1501 <- c("High school graduate or higher" = "S1501_C01_014",
                      "Bachelor's degree or higher" = "S1501_C01_015",
                      "Graduate or professional degree" = "S1501_C01_013")
 
@@ -98,7 +98,7 @@ acs_S1501_county <- get_acs(
   geography = "county",
   state = "VA",
   county = county_codes,
-  var = ADHI_vars_S1501,
+  var = AHDI_vars_S1501,
   summary_var = "S1501_C01_006", 
   year = year, 
   survey = "acs5")
@@ -107,7 +107,7 @@ acs_S1501_tract <- get_acs(
   geography = "tract",
   state = "VA",
   county = county_codes,
-  var = ADHI_vars_S1501,
+  var = AHDI_vars_S1501,
   summary_var = "S1501_C01_006", 
   year = year, 
   survey = "acs5")
@@ -169,11 +169,11 @@ region_edu_attain <- edu_attain_county %>%
 write_csv(region_edu_attain, paste0("data/region_edu_attain", "_", year, ".csv"))
 
 ## ...........................................................
-# School Enrollment, Ages 3-24 (ADHI MEASURE): S1401 ----
+# School Enrollment, Ages 3-24 (AHDI MEASURE): S1401 ----
 
 # School Enrollment: County & tract ----
 # Get ACS data
-ADHI_vars_S1401 <- c("3 to 4 year olds enrolled in school" = "S1401_C01_014", 
+AHDI_vars_S1401 <- c("3 to 4 year olds enrolled in school" = "S1401_C01_014", 
                      "5 to 9 year olds enrolled in school" = "S1401_C01_016",  
                      "10 to 14 year olds enrolled in school" = "S1401_C01_018", 
                      "15 to 17 year olds enrolled in school" = "S1401_C01_020", 
@@ -190,7 +190,7 @@ acs_S1401_county <- get_acs(
   geography = "county",
   state = "VA",
   county = county_codes,
-  var = ADHI_vars_S1401,
+  var = AHDI_vars_S1401,
   year = year, 
   survey = "acs5")
 
@@ -198,7 +198,7 @@ acs_S1401_tract <- get_acs(
   geography = "tract",
   state = "VA",
   county = county_codes,
-  var = ADHI_vars_S1401,
+  var = AHDI_vars_S1401,
   year = year, 
   survey = "acs5")
 
@@ -470,6 +470,8 @@ ap_enroll <- rbind(ap_enroll_race, ap_enroll_disadv, ap_enroll_all) %>%
   mutate(school_year = "2022-2023")
 
 # Get School Enrollment, Fall-Membership numbers
+# Need to compare all hs enrolled vs 10,11,12 enrollment
+# All potential AP students vs students most likely to be enrolled in AP
 # Source: https://p1pe.doe.virginia.gov/apex_captcha/home.do?apexTypeId=304
 
 fall_membership_race <- read_csv("data/tempdata/fall_membership_race_2022_2023.csv") %>% 
@@ -526,7 +528,7 @@ alb_ap_enroll <- ap_enroll %>%
 
 write_csv(alb_ap_enroll, paste0("data/alb_ap_enroll_2022_2023.csv"))
 
-## .....................................................
+## .......................................................
 # Suspensions by Race/Ethnicity & Chronic Absenteeism ----
 # Source: ACPS report
 # Available at schoolquality.virginia.gov 
@@ -551,3 +553,31 @@ lt_suspensions <- read_csv("data/tempdata/vdoe_data/Long Term Suspensions.csv", 
 absent <- read_csv("data/tempdata/vdoe_data/Chronic Absenteeism.csv", skip = 3) %>% 
   clean_names()
 
+cville_absenteeism <- absent %>% 
+  filter(division == "Charlottesville City Public Schools")
+
+write_csv(cville_absenteeism, paste0("data/cville_absenteeism_2022_2023.csv"))
+
+alb_absenteeism <- absent %>% 
+  filter(division == "Albemarle County Public Schools")
+
+write_csv(alb_absenteeism, paste0("data/alb_absenteeism_2022_2023.csv"))
+
+# Combined Region
+region_absenteeism <- absent %>% 
+  mutate(count_below_10 = as.numeric(count_below_10),
+         count_above_10 = as.numeric(count_above_10)) %>% 
+  group_by(year, subgroup) %>% 
+  summarize(count_below_10 = sum(count_below_10),
+            count_above_10 = sum(count_above_10),
+            total_count = sum(count_below_10, count_above_10),
+            .groups = "drop") %>% 
+  mutate(percent_below_10 = round(100 * count_below_10 / total_count, 2),
+         percent_above_10 = round(100 * count_above_10 / total_count, 2),
+         division = "ACPS & CCS") %>% 
+  select(year, division, subgroup, count_below_10:percent_above_10)
+
+write_csv(region_absenteeism, paste0("data/region_absenteeism_2022_2023.csv"))
+
+## .....................................................
+## End

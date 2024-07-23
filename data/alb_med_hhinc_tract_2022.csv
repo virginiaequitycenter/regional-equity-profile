@@ -1,0 +1,291 @@
+GEOID,locality,tract,label,group,estimate,moe,year,county,locality_num,tract_num,tractnames
+51003010100,Albemarle County,Census Tract 101,Median Household Income,All Households,94909,16215,2022,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,Median Household Income,White,93409,18512,2022,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,Median Household Income,Black,NA,NA,2022,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,Median Household Income,Asian,NA,NA,2022,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,Median Household Income,Other,NA,NA,2022,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,Median Household Income,"White, Not Hispanic or Latino",93409,18512,2022,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,010100,Free Union
+51003010201,Albemarle County,Census Tract 102.01,Median Household Income,All Households,116106,13365,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,Median Household Income,White,114297,14133,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,Median Household Income,Black,96302,53206,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,Median Household Income,Asian,180733,102123,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,Median Household Income,Other,NA,NA,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,Median Household Income,Multiracial,221250,113378,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,Median Household Income,"White, Not Hispanic or Latino",114258,14632,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,Median Household Income,Hispanic or Latino,204135,153380,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010202,Albemarle County,Census Tract 102.02,Median Household Income,All Households,180956,23036,2022,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,Median Household Income,White,175909,24058,2022,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,Median Household Income,Black,NA,NA,2022,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,Median Household Income,Asian,NA,NA,2022,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,Median Household Income,Other,NA,NA,2022,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,Median Household Income,Multiracial,250001,NA,2022,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,Median Household Income,"White, Not Hispanic or Latino",174453,25063,2022,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,Median Household Income,Hispanic or Latino,250001,NA,2022,Albemarle,003,010202,Earlysville
+51003010301,Albemarle County,Census Tract 103.01,Median Household Income,All Households,107750,26410,2022,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,Median Household Income,White,102264,37443,2022,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,Median Household Income,Black,107750,52286,2022,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,Median Household Income,Asian,NA,NA,2022,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,Median Household Income,Other,NA,NA,2022,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,Median Household Income,Multiracial,177857,148143,2022,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,Median Household Income,"White, Not Hispanic or Latino",102348,38703,2022,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,Median Household Income,Hispanic or Latino,68224,48505,2022,Albemarle,003,010301,Berkmar Drive
+51003010302,Albemarle County,Census Tract 103.02,Median Household Income,All Households,168295,27172,2022,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,Median Household Income,White,167955,34833,2022,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,Median Household Income,Black,NA,NA,2022,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,Median Household Income,Asian,NA,NA,2022,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,Median Household Income,Other,NA,NA,2022,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,Median Household Income,"White, Not Hispanic or Latino",154500,38174,2022,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,010302,Polo Grounds Road
+51003010303,Albemarle County,Census Tract 103.03,Median Household Income,All Households,113846,18646,2022,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,Median Household Income,White,120082,22518,2022,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,Median Household Income,Black,NA,NA,2022,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,Median Household Income,Asian,99063,79540,2022,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,Median Household Income,Other,NA,NA,2022,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,Median Household Income,Multiracial,106488,103782,2022,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,Median Household Income,"White, Not Hispanic or Latino",121809,17678,2022,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,Median Household Income,Hispanic or Latino,81552,48780,2022,Albemarle,003,010303,Hollymead
+51003010401,Albemarle County,Census Tract 104.01,Median Household Income,All Households,103362,25999,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,Median Household Income,White,120393,36935,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,Median Household Income,Black,57604,16117,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,Median Household Income,Asian,NA,NA,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,Median Household Income,Other,NA,NA,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,Median Household Income,"White, Not Hispanic or Latino",116765,34005,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,Median Household Income,Hispanic or Latino,138828,91505,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010402,Albemarle County,Census Tract 104.02,Median Household Income,All Households,119618,19782,2022,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,Median Household Income,White,120583,18791,2022,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,Median Household Income,Black,NA,NA,2022,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,Median Household Income,Asian,55096,12350,2022,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,Median Household Income,Other,NA,NA,2022,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,Median Household Income,Multiracial,250001,NA,2022,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,Median Household Income,"White, Not Hispanic or Latino",120583,18791,2022,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,010402,Village of Rivanna
+51003010501,Albemarle County,Census Tract 105.01,Median Household Income,All Households,147677,21570,2022,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,Median Household Income,White,122279,49409,2022,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,Median Household Income,Black,136625,119896,2022,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,Median Household Income,Asian,NA,NA,2022,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,Median Household Income,Other,NA,NA,2022,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,Median Household Income,Multiracial,156094,155134,2022,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,Median Household Income,"White, Not Hispanic or Latino",122279,49409,2022,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,010501,Darden-Key West
+51003010502,Albemarle County,Census Tract 105.02,Median Household Income,All Households,76698,11912,2022,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,Median Household Income,White,97411,27393,2022,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,Median Household Income,Black,46250,5851,2022,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,Median Household Income,Asian,NA,NA,2022,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,Median Household Income,Other,NA,NA,2022,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,Median Household Income,"White, Not Hispanic or Latino",99545,27546,2022,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,010502,Pantops
+51003010602,Albemarle County,Census Tract 106.02,Median Household Income,All Households,112548,16130,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,Median Household Income,White,115690,10483,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,Median Household Income,Black,NA,NA,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,Median Household Income,Asian,118750,60524,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,Median Household Income,Other,NA,NA,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,Median Household Income,"White, Not Hispanic or Latino",115675,10692,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010603,Albemarle County,Census Tract 106.03,Median Household Income,All Households,52001,11423,2022,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,Median Household Income,White,51837,10048,2022,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,Median Household Income,Black,NA,NA,2022,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,Median Household Income,Asian,NA,NA,2022,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,Median Household Income,Other,NA,NA,2022,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,Median Household Income,"White, Not Hispanic or Latino",51701,8857,2022,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,010603,Branchland
+51003010604,Albemarle County,Census Tract 106.04,Median Household Income,All Households,112798,15678,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,Median Household Income,White,126599,25768,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,Median Household Income,Black,38523,641,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,Median Household Income,Asian,84306,47336,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,Median Household Income,Other,NA,NA,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,Median Household Income,Multiracial,22054,18612,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,Median Household Income,"White, Not Hispanic or Latino",127209,30682,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010701,Albemarle County,Census Tract 107.01,Median Household Income,All Households,55156,16415,2022,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,Median Household Income,White,62917,41240,2022,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,Median Household Income,Black,46557,16510,2022,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,Median Household Income,Asian,160148,98126,2022,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,Median Household Income,Other,NA,NA,2022,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,Median Household Income,"White, Not Hispanic or Latino",51532,37771,2022,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,010701,Hydraulic
+51003010702,Albemarle County,Census Tract 107.02,Median Household Income,All Households,68810,9122,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,Median Household Income,White,66031,8588,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,Median Household Income,Black,83293,71218,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,Median Household Income,Asian,NA,NA,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,Median Household Income,Other,NA,NA,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,Median Household Income,"White, Not Hispanic or Latino",65577,11587,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,Median Household Income,Hispanic or Latino,71500,50851,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010801,Albemarle County,Census Tract 108.01,Median Household Income,All Households,70000,18210,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,Median Household Income,White,88264,23755,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,Median Household Income,Black,36421,11456,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,Median Household Income,Asian,59556,12036,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,Median Household Income,Other,95500,11671,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,Median Household Income,"White, Not Hispanic or Latino",95417,24366,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,Median Household Income,Hispanic or Latino,81797,39761,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010802,Albemarle County,Census Tract 108.02,Median Household Income,All Households,98555,15685,2022,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,Median Household Income,White,97617,29467,2022,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,Median Household Income,Black,NA,NA,2022,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,Median Household Income,Asian,228500,218429,2022,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,Median Household Income,Other,NA,NA,2022,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,Median Household Income,"White, Not Hispanic or Latino",111207,70414,2022,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,Median Household Income,Hispanic or Latino,91884,18025,2022,Albemarle,003,010802,Albemarle High School
+51003010901,Albemarle County,Census Tract 109.01,Median Household Income,All Households,49120,13427,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,Median Household Income,White,48125,14076,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,Median Household Income,Black,68424,9746,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,Median Household Income,Asian,37750,28538,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,Median Household Income,Other,NA,NA,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,Median Household Income,"White, Not Hispanic or Latino",48438,14321,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Household Income,All Households,43438,14204,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Household Income,White,34563,16021,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Household Income,Black,68661,9142,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Household Income,Asian,56364,27418,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Household Income,Other,24950,7467,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Household Income,"White, Not Hispanic or Latino",33125,26091,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Household Income,Hispanic or Latino,29474,9646,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003011000,Albemarle County,Census Tract 110,Median Household Income,All Households,176600,15167,2022,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,Median Household Income,White,176200,17423,2022,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,Median Household Income,Black,NA,NA,2022,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,Median Household Income,Asian,244042,34940,2022,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,Median Household Income,Other,NA,NA,2022,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,Median Household Income,"White, Not Hispanic or Latino",176121,18371,2022,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,011000,Ivy
+51003011101,Albemarle County,Census Tract 111.01,Median Household Income,All Households,87784,36389,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,Median Household Income,White,89091,29761,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,Median Household Income,Black,41500,16410,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,Median Household Income,Asian,NA,NA,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,Median Household Income,Other,NA,NA,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,Median Household Income,"White, Not Hispanic or Latino",89091,29761,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011102,Albemarle County,Census Tract 111.02,Median Household Income,All Households,120357,50869,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,Median Household Income,White,109563,52033,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,Median Household Income,Black,NA,NA,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,Median Household Income,Asian,NA,NA,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,Median Household Income,Other,NA,NA,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,Median Household Income,"White, Not Hispanic or Latino",113984,55207,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011103,Albemarle County,Census Tract 111.03,Median Household Income,All Households,118147,26086,2022,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,Median Household Income,White,116597,25056,2022,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,Median Household Income,Black,NA,NA,2022,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,Median Household Income,Asian,151987,82672,2022,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,Median Household Income,Other,NA,NA,2022,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,Median Household Income,"White, Not Hispanic or Latino",112361,24740,2022,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,011103,Old Trail
+51003011201,Albemarle County,Census Tract 112.01,Median Household Income,All Households,95980,12446,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,Median Household Income,White,93938,19434,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,Median Household Income,Black,NA,NA,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,Median Household Income,Asian,NA,NA,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,Median Household Income,Other,NA,NA,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,Median Household Income,Multiracial,96898,88278,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,Median Household Income,"White, Not Hispanic or Latino",94438,20581,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011202,Albemarle County,Census Tract 112.02,Median Household Income,All Households,165357,29154,2022,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,Median Household Income,White,144063,31794,2022,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,Median Household Income,Black,NA,NA,2022,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,Median Household Income,Asian,250001,NA,2022,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,Median Household Income,Other,NA,NA,2022,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,Median Household Income,"White, Not Hispanic or Latino",142125,32859,2022,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,Median Household Income,Hispanic or Latino,188750,82862,2022,Albemarle,003,011202,North Garden
+51003011301,Albemarle County,Census Tract 113.01,Median Household Income,All Households,89922,18718,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,Median Household Income,White,86528,15625,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,Median Household Income,Black,120568,57990,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,Median Household Income,Asian,103237,33807,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,Median Household Income,Other,NA,NA,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,Median Household Income,"White, Not Hispanic or Latino",86528,15625,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011302,Albemarle County,Census Tract 113.02,Median Household Income,All Households,72992,21761,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,Median Household Income,White,73333,26484,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,Median Household Income,Black,19162,5432,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,Median Household Income,Asian,175680,73697,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,Median Household Income,Other,NA,NA,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,Median Household Income,Multiracial,90833,39555,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,Median Household Income,"White, Not Hispanic or Latino",73561,23240,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,Median Household Income,Hispanic or Latino,90346,53298,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011303,Albemarle County,Census Tract 113.03,Median Household Income,All Households,89914,16961,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,Median Household Income,White,88750,17562,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,Median Household Income,Black,106287,34688,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,Median Household Income,Asian,112031,42468,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,Median Household Income,Other,53594,46804,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,Median Household Income,"White, Not Hispanic or Latino",87931,16715,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,Median Household Income,Hispanic or Latino,76324,52205,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011400,Albemarle County,Census Tract 114,Median Household Income,All Households,76696,15124,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,Median Household Income,White,85364,12749,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,Median Household Income,Black,46250,27958,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,Median Household Income,American Indian and Alaska Native,NA,NA,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,Median Household Income,Asian,NA,NA,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,Median Household Income,NHPI,NA,NA,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,Median Household Income,Other,NA,NA,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,Median Household Income,Multiracial,NA,NA,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,Median Household Income,"White, Not Hispanic or Latino",85250,12915,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,Median Household Income,Hispanic or Latino,NA,NA,2022,Albemarle,003,011400,Southern Albemarle-Scottsville

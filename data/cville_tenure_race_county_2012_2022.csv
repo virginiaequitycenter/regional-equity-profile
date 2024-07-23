@@ -1,0 +1,37 @@
+GEOID,locality,label,group,estimate,moe,total_households,percent,year
+51540,"Charlottesville city, Virginia",Owner occupied,White,6683,391,14266,46.85,2022
+51540,"Charlottesville city, Virginia",Renter occupied,White,7583,479,14266,53.15,2022
+51540,"Charlottesville city, Virginia",Owner occupied,White,5881,293,12978,45.32,2012
+51540,"Charlottesville city, Virginia",Renter occupied,White,7097,462,12978,54.68,2012
+51540,"Charlottesville city, Virginia",Owner occupied,Black,819,185,3056,26.8,2022
+51540,"Charlottesville city, Virginia",Renter occupied,Black,2237,283,3056,73.2,2022
+51540,"Charlottesville city, Virginia",Owner occupied,Black,908,152,3064,29.63,2012
+51540,"Charlottesville city, Virginia",Renter occupied,Black,2156,266,3064,70.37,2012
+51540,"Charlottesville city, Virginia",Owner occupied,American Indian/Native Alaskan,0,28,70,0,2022
+51540,"Charlottesville city, Virginia",Renter occupied,American Indian/Native Alaskan,70,42,70,100,2022
+51540,"Charlottesville city, Virginia",Owner occupied,American Indian/Native Alaskan,22,20,84,26.19,2012
+51540,"Charlottesville city, Virginia",Renter occupied,American Indian/Native Alaskan,62,37,84,73.81,2012
+51540,"Charlottesville city, Virginia",Owner occupied,Asian,311,115,1016,30.61,2022
+51540,"Charlottesville city, Virginia",Renter occupied,Asian,705,112,1016,69.39,2022
+51540,"Charlottesville city, Virginia",Owner occupied,Asian,196,88,841,23.31,2012
+51540,"Charlottesville city, Virginia",Renter occupied,Asian,645,134,841,76.69,2012
+51540,"Charlottesville city, Virginia",Owner occupied,Native Hawaiian/Pacific Islander,0,28,0,NA,2022
+51540,"Charlottesville city, Virginia",Renter occupied,Native Hawaiian/Pacific Islander,0,28,0,NA,2022
+51540,"Charlottesville city, Virginia",Owner occupied,Native Hawaiian/Pacific Islander,0,26,8,0,2012
+51540,"Charlottesville city, Virginia",Renter occupied,Native Hawaiian/Pacific Islander,8,15,8,100,2012
+51540,"Charlottesville city, Virginia",Owner occupied,Other,75,77,281,26.69,2022
+51540,"Charlottesville city, Virginia",Renter occupied,Other,206,145,281,73.31,2022
+51540,"Charlottesville city, Virginia",Owner occupied,Other,38,39,115,33.04,2012
+51540,"Charlottesville city, Virginia",Renter occupied,Other,77,67,115,66.96,2012
+51540,"Charlottesville city, Virginia",Owner occupied,Mutiracial,374,170,822,45.5,2022
+51540,"Charlottesville city, Virginia",Renter occupied,Mutiracial,448,127,822,54.5,2022
+51540,"Charlottesville city, Virginia",Owner occupied,Mutiracial,16,23,229,6.99,2012
+51540,"Charlottesville city, Virginia",Renter occupied,Mutiracial,213,90,229,93.01,2012
+51540,"Charlottesville city, Virginia",Owner occupied,"White, Not Hispanic or Latino",6541,379,13729,47.64,2022
+51540,"Charlottesville city, Virginia",Renter occupied,"White, Not Hispanic or Latino",7188,468,13729,52.36,2022
+51540,"Charlottesville city, Virginia",Owner occupied,"White, Not Hispanic or Latino",5779,297,12649,45.69,2012
+51540,"Charlottesville city, Virginia",Renter occupied,"White, Not Hispanic or Latino",6870,439,12649,54.31,2012
+51540,"Charlottesville city, Virginia",Owner occupied,Hispanic or Latino,257,136,805,31.93,2022
+51540,"Charlottesville city, Virginia",Renter occupied,Hispanic or Latino,548,147,805,68.07,2022
+51540,"Charlottesville city, Virginia",Owner occupied,Hispanic or Latino,148,74,507,29.19,2012
+51540,"Charlottesville city, Virginia",Renter occupied,Hispanic or Latino,359,100,507,70.81,2012

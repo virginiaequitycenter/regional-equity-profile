@@ -1,0 +1,88 @@
+GEOID,locality,tract,label,group,estimate,moe,year,county,locality_num,tract_num,tractnames
+51003010100,Albemarle County,Census Tract 101,Median Earnings,All,55581,12435,2022,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,Median Earnings,Male,56620,24243,2022,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,Median Earnings,Female,53361,20170,2022,Albemarle,003,010100,Free Union
+51003010201,Albemarle County,Census Tract 102.01,Median Earnings,All,58836,11858,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,Median Earnings,Male,69792,9460,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,Median Earnings,Female,50541,7886,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010202,Albemarle County,Census Tract 102.02,Median Earnings,All,73841,24999,2022,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,Median Earnings,Male,112734,54250,2022,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,Median Earnings,Female,59531,20093,2022,Albemarle,003,010202,Earlysville
+51003010301,Albemarle County,Census Tract 103.01,Median Earnings,All,46673,28801,2022,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,Median Earnings,Male,55263,34747,2022,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,Median Earnings,Female,45304,38290,2022,Albemarle,003,010301,Berkmar Drive
+51003010302,Albemarle County,Census Tract 103.02,Median Earnings,All,87790,10885,2022,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,Median Earnings,Male,88232,12491,2022,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,Median Earnings,Female,82472,15269,2022,Albemarle,003,010302,Polo Grounds Road
+51003010303,Albemarle County,Census Tract 103.03,Median Earnings,All,59394,7458,2022,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,Median Earnings,Male,75833,6271,2022,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,Median Earnings,Female,52225,4678,2022,Albemarle,003,010303,Hollymead
+51003010401,Albemarle County,Census Tract 104.01,Median Earnings,All,56361,6438,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,Median Earnings,Male,63684,9981,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,Median Earnings,Female,42042,6813,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010402,Albemarle County,Census Tract 104.02,Median Earnings,All,62105,8340,2022,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,Median Earnings,Male,79167,28795,2022,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,Median Earnings,Female,55694,10828,2022,Albemarle,003,010402,Village of Rivanna
+51003010501,Albemarle County,Census Tract 105.01,Median Earnings,All,64310,13177,2022,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,Median Earnings,Male,84216,18904,2022,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,Median Earnings,Female,55538,9013,2022,Albemarle,003,010501,Darden-Key West
+51003010502,Albemarle County,Census Tract 105.02,Median Earnings,All,50985,7068,2022,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,Median Earnings,Male,51821,7093,2022,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,Median Earnings,Female,46925,12619,2022,Albemarle,003,010502,Pantops
+51003010602,Albemarle County,Census Tract 106.02,Median Earnings,All,64800,14247,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,Median Earnings,Male,87500,14323,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,Median Earnings,Female,46111,14990,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010603,Albemarle County,Census Tract 106.03,Median Earnings,All,55132,17096,2022,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,Median Earnings,Male,57159,24903,2022,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,Median Earnings,Female,51856,30029,2022,Albemarle,003,010603,Branchland
+51003010604,Albemarle County,Census Tract 106.04,Median Earnings,All,54955,12959,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,Median Earnings,Male,70139,29156,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,Median Earnings,Female,51831,10598,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010701,Albemarle County,Census Tract 107.01,Median Earnings,All,40170,5427,2022,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,Median Earnings,Male,56375,13988,2022,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,Median Earnings,Female,34160,1842,2022,Albemarle,003,010701,Hydraulic
+51003010702,Albemarle County,Census Tract 107.02,Median Earnings,All,47458,8644,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,Median Earnings,Male,46389,11163,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,Median Earnings,Female,51833,10912,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010801,Albemarle County,Census Tract 108.01,Median Earnings,All,37213,7967,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,Median Earnings,Male,46944,21128,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,Median Earnings,Female,35961,1677,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010802,Albemarle County,Census Tract 108.02,Median Earnings,All,44527,19878,2022,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,Median Earnings,Male,49698,29761,2022,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,Median Earnings,Female,42804,19649,2022,Albemarle,003,010802,Albemarle High School
+51003010901,Albemarle County,Census Tract 109.01,Median Earnings,All,22860,10237,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,Median Earnings,Male,25060,7345,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,Median Earnings,Female,14219,12970,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Earnings,All,4046,946,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Earnings,Male,4479,1695,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Earnings,Female,3639,1232,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003011000,Albemarle County,Census Tract 110,Median Earnings,All,78833,17180,2022,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,Median Earnings,Male,79848,43063,2022,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,Median Earnings,Female,71094,25127,2022,Albemarle,003,011000,Ivy
+51003011101,Albemarle County,Census Tract 111.01,Median Earnings,All,57772,7464,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,Median Earnings,Male,54583,13361,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,Median Earnings,Female,58623,12603,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011102,Albemarle County,Census Tract 111.02,Median Earnings,All,56371,26473,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,Median Earnings,Male,123636,27534,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,Median Earnings,Female,NA,NA,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011103,Albemarle County,Census Tract 111.03,Median Earnings,All,65448,11449,2022,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,Median Earnings,Male,87254,16984,2022,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,Median Earnings,Female,50326,18239,2022,Albemarle,003,011103,Old Trail
+51003011201,Albemarle County,Census Tract 112.01,Median Earnings,All,48071,9800,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,Median Earnings,Male,62125,10017,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,Median Earnings,Female,39840,5600,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011202,Albemarle County,Census Tract 112.02,Median Earnings,All,74382,9965,2022,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,Median Earnings,Male,85208,37540,2022,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,Median Earnings,Female,66845,12769,2022,Albemarle,003,011202,North Garden
+51003011301,Albemarle County,Census Tract 113.01,Median Earnings,All,45112,8775,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,Median Earnings,Male,42397,9392,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,Median Earnings,Female,45359,10263,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011302,Albemarle County,Census Tract 113.02,Median Earnings,All,41898,8952,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,Median Earnings,Male,45278,5798,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,Median Earnings,Female,34554,12966,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011303,Albemarle County,Census Tract 113.03,Median Earnings,All,54462,3617,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,Median Earnings,Male,54486,2584,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,Median Earnings,Female,54250,18066,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011400,Albemarle County,Census Tract 114,Median Earnings,All,45833,4534,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,Median Earnings,Male,48617,6910,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,Median Earnings,Female,43220,7751,2022,Albemarle,003,011400,Southern Albemarle-Scottsville

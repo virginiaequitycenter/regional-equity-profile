@@ -1,0 +1,4 @@
+GEOID,locality,label,group,estimate,moe,year
+51540,"Charlottesville city, Virginia",Median Earnings,All,36222,2175,2022
+51540,"Charlottesville city, Virginia",Median Earnings,Male,41002,3446,2022
+51540,"Charlottesville city, Virginia",Median Earnings,Female,33156,2316,2022

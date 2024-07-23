@@ -1,34 +1,71 @@
 # R Script for pulling and examining living standards data
-# Author: Henry DeMarco
+# Authors: Henry DeMarco, Beth Mitchell
 # Date Created: June 17, 2024
-# Last Updated: July 9, 2024
-# Progress Tracking Spreadsheet Updated: July 9, 2024 (!)
+# Last Updated: July 23, 2024
 
 ## County FIPS Codes
 # 003 -- Albemarle
 # 540 -- Charlottesville
 
-#(!) indicates temporary comments to remove
+# Living Standards TOC ----
+# AHDI MEASURES, COUNTY & TRACT LEVEL
+# Median personal earnings
+# - Source: ACS Table B20002
+# Median personal earnings, method for aggregating combined region
+# - Source: ACS Table B20001
+# OTHER MEASURES
+# Median personal earnings by sex and race (COUNTY)
+# - Source: ACS Table B20017A-I
+# Median household income (COUNTY & TRACT)
+# - Sources: ACS Table B19013 & B19013A-I (BY RACE, COUNTY ONLY)
+# - Swap: B19001 & B19001A-I
+# ALICE Households (COUNTY) 
+# - ALICE Thresholds over time 2012-2022
+# - ALICE households, all and by race/ethnicity 2022 
+# - Source: https://www.unitedforalice.org/state-overview/Virginia
+# Median Gross Rent
+# - Tract (2022)
+# - County (2012-2022)
+# - NEED METHOD FOR REGION
+# - Source: ACS Table B25064
+# Rent-burdened households, 2022 (COUNTY & TRACT)
+# - Source: ACS Table B25070
+# Tenure/Home Ownership, 2022 (COUNTY & TRACT)
+# - Source: ACS Table B25003
+# Tenure/Home Ownership by Race, 2012, 2022 (COUNTY)
+# - Source: ACS Table B25003A-I
 
-#Packages
+# Load packages
 library(tidyverse)
 library(tidycensus)
+library(readxl)
+library(janitor)
 
 # Census API Key
 # census_api_key("YOUR KEY GOES HERE", install = TRUE)
 
-# Creating basic objects
+# Creating basic objects ----
 
-# Year for all data pull
+# Year for ACS data (single year)
 year <- 2022
 
-# Get labels
-acs5 <- load_variables(2022, "acs5", cache = TRUE)
+# County FIPS codes 
+county_codes <- c("003", "540") # Albemarle, Charlottesville FIPS Code
 
-# County FIPS codes and name
-county_code <- c("003") #Albemarle FIPS Code
+# Name for combined region
+region_name <- "Combined Region"
 
-# A custom R function that creates a table of all variable codes and metadata
+# Read in tract names
+tract_names <- read_csv("data/regional_tractnames.csv")
+tract_names <- tract_names %>% 
+  mutate(GEOID = as.character(GEOID)) %>% 
+  rename("county" = "locality",
+         "tract_num" = "tract") %>% 
+  filter(locality_num %in% county_codes)
+
+# ACS Variables ----
+# A custom R function that creates a table of variable codes and metadata 
+# for ACS 5-year, including subject and profile tables
 all_acs_meta <- function(){
   # Gets the list of all variables from all acs5 metadata tables
   vars1 <- load_variables(year, "acs5", cache = TRUE) %>% select(-geography)
@@ -50,2453 +87,1039 @@ all_acs_meta <- function(){
 meta_table <- all_acs_meta()
 
 # Opens the newly made table
-View(meta_table)
+# View(meta_table)
 
-############################
-
-# Table: B19051 (Earnings in the Past 12 Months for Households)
-
-# Charlottesville (Rent Burden), 2022
-
-cville_tract_housing_cost_2022 <- get_acs(geography = "tract", 
-                              table = "B25070", 
-                              state = "VA", 
-                              county = "540", 
-                              survey = "acs5", 
-                              year = 2022, 
-                              cache_table = TRUE)
-
-cville_tract_housing_total_2022 <- get_acs(geography = "tract", 
-                                           variable = "B19051_001", 
-                                           state = "VA", 
-                                           county = "540", 
-                                           survey = "acs5", 
-                                           year = 2022, 
-                                           cache_table = TRUE) %>%
-  select(total_households = estimate, geoid = GEOID) 
-
-## Tract level stats: counts
-cville_housing_costs_counts_2022 <- 
-  cville_tract_housing_cost_2022 %>%
-  left_join(acs5 %>% rename(variable = name)) %>%
-  separate(label, c(NA, "Total", "level"), sep = "!!")  %>%
-  mutate(level = case_when(is.na(level) ~ "Total",
-                           TRUE ~ level)) %>%
-  select(estimate, level, GEOID)  %>%
-  spread(level, estimate) %>%
-  rename_with( ~ str_replace_all(
-    tolower(
-      str_replace_all(.x, " ", "_")
-    ),
-    "_percent",
-    "")
-  ) %>%
-  
-  mutate(denom = total - not_computed,
-         Burdened = `30.0_to_34.9` + `35.0_to_39.9` + `40.0_to_49.9`,
-         `Severely Burdened` =  `50.0_or_more`,
-         `Not Burdened` = less_than_10.0 + `10.0_to_14.9` + `15.0_to_19.9` + `20.0_to_24.9` +`25.0_to_29.9`
-         
-  ) %>%
-  select(geoid, denom, Burdened, `Severely Burdened`, `Not Burdened`, total_renting = total) %>%
-  left_join(cville_tract_housing_total_2022) %>%
-  mutate(Renting = total_renting/total_households) %>%
-  mutate(county_type = "Census Tracts")
-
-## Tract level stats: percentages
-cville_housing_costs_percentages_2022 <- 
-  cville_tract_housing_cost_2022 %>%
-  left_join(acs5 %>% rename(variable = name)) %>%
-  separate(label, c(NA, "Total", "level"), sep = "!!")  %>%
-  mutate(level = case_when(is.na(level) ~ "Total",
-                           TRUE ~ level)) %>%
-  select(estimate, level, GEOID)  %>%
-  spread(level, estimate) %>%
-  rename_with( ~ str_replace_all(
-    tolower(
-      str_replace_all(.x, " ", "_")
-    ),
-    "_percent",
-    "")
-  ) %>%
-  
-  mutate(denom = total - not_computed,
-         Burdened = `30.0_to_34.9` + `35.0_to_39.9` + `40.0_to_49.9`,
-         `Severely Burdened` =  `50.0_or_more`,
-         `Not Burdened` = less_than_10.0 + `10.0_to_14.9` + `15.0_to_19.9` + `20.0_to_24.9` +`25.0_to_29.9`
-         
-  ) %>%
-  select(geoid, denom, Burdened, `Severely Burdened`, `Not Burdened`, total_renting = total) %>%
-  left_join(cville_tract_housing_total_2022) %>%
-  mutate(across(c(Burdened, `Severely Burdened`, `Not Burdened`), ~.x/denom), Renting = total_renting/total_households) %>%
-  mutate(county_type = "Census Tracts")
-
-
-# Albemarle (Rent Burden), 2022
-
-alb_tract_housing_total_2022 <- get_acs(geography = "tract", 
-                                           variable = "B19051_001", 
-                                           state = "VA", 
-                                           county = "003", 
-                                           survey = "acs5", 
-                                           year = 2022, 
-                                           cache_table = TRUE) %>%
-  select(total_households = estimate, geoid = GEOID) 
-
-alb_tract_housing_cost_2022 <- get_acs(geography = "tract", 
-                                          table = "B25070", 
-                                          state = "VA", 
-                                          county = "003", 
-                                          survey = "acs5", 
-                                          year = 2022, 
-                                          cache_table = TRUE)
-
-## Tract level stats: counts
-alb_housing_costs_counts_2022 <- 
-  alb_tract_housing_cost_2022 %>%
-  left_join(acs5 %>% rename(variable = name)) %>%
-  separate(label, c(NA, "Total", "level"), sep = "!!")  %>%
-  mutate(level = case_when(is.na(level) ~ "Total",
-                           TRUE ~ level)) %>%
-  select(estimate, level, GEOID)  %>%
-  spread(level, estimate) %>%
-  rename_with( ~ str_replace_all(
-    tolower(
-      str_replace_all(.x, " ", "_")
-    ),
-    "_percent",
-    "")
-  ) %>%
-  
-  mutate(denom = total - not_computed,
-         Burdened = `30.0_to_34.9` + `35.0_to_39.9` + `40.0_to_49.9`,
-         `Severely Burdened` =  `50.0_or_more`,
-         `Not Burdened` = less_than_10.0 + `10.0_to_14.9` + `15.0_to_19.9` + `20.0_to_24.9` +`25.0_to_29.9`
-         
-  ) %>%
-  select(geoid, denom, Burdened, `Severely Burdened`, `Not Burdened`, total_renting = total) %>%
-  left_join(alb_tract_housing_total_2022) %>%
-  mutate(Renting = total_renting/total_households) %>%
-  mutate(county_type = "Census Tracts")
-
-## Tract level stats: percentages
-alb_housing_costs_percentages_2022 <- 
-  alb_tract_housing_cost_2022 %>%
-  left_join(acs5 %>% rename(variable = name)) %>%
-  separate(label, c(NA, "Total", "level"), sep = "!!")  %>%
-  mutate(level = case_when(is.na(level) ~ "Total",
-                           TRUE ~ level)) %>%
-  select(estimate, level, GEOID)  %>%
-  spread(level, estimate) %>%
-  rename_with( ~ str_replace_all(
-    tolower(
-      str_replace_all(.x, " ", "_")
-    ),
-    "_percent",
-    "")
-  ) %>%
-  
-  mutate(denom = total - not_computed,
-         Burdened = `30.0_to_34.9` + `35.0_to_39.9` + `40.0_to_49.9`,
-         `Severely Burdened` =  `50.0_or_more`,
-         `Not Burdened` = less_than_10.0 + `10.0_to_14.9` + `15.0_to_19.9` + `20.0_to_24.9` +`25.0_to_29.9`
-         
-  ) %>%
-  select(geoid, denom, Burdened, `Severely Burdened`, `Not Burdened`, total_renting = total) %>%
-  left_join(alb_tract_housing_total_2022) %>%
-  mutate(across(c(Burdened, `Severely Burdened`, `Not Burdened`), ~.x/denom), Renting = total_renting/total_households) %>%
-  mutate(county_type = "Census Tracts")
-
+## .................................................
+# Median Personal Earnings (AHDI MEASURE): B20002 (NEED TO UPDATE TO B20001) ----
 # Table: B20002 (Median Earnings in the Past 12 Months, Inflation-Adjusted)
 
-# Charlottesville (Median Earnings), 2022
+# Median Personal Earnings: County & tract
+# Get ACS data
+AHDI_vars_B20002 <- c("Median Earnings; All" = "B20002_001",
+                     "Median Earnings; Male" = "B20002_002",
+                     "Median Earnings; Female" = "B20002_003")
 
-median_earnings_cville_2022 <- get_acs(
-  geography = "tract",
-  county = "540",
-  cache = TRUE,
+acs_B20002_county <- get_acs(
+  geography = "county",
   state = "VA",
-  table = "B20002",
-  survey = "acs5",
-  year = 2022)
+  county = county_codes,
+  var = AHDI_vars_B20002,
+  year = year, 
+  survey = "acs5")
 
-# Finalizing Table:
-
-cville_median_earnings_2022 <- median_earnings_cville_2022 %>% 
-  mutate(year = "2022",
-         label = case_when(
-           variable == "B20002_001" ~ "Median Earnings in Past 12 Months (Inflation Adjusted): Total",
-           variable == "B20002_002" ~ "Median Earnings in Past 12 Months (Inflation Adjusted): Male",
-           variable == "B20002_003" ~ "Median Earnings in Past 12 Months (Inflation Adjusted): Female",
-         ))
-
-# Generating CSV:
-
-write.csv(cville_median_earnings_2022, "temp_data/cville_median_earnings_2022.csv")
-
-# Albemarle (Median Earnings), 2022
-
-median_earnings_alb_2022 <- get_acs(
+acs_B20002_tract <- get_acs(
   geography = "tract",
-  county = "003",
-  cache = TRUE,
   state = "VA",
-  table = "B20002",
-  survey = "acs5",
-  year = 2022)
+  county = county_codes,
+  var = AHDI_vars_B20002,
+  year = year, 
+  survey = "acs5")
 
-# Finalizing Table:
+# Wrangle tables:
+med_earnings_county <- acs_B20002_county %>% 
+  separate(variable, into=c("label","group"), sep="; ", remove=FALSE) %>% 
+  mutate(year = year) %>% 
+  rename("locality" = "NAME") %>% 
+  select(GEOID, locality, label, group, estimate, moe, year)
 
-alb_median_earnings_2022 <- median_earnings_alb_2022 %>% 
-  mutate(year = "2022",
-         label = case_when(
-           variable == "B20002_001" ~ "Median Earnings in Past 12 Months (Inflation Adjusted): Total",
-           variable == "B20002_002" ~ "Median Earnings in Past 12 Months (Inflation Adjusted): Male",
-           variable == "B20002_003" ~ "Median Earnings in Past 12 Months (Inflation Adjusted): Female",
-         ))
+med_earnings_tract <- acs_B20002_tract %>% 
+  separate(variable, into=c("label","group"), sep="; ", remove=FALSE) %>% 
+  mutate(year = year) %>% 
+  separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE) %>%
+  select(GEOID, locality, tract, label, group, estimate, moe, year)
 
-# Generating CSV:
+# Join tract names
+med_earnings_tract <- med_earnings_tract %>% 
+  left_join(tract_names)
 
-write.csv(alb_median_earnings_2022, "temp_data/alb_median_earnings_2022.csv")
+# Median Personal Earnings: Charlottesville, county & tract ----
+cville_med_earnings_county <- med_earnings_county %>% 
+  filter(locality == "Charlottesville city, Virginia")
 
-# Table: B25064 (Median Gross Rent (Dollars)) - County Level, 2012-2022
+write_csv(cville_med_earnings_county, paste0("data/cville_med_earnings_county", "_", year, ".csv"))
 
-# Charlottesville (Gross Rent), 2012-2022
+cville_med_earnings_tract <- med_earnings_tract %>% 
+  filter(locality == "Charlottesville city")
 
-gross_rent_cville_2012_2022 <- 
-  map_df(2022:2012,
-         ~ get_acs(
-           year = .x,
-           geography = "county",
-           state = "VA",
-           county = "540",
-           table = "B25064",
-           survey = "acs5", 
-           cache = TRUE
-         ) %>%
-           mutate(year = .x)
-  )
+write_csv(cville_med_earnings_tract, paste0("data/cville_med_earnings_tract", "_", year, ".csv"))
 
-# Finalizing table:
+# Median Personal Earnings: Albemarle, county & tract ----
+alb_med_earnings_county <- med_earnings_county %>% 
+  filter(locality == "Albemarle County, Virginia")
 
-cville_gross_rent_2012_2022 <- gross_rent_cville_2012_2022 %>% 
-         mutate(label = case_when(
-           variable == "B25064_001" ~ "Gross rent"
-         ))
+write_csv(alb_med_earnings_county, paste0("data/alb_med_earnings_county", "_", year, ".csv"))
 
-# Generating CSV:
+alb_med_earnings_tract <- med_earnings_tract %>% 
+  filter(locality == "Albemarle County")
 
-write.csv(cville_gross_rent_2012_2022, "temp_data/cville_gross_rent_2012_2022.csv")
+write_csv(alb_med_earnings_tract, paste0("data/alb_med_earnings_tract", "_", year, ".csv"))
 
-# Albemarle (Gross Rent), 2012-2022
+# Median Personal Earnings: Combined Region, B20001 ----
+# ACS Table B20001 Sex by Earning
+# Get ACS data
+acs_B20001_county <- get_acs(geography = "county",
+                             state = "51",
+                             county = county_codes,
+                             table = "B20001", 
+                             summary_var = "B20001_001",
+                             year = year,
+                             survey = "acs5",
+                             cache_table = TRUE) 
 
-gross_rent_alb_2012_2022 <- 
-  map_df(2022:2012,
-         ~ get_acs(
-           year = .x,
-           geography = "county",
-           state = "VA",
-           county = "003",
-           table = "B25064",
-           survey = "acs5", 
-           cache = TRUE
-         ) %>%
-           mutate(year = .x)
-  )
+# prep data
+earning_ranges <- tibble::tibble(
+  earning_bin = c("1-2,499", "2,500-4,999", "5,000-7,499", "7,500-9,999", 
+                "10,000-12,499", "12,500-14,999", "15,000-17,499", "17,500-19,999", 
+                "20,000-22,499", "22,500-24,999", "25,000-29,999", "30,000-34,999", 
+                "35,000-39,999", "40,000-44,999", "45,000-49,999", "50,000-54,999", 
+                "55,000-64,999", "65,000-74,999", "75,000-99,999", "100,000-300,000"),
+  male_var = c("B20001_003", "B20001_004", "B20001_005", "B20001_006", "B20001_007", 
+               "B20001_008", "B20001_009", "B20001_010", "B20001_011", "B20001_012", 
+               "B20001_013", "B20001_014", "B20001_015", "B20001_016", "B20001_017", 
+               "B20001_018", "B20001_019", "B20001_020", "B20001_021", "B20001_022"),
+  female_var = c("B20001_024", "B20001_025", "B20001_026","B20001_027", "B20001_028", 
+                 "B20001_029", "B20001_030", "B20001_031", "B20001_032", "B20001_033", 
+                 "B20001_034", "B20001_035", "B20001_036", "B20001_037", "B20001_038", 
+                 "B20001_039", "B20001_040", "B20001_041", "B20001_042", "B20001_043")
+)
 
-# Finalizing table:
+earnings_sex_df <- earning_ranges %>%
+  pmap_dfr(function(earning_bin, male_var, female_var) {
+    acs_B20001_county %>%
+      filter(variable %in% c(male_var, female_var))  %>%
+      group_by(variable, GEOID, NAME) %>%
+      mutate(earning_bin = as.factor(earning_bin),
+             sex = case_when(variable %in% c(male_var) ~ "Male",
+                             variable %in% c(female_var) ~ "Female")) %>%
+      select(GEOID, NAME, variable, estimate, moe, summary_est, sex, earning_bin)
+  })
 
-alb_gross_rent_2012_2022 <- gross_rent_alb_2012_2022 %>% 
-  mutate(label = case_when(
-    variable == "B25064_001" ~ "Gross rent"
-  ))
+# Collapse sex
+earnings_df <- earnings_sex_df %>%
+  group_by(GEOID, NAME, earning_bin) %>%
+  summarize(
+    estimate = sum(estimate),
+    moe = moe_sum(moe = moe, estimate = estimate),
+    summary_est = first(summary_est),
+    .groups = 'drop') %>% 
+  separate(earning_bin, into = c("bin_start", "bin_end"), 
+           sep = "-", remove = FALSE)
 
-# Generating CSV:
+# Add bin start and end
+earnings_df <- earnings_df  %>% 
+  mutate(across(starts_with("bin"), ~as.numeric(str_remove(.x, ","))))
 
-write.csv(alb_gross_rent_2012_2022, "temp_data/alb_gross_rent_2012_2022.csv")
+# Derive steps to aggregate and estimate
+# choose localities for combined region
+choose <- c("51003", "51540")
 
-# Table: B25064 (Median Gross Rent (Dollars)) - Tract Level, 2022
-
-# Charlottesville (Gross Rent: Tracts), 2022
-
-gross_rent_tract_cville_2022 <- get_acs(
-  geography = "tract",
-  county = "540",
-  cache = TRUE,
-  state = "VA",
-  table = "B25064",
-  survey = "acs5",
-  year = 2022)
-
-# Finalizing table:
-
-cville_gross_rent_tract_2022 <- gross_rent_tract_cville_2022 %>% 
-  mutate(year = "2022",
-    label = case_when(
-    variable == "B25064_001" ~ "Gross rent"
-  ))
-
-# Generating CSV:
-
-write.csv(cville_gross_rent_tract_2022, "temp_data/cville_gross_rent_tract_2022.csv")
-
-# Albemarle (Gross Rent: Tracts), 2022
-
-gross_rent_tract_alb_2022 <- get_acs(
-  geography = "tract",
-  county = "003",
-  cache = TRUE,
-  state = "VA",
-  table = "B25064",
-  survey = "acs5",
-  year = 2022)
-
-# Finalizing table:
-
-alb_gross_rent_tract_2022 <- gross_rent_tract_alb_2022 %>% 
-  mutate(year = "2022",
-    label = case_when(
-    variable == "B25064_001" ~ "Gross rent"
-  ))
-
-# Generating CSV:
-
-write.csv(alb_gross_rent_tract_2022, "temp_data/alb_gross_rent_tract_2022.csv")
-
-# Table: B25003 (Home Ownership) - Tract Level, 2022
-
-# Charlottesville (Home Ownership), 2022
-
-home_ownership_cville_2022 <- get_acs(
-  geography = "tract",
-  county = "540",
-  cache = TRUE,
-  state = "VA",
-  table = "B25003",
-  summary_var = "B25003_001",
-  survey = "acs5",
-  year = 2022) %>% 
-  filter(variable %in% c("B25003_002", "B25003_003")
-  )
-         
-# Finalizing table:
-
-cville_home_ownership_2022 <- home_ownership_cville_2022 %>% 
-  mutate(percent = 100 * (estimate / summary_est),
-         year = "2022",
-         label = case_when(
-           variable == "B25003_002" ~ "Owner occupied",
-           variable == "B25003_003" ~ "Renter occupied",
-         ))
-
-# Generating CSV:
-
-write.csv(cville_home_ownership_2022, "temp_data/cville_home_ownership_2022.csv")
-
-# Albemarle (Home Ownership), 2022
-
-home_ownership_alb_2022 <- get_acs(
-  geography = "tract",
-  county = "003",
-  cache = TRUE,
-  state = "VA",
-  table = "B25003",
-  summary_var = "B25003_001",
-  survey = "acs5",
-  year = 2022)  %>% 
-  filter(variable %in% c("B25003_002", "B25003_003")
-  )
-
-# Finalizing table:
-
-alb_home_ownership_2022 <- home_ownership_alb_2022 %>% 
-  mutate(percent = 100 * (estimate / summary_est),
-         year = "2022",
-         label = case_when(
-           variable == "B25003_002" ~ "Owner occupied",
-           variable == "B25003_003" ~ "Renter occupied",
-         ))
-
-# Generating CSV:
-
-write.csv(alb_home_ownership_2022, "temp_data/alb_home_ownership_2022.csv")
-
-# Home Ownership by Race Tables: B25003A-B25003I, 2012 & 2022
-
-# Note: three different methods for calculating home ownership by race are attempted
-# Method one extends from lines 381 to 1151
-# Method two extends from lines 1153 to 1317
-# Method two extends from lines 1319 to 1975
-
-# Method one: long approach (manually pulling each table):
-
-          # Table: B25003A (Home Ownership by Race, White Alone), 2012 & 2022
-          
-          # Charlottesville (Home Ownership by Race, White Alone), 2022
-          
-          home_ownership_white_alone_cville_2022 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003A",
-            summary_var = "B25003A_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003A_002", "B25003A_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_white_alone_2022 <- home_ownership_white_alone_cville_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003A_002" ~ "Owner occupied",
-                     variable == "B25003A_003" ~ "Renter occupied",
-                   ))
-          
-          # Charlottesville (Home Ownership by Race, White Alone), 2012
-          
-          home_ownership_white_alone_cville_2012 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003A",
-            summary_var = "B25003A_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003A_002", "B25003A_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_white_alone_2012 <- home_ownership_white_alone_cville_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003A_002" ~ "Owner occupied",
-                     variable == "B25003A_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, White Alone), 2022
-          
-          home_ownership_white_alone_alb_2022 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003A",
-            summary_var = "B25003A_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003A_002", "B25003A_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_white_alone_2022 <- home_ownership_white_alone_alb_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003A_002" ~ "Owner occupied",
-                     variable == "B25003A_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, White Alone), 2012
-          
-          home_ownership_white_alone_alb_2012 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003A",
-            summary_var = "B25003A_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003A_002", "B25003A_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_white_alone_2012 <- home_ownership_white_alone_alb_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003A_002" ~ "Owner occupied",
-                     variable == "B25003A_003" ~ "Renter occupied",
-                   ))
-          
-          # Table: B25003B (Home Ownership by Race, Black or African American Alone), 2012 & 2022
-          
-          # Charlottesville (Home Ownership by Race, Black or African American Alone), 2022
-          
-          home_ownership_black_alone_cville_2022 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003B",
-            summary_var = "B25003B_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003B_002", "B25003B_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_black_alone_2022 <- home_ownership_black_alone_cville_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003B_002" ~ "Owner occupied",
-                     variable == "B25003B_003" ~ "Renter occupied",
-                   ))
-          
-          # Charlottesville (Home Ownership by Race, Black or African American Alone), 2012
-          
-          home_ownership_black_alone_cville_2012 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003B",
-            summary_var = "B25003B_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003B_002", "B25003B_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_black_alone_2012 <- home_ownership_black_alone_cville_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003B_002" ~ "Owner occupied",
-                     variable == "B25003B_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, Black or African American Alone), 2022
-          
-          home_ownership_black_alone_alb_2022 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003B",
-            summary_var = "B25003B_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003B_002", "B25003B_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_black_alone_2022 <- home_ownership_black_alone_alb_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003B_002" ~ "Owner occupied",
-                     variable == "B25003B_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, Black or African American Alone), 2012
-          
-          home_ownership_black_alone_alb_2012 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003B",
-            summary_var = "B25003B_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003B_002", "B25003B_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_black_alone_2012 <- home_ownership_black_alone_alb_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003B_002" ~ "Owner occupied",
-                     variable == "B25003B_003" ~ "Renter occupied",
-                   ))
-          
-          # Table: B25003C (Home Ownership by Race, American Indian and Alaska Native Alone), 2012 & 2022
-          
-          # Charlottesville (Home Ownership by Race, American Indian and Alaska Native Alone), 2022
-          
-          home_ownership_native_alone_cville_2022 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003C",
-            summary_var = "B25003C_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003C_002", "B25003C_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_native_alone_2022 <- home_ownership_native_alone_cville_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003C_002" ~ "Owner occupied",
-                     variable == "B25003C_003" ~ "Renter occupied",
-                   ))
-          
-          # Charlottesville (Home Ownership by Race, American Indian and Alaska Native Alone), 2012
-          
-          home_ownership_native_alone_cville_2012 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003C",
-            summary_var = "B25003C_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003C_002", "B25003C_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_native_alone_2012 <- home_ownership_native_alone_cville_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003C_002" ~ "Owner occupied",
-                     variable == "B25003C_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, American Indian and Alaska Native Alone), 2022
-          
-          home_ownership_native_alone_alb_2022 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003C",
-            summary_var = "B25003C_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003C_002", "B25003C_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_native_alone_2022 <- home_ownership_native_alone_alb_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003C_002" ~ "Owner occupied",
-                     variable == "B25003C_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, American Indian and Alaska Native Alone), 2012
-          
-          home_ownership_native_alone_alb_2012 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003C",
-            summary_var = "B25003C_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003C_002", "B25003C_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_native_alone_2012 <- home_ownership_native_alone_alb_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003C_002" ~ "Owner occupied",
-                     variable == "B25003C_003" ~ "Renter occupied",
-                   ))
-          
-          # Table: B25003D (Home Ownership by Race, Asian Alone), 2012 & 2022
-          
-          # Charlottesville (Home Ownership by Race, Asian Alone), 2022
-          
-          home_ownership_asian_alone_cville_2022 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003D",
-            summary_var = "B25003D_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003D_002", "B25003D_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_asian_alone_2022 <- home_ownership_asian_alone_cville_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003D_002" ~ "Owner occupied",
-                     variable == "B25003D_003" ~ "Renter occupied",
-                   ))
-          
-          # Charlottesville (Home Ownership by Race, Asian Alone), 2012
-          
-          home_ownership_asian_alone_cville_2012 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003D",
-            summary_var = "B25003D_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003D_002", "B25003D_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_asian_alone_2012 <- home_ownership_asian_alone_cville_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003D_002" ~ "Owner occupied",
-                     variable == "B25003D_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, Asian Alone), 2022
-          
-          home_ownership_asian_alone_alb_2022 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003D",
-            summary_var = "B25003D_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003D_002", "B25003D_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_asian_alone_2022 <- home_ownership_asian_alone_alb_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003D_002" ~ "Owner occupied",
-                     variable == "B25003D_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, Asian Alone), 2012
-          
-          home_ownership_asian_alone_alb_2012 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003D",
-            summary_var = "B25003D_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003D_002", "B25003D_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_asian_alone_2012 <- home_ownership_asian_alone_alb_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003D_002" ~ "Owner occupied",
-                     variable == "B25003D_003" ~ "Renter occupied",
-                   ))
-          
-          # Table: B25003E (Home Ownership by Race, Native Hawaiian and Other Pacific Islander Alone), 2012 & 2022
-          
-          # Charlottesville (Home Ownership by Race, Native Hawaiian and Other Pacific Islander Alone), 2022
-          
-          home_ownership_pacific_islander_alone_cville_2022 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003E",
-            summary_var = "B25003E_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003E_002", "B25003E_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_pacific_islander_alone_2022 <- home_ownership_pacific_islander_alone_cville_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003E_002" ~ "Owner occupied",
-                     variable == "B25003E_003" ~ "Renter occupied",
-                   ))
-          
-          # Charlottesville (Home Ownership by Race, Native Hawaiian and Other Pacific Islander Alone), 2012
-          
-          home_ownership_pacific_islander_alone_cville_2012 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003E",
-            summary_var = "B25003E_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003E_002", "B25003E_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_pacific_islander_alone_2012 <- home_ownership_pacific_islander_alone_cville_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003E_002" ~ "Owner occupied",
-                     variable == "B25003E_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, Native Hawaiian and Other Pacific Islander Alone), 2022
-          
-          home_ownership_pacific_islander_alone_alb_2022 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003E",
-            summary_var = "B25003E_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003E_002", "B25003E_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_pacific_islander_alone_2022 <- home_ownership_pacific_islander_alone_alb_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003E_002" ~ "Owner occupied",
-                     variable == "B25003E_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, Native Hawaiian and Other Pacific Islander Alone), 2012
-          
-          home_ownership_pacific_islander_alone_alb_2012 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003E",
-            summary_var = "B25003E_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003E_002", "B25003E_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_pacific_islander_alone_2012 <- home_ownership_pacific_islander_alone_alb_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003E_002" ~ "Owner occupied",
-                     variable == "B25003E_003" ~ "Renter occupied",
-                   ))
-          
-          # Table: B25003F (Home Ownership by Race, Some Other Race Alone), 2012 & 2022
-          
-          # Charlottesville (Home Ownership by Race, Some Other Race Alone), 2022
-          
-          home_ownership_other_race_alone_cville_2022 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003F",
-            summary_var = "B25003F_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003F_002", "B25003F_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_other_race_alone_2022 <- home_ownership_other_race_alone_cville_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003F_002" ~ "Owner occupied",
-                     variable == "B25003F_003" ~ "Renter occupied",
-                   ))
-          
-          # Charlottesville (Home Ownership by Race, Some Other Race Alone), 2012
-          
-          home_ownership_other_race_alone_cville_2012 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003F",
-            summary_var = "B25003F_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003F_002", "B25003F_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_other_race_alone_2012 <- home_ownership_other_race_alone_cville_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003F_002" ~ "Owner occupied",
-                     variable == "B25003F_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, Some Other Race Alone), 2022
-          
-          home_ownership_other_race_alone_alb_2022 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003F",
-            summary_var = "B25003F_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003F_002", "B25003F_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_other_race_alone_2022 <- home_ownership_other_race_alone_alb_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003F_002" ~ "Owner occupied",
-                     variable == "B25003F_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, Some Other Race Alone), 2012
-          
-          home_ownership_other_race_alone_alb_2012 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003F",
-            summary_var = "B25003F_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003F_002", "B25003F_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_other_race_alone_2012 <- home_ownership_other_race_alone_alb_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003F_002" ~ "Owner occupied",
-                     variable == "B25003F_003" ~ "Renter occupied",
-                   ))
-          
-          # Table: B25003G (Home Ownership by Race, Two or More Races), 2012 & 2022
-          
-          # Charlottesville (Home Ownership by Race, Two or More Races), 2022
-          
-          home_ownership_two_or_more_races_cville_2022 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003G",
-            summary_var = "B25003G_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003G_002", "B25003G_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_two_or_more_races_2022 <- home_ownership_two_or_more_races_cville_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003G_002" ~ "Owner occupied",
-                     variable == "B25003G_003" ~ "Renter occupied",
-                   ))
-          
-          # Charlottesville (Home Ownership by Race, Two or More Races), 2012
-          
-          home_ownership_two_or_more_races_cville_2012 <- get_acs(
-            geography = "county",
-            county = "540",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003G",
-            summary_var = "B25003G_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003G_002", "B25003G_003")
-            )
-          
-          # Finalizing table:
-          
-          cville_home_ownership_two_or_more_races_2012 <- home_ownership_two_or_more_races_cville_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003G_002" ~ "Owner occupied",
-                     variable == "B25003G_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, Two or More Races), 2022
-          
-          home_ownership_two_or_more_races_alb_2022 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003G",
-            summary_var = "B25003G_001",
-            survey = "acs5",
-            year = 2022)  %>% 
-            filter(variable %in% c("B25003G_002", "B25003G_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_two_or_more_races_2022 <- home_ownership_two_or_more_races_alb_2022 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2022",
-                   label = case_when(
-                     variable == "B25003G_002" ~ "Owner occupied",
-                     variable == "B25003G_003" ~ "Renter occupied",
-                   ))
-          
-          # Albemarle (Home Ownership by Race, Two or More Races), 2012
-          
-          home_ownership_two_or_more_races_alb_2012 <- get_acs(
-            geography = "county",
-            county = "003",
-            cache = TRUE,
-            state = "VA",
-            table = "B25003G",
-            summary_var = "B25003G_001",
-            survey = "acs5",
-            year = 2012)  %>% 
-            filter(variable %in% c("B25003G_002", "B25003G_003")
-            )
-          
-          # Finalizing table:
-          
-          alb_home_ownership_two_or_more_races_2012 <- home_ownership_two_or_more_races_alb_2012 %>% 
-            mutate(percent = 100 * (estimate / summary_est),
-                   year = "2012",
-                   label = case_when(
-                     variable == "B25003G_002" ~ "Owner occupied",
-                     variable == "B25003G_003" ~ "Renter occupied",
-                   ))
-          
-          # Add Race columns to each dataframe
-          cville_home_ownership_white_alone_2022 <- cville_home_ownership_white_alone_2022 %>%
-            mutate(Race = "White Alone")
-          cville_home_ownership_white_alone_2012 <- cville_home_ownership_white_alone_2012 %>%
-            mutate(Race = "White Alone")
-          alb_home_ownership_white_alone_2022 <- alb_home_ownership_white_alone_2022 %>%
-            mutate(Race = "White Alone")
-          alb_home_ownership_white_alone_2012 <- alb_home_ownership_white_alone_2012 %>%
-            mutate(Race = "White Alone")
-          
-          cville_home_ownership_black_alone_2022 <- cville_home_ownership_black_alone_2022 %>%
-            mutate(Race = "Black Alone")
-          cville_home_ownership_black_alone_2012 <- cville_home_ownership_black_alone_2012 %>%
-            mutate(Race = "Black Alone")
-          alb_home_ownership_black_alone_2022 <- alb_home_ownership_black_alone_2022 %>%
-            mutate(Race = "Black Alone")
-          alb_home_ownership_black_alone_2012 <- alb_home_ownership_black_alone_2012 %>%
-            mutate(Race = "Black Alone")
-          
-          cville_home_ownership_asian_alone_2022 <- cville_home_ownership_asian_alone_2022 %>%
-            mutate(Race = "Asian Alone")
-          cville_home_ownership_asian_alone_2012 <- cville_home_ownership_asian_alone_2012 %>%
-            mutate(Race = "Asian Alone")
-          alb_home_ownership_asian_alone_2022 <- alb_home_ownership_asian_alone_2022 %>%
-            mutate(Race = "Asian Alone")
-          alb_home_ownership_asian_alone_2012 <- alb_home_ownership_asian_alone_2012 %>%
-            mutate(Race = "Asian Alone")
-          
-          cville_home_ownership_pacific_islander_alone_2022 <- cville_home_ownership_pacific_islander_alone_2022 %>%
-            mutate(Race = "Pacific Islander Alone")
-          cville_home_ownership_pacific_islander_alone_2012 <- cville_home_ownership_pacific_islander_alone_2012 %>%
-            mutate(Race = "Pacific Islander Alone")
-          alb_home_ownership_pacific_islander_alone_2022 <- alb_home_ownership_pacific_islander_alone_2022 %>%
-            mutate(Race = "Pacific Islander Alone")
-          alb_home_ownership_pacific_islander_alone_2012 <- alb_home_ownership_pacific_islander_alone_2012 %>%
-            mutate(Race = "Pacific Islander Alone")
-          
-          cville_home_ownership_other_race_alone_2022 <- cville_home_ownership_other_race_alone_2022 %>%
-            mutate(Race = "Other Race Alone")
-          cville_home_ownership_other_race_alone_2012 <- cville_home_ownership_other_race_alone_2012 %>%
-            mutate(Race = "Other Race Alone")
-          alb_home_ownership_other_race_alone_2022 <- alb_home_ownership_other_race_alone_2022 %>%
-            mutate(Race = "Other Race Alone")
-          alb_home_ownership_other_race_alone_2012 <- alb_home_ownership_other_race_alone_2012 %>%
-            mutate(Race = "Other Race Alone")
-          
-          cville_home_ownership_two_or_more_races_2022 <- cville_home_ownership_two_or_more_races_2022 %>%
-            mutate(Race = "Two or More Races")
-          cville_home_ownership_two_or_more_races_2012 <- cville_home_ownership_two_or_more_races_2012 %>%
-            mutate(Race = "Two or More Races")
-          alb_home_ownership_two_or_more_races_2022 <- alb_home_ownership_two_or_more_races_2022 %>%
-            mutate(Race = "Two or More Races")
-          alb_home_ownership_two_or_more_races_2012 <- alb_home_ownership_two_or_more_races_2012 %>%
-            mutate(Race = "Two or More Races")
-          
-          
-          # Combining all data
-          
-          combined_home_ownership_race <- bind_rows(
-            cville_home_ownership_white_alone_2022,
-            cville_home_ownership_white_alone_2012,
-            alb_home_ownership_white_alone_2022,
-            alb_home_ownership_white_alone_2012,
-            cville_home_ownership_black_alone_2022,
-            cville_home_ownership_black_alone_2012,
-            alb_home_ownership_black_alone_2022,
-            alb_home_ownership_black_alone_2012,
-            cville_home_ownership_asian_alone_2022,
-            cville_home_ownership_asian_alone_2012,
-            alb_home_ownership_asian_alone_2022,
-            alb_home_ownership_asian_alone_2012,
-            cville_home_ownership_pacific_islander_alone_2022,
-            cville_home_ownership_pacific_islander_alone_2012,
-            alb_home_ownership_pacific_islander_alone_2022,
-            alb_home_ownership_pacific_islander_alone_2012,
-            cville_home_ownership_other_race_alone_2022,
-            cville_home_ownership_other_race_alone_2012,
-            alb_home_ownership_other_race_alone_2022,
-            alb_home_ownership_other_race_alone_2012,
-            cville_home_ownership_two_or_more_races_2022,
-            cville_home_ownership_two_or_more_races_2012,
-            alb_home_ownership_two_or_more_races_2022,
-            alb_home_ownership_two_or_more_races_2012)
-          
-# Method two: (fewer lines of code)
- 
-          vars <- c("B25003A_001", # white alone, total
-                    "B25003A_002", # white alone, owner occupied
-                    "B25003A_003", # white alone, renter occupied
-                    "B25003B_001", # black alone, total
-                    "B25003B_002", # black alone, owner occupied
-                    "B25003B_003", # black alone, renter occupied
-                    "B25003C_001", # native alone, total
-                    "B25003C_002", # native alone, owner occupied
-                    "B25003C_003", # native alone, renter occupied
-                    "B25003D_001", # asian alone, total
-                    "B25003D_002", # asian alone, owner occupied
-                    "B25003D_003", # asian alone, renter occupied
-                    "B25003E_001", # asian alone, total
-                    "B25003E_002", # pacific islander alone, owner occupied
-                    "B25003E_003", # pacific islander alone, renter occupied
-                    "B25003F_001", # some other race alone, total
-                    "B25003F_002", # some other race alone, owner occupied
-                    "B25003F_003", # some other race alone, renter occupied
-                    "B25003G_001", # two or more races, total
-                    "B25003G_002", # two or more races, owner occupied
-                    "B25003G_003", # two or more races, renter occupied
-                    "B25003H_001", # white alone, not hispanic or latino, total
-                    "B25003H_002", # white alone, not hispanic or latino, owner occupied
-                    "B25003H_003", # white alone, not hispanic or latino, renter occupied
-                    "B25003I_001", # hispanic or latino, total
-                    "B25003I_002", # hispanic or latino, owner occupied
-                    "B25003I_003") # hispanic or latino, renter occupied
-          
-          # Charlottesville, 2022
-          
-          home_ownership_cville_2022 <- get_acs(geography = "county",
-                                             variable = vars,
-                                             county = "540",
-                                             cache = TRUE,
-                                             state = "VA",
-                                             survey = "acs5",
-                                             year = 2022,
-                                             output = "wide")
-          
-          # Calculate percentages, rename variables, select variables
-          home_ownership_cville_2022 <- home_ownership_cville_2022 %>%
-            select(-ends_with("M")) %>% 
-            mutate(homeowners_white_alone_pct = 100 * B25003A_002E / B25003A_001E,
-                   renters_white_alone_pct = 100 * B25003A_003E / B25003A_001E,
-                   homeowners_black_alone_pct = 100 * B25003B_002E / B25003B_001E,
-                   renters_black_alone_pct = 100 * B25003B_003E / B25003B_001E,
-                   homeowners_native_alone_pct = 100 * B25003C_002E / B25003C_001E,
-                   renters_native_alone_pct = 100 * B25003C_003E / B25003C_001E,
-                   homeowners_asian_alone_pct = 100 * B25003D_002E / B25003D_001E,
-                   renters_asian_alone_pct = 100 * B25003D_003E / B25003D_001E,
-                   homeowners_pacific_islander_alone_pct = 100 * B25003E_002E / B25003E_001E,
-                   renters_pacific_islander_alone_pct = 100 * B25003E_003E / B25003E_001E,
-                   homeowners_some_other_race_pct = 100 * B25003F_002E / B25003F_001E,
-                   renters_some_other_race_pct = 100 * B25003F_003E / B25003F_001E,
-                   homeowners_two_or_more_races_pct = 100 * B25003G_002E / B25003G_001E,
-                   renters_two_or_more_races_pct = 100 * B25003G_003E / B25003G_001E,
-                   homeowners_white_alone_not_hispanic_pct = 100 * B25003H_002E / B25003H_001E,
-                   renters_white_alone_not_hispanic_pct = 100 * B25003H_003E / B25003H_001E,
-                   homeowners_hispanic_latino_pct = 100 * B25003I_002E / B25003I_001E,
-                   renters_hispanic_latino_pct = 100 * B25003I_003E / B25003I_001E) %>%
-            select(GEOID, NAME, contains("pct"))
-          
-          # Charlottesville, 2012
-          
-          home_ownership_cville_2012 <- get_acs(geography = "county",
-                                             table = vars,
-                                             county = "540",
-                                             cache = TRUE,
-                                             state = "VA",
-                                             survey = "acs5",
-                                             year = 2012,
-                                             output = "wide")
-          
-          # Calculate percentages, rename variables, select variables
-          home_ownership_cville_2012 <- home_ownership_cville_2012 %>%
-            select(-ends_with("M")) %>% 
-            mutate(homeowners_white_alone_pct = 100 * B25003A_002E / B25003A_001E,
-                   renters_white_alone_pct = 100 * B25003A_003E / B25003A_001E,
-                   homeowners_black_alone_pct = 100 * B25003B_002E / B25003B_001E,
-                   renters_black_alone_pct = 100 * B25003B_003E / B25003B_001E,
-                   homeowners_native_alone_pct = 100 * B25003C_002E / B25003C_001E,
-                   renters_native_alone_pct = 100 * B25003C_003E / B25003C_001E,
-                   homeowners_asian_alone_pct = 100 * B25003D_002E / B25003D_001E,
-                   renters_asian_alone_pct = 100 * B25003D_003E / B25003D_001E,
-                   homeowners_pacific_islander_alone_pct = 100 * B25003E_002E / B25003E_001E,
-                   renters_pacific_islander_alone_pct = 100 * B25003E_003E / B25003E_001E,
-                   homeowners_some_other_race_pct = 100 * B25003F_002E / B25003F_001E,
-                   renters_some_other_race_pct = 100 * B25003F_003E / B25003F_001E,
-                   homeowners_two_or_more_races_pct = 100 * B25003G_002E / B25003G_001E,
-                   renters_two_or_more_races_pct = 100 * B25003G_003E / B25003G_001E,
-                   homeowners_white_alone_not_hispanic_pct = 100 * B25003H_002E / B25003H_001E,
-                   renters_white_alone_not_hispanic_pct = 100 * B25003H_003E / B25003H_001E,
-                   homeowners_hispanic_latino_pct = 100 * B25003I_002E / B25003I_001E,
-                   renters_hispanic_latino_pct = 100 * B25003I_003E / B25003I_001E) %>%
-            select(GEOID, NAME, contains("pct"))
-          
-          # Albemarle, 2022
-          
-          home_ownership_alb_2022 <- get_acs(geography = "county",
-                               variable = vars,
-                               county = "003",
-                               cache = TRUE,
-                               state = "VA",
-                               survey = "acs5",
-                               year = 2022,
-                               output = "wide")
-          
-          # Calculate percentages, rename variables, select variables
-          home_ownership_alb_2022 <- home_ownership_alb_2022 %>%
-            select(-ends_with("M")) %>% 
-            mutate(homeowners_white_alone_pct = 100 * B25003A_002E / B25003A_001E,
-                   renters_white_alone_pct = 100 * B25003A_003E / B25003A_001E,
-                   homeowners_black_alone_pct = 100 * B25003B_002E / B25003B_001E,
-                   renters_black_alone_pct = 100 * B25003B_003E / B25003B_001E,
-                   homeowners_native_alone_pct = 100 * B25003C_002E / B25003C_001E,
-                   renters_native_alone_pct = 100 * B25003C_003E / B25003C_001E,
-                   homeowners_asian_alone_pct = 100 * B25003D_002E / B25003D_001E,
-                   renters_asian_alone_pct = 100 * B25003D_003E / B25003D_001E,
-                   homeowners_pacific_islander_alone_pct = 100 * B25003E_002E / B25003E_001E,
-                   renters_pacific_islander_alone_pct = 100 * B25003E_003E / B25003E_001E,
-                   homeowners_some_other_race_pct = 100 * B25003F_002E / B25003F_001E,
-                   renters_some_other_race_pct = 100 * B25003F_003E / B25003F_001E,
-                   homeowners_two_or_more_races_pct = 100 * B25003G_002E / B25003G_001E,
-                   renters_two_or_more_races_pct = 100 * B25003G_003E / B25003G_001E,
-                   homeowners_white_alone_not_hispanic_pct = 100 * B25003H_002E / B25003H_001E,
-                   renters_white_alone_not_hispanic_pct = 100 * B25003H_003E / B25003H_001E,
-                   homeowners_hispanic_latino_pct = 100 * B25003I_002E / B25003I_001E,
-                   renters_hispanic_latino_pct = 100 * B25003I_003E / B25003I_001E) %>%
-            select(GEOID, NAME, contains("pct"))
-          
-          # Albemarle, 2012
-          
-          home_ownership_alb_2012 <- get_acs(geography = "county",
-                                             variable = vars,
-                                             county = "003",
-                                             cache = TRUE,
-                                             state = "VA",
-                                             survey = "acs5",
-                                             year = 2012,
-                                             output = "wide")
-          
-          # Calculate percentages, rename variables, select variables
-          home_ownership_alb_2012 <- home_ownership_alb_2012 %>%
-            select(-ends_with("M")) %>% 
-            mutate(homeowners_white_alone_pct = 100 * B25003A_002E / B25003A_001E,
-                   renters_white_alone_pct = 100 * B25003A_003E / B25003A_001E,
-                   homeowners_black_alone_pct = 100 * B25003B_002E / B25003B_001E,
-                   renters_black_alone_pct = 100 * B25003B_003E / B25003B_001E,
-                   homeowners_native_alone_pct = 100 * B25003C_002E / B25003C_001E,
-                   renters_native_alone_pct = 100 * B25003C_003E / B25003C_001E,
-                   homeowners_asian_alone_pct = 100 * B25003D_002E / B25003D_001E,
-                   renters_asian_alone_pct = 100 * B25003D_003E / B25003D_001E,
-                   homeowners_pacific_islander_alone_pct = 100 * B25003E_002E / B25003E_001E,
-                   renters_pacific_islander_alone_pct = 100 * B25003E_003E / B25003E_001E,
-                   homeowners_some_other_race_pct = 100 * B25003F_002E / B25003F_001E,
-                   renters_some_other_race_pct = 100 * B25003F_003E / B25003F_001E,
-                   homeowners_two_or_more_races_pct = 100 * B25003G_002E / B25003G_001E,
-                   renters_two_or_more_races_pct = 100 * B25003G_003E / B25003G_001E,
-                   homeowners_white_alone_not_hispanic_pct = 100 * B25003H_002E / B25003H_001E,
-                   renters_white_alone_not_hispanic_pct = 100 * B25003H_003E / B25003H_001E,
-                   homeowners_hispanic_latino_pct = 100 * B25003I_002E / B25003I_001E,
-                   renters_hispanic_latino_pct = 100 * B25003I_003E / B25003I_001E) %>%
-            select(GEOID, NAME, contains("pct"))
-          
-# Method three (based on United Way Code): 
-   
-  # Charlottesville, 2022
-          
-          # White alone
-          
-          vars_B25003A <- c(pop_own_white = "B25003A_002", # renter occupied
-                            pop_rent_white = "B25003A_003" # owner occupied
-          )
-          
-          home_ownership_white_cville_2022 <- get_acs(geography = "county",
-                                                      state = "VA",
-                                                      county = "540",
-                                                      var = vars_B25003A,
-                                                      year = 2022,
-                                                      survey = "acs5")
-          
-          # Black alone
-          
-          vars_B25003B <- c(pop_own_black = "B25003B_002", # renter occupied
-                            pop_rent_black = "B25003B_003" # owner occupied
-          )
-          
-          home_ownership_black_cville_2022 <- get_acs(geography = "county",
-                                                      state = "VA",
-                                                      county = "540",
-                                                      var = vars_B25003B,
-                                                      year = 2022,
-                                                      survey = "acs5")
-          
-          # American Indian/Alaska Native
-          
-          vars_B25003C <- c(pop_own_aian = "B25003C_002", # renter occupied
-                            pop_rent_aian = "B25003C_003" # owner occupied
-          )
-          
-          home_ownership_aian_cville_2022 <- get_acs(geography = "county",
-                                                     state = "VA",
-                                                     county = "540",
-                                                     var = vars_B25003C,
-                                                     year = 2022,
-                                                     survey = "acs5")
-          
-          # Asian alone
-          
-          vars_B25003D <- c(pop_own_asian = "B25003D_002", # renter occupied
-                            pop_rent_asian = "B25003D_003" # owner occupied) 
-          )
-          
-          home_ownership_asian_cville_2022 <- get_acs(geography = "county",
-                                                      state = "VA",
-                                                      county = "540",
-                                                      var = vars_B25003D,
-                                                      year = 2022,
-                                                      survey = "acs5")
-          
-          # Native Hawaiian / Pacific Islander Alone
-          
-          vars_B25003E <- c(pop_own_nhpi = "B25003E_002", # renter occupied
-                            pop_rent_nhpi = "B25003E_003" # owner occupied
-          )
-          
-          home_ownership_nhpi_cville_2022 <- get_acs(geography = "county",
-                                                     state = "VA",
-                                                     county = "540",
-                                                     var = vars_B25003E,
-                                                     year = 2022,
-                                                     survey = "acs5")
-          
-          # Some other race alone
-          
-          vars_B25003F <- c(pop_own_other = "B25003F_002", # renter occupied
-                            pop_rent_other = "B25003F_003" # owner occupied)
-          )
-          
-          home_ownership_other_cville_2022 <- get_acs(geography = "county",
-                                                      state = "VA",
-                                                      county = "540",
-                                                      var = vars_B25003F,
-                                                      year = 2022,
-                                                      survey = "acs5")                 
-          
-          # Two or more races
-          
-          vars_B25003G <- c(pop_own_two_or_more = "B25003G_002", # renter occupied
-                            pop_rent_two_or_more = "B25003G_003" # owner occupied)
-          )
-          
-          home_ownership_two_or_more_cville_2022 <- get_acs(geography = "county",
-                                                            state = "VA",
-                                                            county = "540",
-                                                            var = vars_B25003G,
-                                                            year = 2022,
-                                                            survey = "acs5")                  
-          
-          
-          # White alone, not hispanic or latino              
-          
-          vars_B25003H <- c(pop_own_white_non_hisp = "B25003H_002", # renter occupied
-                            pop_rent_white_non_hisp = "B25003H_003" # owner occupied)
-          )
-          
-          home_ownership_white_non_hisp_cville_2022 <- get_acs(geography = "county",
-                                                               state = "VA",
-                                                               county = "540",
-                                                               var = vars_B25003H,
-                                                               year = 2022,
-                                                               survey = "acs5")                                       
-          
-          # Hispanic or latino               
-          
-          vars_B25003I <- c(pop_own_hisp = "B25003I_002", # renter occupied
-                            pop_rent_hisp = "B25003I_003" # owner occupied)
-          )
-          
-          home_ownership_hisp_cville_2022 <- get_acs(geography = "county",
-                                                     state = "VA",
-                                                     county = "540",
-                                                     var = vars_B25003I,
-                                                     year = 2022,
-                                                     survey = "acs5")
-          
-          # Combined race tables
-          
-          home_ownership_race_cville_2022 <- bind_rows(home_ownership_white_cville_2022, home_ownership_black_cville_2022,
-                                                       home_ownership_aian_cville_2022, home_ownership_asian_cville_2022,
-                                                       home_ownership_nhpi_cville_2022, home_ownership_other_cville_2022,
-                                                       home_ownership_two_or_more_cville_2022, home_ownership_white_non_hisp_cville_2022,
-                                                       home_ownership_hisp_cville_2022)
-          
-          # Get totals from B25003 summary table, joined to the race/ethn specific tables to calculate proportions
-          vars_B25003 <- c(total_tenure = "B25003_001", 
-                           total_homeowner = "B25003_002", 
-                           total_renter = "B25003_003")
-          
-          tenure_totals <- get_acs(geography = "county",
-                                   state = "VA",
-                                   county = "540",
-                                   var = vars_B25003,
-                                   year = 2022,
-                                   survey = "acs5")
-          
-          home_ownership_race_cville_2022 <- bind_rows(home_ownership_race_cville_2022, tenure_totals)
-          
-          # Identify the values for total_tenure, total_homeowner, and total_renter
-          total_tenure_val <- home_ownership_race_cville_2022 %>%
-            filter(variable == "total_tenure") %>%
-            pull(estimate)
-          
-          total_homeowner_val <- home_ownership_race_cville_2022 %>%
-            filter(variable == "total_homeowner") %>%
-            pull(estimate)
-          
-          total_renter_val <- home_ownership_race_cville_2022 %>%
-            filter(variable == "total_renter") %>%
-            pull(estimate)
-          
-          # Filter out the total rows and create new columns
-          home_ownership_race_cville_2022_processed <- home_ownership_race_cville_2022 %>%
-            filter(variable != "total_tenure" & variable != "total_homeowner" & variable != "total_renter") %>%
-            mutate(total_tenure = total_tenure_val,
-                   total_homeowner = total_homeowner_val,
-                   total_renter = total_renter_val)
-          
-          # Calculate percentages (unfinished) (!)
-                 
-  # Charlottesville, 2012   
-          
-          # White alone
-          
-          vars_B25003A <- c(pop_own_white = "B25003A_002", # renter occupied
-                            pop_rent_white = "B25003A_003" # owner occupied
-          )
-          
-          home_ownership_white_cville_2012 <- get_acs(geography = "county",
-                                                      state = "VA",
-                                                      county = "540",
-                                                      var = vars_B25003A,
-                                                      year = 2012,
-                                                      survey = "acs5")
-          
-          # Black alone
-          
-          vars_B25003B <- c(pop_own_black = "B25003B_002", # renter occupied
-                            pop_rent_black = "B25003B_003" # owner occupied
-          )
-          
-          home_ownership_black_cville_2012 <- get_acs(geography = "county",
-                                                      state = "VA",
-                                                      county = "540",
-                                                      var = vars_B25003B,
-                                                      year = 2012,
-                                                      survey = "acs5")
-          
-          # American Indian/Alaska Native
-          
-          vars_B25003C <- c(pop_own_aian = "B25003C_002", # renter occupied
-                            pop_rent_aian = "B25003C_003" # owner occupied
-          )
-          
-          home_ownership_aian_cville_2012 <- get_acs(geography = "county",
-                                                     state = "VA",
-                                                     county = "540",
-                                                     var = vars_B25003C,
-                                                     year = 2012,
-                                                     survey = "acs5")
-          
-          # Asian alone
-          
-          vars_B25003D <- c(pop_own_asian = "B25003D_002", # renter occupied
-                            pop_rent_asian = "B25003D_003" # owner occupied) 
-          )
-          
-          home_ownership_asian_cville_2012 <- get_acs(geography = "county",
-                                                      state = "VA",
-                                                      county = "540",
-                                                      var = vars_B25003D,
-                                                      year = 2012,
-                                                      survey = "acs5")
-          
-          # Native Hawaiian / Pacific Islander Alone
-          
-          vars_B25003E <- c(pop_own_nhpi = "B25003E_002", # renter occupied
-                            pop_rent_nhpi = "B25003E_003" # owner occupied
-          )
-          
-          home_ownership_nhpi_cville_2012 <- get_acs(geography = "county",
-                                                     state = "VA",
-                                                     county = "540",
-                                                     var = vars_B25003E,
-                                                     year = 2012,
-                                                     survey = "acs5")
-          
-          # Some other race alone
-          
-          vars_B25003F <- c(pop_own_other = "B25003F_002", # renter occupied
-                            pop_rent_other = "B25003F_003" # owner occupied)
-          )
-          
-          home_ownership_other_cville_2012 <- get_acs(geography = "county",
-                                                      state = "VA",
-                                                      county = "540",
-                                                      var = vars_B25003F,
-                                                      year = 2012,
-                                                      survey = "acs5")                 
-          
-          # Two or more races
-          
-          vars_B25003G <- c(pop_own_two_or_more = "B25003G_002", # renter occupied
-                            pop_rent_two_or_more = "B25003G_003" # owner occupied)
-          )
-          
-          home_ownership_two_or_more_cville_2012 <- get_acs(geography = "county",
-                                                            state = "VA",
-                                                            county = "540",
-                                                            var = vars_B25003G,
-                                                            year = 2012,
-                                                            survey = "acs5")                  
-          
-          
-          # White alone, not hispanic or latino              
-          
-          vars_B25003H <- c(pop_own_white_non_hisp = "B25003H_002", # renter occupied
-                            pop_rent_white_non_hisp = "B25003H_003" # owner occupied)
-          )
-          
-          home_ownership_white_non_hisp_cville_2012 <- get_acs(geography = "county",
-                                                               state = "VA",
-                                                               county = "540",
-                                                               var = vars_B25003H,
-                                                               year = 2012,
-                                                               survey = "acs5")                                       
-          
-          # Hispanic or latino               
-          
-          vars_B25003I <- c(pop_own_hisp = "B25003I_002", # renter occupied
-                            pop_rent_hisp = "B25003I_003" # owner occupied)
-          )
-          
-          home_ownership_hisp_cville_2012 <- get_acs(geography = "county",
-                                                     state = "VA",
-                                                     county = "540",
-                                                     var = vars_B25003I,
-                                                     year = 2012,
-                                                     survey = "acs5")
-          
-          # Combined race tables
-          
-          home_ownership_race_cville_2012 <- bind_rows(home_ownership_white_cville_2012, home_ownership_black_cville_2012,
-                                                       home_ownership_aian_cville_2012, home_ownership_asian_cville_2012,
-                                                       home_ownership_nhpi_cville_2012, home_ownership_other_cville_2012,
-                                                       home_ownership_two_or_more_cville_2012, home_ownership_white_non_hisp_cville_2012,
-                                                       home_ownership_hisp_cville_2012)
-          
-          # Get totals from B25003 summary table, joined to the race/ethn specific tables to calculate proportions
-          vars_B25003 <- c(total_tenure = "B25003_001", 
-                           total_homeowner = "B25003_002", 
-                           total_renter = "B25003_003")
-          
-          tenure_totals <- get_acs(geography = "county",
-                                   state = "VA",
-                                   county = "540",
-                                   var = vars_B25003,
-                                   year = 2012,
-                                   survey = "acs5")
-          
-          home_ownership_race_cville_2012 <- bind_rows(home_ownership_race_cville_2012, tenure_totals)
-          
-          # Identify the values for total_tenure, total_homeowner, and total_renter
-          total_tenure_val <- home_ownership_race_cville_2012 %>%
-            filter(variable == "total_tenure") %>%
-            pull(estimate)
-          
-          total_homeowner_val <- home_ownership_race_cville_2012 %>%
-            filter(variable == "total_homeowner") %>%
-            pull(estimate)
-          
-          total_renter_val <- home_ownership_race_cville_2012 %>%
-            filter(variable == "total_renter") %>%
-            pull(estimate)
-          
-          # Filter out the total rows and create new columns
-          home_ownership_race_cville_2012_processed <- home_ownership_race_cville_2012 %>%
-            filter(variable != "total_tenure" & variable != "total_homeowner" & variable != "total_renter") %>%
-            mutate(total_tenure = total_tenure_val,
-                   total_homeowner = total_homeowner_val,
-                   total_renter = total_renter_val)
-          
-          # Calculate percentages (unfinished) (!)
-          
-# Albemarle, 2022
-          
-          # White alone
-          
-          vars_B25003A <- c(pop_own_white = "B25003A_002", # renter occupied
-                            pop_rent_white = "B25003A_003" # owner occupied
-          )
-          
-          home_ownership_white_alb_2022 <- get_acs(geography = "county",
-                                                   state = "VA",
-                                                   county = "003",
-                                                   var = vars_B25003A,
-                                                   year = 2022,
-                                                   survey = "acs5")
-          
-          # Black alone
-          
-          vars_B25003B <- c(pop_own_black = "B25003B_002", # renter occupied
-                            pop_rent_black = "B25003B_003" # owner occupied
-          )
-          
-          home_ownership_black_alb_2022 <- get_acs(geography = "county",
-                                                   state = "VA",
-                                                   county = "003",
-                                                   var = vars_B25003B,
-                                                   year = 2022,
-                                                   survey = "acs5")
-          
-          # American Indian/Alaska Native
-          
-          vars_B25003C <- c(pop_own_aian = "B25003C_002", # renter occupied
-                            pop_rent_aian = "B25003C_003" # owner occupied
-          )
-          
-          home_ownership_aian_alb_2022 <- get_acs(geography = "county",
-                                                  state = "VA",
-                                                  county = "003",
-                                                  var = vars_B25003C,
-                                                  year = 2022,
-                                                  survey = "acs5")
-          
-          # Asian alone
-          
-          vars_B25003D <- c(pop_own_asian = "B25003D_002", # renter occupied
-                            pop_rent_asian = "B25003D_003" # owner occupied) 
-          )
-          
-          home_ownership_asian_alb_2022 <- get_acs(geography = "county",
-                                                   state = "VA",
-                                                   county = "003",
-                                                   var = vars_B25003D,
-                                                   year = 2022,
-                                                   survey = "acs5")
-          
-          # Native Hawaiian / Pacific Islander Alone
-          
-          vars_B25003E <- c(pop_own_nhpi = "B25003E_002", # renter occupied
-                            pop_rent_nhpi = "B25003E_003" # owner occupied
-          )
-          
-          home_ownership_nhpi_alb_2022 <- get_acs(geography = "county",
-                                                  state = "VA",
-                                                  county = "003",
-                                                  var = vars_B25003E,
-                                                  year = 2022,
-                                                  survey = "acs5")
-          
-          # Some other race alone
-          
-          vars_B25003F <- c(pop_own_other = "B25003F_002", # renter occupied
-                            pop_rent_other = "B25003F_003" # owner occupied)
-          )
-          
-          home_ownership_other_alb_2022 <- get_acs(geography = "county",
-                                                   state = "VA",
-                                                   county = "003",
-                                                   var = vars_B25003F,
-                                                   year = 2022,
-                                                   survey = "acs5")                 
-          
-          # Two or more races
-          
-          vars_B25003G <- c(pop_own_two_or_more = "B25003G_002", # renter occupied
-                            pop_rent_two_or_more = "B25003G_003" # owner occupied)
-          )
-          
-          home_ownership_two_or_more_alb_2022 <- get_acs(geography = "county",
-                                                         state = "VA",
-                                                         county = "003",
-                                                         var = vars_B25003G,
-                                                         year = 2022,
-                                                         survey = "acs5")                  
-          
-          
-          # White alone, not hispanic or latino              
-          
-          vars_B25003H <- c(pop_own_white_non_hisp = "B25003H_002", # renter occupied
-                            pop_rent_white_non_hisp = "B25003H_003" # owner occupied)
-          )
-          
-          home_ownership_white_non_hisp_alb_2022 <- get_acs(geography = "county",
-                                                            state = "VA",
-                                                            county = "003",
-                                                            var = vars_B25003H,
-                                                            year = 2022,
-                                                            survey = "acs5")                                       
-          
-          # Hispanic or latino               
-          
-          vars_B25003I <- c(pop_own_hisp = "B25003I_002", # renter occupied
-                            pop_rent_hisp = "B25003I_003" # owner occupied)
-          )
-          
-          home_ownership_hisp_alb_2022 <- get_acs(geography = "county",
-                                                  state = "VA",
-                                                  county = "003",
-                                                  var = vars_B25003I,
-                                                  year = 2022,
-                                                  survey = "acs5")
-          
-          # Combined race tables
-          
-          home_ownership_race_alb_2022 <- bind_rows(home_ownership_white_alb_2022, home_ownership_black_alb_2022,
-                                                    home_ownership_aian_alb_2022, home_ownership_asian_alb_2022,
-                                                    home_ownership_nhpi_alb_2022, home_ownership_other_alb_2022,
-                                                    home_ownership_two_or_more_alb_2022, home_ownership_white_non_hisp_alb_2022,
-                                                    home_ownership_hisp_alb_2022)
-          
-          # Get totals from B25003 summary table, joined to the race/ethn specific tables to calculate proportions
-          vars_B25003 <- c(total_tenure = "B25003_001", 
-                           total_homeowner = "B25003_002", 
-                           total_renter = "B25003_003")
-          
-          tenure_totals <- get_acs(geography = "county",
-                                   state = "VA",
-                                   county = "003",
-                                   var = vars_B25003,
-                                   year = 2022,
-                                   survey = "acs5")
-          
-          home_ownership_race_alb_2022 <- bind_rows(home_ownership_race_alb_2022, tenure_totals)
-          
-          # Identify the values for total_tenure, total_homeowner, and total_renter
-          total_tenure_val <- home_ownership_race_alb_2022 %>%
-            filter(variable == "total_tenure") %>%
-            pull(estimate)
-          
-          total_homeowner_val <- home_ownership_race_alb_2022 %>%
-            filter(variable == "total_homeowner") %>%
-            pull(estimate)
-          
-          total_renter_val <- home_ownership_race_alb_2022 %>%
-            filter(variable == "total_renter") %>%
-            pull(estimate)
-          
-          # Filter out the total rows and create new columns
-          home_ownership_race_alb_2022_processed <- home_ownership_race_alb_2022 %>%
-            filter(variable != "total_tenure" & variable != "total_homeowner" & variable != "total_renter") %>%
-            mutate(total_tenure = total_tenure_val,
-                   total_homeowner = total_homeowner_val,
-                   total_renter = total_renter_val)
-          
-          # Calculate percentages (unfinished) (!)
-          
-# Albemarle, 2012   
-          
-          # White alone
-          
-          vars_B25003A <- c(pop_own_white = "B25003A_002", # renter occupied
-                            pop_rent_white = "B25003A_003" # owner occupied
-          )
-          
-          home_ownership_white_alb_2012 <- get_acs(geography = "county",
-                                                   state = "VA",
-                                                   county = "003",
-                                                   var = vars_B25003A,
-                                                   year = 2012,
-                                                   survey = "acs5")
-          
-          # Black alone
-          
-          vars_B25003B <- c(pop_own_black = "B25003B_002", # renter occupied
-                            pop_rent_black = "B25003B_003" # owner occupied
-          )
-          
-          home_ownership_black_alb_2012 <- get_acs(geography = "county",
-                                                   state = "VA",
-                                                   county = "003",
-                                                   var = vars_B25003B,
-                                                   year = 2012,
-                                                   survey = "acs5")
-          
-          # American Indian/Alaska Native
-          
-          vars_B25003C <- c(pop_own_aian = "B25003C_002", # renter occupied
-                            pop_rent_aian = "B25003C_003" # owner occupied
-          )
-          
-          home_ownership_aian_alb_2012 <- get_acs(geography = "county",
-                                                  state = "VA",
-                                                  county = "003",
-                                                  var = vars_B25003C,
-                                                  year = 2012,
-                                                  survey = "acs5")
-          
-          # Asian alone
-          
-          vars_B25003D <- c(pop_own_asian = "B25003D_002", # renter occupied
-                            pop_rent_asian = "B25003D_003" # owner occupied) 
-          )
-          
-          home_ownership_asian_alb_2012 <- get_acs(geography = "county",
-                                                   state = "VA",
-                                                   county = "003",
-                                                   var = vars_B25003D,
-                                                   year = 2012,
-                                                   survey = "acs5")
-          
-          # Native Hawaiian / Pacific Islander Alone
-          
-          vars_B25003E <- c(pop_own_nhpi = "B25003E_002", # renter occupied
-                            pop_rent_nhpi = "B25003E_003" # owner occupied
-          )
-          
-          home_ownership_nhpi_alb_2012 <- get_acs(geography = "county",
-                                                  state = "VA",
-                                                  county = "003",
-                                                  var = vars_B25003E,
-                                                  year = 2012,
-                                                  survey = "acs5")
-          
-          # Some other race alone
-          
-          vars_B25003F <- c(pop_own_other = "B25003F_002", # renter occupied
-                            pop_rent_other = "B25003F_003" # owner occupied)
-          )
-          
-          home_ownership_other_alb_2012 <- get_acs(geography = "county",
-                                                   state = "VA",
-                                                   county = "003",
-                                                   var = vars_B25003F,
-                                                   year = 2012,
-                                                   survey = "acs5")                 
-          
-          # Two or more races
-          
-          vars_B25003G <- c(pop_own_two_or_more = "B25003G_002", # renter occupied
-                            pop_rent_two_or_more = "B25003G_003" # owner occupied)
-          )
-          
-          home_ownership_two_or_more_alb_2012 <- get_acs(geography = "county",
-                                                         state = "VA",
-                                                         county = "003",
-                                                         var = vars_B25003G,
-                                                         year = 2012,
-                                                         survey = "acs5")                  
-          
-          
-          # White alone, not hispanic or latino              
-          
-          vars_B25003H <- c(pop_own_white_non_hisp = "B25003H_002", # renter occupied
-                            pop_rent_white_non_hisp = "B25003H_003" # owner occupied)
-          )
-          
-          home_ownership_white_non_hisp_alb_2012 <- get_acs(geography = "county",
-                                                            state = "VA",
-                                                            county = "003",
-                                                            var = vars_B25003H,
-                                                            year = 2012,
-                                                            survey = "acs5")                                       
-          
-          # Hispanic or latino               
-          
-          vars_B25003I <- c(pop_own_hisp = "B25003I_002", # renter occupied
-                            pop_rent_hisp = "B25003I_003" # owner occupied)
-          )
-          
-          home_ownership_hisp_alb_2012 <- get_acs(geography = "county",
-                                                  state = "VA",
-                                                  county = "003",
-                                                  var = vars_B25003I,
-                                                  year = 2012,
-                                                  survey = "acs5")
-          
-          # Combined race tables
-          
-          home_ownership_race_alb_2012 <- bind_rows(home_ownership_white_alb_2012, home_ownership_black_alb_2012,
-                                                    home_ownership_aian_alb_2012, home_ownership_asian_alb_2012,
-                                                    home_ownership_nhpi_alb_2012, home_ownership_other_alb_2012,
-                                                    home_ownership_two_or_more_alb_2012, home_ownership_white_non_hisp_alb_2012,
-                                                    home_ownership_hisp_alb_2012)
-          
-          # Get totals from B25003 summary table, joined to the race/ethn specific tables to calculate proportions
-          vars_B25003 <- c(total_tenure = "B25003_001", 
-                           total_homeowner = "B25003_002", 
-                           total_renter = "B25003_003")
-          
-          tenure_totals <- get_acs(geography = "county",
-                                   state = "VA",
-                                   county = "003",
-                                   var = vars_B25003,
-                                   year = 2012,
-                                   survey = "acs5")
-          
-          home_ownership_race_alb_2012 <- bind_rows(home_ownership_race_alb_2012, tenure_totals)
-          
-          # Identify the values for total_tenure, total_homeowner, and total_renter
-          total_tenure_val <- home_ownership_race_alb_2012 %>%
-            filter(variable == "total_tenure") %>%
-            pull(estimate)
-          
-          total_homeowner_val <- home_ownership_race_alb_2012 %>%
-            filter(variable == "total_homeowner") %>%
-            pull(estimate)
-          
-          total_renter_val <- home_ownership_race_alb_2012 %>%
-            filter(variable == "total_renter") %>%
-            pull(estimate)
-          
-          # Filter out the total rows and create new columns
-          home_ownership_race_alb_2012_processed <- home_ownership_race_alb_2012 %>%
-            filter(variable != "total_tenure" & variable != "total_homeowner" & variable != "total_renter") %>%
-            mutate(total_tenure = total_tenure_val,
-                   total_homeowner = total_homeowner_val,
-                   total_renter = total_renter_val)
-          
-          # Calculate percentages (unfinished) (!)    
-          
+# Make a function ----
+agg_earning_median <- function(df, loc){
+  agg_earning_range <- df %>% 
+    filter(GEOID %in% loc) %>% 
+    group_by(earning_bin, bin_start, bin_end) %>% 
+    summarize(estimate = sum(estimate),
+              total = sum(summary_est)) %>% 
+    ungroup() %>% 
+    mutate(cum_sum = cumsum(estimate),
+           cum_per = cum_sum/total)
   
-# Table: B19013 (Median Household Income) - By Tract
+  midpoint <- agg_earning_range$total[1]/2
+  index_bin <- which(agg_earning_range$cum_sum > midpoint)[1]
+  range_reach <- midpoint-agg_earning_range$cum_sum[index_bin-1]
+  range_prop <- range_reach / agg_earning_range$estimate[index_bin]
+  income_add <- range_prop * (agg_earning_range$bin_end[index_bin] + 1 - agg_earning_range$bin_start[index_bin])
+  median_earn <- agg_earning_range$bin_end[index_bin-1] + income_add
+  return(median_earn)
+}
 
-# Charlottesville (Median Household Income), 2022
+# apply function 
+med_earn_combined <- agg_earning_median(earnings_df, choose)
 
-median_household_income_cville_2022 <- get_acs(
-  geography = "tract",
-  county = "540",
-  cache = TRUE,
+# Create data frame
+region_med_earnings <- data.frame(
+  locality = region_name,
+  region_FIPS = paste(choose, collapse = ","),
+  med_earnings_est = med_earn_combined,
+  year = year
+)
+
+# Generating CSV:
+write_csv(region_med_earnings, paste0("data/region_med_earnings", "_", year, ".csv"))
+
+## ....................................................
+# Median Personal Earnings by Sex and Race: B20017 ----
+# Median Personal Earnings by Sex and Race (populations statistically significant): County
+# Get ACS data
+vars_B20017 <- c("Median Earnings; All; White" = "B20017A_001",
+                      "Median Earnings; Male; White" = "B20017A_002",
+                      "Median Earnings; Female; White" = "B20017A_005",
+                      "Median Earnings; All; Black" = "B20017B_001",
+                      "Median Earnings; Male; Black" = "B20017B_002",
+                      "Median Earnings; Female; Black" = "B20017B_005",
+                      "Median Earnings; All; Asian" = "B20017D_001",
+                      "Median Earnings; Male; Asian" = "B20017D_002",
+                      "Median Earnings; Female; Asian" = "B20017D_005",
+                      "Median Earnings; All; Mutiracial" = "B20017G_001",
+                      "Median Earnings; Male; Mutiracial" = "B20017G_002",
+                      "Median Earnings; Female; Mutiracial" = "B20017G_005",
+                      "Median Earnings; All; White, Not Hispanic or Latino" = "B20017H_001",
+                      "Median Earnings; Male; White, Not Hispanic or Latino" = "B20017H_002",
+                      "Median Earnings; Female; White, Not Hispanic or Latino" = "B20017H_005",
+                      "Median Earnings; All; Hispanic or Latino" = "B20017I_001",
+                      "Median Earnings; Male; Hispanic or Latino" = "B20017I_002",
+                      "Median Earnings; Female; Hispanic or Latino" = "B20017I_005")
+
+acs_B20017_county <- get_acs(
+  geography = "county",
   state = "VA",
-  table = "B19013",
-  survey = "acs5",
-  year = 2022)
+  county = county_codes,
+  var = vars_B20017,
+  year = year, 
+  survey = "acs5")
 
-# Finalizing table
+# Wrangle table:
+med_earnings_race_county <- acs_B20017_county %>% 
+  separate(variable, into=c("label","sex", "race"), sep="; ", remove=FALSE) %>% 
+  mutate(year = year) %>% 
+  rename("locality" = "NAME") %>% 
+  select(GEOID, locality, label, sex, race, estimate, moe, year)
 
-cville_median_household_income_2022 <- median_household_income_cville_2022 %>% 
-  mutate(year = "2022",
-         label = case_when(
-           variable == "B19013_001" ~ "Median Household Income in Past 12 Months (Inflation Adjusted)"
-         ))
+# Median Personal Earnings by Sex and Race: Charlottesville, county ----
+cville_med_earnings_race_county <- med_earnings_race_county %>% 
+  filter(locality == "Charlottesville city, Virginia")
 
-# Generating CSV:
+write_csv(cville_med_earnings_race_county, paste0("data/cville_med_earnings_race_county", "_", year, ".csv"))
 
-write.csv(cville_median_household_income_2022, "temp_data/cville_median_household_income_2022.csv")
+# Median Personal Earnings by Sex and Race: Albemarle, county ----
+alb_med_earnings_race_county <- med_earnings_race_county %>% 
+  filter(locality == "Albemarle County, Virginia")
 
-# Albemarle (Median Household Income), 2022
+write_csv(alb_med_earnings_race_county, paste0("data/alb_med_earnings_race_county", "_", year, ".csv"))
 
-median_household_income_alb_2022 <- get_acs(
-  geography = "tract",
-  county = "003",
-  cache = TRUE,
+## ...................................
+# Median Household Income: B19001 (All) & B19001A-I (By Race/Ethnicity) UPDATED METHOD ----
+# A good explanation of finding the median across aggregated geographies
+# https://dof.ca.gov/wp-content/uploads/sites/352/Forecasting/Demographics/Documents/How_to_Recalculate_a_Median.pdf
+
+# Median Household Income: ACS Table B19001, County ----
+# Get ACS data
+acs_B19001_county <- get_acs(geography = "county",
+                               state = "51",
+                               county = county_codes,
+                               table = "B19001", 
+                               summary_var = "B19001_001",
+                               year = year,
+                               survey = "acs5",
+                               cache_table = TRUE) 
+
+# acs_B19001_tract <- get_acs(geography = "tract",
+#                              state = "51",
+#                              county = county_codes,
+#                              table = "B19001", 
+#                              summary_var = "B19001_001",
+#                              year = year,
+#                              survey = "acs5",
+#                              cache_table = TRUE) 
+# 
+
+# prep data
+# income range function
+income_ranges_func <- function(df){
+  income_ranges <- df %>% 
+    filter(variable != "B19001_001") %>%
+    mutate(income_bin = as.factor(variable)) %>%
+    mutate(income_bin = fct_recode(income_bin,
+                                   "2500_9999" = "B19001_002",
+                                   "10000_14999" = "B19001_003",
+                                   "15000_19999" = "B19001_004",
+                                   "20000_24999" = "B19001_005",
+                                   "25000_29999" = "B19001_006",
+                                   "30000_34999" = "B19001_007",
+                                   "35000_39999" = "B19001_008",
+                                   "40000_44999" = "B19001_009",
+                                   "45000_49999" = "B19001_010",
+                                   "50000_59999" = "B19001_011",
+                                   "60000_74999" = "B19001_012",
+                                   "75000_99999" = "B19001_013",
+                                   "100000_124999" = "B19001_014",
+                                   "125000_149999" = "B19001_015",
+                                   "150000_199999" = "B19001_016",
+                                   "200000_300000" = "B19001_017" 
+    )) %>% 
+    separate(income_bin, into = c("bin_start", "bin_end"), 
+             sep = "_", remove = FALSE) %>% 
+    mutate(across(starts_with("bin"), as.numeric))
+
+    return(income_ranges)
+}
+
+# Run income ranges function for county and tract
+income_ranges_county <- income_ranges_func(acs_B19001_county)
+# income_ranges_tract <- income_ranges_func(acs_B19001_tract)
+
+# income_ranges_county <- acs_B19001_county %>% 
+#   filter(variable != "B19001_001") %>%
+#   mutate(income_bin = as.factor(variable)) %>%
+#   mutate(income_bin = fct_recode(income_bin,
+#                                  "2500_9999" = "B19001_002",
+#                                  "10000_14999" = "B19001_003",
+#                                  "15000_19999" = "B19001_004",
+#                                  "20000_24999" = "B19001_005",
+#                                  "25000_29999" = "B19001_006",
+#                                  "30000_34999" = "B19001_007",
+#                                  "35000_39999" = "B19001_008",
+#                                  "40000_44999" = "B19001_009",
+#                                  "45000_49999" = "B19001_010",
+#                                  "50000_59999" = "B19001_011",
+#                                  "60000_74999" = "B19001_012",
+#                                  "75000_99999" = "B19001_013",
+#                                  "100000_124999" = "B19001_014",
+#                                  "125000_149999" = "B19001_015",
+#                                  "150000_199999" = "B19001_016",
+#                                  "200000_300000" = "B19001_017" 
+#   )) %>% 
+#   separate(income_bin, into = c("bin_start", "bin_end"), 
+#            sep = "_", remove = FALSE) %>% 
+#   mutate(across(starts_with("bin"), as.numeric))
+
+
+# Derive steps to aggregate and estimate
+# Median Household Income, Combined Region, County & tract ----
+
+# choose localities for combined region
+choose <- c("51003", "51540")
+
+# generate aggregate sums
+aggregate_range_county <- income_ranges_county %>% 
+  filter(GEOID %in% choose) %>% 
+  group_by(income_bin, bin_start, bin_end) %>% 
+  summarize(estimate = sum(estimate),
+            total = sum(summary_est)) %>% 
+  ungroup() %>% 
+  mutate(cum_sum = cumsum(estimate),
+         cum_per = cum_sum/total)
+
+# identify midpoint observation
+midpoint <- aggregate_range_county$total[1]/2
+
+# find index of row for which cum_sum contains the midpoint
+index_bin <- which(aggregate_range_county$cum_sum > midpoint)[1]
+
+# range_reach = midpoint - cum_sum[x-1]
+#   how many observations into the identified cum_sum do we need to reach
+range_reach <- midpoint-aggregate_range_county$cum_sum[index_bin-1]
+
+# range_prop = range_reach / estimate[x]
+#   what proportion of the total of the identified income_bin is this 
+range_prop <- range_reach / aggregate_range_county$estimate[index_bin]
+
+# income_add = range_prop * (bin_end[x] - bin_start[x] + 1) 
+#   assuming uniform distribution in the range, how far into the income bin is this proportion
+income_add <- range_prop * (aggregate_range_county$bin_end[index_bin] + 1 - aggregate_range_county$bin_start[index_bin])
+
+# median = bin_end[x-1] + income_add 
+#   add this income to the top range of the prior income bin
+median <- aggregate_range_county$bin_end[index_bin-1] + income_add
+
+# Compare to county estimates from B19013
+# Albemarle: estimate 97564, table 97708
+# Charlottesville: estimate 67489, table 67177
+
+# get all tables
+# get all race-ethnicity specific tables
+tables <- c("B19001", "B19001A", "B19001B", "B19001C", "B19001D", "B19001E",
+            "B19001F", "B19001G", "B19001H", "B19001I")
+
+acs_B19001_race_county <- map(tables,
+                         ~get_acs(geography = "county",
+                                  state = "51",
+                                  county = county_codes,
+                                  table = .x, 
+                                  #summary_var = "B19001_001",
+                                  year = year,
+                                  survey = "acs5",
+                                  cache_table = TRUE) %>% 
+                           mutate(table = .x)
+)
+
+# prep all data ----
+# perform processing across list
+income_tables_county <- acs_B19001_race_county %>% 
+  map(~filter(., !(str_detect(variable, fixed("_001")))) %>% 
+        mutate(variable = str_replace(variable, "B19001[:upper:]", "B19001"),
+               income_bin = as.factor(variable),
+               income_bin = fct_recode(income_bin,
+                                       "2500_9999" = "B19001_002",
+                                       "10000_14999" = "B19001_003",
+                                       "15000_19999" = "B19001_004",
+                                       "20000_24999" = "B19001_005",
+                                       "25000_29999" = "B19001_006",
+                                       "30000_34999" = "B19001_007",
+                                       "35000_39999" = "B19001_008",
+                                       "40000_44999" = "B19001_009",
+                                       "45000_49999" = "B19001_010",
+                                       "50000_59999" = "B19001_011",
+                                       "60000_74999" = "B19001_012",
+                                       "75000_99999" = "B19001_013",
+                                       "100000_124999" = "B19001_014",
+                                       "125000_149999" = "B19001_015",
+                                       "150000_199999" = "B19001_016",
+                                       "200000_300000" = "B19001_017")
+        ) %>% 
+        separate(income_bin, into = c("bin_start", "bin_end"), 
+                 sep = "_", remove = FALSE) %>% 
+        mutate(across(starts_with("bin"), as.numeric)) %>% 
+        group_by(GEOID, NAME) %>% 
+        mutate(summary_est = sum(estimate)) %>% 
+        ungroup()
+  )
+
+# Make a function ----
+aggregate_median <- function(aggregate_range, df, loc){
+  aggregate_range <- df %>% 
+    filter(GEOID %in% loc) %>% 
+    group_by(income_bin, bin_start, bin_end) %>% 
+    summarize(estimate = sum(estimate),
+              total = sum(summary_est)) %>% 
+    ungroup() %>% 
+    mutate(cum_sum = cumsum(estimate),
+           cum_per = cum_sum/total)
+  
+  midpoint <- aggregate_range$total[1]/2
+  index_bin <- which(aggregate_range$cum_sum > midpoint)[1]
+  range_reach <- midpoint-aggregate_range$cum_sum[index_bin-1]
+  range_prop <- range_reach / aggregate_range$estimate[index_bin]
+  income_add <- range_prop * (aggregate_range$bin_end[index_bin] + 1 - aggregate_range$bin_start[index_bin])
+  median <- aggregate_range$bin_end[index_bin-1] + income_add
+  return(median)
+}
+
+# apply function 
+median_overall <- aggregate_median(aggregate_range_county,income_tables_county[[1]], choose)
+median_whitealone <- aggregate_median(aggregate_range_county, income_tables_county[[2]], choose)
+median_blackalone <- aggregate_median(aggregate_range_county, income_tables_county[[3]], choose)
+median_aianalone <- aggregate_median(aggregate_range_county, income_tables_county[[4]], choose)
+median_asianalone <- aggregate_median(aggregate_range_county, income_tables_county[[5]], choose)
+median_nhpialone <- aggregate_median(aggregate_range_county, income_tables_county[[6]], choose)
+median_otheralone <- aggregate_median(aggregate_range_county, income_tables_county[[7]], choose)
+median_multialone <- aggregate_median(aggregate_range_county, income_tables_county[[8]], choose)
+median_whitenhalone <- aggregate_median(aggregate_range_county, income_tables_county[[9]], choose)
+median_hispanic <- aggregate_median(aggregate_range_county, income_tables_county[[10]], choose)
+
+# why no nhpi?
+# income_tables[[6]] %>% view()
+
+# combine into data frame
+medians_bygroup <- data.frame(mget(ls(pattern="median_"))) %>% 
+  pivot_longer(everything(), names_to = "group", values_to = "median_hh_inc") %>% 
+  mutate(region_FIPS = paste(choose, collapse = ","),
+         locality = region_name)
+
+
+# Median Household Income by Race: B19013 ----
+
+# Median Household Income by Race: County & tract
+# Get ACS data
+vars_B19013 <- c("Median Household Income; White" = "B19013A_001", 
+                 "Median Household Income; Black" = "B19013B_001", 
+                 "Median Household Income; American Indian and Alaska Native" = "B19013C_001", 
+                 "Median Household Income; Asian" = "B19013D_001", 
+                 "Median Household Income; NHPI" = "B19013E_001",
+                 "Median Household Income; Other" = "B19013F_001", 
+                 "Median Household Income; Multiracial" = "B19013G_001", 
+                 "Median Household Income; White, Not Hispanic or Latino" = "B19013H_001", 
+                 "Median Household Income; Hispanic or Latino" = "B19013I_001",
+                 "Median Household Income; All Households" = "B19013_001")
+
+acs_B19013_county <- get_acs(
+  geography = "county",
   state = "VA",
-  table = "B19013",
-  survey = "acs5",
-  year = 2022)
+  county = county_codes,
+  var = vars_B19013,
+  year = year, 
+  survey = "acs5")
 
-# Finalizing table
+acs_B19013_tract <- get_acs(
+  geography = "tract",
+  state = "VA",
+  county = county_codes,
+  var = vars_B19013,
+  year = year, 
+  survey = "acs5")
 
-alb_median_household_income_2022 <- median_household_income_alb_2022 %>% 
-  mutate(year = "2022",
+# Wrangle tables:
+med_hhinc_county <- acs_B19013_county %>% 
+  separate(variable, into=c("label","group"), sep="; ", remove=FALSE) %>%
+  mutate(year = year) %>% 
+  rename("locality" = "NAME") %>% 
+  select(GEOID, locality, label, group, estimate, moe, year)
+
+med_hhinc_tract <- acs_B19013_tract %>% 
+  separate(variable, into=c("label","group"), sep="; ", remove=FALSE) %>%
+  mutate(year = year) %>% 
+  separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE) %>%
+  select(GEOID, locality, tract, label, group, estimate, moe, year)
+
+# Join tract names
+med_hhinc_tract <- med_hhinc_tract %>% 
+  left_join(tract_names)
+
+# Median Household Income: Charlottesville, county & tract ----
+cville_med_hhinc_county <- med_hhinc_county %>% 
+  filter(locality == "Charlottesville city, Virginia")
+
+write_csv(cville_med_hhinc_county, paste0("data/cville_med_hhinc_county", "_", year, ".csv"))
+
+cville_med_hhinc_tract <- med_hhinc_tract %>% 
+  filter(locality == "Charlottesville city")
+
+write_csv(cville_med_hhinc_tract, paste0("data/cville_med_hhinc_tract", "_", year, ".csv"))
+
+# Median Household Income: Albemarle, county & tract ----
+alb_med_hhinc_county <- med_hhinc_county %>% 
+  filter(locality == "Albemarle County, Virginia")
+
+write_csv(alb_med_hhinc_county, paste0("data/alb_med_hhinc_county", "_", year, ".csv"))
+
+alb_med_hhinc_tract <- med_hhinc_tract %>% 
+  filter(locality == "Albemarle County")
+
+write_csv(alb_med_hhinc_tract, paste0("data/alb_med_hhinc_tract", "_", year, ".csv"))
+
+## ..........................................
+# ALICE Households & Threshold 2010-2022 -----
+# Get ALICE Data (2010-2022): https://www.unitedforalice.org/state-overview/Virginia
+
+url <- "https://www.unitedforalice.org/Attachments/StateDataSheet/2024%20ALICE%20-%20Virginia%20Data%20Sheet.xlsx"
+
+# Download file
+download.file(url, destfile="data/tempdata/2024_ALICE_Virginia_Data_Sheet.xlsx", method="libcurl")
+
+# Read data - County (2010-2022)
+ALICE_sheet_county <- read_excel("data/tempdata/2024_ALICE_Virginia_Data_Sheet.xlsx", sheet = "County 2010-2022") %>% 
+  clean_names()
+
+# ALICE Thresholds, 2010-2022
+ALICE_threshold_county <- ALICE_sheet_county %>% 
+  filter(str_detect(geo_id2, paste0("51", county_codes, collapse = '|'))) %>% 
+  rename(GEOID = geo_id2,
+         locality = geo_display_label) %>% 
+  select(GEOID, locality, year, alice_threshold_hh_under_65, alice_threshold_hh_65_years_and_over, source_american_community_survey, county )
+
+# ALICE Thresholds, 2010-2022: Charlottesville ----
+cville_ALICE_threshold_2010_2022 <- ALICE_threshold_county %>% 
+  filter(locality == "Charlottesville city, Virginia")
+
+write_csv(cville_ALICE_threshold_2010_2022, paste0("data/cville_ALICE_threshold_2010_2022.csv"))
+
+# ALICE Thresholds, 2010-2022: Albemarle ----
+alb_ALICE_threshold_2010_2022 <- ALICE_threshold_county %>% 
+  filter(locality == "Albemarle County, Virginia")
+
+write_csv(alb_ALICE_threshold_2010_2022, paste0("data/alb_ALICE_threshold_2010_2022.csv"))
+
+# ALICE households, 2022 ----
+ALICE_households_county <- ALICE_sheet_county %>% 
+  filter(str_detect(geo_id2, paste0("51", county_codes, collapse = '|')) &
+           year == 2022) %>% 
+  rename(GEOID = geo_id2,
+         locality = geo_display_label) %>% 
+  gather(level, number, poverty_households:above_alice_households) %>% 
+  mutate(percent = round(100 * (number / households), digits = 2),
+         group = "All") %>% 
+  select(GEOID, locality, level, group, number, households, percent, year)
+
+# Read in ALICE Race/Ethnicity 
+# CSV downloaded after filtering for each county
+ALICE_sheet_race_cville <- read_excel("data/tempdata/households-by-race-cville-2022.xlsx") %>% 
+  clean_names() %>% 
+  gather(level, number, above:poverty) %>% 
+  mutate(percent = round(100 * (number / number_households), digits = 2),
+         GEOID = "51540",
+         locality = "Charlottesville city, Virginia",
+         year = 2022) %>% 
+  rename(group = name,
+         households = number_households) %>% 
+  select(GEOID, locality, level, group, number, households, percent, year)
+
+ALICE_sheet_race_alb <- read_excel("data/tempdata/households-by-race-albemarle.xlsx") %>% 
+  clean_names() %>% 
+  gather(level, number, above:poverty) %>% 
+  mutate(percent = round(100 * (number / number_households), digits = 2),
+         GEOID = "51003",
+         locality = "Albemarle County, Virginia",
+         year = 2022) %>% 
+  rename(group = name,
+         households = number_households) %>% 
+  select(GEOID, locality, level, group, number, households, percent, year)
+
+# Combine ALICE household total and race tables
+ALICE_households_by_race <- rbind(ALICE_households_county, ALICE_sheet_race_cville, ALICE_sheet_race_alb)
+
+# ALICE household by Race: Charlottesville ----
+cville_ALICE_households_by_race_2022 <- ALICE_households_by_race %>% 
+  filter(locality == "Charlottesville city, Virginia")
+
+write_csv(cville_ALICE_households_by_race_2022, paste0("data/cville_ALICE_households_by_race_2022.csv"))
+
+# ALICE household by Race: Albemarle ----
+alb_ALICE_households_by_race_2022 <- ALICE_households_by_race %>% 
+  filter(locality == "Albemarle County, Virginia")
+
+write_csv(alb_ALICE_households_by_race_2022, paste0("data/alb_ALICE_households_by_race_2022.csv"))
+
+# ALICE household by Race: Combined Region ----
+region_fips <- as.list(unique(ALICE_households_by_race$GEOID))
+
+region_ALICE_households_by_race_2022 <- ALICE_households_by_race %>% 
+  group_by(group, level, year) %>% 
+  summarize(number = sum(number),
+            households = sum(households),
+            .groups = 'drop') %>% 
+  mutate(percent = round(100 * (number / households), digits = 2),
+         locality = region_name,
+         region_fips = paste(region_fips, collapse = ";")) %>% 
+  select(locality, region_fips, group, level, number, households, percent, year)
+
+write_csv(region_ALICE_households_by_race_2022, "data/region_ALICE_households_by_race_2022.csv")
+
+# Read data - Subcounty (2022) - NOT USED
+# ALICE_sheet_subcounty <- read_excel("data/tempdata/2024_ALICE_Virginia_Data_Sheet.xlsx", sheet = "Subcounty, Places, Zip Codes") %>% 
+#   clean_names()
+
+# ALICE_data_subcounty <- ALICE_sheet_subcounty %>% 
+#   filter(str_detect(geo_id2, paste0("51", county_codes, collapse = '|'))) %>% 
+#   separate(geo_display_label, into=c("sub_county","locality", "state"), sep=", ", remove=FALSE) %>% 
+#   rename(GEOID = geo_id2) %>% 
+#   gather(level, number, poverty_households:above_alice_households) %>% 
+#   mutate(percent = round(100 * (number / households), digits = 2)) %>% 
+#   select(GEOID, locality, sub_county, year, level, number, households, percent, source_american_community_survey)
+
+## .....................................................................................
+# Rent-burdened households: B25070 ----
+
+# get acs data
+acs_B25070_county <- get_acs(geography = "county",
+                             table = "B25070",
+                             state = "VA",
+                             county = county_codes,
+                             summary_var = "B25070_001",
+                             survey = "acs5",
+                             year = year,
+                             cache_table = TRUE)
+
+acs_B25070_tract <- get_acs(geography = "tract",
+                             table = "B25070",
+                             state = "VA",
+                             county = county_codes,
+                             summary_var = "B25070_001",
+                             survey = "acs5",
+                             year = year,
+                             cache_table = TRUE)
+
+# wrangle
+rent_burden_county <- acs_B25070_county %>% 
+  filter(!variable %in% c("B25070_001", "B25070_011")) %>% 
+  mutate(level = case_when(variable %in% c("B25070_002", "B25070_003", "B25070_004", "B25070_005", "B25070_006") ~ "Not burdened; Less than 30% household income",
+                           variable %in% c("B25070_007", "B25070_008", "B25070_009") ~ "Burdened; 30% to 49% household income",
+                           variable == "B25070_010" ~ "Severely Burdened; Over 50% household income")) %>% 
+  group_by(GEOID, NAME, level) %>% 
+  summarize(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            summary_est = first(summary_est),
+            .groups = 'drop') %>% 
+  separate(level, into=c("level","rent_burden"), sep="; ", remove=FALSE) %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         total_units = summary_est,
+         locality = NAME,
+         year = year) %>%
+  select(GEOID, locality, estimate, moe, total_units, percent, level, rent_burden, year)
+
+rent_burden_tract <- acs_B25070_tract %>% 
+  filter(!variable %in% c("B25070_001", "B25070_011")) %>% 
+  mutate(level = case_when(variable %in% c("B25070_002", "B25070_003", "B25070_004", "B25070_005", "B25070_006") ~ "Not burdened; Less than 30% household income",
+                           variable %in% c("B25070_007", "B25070_008", "B25070_009") ~ "Burdened; 30% to 49% household income",
+                           variable == "B25070_010" ~ "Severely Burdened; Over 50% household income")) %>% 
+  group_by(GEOID, NAME, level) %>% 
+  summarize(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            summary_est = first(summary_est),
+            .groups = 'drop') %>% 
+  separate(level, into=c("level","rent_burden"), sep="; ", remove=FALSE) %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         total_units = summary_est,
+         year = year) %>%
+  separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE) %>%
+  select(GEOID, locality, tract, estimate, moe, total_units, percent, level, rent_burden, year)
+
+# Join tract names
+rent_burden_tract <- rent_burden_tract %>% 
+  left_join(tract_names)
+
+# Rent-burdened households: Charlottesville, county & tract ----
+cville_rent_burden_county <- rent_burden_county %>% 
+  filter(locality == "Charlottesville city, Virginia")
+
+write_csv(cville_rent_burden_county, paste0("data/cville_rent_burden_county", "_", year, ".csv"))
+
+cville_rent_burden_tract <- rent_burden_tract %>% 
+  filter(locality == "Charlottesville city")
+
+write_csv(cville_rent_burden_tract, paste0("data/cville_rent_burden_tract", "_", year, ".csv"))
+
+# Rent-burdened households: Albemarle, county & tract ----
+alb_rent_burden_county <- rent_burden_county %>% 
+  filter(locality == "Albemarle County, Virginia")
+
+write_csv(alb_rent_burden_county, paste0("data/alb_rent_burden_county", "_", year, ".csv"))
+
+alb_rent_burden_tract <- rent_burden_tract %>% 
+  filter(locality == "Albemarle County")
+
+write_csv(alb_rent_burden_tract, paste0("data/alb_rent_burden_tract", "_", year, ".csv"))
+
+# Rent-burdened households: Charlottesville, Albemarle Combined Table, county & tract ----
+region_rent_burden <- rent_burden_county %>% 
+  group_by(level, rent_burden, year) %>% 
+  summarize(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            total_units = sum(total_units),
+            .groups = 'drop') %>% 
+  mutate(percent = round(100 * (estimate / total_units), digits = 2),
+         locality = region_name,
+         region_fips = paste(county_codes, collapse = ";")) %>% 
+  select(locality, region_fips, estimate, moe, total_units, percent, level, rent_burden, year)
+
+write_csv(region_rent_burden, paste0("data/region_rent_burden", "_", year, ".csv"))
+
+## ...........................................................
+# Median Gross Rent, 2012-2022: B25064 (Incomplete) ----
+# Table: B25064 (Median Gross Rent (Dollars))
+
+# Get ACS
+# County 2012-2022
+acs_B25064_county <- map_df(2022:2012,
+                            ~ get_acs(geography = "county",
+                                      year = .x,
+                                      state = "VA",
+                                      county = county_codes,
+                                      table = "B25064",
+                                      survey = "acs5", 
+                                      cache = TRUE) %>%
+                              mutate(year = .x))
+
+# Tract 2022 only 
+acs_B25064_tract <- get_acs(
+  geography = "tract",
+  state = "VA",
+  county = county_codes,
+  table = "B25064",
+  year = year, 
+  survey = "acs5")
+
+# Tracts have changed during this time frame - NOT USED
+# acs_B25064_tract <- map_df(2022:2012,
+#                             ~ get_acs(geography = "tract",
+#                                       year = .x,
+#                                       state = "VA",
+#                                       county = county_codes,
+#                                       table = "B25064",
+#                                       survey = "acs5", 
+#                                       cache = TRUE) %>%
+#                               mutate(year = .x))
+
+# Finalizing tables
+gross_rent_county_2012_2022 <- acs_B25064_county %>% 
+  mutate(label = case_when(variable == "B25064_001" ~ "Median Gross Rent"),
+         locality = NAME) %>% 
+  select(GEOID, locality, label, estimate, moe, year)
+
+gross_rent_tract_2022 <- acs_B25064_tract %>% 
+  mutate(label = case_when(variable == "B25064_001" ~ "Median Gross Rent"),
+         year = year) %>% 
+  separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE) %>%
+  select(GEOID, locality, tract, label, estimate, moe, year)
+
+# Join tract names
+gross_rent_tract_2022 <- gross_rent_tract_2022 %>% 
+  left_join(tract_names)
+
+# Median Gross Rent: Charlottesville, county (2012-2022) & tract (2022) ----
+cville_gross_rent_county_2012_2022 <- gross_rent_county_2012_2022 %>% 
+  filter(locality == "Charlottesville city, Virginia")
+
+write_csv(cville_gross_rent_county_2012_2022, paste0("data/cville_gross_rent_county_2012_2022.csv"))
+
+cville_gross_rent_tract_2022 <- gross_rent_tract_2022 %>% 
+  filter(locality == "Charlottesville city")
+
+write_csv(cville_gross_rent_tract_2022, paste0("data/cville_gross_rent_tract_2022.csv"))
+
+# Median Gross Rent: Albemarle, county (2012-2022) & tract (2022) ----
+alb_gross_rent_county_2012_2022 <- gross_rent_county_2012_2022 %>% 
+  filter(locality == "Albemarle County, Virginia")
+
+write_csv(alb_gross_rent_county_2012_2022, paste0("data/alb_gross_rent_county_2012_2022.csv"))
+
+alb_gross_rent_tract_2022 <- gross_rent_tract_2022 %>% 
+  filter(locality == "Albemarle County")
+
+write_csv(alb_gross_rent_tract_2022, paste0("data/alb_gross_rent_tract_2022.csv"))
+
+## .....................................
+# Tenure (Own & Rent): B25003 ----
+# Table: B25003 (Tenure)
+# Get ACS data - County and tract
+acs_B25003_county <- get_acs(geography = "county",
+                            county = county_codes,
+                            state = "VA",
+                            table = "B25003",
+                            summary_var = "B25003_001",
+                            survey = "acs5",
+                            year = year) %>% 
+  filter(variable %in% c("B25003_002", "B25003_003"))
+
+acs_B25003_tract <- get_acs(geography = "tract",
+                            county = county_codes,
+                            state = "VA",
+                            table = "B25003",
+                            summary_var = "B25003_001",
+                            survey = "acs5",
+                            year = year) %>% 
+  filter(variable %in% c("B25003_002", "B25003_003"))
+
+# Wrangle data
+tenure_county <- acs_B25003_county %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         year = year,
          label = case_when(
-           variable == "B19013_001" ~ "Median Household Income in Past 12 Months (Inflation Adjusted)"
-         ))
+           variable == "B25003_002" ~ "Owner occupied",
+           variable == "B25003_003" ~ "Renter occupied")) %>% 
+  rename(total_households = summary_est,
+         locality = NAME) %>% 
+  select(GEOID, locality, label, estimate, moe, total_households, percent, year)
 
-# Generating CSV:
+tenure_tract <- acs_B25003_tract %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         year = year,
+         total_households = summary_est,
+         label = case_when(
+           variable == "B25003_002" ~ "Owner occupied",
+           variable == "B25003_003" ~ "Renter occupied")) %>% 
+  separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE) %>%
+  select(GEOID, locality, tract, label, estimate, moe, total_households, percent, year)
 
-write.csv(alb_median_household_income_2022, "temp_data/alb_median_household_income_2022.csv")
+# Join tract names
+tenure_tract <- tenure_tract %>% 
+  left_join(tract_names)
 
-# Median Household Income by Race Tables: B19013A-B19013I, 2022
+# Tenure (Own & Rent): Charlottesville, county & tract ----
+cville_tenure_county <- tenure_county %>% 
+  filter(locality == "Charlottesville city, Virginia")
 
-# Note: two methods attempted
-  # Method one: lines 2088-2405
-  # Method two: lines 2407-2469
+write_csv(cville_tenure_county, paste0("data/cville_tenure_county", "_", year, ".csv"))
 
-# Long approach (manually pulling each table):
+cville_tenure_tract <- tenure_tract %>% 
+  filter(locality == "Charlottesville city")
 
-        # Table: B19013A (Median Household Income by Race, White Alone), 2022
-        
-        # Charlottesville (Median Household Income by Race, White Alone), 2022
-        median_white_household_income_cville_2022 <- get_acs(
-          geography = "county",
-          county = "540",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013A",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        cville_median_white_household_income_2022 <- median_white_household_income_cville_2022 %>% 
-          mutate(year = "2022", race = "White Alone", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Albemarle (Median Household Income by Race, White Alone), 2022
-        median_white_household_income_alb_2022 <- get_acs(
-          geography = "county",
-          county = "003",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013A",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        alb_median_white_household_income_2022 <- median_white_household_income_alb_2022 %>% 
-          mutate(year = "2022", race = "White Alone", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Table: B19013B (Median Household Income by Race, Black or African American Alone), 2022
-        
-        # Charlottesville (Median Household Income by Race, Black or African American Alone), 2022
-        median_black_household_income_cville_2022 <- get_acs(
-          geography = "county",
-          county = "540",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013B",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        cville_median_black_household_income_2022 <- median_black_household_income_cville_2022 %>% 
-          mutate(year = "2022", race = "Black or African American Alone", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Albemarle (Median Household Income by Race, Black or African American Alone), 2022
-        median_black_household_income_alb_2022 <- get_acs(
-          geography = "county",
-          county = "003",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013B",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        alb_median_black_household_income_2022 <- median_black_household_income_alb_2022 %>% 
-          mutate(year = "2022", race = "Black or African American Alone", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Table: B19013C (Median Household Income by Race, American Indian and Alaska Native Alone), 2022
-        
-        # Charlottesville (Median Household Income by Race, American Indian and Alaska Native Alone), 2022
-        median_native_household_income_cville_2022 <- get_acs(
-          geography = "county",
-          county = "540",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013C",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        cville_median_native_household_income_2022 <- median_native_household_income_cville_2022 %>% 
-          mutate(year = "2022", race = "American Indian and Alaska Native Alone", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Albemarle (Median Household Income by Race, American Indian and Alaska Native Alone), 2022
-        median_native_household_income_alb_2022 <- get_acs(
-          geography = "county",
-          county = "003",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013C",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        alb_median_native_household_income_2022 <- median_native_household_income_alb_2022 %>% 
-          mutate(year = "2022", race = "American Indian and Alaska Native Alone", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Table: B19013D (Median Household Income by Race, Asian Alone), 2022
-        
-        # Charlottesville (Median Household Income by Race, Asian Alone), 2022
-        median_asian_household_income_cville_2022 <- get_acs(
-          geography = "county",
-          county = "540",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013D",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        cville_median_asian_household_income_2022 <- median_asian_household_income_cville_2022 %>% 
-          mutate(year = "2022", race = "Asian Alone", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Albemarle (Median Household Income by Race, Asian Alone), 2022
-        median_asian_household_income_alb_2022 <- get_acs(
-          geography = "county",
-          county = "003",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013D",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        alb_median_asian_household_income_2022 <- median_asian_household_income_alb_2022 %>% 
-          mutate(year = "2022", race = "Asian Alone", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Table: B19013E (Median Household Income by Race, Native Hawaiian and Other Pacific Islander Alone), 2022
-        
-        # Charlottesville (Median Household Income by Race, Native Hawaiian and Other Pacific Islander Alone), 2022
-        median_pacific_islander_household_income_cville_2022 <- get_acs(
-          geography = "county",
-          county = "540",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013E",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        cville_median_pacific_islander_household_income_2022 <- median_pacific_islander_household_income_cville_2022 %>% 
-          mutate(year = "2022", race = "Native Hawaiian and Other Pacific Islander Alone", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Albemarle (Median Household Income by Race, Native Hawaiian and Other Pacific Islander Alone), 2022
-        median_pacific_islander_household_income_alb_2022 <- get_acs(
-          geography = "county",
-          county = "003",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013E",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        alb_median_pacific_islander_household_income_2022 <- median_pacific_islander_household_income_alb_2022 %>% 
-          mutate(year = "2022", race = "Native Hawaiian and Other Pacific Islander Alone", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Table: B19013F (Median Household Income by Race, Some Other Race Alone), 2022
-        
-        # Charlottesville (Median Household Income by Race, Some Other Race Alone), 2022
-        median_other_race_household_income_cville_2022 <- get_acs(
-          geography = "county",
-          county = "540",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013F",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        cville_median_other_race_household_income_2022 <- median_other_race_household_income_cville_2022 %>% 
-          mutate(year = "2022", race = "Some Other Race Alone", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Albemarle (Median Household Income by Race, Some Other Race Alone), 2022
-        median_other_race_household_income_alb_2022 <- get_acs(
-          geography = "county",
-          county = "003",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013F",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        alb_median_other_race_household_income_2022 <- median_other_race_household_income_alb_2022 %>% 
-          mutate(year = "2022", race = "Some Other Race Alone", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Table: B19013G (Median Household Income by Race, Two or More Races), 2022
-        
-        # Charlottesville (Median Household Income by Race, Two or More Races Alone), 2022
-        median_two_or_more_races_household_income_cville_2022 <- get_acs(
-          geography = "county",
-          county = "540",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013G",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        cville_median_two_or_more_races_household_income_2022 <- median_two_or_more_races_household_income_cville_2022 %>% 
-          mutate(year = "2022", race = "Two or More Races", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Albemarle (Median Household Income by Race, Two or More Races Alone), 2022
-        median_two_or_more_races_household_income_alb_2022 <- get_acs(
-          geography = "county",
-          county = "003",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013G",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        alb_median_two_or_more_races_household_income_2022 <- median_two_or_more_races_household_income_alb_2022 %>% 
-          mutate(year = "2022", race = "Two or More Races", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Table: B19013H (Median Household Income by Race, White Alone, Not Hispanic or Latino), 2022
-        
-        # Charlottesville (Median Household Income by Race, White Alone, Not Hispanic or Latino Alone), 2022
-        median_white_not_hispanic_household_income_cville_2022 <- get_acs(
-          geography = "county",
-          county = "540",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013H",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        cville_median_white_not_hispanic_household_income_2022 <- median_white_not_hispanic_household_income_cville_2022 %>% 
-          mutate(year = "2022", race = "White Alone, Not Hispanic or Latino", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Albemarle (Median Household Income by Race, White Alone, Not Hispanic or Latino Alone), 2022
-        median_white_not_hispanic_household_income_alb_2022 <- get_acs(
-          geography = "county",
-          county = "003",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013H",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        alb_median_white_not_hispanic_household_income_2022 <- median_white_not_hispanic_household_income_alb_2022 %>% 
-          mutate(year = "2022", race = "White Alone, Not Hispanic or Latino", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Table: B19013I (Median Household Income by Race, Hispanic or Latino), 2022
-        
-        # Charlottesville (Median Household Income by Race, Hispanic or Latino), 2022
-        median_hispanic_household_income_cville_2022 <- get_acs(
-          geography = "county",
-          county = "540",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013I",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        cville_median_hispanic_household_income_2022 <- median_hispanic_household_income_cville_2022 %>% 
-          mutate(year = "2022", race = "Hispanic or Latino", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Albemarle (Median Household Income by Race, Hispanic or Latino), 2022
-        median_hispanic_household_income_alb_2022 <- get_acs(
-          geography = "county",
-          county = "003",
-          cache = TRUE,
-          state = "VA",
-          table = "B19013I",
-          survey = "acs5",
-          year = 2022
-        )
-        
-        # Finalizing table
-        alb_median_hispanic_household_income_2022 <- median_hispanic_household_income_alb_2022 %>% 
-          mutate(year = "2022", race = "Hispanic or Latino", label = "Median Household Income in Past 12 Months (Inflation Adjusted)")
-        
-        # Combining data (Charlottesville)
-        
-        cville_median_household_income_race_2022 <- bind_rows(
-          cville_median_white_household_income_2022,
-          cville_median_black_household_income_2022,
-          cville_median_native_household_income_2022,
-          cville_median_asian_household_income_2022,
-          cville_median_pacific_islander_household_income_2022,
-          cville_median_other_race_household_income_2022,
-          cville_median_two_or_more_races_household_income_2022,
-          cville_median_white_not_hispanic_household_income_2022,
-          cville_median_hispanic_household_income_2022
-        )
-        
-        # Combining data (Albemarle)
-        
-        alb_median_household_income_race_2022 <- bind_rows(
-          alb_median_white_household_income_2022,
-          alb_median_black_household_income_2022,
-          alb_median_native_household_income_2022,
-          alb_median_asian_household_income_2022,
-          alb_median_pacific_islander_household_income_2022,
-          alb_median_other_race_household_income_2022,
-          alb_median_two_or_more_races_household_income_2022,
-          alb_median_white_not_hispanic_household_income_2022,
-          alb_median_hispanic_household_income_2022
-        )
-    
-# Alternate method (fewer lines of code)
-        
-        vars <- c("B19013A_001", # Median Household Income by Race, White Alone
-                  "B19013B_001", # Median Household Income by Race, Black or African American Alone
-                  "B19013C_001", # Median Household Income by Race, American Indian and Alaska Native Alone
-                  "B19013D_001", # Median Household Income by Race, Asian Alone
-                  "B19013E_001", # Median Household Income by Race, Native Hawaiian and Other Pacific Islander Alone
-                  "B19013F_001", # Median Household Income by Race, Some Other Race Alone
-                  "B19013G_001", # Median Household Income by Race, Two or More Races
-                  "B19013H_001", # Median Household Income by Race, White Alone, Not Hispanic or Latino
-                  "B19013I_001") # Median Household Income by Race, Hispanic or Latino
-        
-        # Charlottesville, 2022
-        
-        median_income_cville_2022 <- get_acs(geography = "county",
-                                              variable = vars,
-                                              county = "540",
-                                              cache = TRUE,
-                                              state = "VA",
-                                              survey = "acs5",
-                                              year = 2022,
-                                              output = "wide")
-        
-        # Finalize
-        median_income_cville_2022 <- median_income_cville_2022 %>%
-          select(-ends_with("M")) %>% 
-          rename(
-            median_household_income_white_alone = B19013A_001E,
-            median_household_income_black_alone = B19013B_001E,
-            median_household_income_native_alone = B19013C_001E,
-            median_household_income_asian_alone = B19013D_001E,
-            median_household_income_pacific_islander_alone = B19013E_001E,
-            median_household_income_some_other_race_alone = B19013F_001E,
-            median_household_income_two_or_more_races = B19013G_001E,
-            median_household_income_white_alone_not_hispanic_latino = B19013H_001E,
-            median_household_income_hispanic_latino = B19013I_001E
-            )
-        
-        # Albemarle, 2022
-        
-        median_income_alb_2022 <- get_acs(geography = "county",
-                                             variable = vars,
-                                             county = "003",
-                                             cache = TRUE,
-                                             state = "VA",
-                                             survey = "acs5",
-                                             year = 2022,
-                                             output = "wide")
-        
-        # Finalize
-        median_income_alb_2022 <- median_income_alb_2022 %>%
-          select(-ends_with("M")) %>% 
-          rename(
-            median_household_income_white_alone = B19013A_001E,
-            median_household_income_black_alone = B19013B_001E,
-            median_household_income_native_alone = B19013C_001E,
-            median_household_income_asian_alone = B19013D_001E,
-            median_household_income_pacific_islander_alone = B19013E_001E,
-            median_household_income_some_other_race_alone = B19013F_001E,
-            median_household_income_two_or_more_races = B19013G_001E,
-            median_household_income_white_alone_not_hispanic_latino = B19013H_001E,
-            median_household_income_hispanic_latino = B19013I_001E
-          )
-        
-# ALICE Data (2010-2022)
-# url: https://www.unitedforalice.org/Attachments/StateDataSheet/2024%20ALICE%20-%20Virginia%20Data%20Sheet.xlsx
-# destfile <- "temp_data/VA_ALICE_2024.xlsx"
+write_csv(cville_tenure_tract, paste0("data/cville_tenure_tract", "_", year, ".csv"))
 
-# Charlottesville (ALICE Households), 2010-2022
+# Tenure (Own & Rent): Albemarle, county & tract ----
+alb_tenure_county <- tenure_county %>% 
+  filter(locality == "Albemarle County, Virginia")
 
-sheets <- excel_sheets("temp_data/VA_ALICE_2024.xlsx")
+write_csv(alb_tenure_county, paste0("data/alb_tenure_county", "_", year, ".csv"))
 
-alice_va <- read_excel("temp_data/VA_ALICE_2024.xlsx", sheet = sheets[2]) %>%
-  rename_with(~ tolower(str_replace_all(.x, ":|-| ", "_") )
-  ) %>%
-  filter(geo.id2 == "51540")
+alb_tenure_tract <- tenure_tract %>% 
+  filter(locality == "Albemarle County")
 
-alice_cville <- alice_va %>%
-  select(year, households, poverty_households, alice_households, above_alice_households) %>%
-  gather(level, number, -year, -households) %>%
-  mutate(pct = number/households*100 )
+write_csv(alb_tenure_tract, paste0("data/alb_tenure_tract", "_", year, ".csv"))
 
-# Generating CSV:
+# Tenure (Own & Rent): Combined region ----
+region_tenure <- tenure_county %>% 
+  group_by(label, year) %>% 
+  summarize(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            total_households = sum(total_households),
+            .groups = 'drop') %>% 
+  mutate(percent = round(100 * (estimate / total_households), digits = 2),
+         locality = region_name,
+         region_fips = paste(county_codes, collapse = ";")) %>% 
+  select(region_fips, locality, estimate, moe, total_households, percent, label, year)
 
-write.csv(alice_cville, "temp_data/cville_alice_2010_2022.csv")
+write_csv(region_tenure, paste0("data/region_tenure", "_", year, ".csv"))
 
-# Albemarle (ALICE Households), 2010-2022
+## ..........................................
+# Tenure (Own & Rent) by Race: B25003A-I ----
+# Tables: B25003A-B25003I, 2012 & 2022
 
-sheets <- excel_sheets("temp_data/VA_ALICE_2024.xlsx")
+# Get ACS Data - County by race
+# White Alone
+acs_B25003A_county <- map_df(c(2022, 2012),
+                                  ~ get_acs(geography = "county",
+                                            year = .x,
+                                            state = "VA",
+                                            county = county_codes,
+                                            table = "B25003A",
+                                            summary_var = "B25003A_001",
+                                            survey = "acs5") %>% 
+                                    mutate(year = .x) %>% 
+                                    filter(variable %in% c("B25003A_002", "B25003A_003")))
 
-alice_va <- read_excel("temp_data/VA_ALICE_2024.xlsx", sheet = sheets[2]) %>%
-  rename_with(~ tolower(str_replace_all(.x, ":|-| ", "_") )
-  ) %>%
-  filter(geo.id2 == "51003")
+# Black Alone
+acs_B25003B_county <- map_df(c(2022, 2012),
+                             ~ get_acs(geography = "county",
+                                       year = .x,
+                                       state = "VA",
+                                       county = county_codes,
+                                       table = "B25003B",
+                                       summary_var = "B25003B_001",
+                                       survey = "acs5") %>% 
+                               mutate(year = .x) %>% 
+                               filter(variable %in% c("B25003B_002", "B25003B_003")))
 
-alice_alb <- alice_va %>%
-  select(year, households, poverty_households, alice_households, above_alice_households) %>%
-  gather(level, number, -year, -households) %>%
-  mutate(pct = number/households*100 )
+# American Indian/Native Alaskan
+acs_B25003C_county <- map_df(c(2022, 2012),
+                             ~ get_acs(geography = "county",
+                                       year = .x,
+                                       state = "VA",
+                                       county = county_codes,
+                                       table = "B25003C",
+                                       summary_var = "B25003C_001",
+                                       survey = "acs5") %>% 
+                               mutate(year = .x) %>% 
+                               filter(variable %in% c("B25003C_002", "B25003C_003")))
 
-# Generating CSV:
+# Asian
+acs_B25003D_county <- map_df(c(2022, 2012),
+                             ~ get_acs(geography = "county",
+                                       year = .x,
+                                       state = "VA",
+                                       county = county_codes,
+                                       table = "B25003D",
+                                       summary_var = "B25003D_001",
+                                       survey = "acs5") %>% 
+                               mutate(year = .x) %>% 
+                               filter(variable %in% c("B25003D_002", "B25003D_003")))
 
-write.csv(alice_alb, "temp_data/alb_alice_2010_2022.csv")
+# Native Hawaiian/Pacific Islander
+acs_B25003E_county <- map_df(c(2022, 2012),
+                             ~ get_acs(geography = "county",
+                                       year = .x,
+                                       state = "VA",
+                                       county = county_codes,
+                                       table = "B25003E",
+                                       summary_var = "B25003E_001",
+                                       survey = "acs5") %>% 
+                               mutate(year = .x) %>% 
+                               filter(variable %in% c("B25003E_002", "B25003E_003")))
+
+# Other Race
+acs_B25003F_county <- map_df(c(2022, 2012),
+                             ~ get_acs(geography = "county",
+                                       year = .x,
+                                       state = "VA",
+                                       county = county_codes,
+                                       table = "B25003F",
+                                       summary_var = "B25003F_001",
+                                       survey = "acs5") %>% 
+                               mutate(year = .x) %>% 
+                               filter(variable %in% c("B25003F_002", "B25003F_003")))
+
+# Multiracial
+acs_B25003G_county <- map_df(c(2022, 2012),
+                             ~ get_acs(geography = "county",
+                                       year = .x,
+                                       state = "VA",
+                                       county = county_codes,
+                                       table = "B25003G",
+                                       summary_var = "B25003G_001",
+                                       survey = "acs5") %>% 
+                               mutate(year = .x) %>% 
+                               filter(variable %in% c("B25003G_002", "B25003G_003")))
+
+
+# White, Not Hispanic or Latino
+acs_B25003H_county <- map_df(c(2022, 2012),
+                             ~ get_acs(geography = "county",
+                                       year = .x,
+                                       state = "VA",
+                                       county = county_codes,
+                                       table = "B25003H",
+                                       summary_var = "B25003H_001",
+                                       survey = "acs5") %>% 
+                               mutate(year = .x) %>% 
+                               filter(variable %in% c("B25003H_002", "B25003H_003")))
+
+# Hispanic or Latino
+acs_B25003I_county <- map_df(c(2022, 2012),
+                             ~ get_acs(geography = "county",
+                                       year = .x,
+                                       state = "VA",
+                                       county = county_codes,
+                                       table = "B25003I",
+                                       summary_var = "B25003I_001",
+                                       survey = "acs5") %>% 
+                               mutate(year = .x) %>% 
+                               filter(variable %in% c("B25003I_002", "B25003I_003")))
+
+# Bind race tables
+acs_B25003_race_county <- rbind(acs_B25003A_county,
+                                acs_B25003B_county,
+                                acs_B25003C_county,
+                                acs_B25003D_county,
+                                acs_B25003E_county,
+                                acs_B25003F_county,
+                                acs_B25003G_county,
+                                acs_B25003H_county,
+                                acs_B25003I_county)
+
+tenure_race_county <- acs_B25003_race_county %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         label = case_when(
+           str_detect(variable, "_002") ~ "Owner occupied",
+           str_detect(variable, "_003") ~ "Renter occupied"),
+         group = case_when(
+           str_detect(variable, "A_") ~ "White",
+           str_detect(variable, "B_") ~ "Black",
+           str_detect(variable, "C_") ~ "American Indian/Native Alaskan",
+           str_detect(variable, "D_") ~ "Asian",
+           str_detect(variable, "E_") ~ "Native Hawaiian/Pacific Islander",
+           str_detect(variable, "F_") ~ "Other",
+           str_detect(variable, "G_") ~ "Mutiracial",
+           str_detect(variable, "H_") ~ "White, Not Hispanic or Latino",
+           str_detect(variable, "I_") ~ "Hispanic or Latino")
+         ) %>% 
+  rename(total_households = summary_est,
+         locality = NAME) %>% 
+  select(GEOID, locality, label, group, estimate, moe, total_households, percent, year)
+
+# Tenure (Own & Rent) by Race: Charlottesville, county ----
+cville_tenure_race_county <- tenure_race_county %>% 
+  filter(locality == "Charlottesville city, Virginia")
+
+write_csv(cville_tenure_race_county, paste0("data/cville_tenure_race_county_2012_2022.csv"))
+
+# Tenure (Own & Rent) by Race: Albemarle, county ----
+alb_tenure_race_county <- tenure_race_county %>% 
+  filter(locality == "Albemarle County, Virginia")
+
+write_csv(alb_tenure_race_county, paste0("data/alb_tenure_race_county_2012_2022.csv"))
+
+# Tenure (Own & Rent) by Race: Combined region ----
+region_tenure_race <- tenure_race_county %>% 
+  group_by(group, label, year) %>% 
+  summarize(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            total_households = sum(total_households),
+            .groups = 'drop') %>% 
+  mutate(percent = round(100 * (estimate / total_households), digits = 2),
+         locality = region_name,
+         region_fips = paste(county_codes, collapse = ";")) %>%
+  select(region_fips, locality, group, label, estimate, moe, total_households, percent, year)
+
+write_csv(region_tenure_race, "data/region_tenure_race_2012_2022.csv")
+
+## ....................................................
+## End

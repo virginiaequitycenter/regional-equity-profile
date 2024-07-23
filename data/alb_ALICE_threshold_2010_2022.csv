@@ -1,0 +1,9 @@
+GEOID,locality,year,alice_threshold_hh_under_65,alice_threshold_hh_65_years_and_over,source_american_community_survey,county
+51003,"Albemarle County, Virginia",2010,50000,45000,1-Year,Albemarle
+51003,"Albemarle County, Virginia",2012,60000,45000,1-Year,Albemarle
+51003,"Albemarle County, Virginia",2014,60000,50000,1-Year,Albemarle
+51003,"Albemarle County, Virginia",2016,75000,60000,1-Year,Albemarle
+51003,"Albemarle County, Virginia",2018,75000,60000,1-Year,Albemarle
+51003,"Albemarle County, Virginia",2019,75000,60000,5-Year,Albemarle
+51003,"Albemarle County, Virginia",2021,75000,60000,5-Year,Albemarle
+51003,"Albemarle County, Virginia",2022,77747.9957595811,65304,1-Year,Albemarle

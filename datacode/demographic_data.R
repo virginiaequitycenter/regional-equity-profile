@@ -1,11 +1,42 @@
 # R Script for pulling and examining demographic data
-# Author: Henry DeMarco, Beth Mitchell
+# Authors: Henry DeMarco, Beth Mitchell
 # Date Created: June 4, 2024
 # Last Updated: June 28, 2024
 
 ## County FIPS Codes
 # 003 -- Albemarle
 # 540 -- Charlottesville
+
+# Demographics TOC ----
+# Race, 2012-2022
+# - Source: ACS Table B02001
+# Ethnicity by Race, 2012-2022
+# - Source: ACS Table B03002 (Hispanic or Latino Origin by Race)
+# Ethnicity, 2012-2022
+# - Source: ACS Table B03003
+# Sex by Age, 2012 & 2022
+# - Source: ACS Table: B01001
+# Nativity & Citizenship Status, 2022
+# - Source: ACS Table: B05001
+# Place of Birth for Foreign-Born Population, 2022
+# - Source: ACS Table: B05006
+# Household Language, Limited and Non-limited English, 2022
+# - Source: ACS Table: B16002
+# Disability Status, by Sex and Age, 2022
+# - Source: ACS Table: B18101
+# Disability by Category, 2022
+# - Hearing Difficulty
+#   - Source: ACS Table: B18102
+# - Vision Difficulty
+#   - Source: ACS Table: B18103
+# - Cognitive Difficulty
+#   - Source: ACS Table: B18104
+# - Ambulatory Difficulty
+#   - Source: ACS Table: B18105
+# - Self-care Difficulty
+#   - Source: ACS Table: B18106
+# - Independent Living Difficulty
+#   - Source: ACS Table: B18107
 
 # Load packages
 library(tidyverse)

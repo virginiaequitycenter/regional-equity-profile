@@ -1,0 +1,19 @@
+GEOID,locality,level,group,number,households,percent,year
+51540,"Charlottesville city, Virginia",poverty_households,All,4147,19511,21.25,2022
+51540,"Charlottesville city, Virginia",alice_households,All,5829,19511,29.88,2022
+51540,"Charlottesville city, Virginia",above_alice_households,All,9535,19511,48.87,2022
+51540,"Charlottesville city, Virginia",above,Asian,336,1016,33.07,2022
+51540,"Charlottesville city, Virginia",above,Black,787,3056,25.75,2022
+51540,"Charlottesville city, Virginia",above,Hispanic,309,805,38.39,2022
+51540,"Charlottesville city, Virginia",above,White,7667,13729,55.85,2022
+51540,"Charlottesville city, Virginia",above,2+ Races,443,822,53.89,2022
+51540,"Charlottesville city, Virginia",alice,Asian,398,1016,39.17,2022
+51540,"Charlottesville city, Virginia",alice,Black,1400,3056,45.81,2022
+51540,"Charlottesville city, Virginia",alice,Hispanic,421,805,52.3,2022
+51540,"Charlottesville city, Virginia",alice,White,4369,13729,31.82,2022
+51540,"Charlottesville city, Virginia",alice,2+ Races,228,822,27.74,2022
+51540,"Charlottesville city, Virginia",poverty,Asian,282,1016,27.76,2022
+51540,"Charlottesville city, Virginia",poverty,Black,869,3056,28.44,2022
+51540,"Charlottesville city, Virginia",poverty,Hispanic,75,805,9.32,2022
+51540,"Charlottesville city, Virginia",poverty,White,1693,13729,12.33,2022
+51540,"Charlottesville city, Virginia",poverty,2+ Races,151,822,18.37,2022

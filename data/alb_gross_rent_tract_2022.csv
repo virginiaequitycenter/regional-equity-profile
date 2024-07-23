@@ -1,0 +1,30 @@
+GEOID,locality,tract,label,estimate,moe,year,county,locality_num,tract_num,tractnames
+51003010100,Albemarle County,Census Tract 101,Median Gross Rent,1663,538,2022,Albemarle,003,010100,Free Union
+51003010201,Albemarle County,Census Tract 102.01,Median Gross Rent,1463,515,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010202,Albemarle County,Census Tract 102.02,Median Gross Rent,NA,NA,2022,Albemarle,003,010202,Earlysville
+51003010301,Albemarle County,Census Tract 103.01,Median Gross Rent,1860,540,2022,Albemarle,003,010301,Berkmar Drive
+51003010302,Albemarle County,Census Tract 103.02,Median Gross Rent,2250,242,2022,Albemarle,003,010302,Polo Grounds Road
+51003010303,Albemarle County,Census Tract 103.03,Median Gross Rent,1626,344,2022,Albemarle,003,010303,Hollymead
+51003010401,Albemarle County,Census Tract 104.01,Median Gross Rent,1333,451,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010402,Albemarle County,Census Tract 104.02,Median Gross Rent,2153,286,2022,Albemarle,003,010402,Village of Rivanna
+51003010501,Albemarle County,Census Tract 105.01,Median Gross Rent,1715,517,2022,Albemarle,003,010501,Darden-Key West
+51003010502,Albemarle County,Census Tract 105.02,Median Gross Rent,1593,241,2022,Albemarle,003,010502,Pantops
+51003010602,Albemarle County,Census Tract 106.02,Median Gross Rent,1776,147,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010603,Albemarle County,Census Tract 106.03,Median Gross Rent,1682,65,2022,Albemarle,003,010603,Branchland
+51003010604,Albemarle County,Census Tract 106.04,Median Gross Rent,1814,199,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010701,Albemarle County,Census Tract 107.01,Median Gross Rent,1345,119,2022,Albemarle,003,010701,Hydraulic
+51003010702,Albemarle County,Census Tract 107.02,Median Gross Rent,1486,193,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010801,Albemarle County,Census Tract 108.01,Median Gross Rent,1572,141,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010802,Albemarle County,Census Tract 108.02,Median Gross Rent,1603,241,2022,Albemarle,003,010802,Albemarle High School
+51003010901,Albemarle County,Census Tract 109.01,Median Gross Rent,1458,55,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Median Gross Rent,1172,59,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003011000,Albemarle County,Census Tract 110,Median Gross Rent,1962,1161,2022,Albemarle,003,011000,Ivy
+51003011101,Albemarle County,Census Tract 111.01,Median Gross Rent,1609,512,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011102,Albemarle County,Census Tract 111.02,Median Gross Rent,1672,135,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011103,Albemarle County,Census Tract 111.03,Median Gross Rent,1827,668,2022,Albemarle,003,011103,Old Trail
+51003011201,Albemarle County,Census Tract 112.01,Median Gross Rent,1179,184,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011202,Albemarle County,Census Tract 112.02,Median Gross Rent,1145,316,2022,Albemarle,003,011202,North Garden
+51003011301,Albemarle County,Census Tract 113.01,Median Gross Rent,1269,264,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011302,Albemarle County,Census Tract 113.02,Median Gross Rent,1667,115,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011303,Albemarle County,Census Tract 113.03,Median Gross Rent,1771,61,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011400,Albemarle County,Census Tract 114,Median Gross Rent,1128,84,2022,Albemarle,003,011400,Southern Albemarle-Scottsville
