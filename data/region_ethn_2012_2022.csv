@@ -1,23 +1,23 @@
-locality,estimate,moe,total_pop,percent,year,label
-Combined Region,7477,NA,142707,5.24,2012,Hispanic or Latino
-Combined Region,7766,NA,144299,5.38,2013,Hispanic or Latino
-Combined Region,7891,NA,146388,5.39,2014,Hispanic or Latino
-Combined Region,8088,NA,148192,5.46,2015,Hispanic or Latino
-Combined Region,8127,NA,149825,5.42,2016,Hispanic or Latino
-Combined Region,8422,NA,151592,5.56,2017,Hispanic or Latino
-Combined Region,8699,NA,153397,5.67,2018,Hispanic or Latino
-Combined Region,8789,NA,154501,5.69,2019,Hispanic or Latino
-Combined Region,8895,NA,156036,5.7,2020,Hispanic or Latino
-Combined Region,9187,NA,158035,5.81,2021,Hispanic or Latino
-Combined Region,9338,NA,158802,5.88,2022,Hispanic or Latino
-Combined Region,135230,NA,142707,94.76,2012,Not Hispanic or Latino
-Combined Region,136533,NA,144299,94.62,2013,Not Hispanic or Latino
-Combined Region,138497,NA,146388,94.61,2014,Not Hispanic or Latino
-Combined Region,140104,NA,148192,94.54,2015,Not Hispanic or Latino
-Combined Region,141698,NA,149825,94.58,2016,Not Hispanic or Latino
-Combined Region,143170,NA,151592,94.44,2017,Not Hispanic or Latino
-Combined Region,144698,NA,153397,94.33,2018,Not Hispanic or Latino
-Combined Region,145712,NA,154501,94.31,2019,Not Hispanic or Latino
-Combined Region,147141,NA,156036,94.3,2020,Not Hispanic or Latino
-Combined Region,148848,NA,158035,94.19,2021,Not Hispanic or Latino
-Combined Region,149464,NA,158802,94.12,2022,Not Hispanic or Latino
+region_fips,locality,estimate,moe,total_pop,percent,year,label
+003;540,Charlottesville-Albemarle Region,7477,NA,142707,5.24,2012,Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,7766,NA,144299,5.38,2013,Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,7891,NA,146388,5.39,2014,Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,8088,NA,148192,5.46,2015,Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,8127,NA,149825,5.42,2016,Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,8422,NA,151592,5.56,2017,Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,8699,NA,153397,5.67,2018,Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,8789,NA,154501,5.69,2019,Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,8895,NA,156036,5.7,2020,Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,9187,NA,158035,5.81,2021,Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,9338,NA,158802,5.88,2022,Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,135230,NA,142707,94.76,2012,Not Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,136533,NA,144299,94.62,2013,Not Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,138497,NA,146388,94.61,2014,Not Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,140104,NA,148192,94.54,2015,Not Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,141698,NA,149825,94.58,2016,Not Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,143170,NA,151592,94.44,2017,Not Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,144698,NA,153397,94.33,2018,Not Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,145712,NA,154501,94.31,2019,Not Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,147141,NA,156036,94.3,2020,Not Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,148848,NA,158035,94.19,2021,Not Hispanic or Latino
+003;540,Charlottesville-Albemarle Region,149464,NA,158802,94.12,2022,Not Hispanic or Latino

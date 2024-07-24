@@ -238,8 +238,8 @@ med_earn_combined <- agg_earning_median(earnings_df, choose)
 
 # Create data frame
 region_med_earnings <- data.frame(
+  region_fips = paste(choose, collapse = ","),
   locality = region_name,
-  region_FIPS = paste(choose, collapse = ","),
   med_earnings_est = med_earn_combined,
   year = year
 )
@@ -385,7 +385,7 @@ income_ranges_county <- income_ranges_func(acs_B19001_county)
 
 
 # Derive steps to aggregate and estimate
-# Median Household Income, Combined Region, County & tract ----
+# Median Household Income, Combined Region ----
 
 # choose localities for combined region
 choose <- c("51003", "51540")
@@ -680,7 +680,7 @@ region_ALICE_households_by_race_2022 <- ALICE_households_by_race %>%
   mutate(percent = round(100 * (number / households), digits = 2),
          locality = region_name,
          region_fips = paste(region_fips, collapse = ";")) %>% 
-  select(locality, region_fips, group, level, number, households, percent, year)
+  select(region_fips, locality, group, level, number, households, percent, year)
 
 write_csv(region_ALICE_households_by_race_2022, "data/region_ALICE_households_by_race_2022.csv")
 
@@ -779,7 +779,7 @@ alb_rent_burden_tract <- rent_burden_tract %>%
 
 write_csv(alb_rent_burden_tract, paste0("data/alb_rent_burden_tract", "_", year, ".csv"))
 
-# Rent-burdened households: Charlottesville, Albemarle Combined Table, county & tract ----
+# Rent-burdened households: Region, Combined Table ----
 region_rent_burden <- rent_burden_county %>% 
   group_by(level, rent_burden, year) %>% 
   summarize(estimate = sum(estimate),
@@ -789,7 +789,7 @@ region_rent_burden <- rent_burden_county %>%
   mutate(percent = round(100 * (estimate / total_units), digits = 2),
          locality = region_name,
          region_fips = paste(county_codes, collapse = ";")) %>% 
-  select(locality, region_fips, estimate, moe, total_units, percent, level, rent_burden, year)
+  select(region_fips, locality, estimate, moe, total_units, percent, level, rent_burden, year)
 
 write_csv(region_rent_burden, paste0("data/region_rent_burden", "_", year, ".csv"))
 

@@ -49,7 +49,7 @@ year <- 2022
 county_codes <- c("003", "540") # Albemarle, Charlottesville FIPS Code
 
 # Name for combined region
-region_name <- "Combined Region"
+region_name <- "Charlottesville-Albemarle Region"
 
 # Read in tract names
 tract_names <- read_csv("data/regional_tractnames.csv")
@@ -155,7 +155,7 @@ alb_edu_attain_tract <- edu_attain_tract %>%
 
 write_csv(alb_edu_attain_tract, paste0("data/alb_edu_attain_tract", "_", year, ".csv"))
 
-# Educational Attainment: Charlottesville, Albemarle Combined Table, county & tract ----
+# Educational Attainment: Charlottesville, Albemarle Combined Table ----
 region_edu_attain <- edu_attain_county %>% 
   group_by(label, year) %>% 
   summarize(estimate = sum(estimate),
@@ -163,8 +163,9 @@ region_edu_attain <- edu_attain_county %>%
             pop_25_over = sum(pop_25_over),
             .groups = 'drop') %>% 
   mutate(percent = round(100 * (estimate / pop_25_over), digits = 2),
-         locality = region_name) %>% 
-  select(locality, estimate, moe, pop_25_over, percent, label, year)
+         locality = region_name,
+         region_fips = paste(county_codes, collapse = ";")) %>% 
+  select(region_fips, locality, estimate, moe, pop_25_over, percent, label, year)
 
 write_csv(region_edu_attain, paste0("data/region_edu_attain", "_", year, ".csv"))
 
@@ -271,8 +272,9 @@ region_enroll <- enroll_county %>%
             pop_3_to_24yr = sum(pop_3_to_24yr),
             .groups = 'drop') %>% 
   mutate(percent = round(100 * (estimate / pop_3_to_24yr), digits = 2),
-         locality = region_name) %>% 
-  select(locality, estimate, moe, pop_3_to_24yr, percent, label, year)
+         locality = region_name,
+         region_fips = paste(county_codes, collapse = ";")) %>% 
+  select(region_fips, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
 
 write_csv(region_enroll, paste0("data/region_enroll", "_", year, ".csv"))
 
@@ -403,8 +405,9 @@ region_edu_attain_race <- edu_attain_race_county %>%
             group_total = sum(group_total),
             .groups = 'drop') %>% 
   mutate(percent = round(100 * (estimate / group_total), digits = 2),
-         locality = region_name) %>% 
-  select(locality, race, edu_level, estimate, group_total, group_total_moe, percent, year)
+         locality = region_name,
+         region_fips = paste(county_codes, collapse = ";")) %>% 
+  select(region_fips, locality, race, edu_level, estimate, group_total, group_total_moe, percent, year)
 
 write_csv(region_edu_attain_race, paste0("data/region_edu_attain_race", "_", year, ".csv"))
 

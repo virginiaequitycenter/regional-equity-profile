@@ -671,7 +671,7 @@ region_nativity_chart_2022 <- ggplot(region_nativity_2022, aes(ymax = ymax, ymin
   theme(legend.position = c(.525, .5)) +
   theme(legend.title = element_blank()) +
   theme(legend.text = element_text(size = 8)) +
-  labs(title = "Nativity of Albemarle Residents, 2022")
+  labs(title = "Nativity of Charlottesville & Albemarle Residents, 2022")
 
 # stacked bar
 region_nativity_stacked <- region_nativity_2022 %>% 
@@ -685,7 +685,7 @@ region_nativity_stacked <- region_nativity_2022 %>%
   scale_x_continuous(labels = label_percent(scale = 1),
                      name = "") +
   scale_y_discrete(name = "") +
-  labs(color = "", title = "Nativity of Charlottesville & Albemarle Residents, 2022") +
+  labs(color = "", title = "") +
   scale_fill_manual(values = c("#b2b8be", "#8856A7")) +  
   theme_minimal() +
   theme(legend.title=element_blank(),

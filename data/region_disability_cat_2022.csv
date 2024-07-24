@@ -1,7 +1,7 @@
-locality,estimate,moe,total_count_disabled,percent,label,year
-Combined Region,5391,566.970898724088,27795,19.4,With a cognitive difficulty,2022
-Combined Region,4243,444.7167637946651,27795,15.27,With a hearing difficulty,2022
-Combined Region,3178,435.0735569992734,27795,11.43,With a self-care difficulty,2022
-Combined Region,2098,368.41688343505643,27795,7.55,With a vision difficulty,2022
-Combined Region,6874,595.8565263551285,27795,24.73,With an ambulatory difficulty,2022
-Combined Region,6011,570.5208146947839,27795,21.63,With an independent living difficulty,2022
+region_fips,locality,estimate,moe,total_count_disabled,percent,label,year
+003;540,Charlottesville-Albemarle Region,5391,566.970898724088,27795,19.4,With a cognitive difficulty,2022
+003;540,Charlottesville-Albemarle Region,4243,444.7167637946651,27795,15.27,With a hearing difficulty,2022
+003;540,Charlottesville-Albemarle Region,3178,435.0735569992734,27795,11.43,With a self-care difficulty,2022
+003;540,Charlottesville-Albemarle Region,2098,368.41688343505643,27795,7.55,With a vision difficulty,2022
+003;540,Charlottesville-Albemarle Region,6874,595.8565263551285,27795,24.73,With an ambulatory difficulty,2022
+003;540,Charlottesville-Albemarle Region,6011,570.5208146947839,27795,21.63,With an independent living difficulty,2022
