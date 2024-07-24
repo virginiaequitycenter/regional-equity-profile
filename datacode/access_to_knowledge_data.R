@@ -1,32 +1,67 @@
 # R Script for pulling and examining access to knowledge data
-# Author: Henry DeMarco
+# Authors: Henry DeMarco, Beth Mitchell
 # Date Created: June 17, 2024
-# Last Updated: July 9, 2024
-# Progress Tracking Spreadsheet Updated: July 9, 2024 (!)
+# Last Updated: July 17, 2024
 
-## County FIPS Codes
+# County FIPS Codes
 # 003 -- Albemarle
 # 540 -- Charlottesville
 
-#(!) indicates temporary comments to remove
+# Access to Knowledge TOC ----
+# AHDI MEASURES, COUNTY & TRACT LEVEL
+# Educational Attainment, 25 and Over
+# - Source: ACS Table S1501
+# - High school graduate or higher: S1501_C01_014
+# - Bachelor's degree or higher: S1501_C01_015
+# - Graduate or professional degree: S1501_C01_013
+# School Enrollment, ages 3-24
+# - Source: ACS Table S1401
+# - School enrollment for the population age 3 to 24: 
+#         S1401_C01_014, S1401_C01_016, 
+#         S1401_C01_018, S1401_C01_020, 
+#         S1401_C01_022, S1401_C01_024
+# OTHER MEASURES, COUNTY & TRACT LEVEL
+# Educational Attainment by Race/Ethnicity: 
+# - Source: ACS Table S1501
+# OTHER MEASURES, BY DISTRICT
+# Students enrolled in AP classes by race/ethnicity
+# - Source: VDOE
+# Students suspended by race/ethnicity (Incomplete)
+# - Source: https://schoolquality.virginia.gov/download-data
+# Students chronically absent by race/ethnicity
+# - Source: https://schoolquality.virginia.gov/download-data
 
-#Packages
+# Packages
 library(tidyverse)
 library(tidycensus)
 library(readxl)
+library(janitor)
 
 # Census API Key
 # census_api_key("YOUR KEY GOES HERE", install = TRUE)
 
-# Creating basic objects
+# Creating basic objects ----
 
-# Year for all data pull
+# Year for ACS data (single year)
 year <- 2022
 
-# County FIPS codes and name
-county_code <- c("003") #Albemarle FIPS Code
+# County FIPS codes 
+county_codes <- c("003", "540") # Albemarle, Charlottesville FIPS Code
 
-# A custom R function that creates a table of all variable codes and metadata
+# Name for combined region
+region_name <- "Charlottesville-Albemarle Region"
+
+# Read in tract names
+tract_names <- read_csv("data/regional_tractnames.csv")
+tract_names <- tract_names %>% 
+  mutate(GEOID = as.character(GEOID)) %>% 
+  rename("county" = "locality",
+         "tract_num" = "tract") %>% 
+  filter(locality_num %in% county_codes)
+
+# ACS Variables ----
+# A custom R function that creates a table of variable codes and metadata 
+# for ACS 5-year, including subject and profile tables
 all_acs_meta <- function(){
   # Gets the list of all variables from all acs5 metadata tables
   vars1 <- load_variables(year, "acs5", cache = TRUE) %>% select(-geography)
@@ -48,527 +83,504 @@ all_acs_meta <- function(){
 meta_table <- all_acs_meta()
 
 # Opens the newly made table
-View(meta_table)
+# View(meta_table)
 
-############################
+## ................................................
+# Educational Attainment (AHDI MEASURE): S1501 ----
 
-# Table: B15003 (Educational Attainment for the Population 25 Years and Over)
+# Educational Attainment: County & tract ----
+# Get ACS data
+AHDI_vars_S1501 <- c("High school graduate or higher" = "S1501_C01_014",
+                     "Bachelor's degree or higher" = "S1501_C01_015",
+                     "Graduate or professional degree" = "S1501_C01_013")
 
-# Charlottesville (Educational Attainment: 25 and Over), 2023
-
-educ_attain_cville_2022 <- get_acs(
-  geography = "tract",
-  county = "540",
-  cache = TRUE,
-  state = "VA",
-  table = "B15003",
-  summary_var = "B15003_001",
-  survey = "acs5",
-  year = 2022) %>% 
-  filter(variable != "B15003_001")
-
-# Finalize the table by creating new labels and calculating percentages
-cville_educ_attain_2022 <- educ_attain_cville_2022 %>%
-  mutate(
-    label = case_when(
-      variable %in% c("B15003_002", "B15003_003", "B15003_004", "B15003_005", "B15003_006", "B15003_007", "B15003_008", "B15003_009", "B15003_010", "B15003_011", "B15003_012", "B15003_013", "B15003_014", "B15003_015", "B15003_016") ~ "Less than high school diploma",
-      variable %in% c("B15003_017", "B15003_018") ~ "High school graduate",
-      variable %in% c("B15003_019", "B15003_020", "B15003_021") ~ "Some college or associate's degree",
-      variable %in% c("B15003_022", "B15003_023", "B15003_024", "B15003_025") ~ "Bachelor's degree or higher"
-    )
-  ) %>%
-  group_by(GEOID, NAME, summary_est, label) %>%
-  summarise(
-    estimate = sum(estimate),
-    .groups = "drop"
-  ) %>%
-  mutate(
-    percent = 100 * (estimate / summary_est),
-    year = "2022"
-  )
-
-# Generating CSV:
-
-write.csv(cville_educ_attain_2022, "temp_data/cville_educ_attain_2022.csv")
-
-# Albemarle (Educational Attainment: 25 and Over), 2023
-
-educ_attain_alb_2022 <- get_acs(
-  geography = "tract",
-  county = "003",
-  cache = TRUE,
-  state = "VA",
-  table = "B15003",
-  summary_var = "B15003_001",
-  survey = "acs5",
-  year = 2022) %>% 
-  filter(variable != "B15003_001")
-
-# Finalize the table by creating new labels and calculating percentages
-alb_educ_attain_2022 <- educ_attain_alb_2022 %>%
-  mutate(
-    label = case_when(
-      variable %in% c("B15003_002", "B15003_003", "B15003_004", "B15003_005", "B15003_006", "B15003_007", "B15003_008", "B15003_009", "B15003_010", "B15003_011", "B15003_012", "B15003_013", "B15003_014", "B15003_015", "B15003_016") ~ "Less than high school diploma",
-      variable %in% c("B15003_017", "B15003_018") ~ "High school graduate",
-      variable %in% c("B15003_019", "B15003_020", "B15003_021") ~ "Some college or associate's degree",
-      variable %in% c("B15003_022", "B15003_023", "B15003_024", "B15003_025") ~ "Bachelor's degree or higher"
-    )
-  ) %>%
-  group_by(GEOID, NAME, summary_est, label) %>%
-  summarise(
-    estimate = sum(estimate),
-    .groups = "drop"
-  ) %>%
-  mutate(
-    percent = 100 * (estimate / summary_est),
-    year = "2022"
-  )
-
-# Generating CSV:
-
-write.csv(alb_educ_attain_2022, "temp_data/alb_educ_attain_2022.csv")
-
-
-# Table: B14001 (School Enrollment by Level of School for the Population 3 Years and Over)
-
-# Charlottesville (School Enrollment), 2022
-
-school_enrollment_cville <- get_acs(
-  geography = "tract",
-  county = "540",
-  cache = TRUE,
-  state = "VA",
-  table = "B14001",
-  summary_var = "B14001_001",
-  survey = "acs5",
-  year = 2022) %>% 
-  filter(variable != "B14001_001")
-
-cville_school_enrollment_2022 <- school_enrollment_cville %>% 
-  mutate(percent = 100 * (estimate / summary_est),
-         year = "2022",
-         label = case_when(
-           variable == "B14001_002" ~ "Enrolled in school",
-           variable == "B14001_003" ~ "Enrolled in school: Nursery school, preschool",
-           variable == "B14001_004" ~ "Enrolled in school: Kindergarten",
-           variable == "B14001_005" ~ "Enrolled in school: Grade 1 to 4",
-           variable == "B14001_006" ~ "Enrolled in school: Grade 5 to 8",
-           variable == "B14001_007" ~ "Enrolled in school: Grade 9 to 12",
-           variable == "B14001_008" ~ "Enrolled in school: College, undergraduate years",
-           variable == "B14001_009" ~ "Enrolled in school: Graduate or professional school",
-           variable == "B14001_010" ~ "Not enrolled in school",
-         ))
-
-# Generating CSV:
-
-write.csv(cville_school_enrollment_2022, "temp_data/cville_school_enrollment_2022.csv")
-
-# Albemarle (School Enrollment), 2022
-
-school_enrollment_alb <- get_acs(
-  geography = "tract",
-  county = "003",
-  cache = TRUE,
-  state = "VA",
-  table = "B14001",
-  summary_var = "B14001_001",
-  survey = "acs5",
-  year = 2022) %>% 
-  filter(variable != "B14001_001")
-
-alb_school_enrollment_2022 <- school_enrollment_alb %>% 
-  mutate(percent = 100 * (estimate / summary_est),
-         year = "2022",
-         label = case_when(
-           variable == "B14001_002" ~ "Enrolled in school",
-           variable == "B14001_003" ~ "Enrolled in school: Nursery school, preschool",
-           variable == "B14001_004" ~ "Enrolled in school: Kindergarten",
-           variable == "B14001_005" ~ "Enrolled in school: Grade 1 to 4",
-           variable == "B14001_006" ~ "Enrolled in school: Grade 5 to 8",
-           variable == "B14001_007" ~ "Enrolled in school: Grade 9 to 12",
-           variable == "B14001_008" ~ "Enrolled in school: College, undergraduate years",
-           variable == "B14001_009" ~ "Enrolled in school: Graduate or professional school",
-           variable == "B14001_010" ~ "Not enrolled in school",
-         ))
-
-# Generating CSV:
-
-write.csv(alb_school_enrollment_2022, "temp_data/alb_school_enrollment_2022.csv")
-
-# Looking for percent enrolled in school, ages 3-24 (might need to use S1401)
-
-# Charlottesville (School Enrollment, Ages 3 to 24), 2023
-
-school_enrollment_3to24_cville <- get_acs(
-  geography = "tract",
-  county = "540",
-  cache = TRUE,
-  state = "VA",
-  table = "S1401",
-  survey = "acs5",
-  year = 2022)
-
-# Define variables for total population and enrolled population (ages 3 to 24)
-total_population_vars <- c("S1401_C01_013", "S1401_C01_015", "S1401_C01_017", "S1401_C01_019", "S1401_C01_021", "S1401_C01_023")
-enrolled_population_vars <- c("S1401_C01_014", "S1401_C01_016", "S1401_C01_018", "S1401_C01_020", "S1401_C01_022", "S1401_C01_024")
-
-# Calculate the total and enrolled population for ages 3 to 24
-cville_school_enrollment_3to24_2022 <- school_enrollment_3to24_cville %>%
-  filter(variable %in% c(total_population_vars, enrolled_population_vars)) %>%
-  mutate(
-    population_type = case_when(
-      variable %in% total_population_vars ~ "total",
-      variable %in% enrolled_population_vars ~ "enrolled"
-    )
-  ) %>%
-  group_by(GEOID, NAME, population_type) %>%
-  summarise(estimate = sum(estimate), .groups = "drop") %>%
-  spread(population_type, estimate) %>%
-  mutate(
-    percent_enrolled = 100 * (enrolled / total)
-  ) %>%
-  select(GEOID, NAME, total, enrolled, percent_enrolled)
-
-# Generating CSV:
-
-write.csv(cville_school_enrollment_3to24_2022, "temp_data/cville_school_enrollment_3to24_2022.csv")
-
-# Albemarle (School Enrollment, Ages 3 to 24), 2023
-
-school_enrollment_3to24_alb <- get_acs(
-  geography = "tract",
-  county = "003",
-  cache = TRUE,
-  state = "VA",
-  table = "S1401",
-  survey = "acs5",
-  year = 2022)
-
-# Define variables for total population and enrolled population (ages 3 to 24)
-total_population_vars <- c("S1401_C01_013", "S1401_C01_015", "S1401_C01_017", "S1401_C01_019", "S1401_C01_021", "S1401_C01_023")
-enrolled_population_vars <- c("S1401_C01_014", "S1401_C01_016", "S1401_C01_018", "S1401_C01_020", "S1401_C01_022", "S1401_C01_024")
-
-# Calculate the total and enrolled population for ages 3 to 24
-alb_school_enrollment_3to24_2022 <- school_enrollment_3to24_alb %>%
-  filter(variable %in% c(total_population_vars, enrolled_population_vars)) %>%
-  mutate(
-    population_type = case_when(
-      variable %in% total_population_vars ~ "total",
-      variable %in% enrolled_population_vars ~ "enrolled"
-    )
-  ) %>%
-  group_by(GEOID, NAME, population_type) %>%
-  summarise(estimate = sum(estimate), .groups = "drop") %>%
-  spread(population_type, estimate) %>%
-  mutate(
-    percent_enrolled = 100 * (enrolled / total)
-  ) %>%
-  select(GEOID, NAME, total, enrolled, percent_enrolled)
-
-# Generating CSV:
-
-write.csv(alb_school_enrollment_3to24_2022, "temp_data/alb_school_enrollment_3to24_2022.csv")
-
-# Table: S1501 (Educational Attainment by Race / Ethnicity)
-
-# Charlottesville (Educational Attainment by Race / Ethnicity), 2022
-
-# Pull the data (county level)
-educ_attain_by_race_cville_county_2022 <- get_acs(
+acs_S1501_county <- get_acs(
   geography = "county",
-  county = "540",
   state = "VA",
-  table = "S1501_C01",
-  survey = "acs5",
-  year = 2022,
-  cache = TRUE
-)
+  county = county_codes,
+  var = AHDI_vars_S1501,
+  summary_var = "S1501_C01_006", 
+  year = year, 
+  survey = "acs5")
 
-# Reshape the data
-educ_attain_cville_county_wide <- educ_attain_by_race_cville_county_2022 %>%
-  select(GEOID, NAME, variable, estimate) %>%
-  pivot_wider(names_from = variable, values_from = estimate)
+acs_S1501_tract <- get_acs(
+  geography = "tract",
+  state = "VA",
+  county = county_codes,
+  var = AHDI_vars_S1501,
+  summary_var = "S1501_C01_006", 
+  year = year, 
+  survey = "acs5")
 
-# Attainment categories with counts
-cville_educ_attain_by_race_county_processed <- educ_attain_cville_county_wide %>%
-  mutate(
-    White_total = `S1501_C01_028`,
-    White_no_high_school = `S1501_C01_028` - `S1501_C01_029`,
-    White_high_school_to_no_bachelors = `S1501_C01_029` - `S1501_C01_030`,
-    White_bachelors_or_more = `S1501_C01_030`,
-    White_non_hisp_total = `S1501_C01_031`,
-    White_non_hisp_no_high_school = `S1501_C01_031` - `S1501_C01_032`,
-    White_non_hisp_high_school_to_no_bachelors = `S1501_C01_032` - `S1501_C01_033`,
-    White_non_hisp_bachelors_or_more = `S1501_C01_033`,
-    Black_total = `S1501_C01_034`,
-    Black_no_high_school = `S1501_C01_034` - `S1501_C01_035`,
-    Black_high_school_to_no_bachelors = `S1501_C01_035` - `S1501_C01_036`,
-    Black_bachelors_or_more = `S1501_C01_036`,
-    Amer_Indian_total = `S1501_C01_037`,
-    Amer_Indian_no_high_school = `S1501_C01_037` - `S1501_C01_038`,
-    Amer_Indian_high_school_to_no_bachelors = `S1501_C01_038` - `S1501_C01_039`,
-    Amer_Indian_bachelors_or_more = `S1501_C01_039`,
-    Asian_total = `S1501_C01_040`,
-    Asian_no_high_school = `S1501_C01_040` - `S1501_C01_041`,
-    Asian_high_school_to_no_bachelors = `S1501_C01_041` - `S1501_C01_042`,
-    Asian_bachelors_or_more = `S1501_C01_042`,
-    NHPI_total = `S1501_C01_043`,
-    NHPI_no_high_school = `S1501_C01_043` - `S1501_C01_044`,
-    NHPI_high_school_to_no_bachelors = `S1501_C01_044` - `S1501_C01_045`,
-    NHPI_bachelors_or_more = `S1501_C01_045`,
-    Other_total = `S1501_C01_046`,
-    Other_no_high_school = `S1501_C01_046` - `S1501_C01_047`,
-    Other_high_school_to_no_bachelors = `S1501_C01_047` - `S1501_C01_048`,
-    Other_bachelors_or_more = `S1501_C01_048`,
-    Two_or_more_total = `S1501_C01_049`,
-    Two_or_more_no_high_school = `S1501_C01_049` - `S1501_C01_050`,
-    Two_or_more_high_school_to_no_bachelors = `S1501_C01_050` - `S1501_C01_051`,
-    Two_or_more_bachelors_or_more = `S1501_C01_051`,
-    Hispanic_total = `S1501_C01_052`,
-    Hispanic_no_high_school = `S1501_C01_052` - `S1501_C01_053`,
-    Hispanic_high_school_to_no_bachelors = `S1501_C01_053` - `S1501_C01_054`,
-    Hispanic_bachelors_or_more = `S1501_C01_054`,
-  ) %>% 
-  select(GEOID, NAME, 
-         White_total, White_no_high_school, White_high_school_to_no_bachelors, White_bachelors_or_more,
-         White_non_hisp_total, White_non_hisp_no_high_school, White_non_hisp_high_school_to_no_bachelors, White_non_hisp_bachelors_or_more,
-         Black_total, Black_no_high_school, Black_high_school_to_no_bachelors, Black_bachelors_or_more,
-         Amer_Indian_total, Amer_Indian_no_high_school, Amer_Indian_high_school_to_no_bachelors, Amer_Indian_bachelors_or_more,
-         Asian_total, Asian_no_high_school, Asian_high_school_to_no_bachelors, Asian_bachelors_or_more,
-         NHPI_total, NHPI_no_high_school, NHPI_high_school_to_no_bachelors, NHPI_bachelors_or_more,
-         Other_total, Other_no_high_school, Other_high_school_to_no_bachelors, Other_bachelors_or_more,
-         Two_or_more_total, Two_or_more_no_high_school, Two_or_more_high_school_to_no_bachelors, Two_or_more_bachelors_or_more,
-         Hispanic_total, Hispanic_no_high_school, Hispanic_high_school_to_no_bachelors, Hispanic_bachelors_or_more,)
+# Wrangle tables:
+edu_attain_county <- acs_S1501_county %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         label = variable,
+         year = year) %>% 
+  rename(c("pop_25_over" = "summary_est",
+           "locality" = "NAME")) %>% 
+  select(GEOID, locality, estimate, moe, pop_25_over, percent, label, year)
 
-# Generating CSV:
+edu_attain_tract <- acs_S1501_tract %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         label = variable,
+         year = year) %>% 
+  rename(c("pop_25_over" = "summary_est")) %>% 
+  separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE) %>%
+  select(GEOID, locality, tract, estimate, moe, pop_25_over, percent, label, year)
 
-write.csv(cville_educ_attain_by_race_county_processed, "temp_data/cville_educ_attain_counts_by_race_2022.csv")
+# Join tract names
+edu_attain_tract <- edu_attain_tract %>% 
+  left_join(tract_names)
 
-# Attainment categories with percentages
+# Educational Attainment: Charlottesville, county & tract ----
+cville_edu_attain_county <- edu_attain_county %>% 
+  filter(locality == "Charlottesville city, Virginia")
 
-cville_educ_attain_by_race_2022 <- cville_educ_attain_by_race_county_processed %>%
-  mutate(White_no_high_school_pct = (`White_no_high_school`) / `White_total` * 100,
-         White_high_school_to_no_bachelors_pct = (`White_high_school_to_no_bachelors`) / `White_total` * 100,
-         White_bachelors_or_more_pct = (`White_bachelors_or_more`) / `White_total` * 100,
-         White_non_hisp_no_high_school_pct = (`White_non_hisp_no_high_school`) / `White_total` * 100,
-         White_non_hisp_high_school_to_no_bachelors_pct = (`White_non_hisp_high_school_to_no_bachelors`) / `White_total` * 100,
-         White_non_hisp_bachelors_or_more_pct = (`White_non_hisp_bachelors_or_more`) / `White_total` * 100,
-         Black_no_high_school_pct = (`Black_no_high_school`) / `Black_total` * 100,
-         Black_high_school_to_no_bachelors_pct = (`Black_high_school_to_no_bachelors`) / `Black_total` * 100,
-         Black_bachelors_or_more_pct = (`Black_bachelors_or_more`) / `Black_total` * 100,
-         Amer_Indian_no_high_school_pct = (`Amer_Indian_no_high_school`) / `Amer_Indian_total` * 100,
-         Amer_Indian_high_school_to_no_bachelors_pct = (`Amer_Indian_high_school_to_no_bachelors`) / `Amer_Indian_total` * 100,
-         Amer_Indian_bachelors_or_more_pct = (`Amer_Indian_bachelors_or_more`) / `Amer_Indian_total` * 100,
-         Asian_no_high_school_pct = (`Asian_no_high_school`) / `Asian_total` * 100,
-         Asian_high_school_to_no_bachelors_pct = (`Asian_high_school_to_no_bachelors`) / `Asian_total` * 100,
-         Asian_bachelors_or_more_pct = (`Asian_bachelors_or_more`) / `Asian_total` * 100,
-         NHPI_no_high_school_pct = (`NHPI_no_high_school`) / `NHPI_total` * 100,
-         NHPI_high_school_to_no_bachelors_pct = (`NHPI_high_school_to_no_bachelors`) / `NHPI_total` * 100,
-         NHPI_bachelors_or_more_pct = (`NHPI_bachelors_or_more`) / `NHPI_total` * 100,
-         Other_no_high_school_pct = (`Other_no_high_school`) / `Other_total` * 100,
-         Other_high_school_to_no_bachelors_pct = (`Other_high_school_to_no_bachelors`) / `Other_total` * 100,
-         Other_bachelors_or_more_pct = (`Other_bachelors_or_more`) / `Other_total` * 100,
-         Two_or_more_no_high_school_pct = (`Two_or_more_no_high_school`) / `Two_or_more_total` * 100,
-         Two_or_more_high_school_to_no_bachelors_pct = (`Two_or_more_high_school_to_no_bachelors`) / `Two_or_more_total` * 100,
-         Two_or_more_bachelors_or_more_pct = (`Two_or_more_bachelors_or_more`) / `Two_or_more_total` * 100,
-         Hispanic_no_high_school_pct = (`Hispanic_no_high_school`) / `Hispanic_total` * 100,
-         Hispanic_high_school_to_no_bachelors_pct = (`Hispanic_high_school_to_no_bachelors`) / `Hispanic_total` * 100,
-         Hispanic_bachelors_or_more_pct = (`Hispanic_bachelors_or_more`) / `Hispanic_total` * 100,
-  ) %>% 
-  select(GEOID, NAME, 
-         White_no_high_school_pct, White_high_school_to_no_bachelors_pct, White_bachelors_or_more_pct,
-         White_non_hisp_no_high_school_pct, White_non_hisp_high_school_to_no_bachelors_pct, White_non_hisp_bachelors_or_more_pct,
-         Black_no_high_school_pct, Black_high_school_to_no_bachelors_pct, Black_bachelors_or_more_pct,
-         Amer_Indian_no_high_school_pct, Amer_Indian_high_school_to_no_bachelors_pct, Amer_Indian_bachelors_or_more_pct,
-         Asian_no_high_school_pct, Asian_high_school_to_no_bachelors_pct, Asian_bachelors_or_more_pct,
-         NHPI_no_high_school_pct, NHPI_high_school_to_no_bachelors_pct, NHPI_bachelors_or_more_pct,
-         Other_no_high_school_pct, Other_high_school_to_no_bachelors_pct, Other_bachelors_or_more_pct,
-         Two_or_more_no_high_school_pct, Two_or_more_high_school_to_no_bachelors_pct, Two_or_more_bachelors_or_more_pct,
-         Hispanic_no_high_school_pct, Hispanic_high_school_to_no_bachelors_pct, Hispanic_bachelors_or_more_pct,)
+write_csv(cville_edu_attain_county, paste0("data/cville_edu_attain_county", "_", year, ".csv"))
 
-# Generating CSV:
+cville_edu_attain_tract <- edu_attain_tract %>% 
+  filter(locality == "Charlottesville city")
 
-write.csv(cville_educ_attain_by_race_2022, "temp_data/cville_educ_attain_pct_by_race_2022.csv")
+write_csv(cville_edu_attain_tract, paste0("data/cville_edu_attain_tract", "_", year, ".csv"))
 
-# Albemarle (Educational Attainment by Race / Ethnicity), 2022
+# Educational Attainment: Albemarle, county & tract ----
+alb_edu_attain_county <- edu_attain_county %>% 
+  filter(locality == "Albemarle County, Virginia")
 
-# Pull the data (county level)
-educ_attain_by_race_alb_county_2022 <- get_acs(
+write_csv(alb_edu_attain_county, paste0("data/alb_edu_attain_county", "_", year, ".csv"))
+
+alb_edu_attain_tract <- edu_attain_tract %>% 
+  filter(locality == "Albemarle County")
+
+write_csv(alb_edu_attain_tract, paste0("data/alb_edu_attain_tract", "_", year, ".csv"))
+
+# Educational Attainment: Charlottesville, Albemarle Combined Table ----
+region_edu_attain <- edu_attain_county %>% 
+  group_by(label, year) %>% 
+  summarize(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            pop_25_over = sum(pop_25_over),
+            .groups = 'drop') %>% 
+  mutate(percent = round(100 * (estimate / pop_25_over), digits = 2),
+         locality = region_name,
+         region_fips = paste(county_codes, collapse = ";")) %>% 
+  select(region_fips, locality, estimate, moe, pop_25_over, percent, label, year)
+
+write_csv(region_edu_attain, paste0("data/region_edu_attain", "_", year, ".csv"))
+
+## ...........................................................
+# School Enrollment, Ages 3-24 (AHDI MEASURE): S1401 ----
+
+# School Enrollment: County & tract ----
+# Get ACS data
+AHDI_vars_S1401 <- c("3 to 4 year olds enrolled in school" = "S1401_C01_014", 
+                     "5 to 9 year olds enrolled in school" = "S1401_C01_016",  
+                     "10 to 14 year olds enrolled in school" = "S1401_C01_018", 
+                     "15 to 17 year olds enrolled in school" = "S1401_C01_020", 
+                     "18 and 19 year olds enrolled in school" = "S1401_C01_022", 
+                     "20 to 24 year olds enrolled in school" = "S1401_C01_024",
+                     "Population 3 to 4 years" = "S1401_C01_013", 
+                     "Population 5 to 9 years" = "S1401_C01_015",  
+                     "Population 10 to 14 years" = "S1401_C01_017", 
+                     "Population 15 to 17 years" = "S1401_C01_019", 
+                     "Population 18 and 19 years" = "S1401_C01_021", 
+                     "Population 20 to 24 years" = "S1401_C01_023")
+
+acs_S1401_county <- get_acs(
   geography = "county",
-  county = "003",
   state = "VA",
-  table = "S1501_C01",
+  county = county_codes,
+  var = AHDI_vars_S1401,
+  year = year, 
+  survey = "acs5")
+
+acs_S1401_tract <- get_acs(
+  geography = "tract",
+  state = "VA",
+  county = county_codes,
+  var = AHDI_vars_S1401,
+  year = year, 
+  survey = "acs5")
+
+# Wrangle data
+enroll_county <- acs_S1401_county %>% 
+  mutate(cat = case_when(str_detect(variable, "enrolled in school") ~ "enrolled",
+                         str_detect(variable, "Population") ~ "pop")) %>% 
+  group_by(GEOID, NAME, cat) %>% 
+  summarise(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            .groups = 'drop') %>% 
+  pivot_wider(names_from = cat, values_from = c(estimate, moe)) %>% 
+  mutate(percent = round(100 * (estimate_enrolled / estimate_pop), digits = 2),
+         label = "3 to 24 year olds enrolled in school",
+         year = year) %>% 
+  rename(locality = NAME,
+         estimate = estimate_enrolled,
+         moe = moe_enrolled,
+         pop_3_to_24yr = estimate_pop) %>% 
+  select(GEOID, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
+
+enroll_tract <- acs_S1401_tract %>% 
+  mutate(cat = case_when(str_detect(variable, "enrolled in school") ~ "enrolled",
+                         str_detect(variable, "Population") ~ "pop")) %>% 
+  group_by(GEOID, NAME, cat) %>% 
+  summarise(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            .groups = 'drop') %>% 
+  pivot_wider(names_from = cat, values_from = c(estimate, moe)) %>% 
+  mutate(percent = round(100 * (estimate_enrolled / estimate_pop), digits = 2),
+         label = "3 to 24 year olds enrolled in school",
+         year = year) %>% 
+  rename(estimate = estimate_enrolled,
+         moe = moe_enrolled,
+         pop_3_to_24yr = estimate_pop) %>% 
+  separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE) %>%
+  select(GEOID, locality, tract, estimate, moe, pop_3_to_24yr, percent, label, year)
+
+# Join tract names
+enroll_tract <- enroll_tract %>% 
+  left_join(tract_names)
+
+# School Enrollment: Charlottesville, county & tract ----
+cville_enroll_county <- enroll_county %>% 
+  filter(locality == "Charlottesville city, Virginia")
+
+write_csv(cville_enroll_county, paste0("data/cville_enroll_county", "_", year, ".csv"))
+
+cville_enroll_tract <- enroll_tract %>% 
+  filter(locality == "Charlottesville city")
+
+write_csv(cville_enroll_tract, paste0("data/cville_enroll_tract", "_", year, ".csv"))
+
+# School Enrollment: Albemarle, county & tract ----
+alb_enroll_county <- enroll_county %>% 
+  filter(locality == "Albemarle County, Virginia")
+
+write_csv(alb_enroll_county, paste0("data/alb_enroll_county", "_", year, ".csv"))
+
+alb_enroll_tract <- enroll_tract %>% 
+  filter(locality == "Albemarle County")
+
+write_csv(alb_enroll_tract, paste0("data/alb_enroll_tract", "_", year, ".csv"))
+
+# School Enrollment: Charlottesville, Albemarle Combined Table ----
+region_enroll <- enroll_county %>% 
+  group_by(label, year) %>% 
+  summarize(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            pop_3_to_24yr = sum(pop_3_to_24yr),
+            .groups = 'drop') %>% 
+  mutate(percent = round(100 * (estimate / pop_3_to_24yr), digits = 2),
+         locality = region_name,
+         region_fips = paste(county_codes, collapse = ";")) %>% 
+  select(region_fips, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
+
+write_csv(region_enroll, paste0("data/region_enroll", "_", year, ".csv"))
+
+## .....................................................
+# Educational Attainment by Race/Ethnicity: S1501 ----
+
+# Educational Attainment by Race/Ethnicity: County & tract
+
+vars_S1501_race <- c("White total" = "S1501_C01_028",
+                "White high_school_up" = "S1501_C01_029",
+                "White bachelors_up" = "S1501_C01_030",
+                "White_non_hisp total" = "S1501_C01_031",
+                "White_non_hisp high_school_up" = "S1501_C01_032",
+                "White_non_hisp bachelors_up" = "S1501_C01_033",
+                "Black total" = "S1501_C01_034",
+                "Black high_school_up" = "S1501_C01_035",
+                "Black bachelors_up" = "S1501_C01_036",
+                "Amer_Indian total" = "S1501_C01_037",
+                "Amer_Indian high_school_up" = "S1501_C01_038",
+                "Amer_Indian bachelors_up" = "S1501_C01_039",
+                "Asian total" = "S1501_C01_040",
+                "Asian high_school_up" = "S1501_C01_041",
+                "Asian bachelors_up" = "S1501_C01_042",
+                "NHPI total" = "S1501_C01_043",
+                "NHPI high_school_up" = "S1501_C01_044",
+                "NHPI bachelors_up" = "S1501_C01_045",
+                "Other total" = "S1501_C01_046",
+                "Other high_school_up" = "S1501_C01_047",
+                "Other bachelors_up" = "S1501_C01_048",
+                "Multi total" = "S1501_C01_049",
+                "Multi high_school_up" = "S1501_C01_050",
+                "Multi bachelors_up" = "S1501_C01_051",
+                "Hispanic total" = "S1501_C01_052",
+                "Hispanic high_school_up" = "S1501_C01_053",
+                "Hispanic bachelors_up" = "S1501_C01_054")
+
+# County
+acs_S1501_race_county <- get_acs(
+  geography = "county",
+  county = county_codes,
+  state = "VA",
+  var = vars_S1501_race,
   survey = "acs5",
-  year = 2022,
-  cache = TRUE
-)
+  year = year)
 
-# Reshape the data
-educ_attain_alb_county_wide <- educ_attain_by_race_alb_county_2022 %>%
-  select(GEOID, NAME, variable, estimate) %>%
-  pivot_wider(names_from = variable, values_from = estimate)
+# Tract
+acs_S1501_race_tract <- get_acs(
+  geography = "tract",
+  county = county_codes,
+  state = "VA",
+  var = vars_S1501_race,
+  survey = "acs5",
+  year = year)
 
-# Attainment categories with counts
-alb_educ_attain_by_race_county_processed <- educ_attain_alb_county_wide %>%
-  mutate(
-    White_total = `S1501_C01_028`,
-    White_no_high_school = `S1501_C01_028` - `S1501_C01_029`,
-    White_high_school_to_no_bachelors = `S1501_C01_029` - `S1501_C01_030`,
-    White_bachelors_or_more = `S1501_C01_030`,
-    White_non_hisp_total = `S1501_C01_031`,
-    White_non_hisp_no_high_school = `S1501_C01_031` - `S1501_C01_032`,
-    White_non_hisp_high_school_to_no_bachelors = `S1501_C01_032` - `S1501_C01_033`,
-    White_non_hisp_bachelors_or_more = `S1501_C01_033`,
-    Black_total = `S1501_C01_034`,
-    Black_no_high_school = `S1501_C01_034` - `S1501_C01_035`,
-    Black_high_school_to_no_bachelors = `S1501_C01_035` - `S1501_C01_036`,
-    Black_bachelors_or_more = `S1501_C01_036`,
-    Amer_Indian_total = `S1501_C01_037`,
-    Amer_Indian_no_high_school = `S1501_C01_037` - `S1501_C01_038`,
-    Amer_Indian_high_school_to_no_bachelors = `S1501_C01_038` - `S1501_C01_039`,
-    Amer_Indian_bachelors_or_more = `S1501_C01_039`,
-    Asian_total = `S1501_C01_040`,
-    Asian_no_high_school = `S1501_C01_040` - `S1501_C01_041`,
-    Asian_high_school_to_no_bachelors = `S1501_C01_041` - `S1501_C01_042`,
-    Asian_bachelors_or_more = `S1501_C01_042`,
-    NHPI_total = `S1501_C01_043`,
-    NHPI_no_high_school = `S1501_C01_043` - `S1501_C01_044`,
-    NHPI_high_school_to_no_bachelors = `S1501_C01_044` - `S1501_C01_045`,
-    NHPI_bachelors_or_more = `S1501_C01_045`,
-    Other_total = `S1501_C01_046`,
-    Other_no_high_school = `S1501_C01_046` - `S1501_C01_047`,
-    Other_high_school_to_no_bachelors = `S1501_C01_047` - `S1501_C01_048`,
-    Other_bachelors_or_more = `S1501_C01_048`,
-    Two_or_more_total = `S1501_C01_049`,
-    Two_or_more_no_high_school = `S1501_C01_049` - `S1501_C01_050`,
-    Two_or_more_high_school_to_no_bachelors = `S1501_C01_050` - `S1501_C01_051`,
-    Two_or_more_bachelors_or_more = `S1501_C01_051`,
-    Hispanic_total = `S1501_C01_052`,
-    Hispanic_no_high_school = `S1501_C01_052` - `S1501_C01_053`,
-    Hispanic_high_school_to_no_bachelors = `S1501_C01_053` - `S1501_C01_054`,
-    Hispanic_bachelors_or_more = `S1501_C01_054`,
-  ) %>% 
-  select(GEOID, NAME, 
-         White_total, White_no_high_school, White_high_school_to_no_bachelors, White_bachelors_or_more,
-         White_non_hisp_total, White_non_hisp_no_high_school, White_non_hisp_high_school_to_no_bachelors, White_non_hisp_bachelors_or_more,
-         Black_total, Black_no_high_school, Black_high_school_to_no_bachelors, Black_bachelors_or_more,
-         Amer_Indian_total, Amer_Indian_no_high_school, Amer_Indian_high_school_to_no_bachelors, Amer_Indian_bachelors_or_more,
-         Asian_total, Asian_no_high_school, Asian_high_school_to_no_bachelors, Asian_bachelors_or_more,
-         NHPI_total, NHPI_no_high_school, NHPI_high_school_to_no_bachelors, NHPI_bachelors_or_more,
-         Other_total, Other_no_high_school, Other_high_school_to_no_bachelors, Other_bachelors_or_more,
-         Two_or_more_total, Two_or_more_no_high_school, Two_or_more_high_school_to_no_bachelors, Two_or_more_bachelors_or_more,
-         Hispanic_total, Hispanic_no_high_school, Hispanic_high_school_to_no_bachelors, Hispanic_bachelors_or_more,)
+# Wrangle data
+# County
+edu_attain_race_county_wide <- acs_S1501_race_county %>% 
+  separate(variable, into = c("race", "var"), sep = " ") %>% 
+  pivot_wider(names_from = var, values_from = c(estimate, moe)) %>% 
+  mutate(less_than_hs = estimate_total - estimate_high_school_up,
+         hs_only = estimate_high_school_up - estimate_bachelors_up) %>% 
+  rename(bachelors_up = estimate_bachelors_up, 
+         group_total = estimate_total,
+         group_total_moe = moe_total) %>% 
+  select(GEOID, NAME, race, less_than_hs, hs_only, bachelors_up, group_total, group_total_moe) 
 
-# Generating CSV:
+# Return to long, add percents, prep for data viz
+edu_attain_race_county <- edu_attain_race_county_wide %>% 
+  pivot_longer(less_than_hs:bachelors_up) %>% 
+  mutate(percent = round(100 * (value / group_total), digits = 2),
+         year = year) %>% 
+  rename(edu_level = name,
+         estimate = value,
+         locality = NAME)
 
-write.csv(alb_educ_attain_by_race_county_processed, "temp_data/alb_educ_attain_counts_by_race_2022.csv")
+# Tract
+edu_attain_race_tract_wide <- acs_S1501_race_tract %>% 
+  separate(variable, into = c("race", "var"), sep = " ") %>% 
+  pivot_wider(names_from = var, values_from = c(estimate, moe)) %>% 
+  mutate(less_than_hs = estimate_total - estimate_high_school_up,
+         hs_only = estimate_high_school_up - estimate_bachelors_up) %>% 
+  rename(bachelors_up = estimate_bachelors_up, 
+         group_total = estimate_total,
+         group_total_moe = moe_total) %>% 
+  select(GEOID, NAME, race, less_than_hs, hs_only, bachelors_up, group_total, group_total_moe) 
 
-# Attainment categories with percentages
+# Return to long, add percents, prep for data viz
+edu_attain_race_tract <- edu_attain_race_tract_wide %>% 
+  pivot_longer(less_than_hs:bachelors_up) %>% 
+  mutate(percent = round(100 * (value / group_total), digits = 2),
+         year = year) %>% 
+  rename(edu_level = name,
+         estimate = value) %>% 
+  separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE) %>% 
+  select(!c(NAME, state))
 
-alb_educ_attain_by_race_2022 <- alb_educ_attain_by_race_county_processed %>%
-  mutate(White_no_high_school_pct = (`White_no_high_school`) / `White_total` * 100,
-         White_high_school_to_no_bachelors_pct = (`White_high_school_to_no_bachelors`) / `White_total` * 100,
-         White_bachelors_or_more_pct = (`White_bachelors_or_more`) / `White_total` * 100,
-         White_non_hisp_no_high_school_pct = (`White_non_hisp_no_high_school`) / `White_total` * 100,
-         White_non_hisp_high_school_to_no_bachelors_pct = (`White_non_hisp_high_school_to_no_bachelors`) / `White_total` * 100,
-         White_non_hisp_bachelors_or_more_pct = (`White_non_hisp_bachelors_or_more`) / `White_total` * 100,
-         Black_no_high_school_pct = (`Black_no_high_school`) / `Black_total` * 100,
-         Black_high_school_to_no_bachelors_pct = (`Black_high_school_to_no_bachelors`) / `Black_total` * 100,
-         Black_bachelors_or_more_pct = (`Black_bachelors_or_more`) / `Black_total` * 100,
-         Amer_Indian_no_high_school_pct = (`Amer_Indian_no_high_school`) / `Amer_Indian_total` * 100,
-         Amer_Indian_high_school_to_no_bachelors_pct = (`Amer_Indian_high_school_to_no_bachelors`) / `Amer_Indian_total` * 100,
-         Amer_Indian_bachelors_or_more_pct = (`Amer_Indian_bachelors_or_more`) / `Amer_Indian_total` * 100,
-         Asian_no_high_school_pct = (`Asian_no_high_school`) / `Asian_total` * 100,
-         Asian_high_school_to_no_bachelors_pct = (`Asian_high_school_to_no_bachelors`) / `Asian_total` * 100,
-         Asian_bachelors_or_more_pct = (`Asian_bachelors_or_more`) / `Asian_total` * 100,
-         NHPI_no_high_school_pct = (`NHPI_no_high_school`) / `NHPI_total` * 100,
-         NHPI_high_school_to_no_bachelors_pct = (`NHPI_high_school_to_no_bachelors`) / `NHPI_total` * 100,
-         NHPI_bachelors_or_more_pct = (`NHPI_bachelors_or_more`) / `NHPI_total` * 100,
-         Other_no_high_school_pct = (`Other_no_high_school`) / `Other_total` * 100,
-         Other_high_school_to_no_bachelors_pct = (`Other_high_school_to_no_bachelors`) / `Other_total` * 100,
-         Other_bachelors_or_more_pct = (`Other_bachelors_or_more`) / `Other_total` * 100,
-         Two_or_more_no_high_school_pct = (`Two_or_more_no_high_school`) / `Two_or_more_total` * 100,
-         Two_or_more_high_school_to_no_bachelors_pct = (`Two_or_more_high_school_to_no_bachelors`) / `Two_or_more_total` * 100,
-         Two_or_more_bachelors_or_more_pct = (`Two_or_more_bachelors_or_more`) / `Two_or_more_total` * 100,
-         Hispanic_no_high_school_pct = (`Hispanic_no_high_school`) / `Hispanic_total` * 100,
-         Hispanic_high_school_to_no_bachelors_pct = (`Hispanic_high_school_to_no_bachelors`) / `Hispanic_total` * 100,
-         Hispanic_bachelors_or_more_pct = (`Hispanic_bachelors_or_more`) / `Hispanic_total` * 100,
-  ) %>% 
-  select(GEOID, NAME, 
-         White_no_high_school_pct, White_high_school_to_no_bachelors_pct, White_bachelors_or_more_pct,
-         White_non_hisp_no_high_school_pct, White_non_hisp_high_school_to_no_bachelors_pct, White_non_hisp_bachelors_or_more_pct,
-         Black_no_high_school_pct, Black_high_school_to_no_bachelors_pct, Black_bachelors_or_more_pct,
-         Amer_Indian_no_high_school_pct, Amer_Indian_high_school_to_no_bachelors_pct, Amer_Indian_bachelors_or_more_pct,
-         Asian_no_high_school_pct, Asian_high_school_to_no_bachelors_pct, Asian_bachelors_or_more_pct,
-         NHPI_no_high_school_pct, NHPI_high_school_to_no_bachelors_pct, NHPI_bachelors_or_more_pct,
-         Other_no_high_school_pct, Other_high_school_to_no_bachelors_pct, Other_bachelors_or_more_pct,
-         Two_or_more_no_high_school_pct, Two_or_more_high_school_to_no_bachelors_pct, Two_or_more_bachelors_or_more_pct,
-         Hispanic_no_high_school_pct, Hispanic_high_school_to_no_bachelors_pct, Hispanic_bachelors_or_more_pct,)
+# Join tract names
+edu_attain_race_tract <- edu_attain_race_tract %>% 
+  left_join(tract_names)
 
-# Generating CSV:
+# Educational Attainment by Race/Ethnicity: Charlottesville, county & tract ----
+cville_edu_attain_race_county <- edu_attain_race_county %>% 
+  filter(locality == "Charlottesville city, Virginia")
 
-write.csv(alb_educ_attain_by_race_2022, "temp_data/alb_educ_attain_pct_by_race_2022.csv")
+write_csv(cville_edu_attain_race_county, paste0("data/cville_edu_attain_race_county", "_", year, ".csv"))
 
-# County School Education Stats (AP Courses, Suspensions, Absenteeism)
+cville_edu_attain_race_tract <- edu_attain_race_tract %>% 
+  filter(locality == "Charlottesville city")
 
-# AP Course Enrollment (by Race / Ethnicity)
+write_csv(cville_edu_attain_race_tract, paste0("data/cville_edu_attain_race_tract", "_", year, ".csv"))
 
-# Source: www.doe.virginia.gov
-  # url: https://www.doe.virginia.gov/home/showpublisheddocument/50006/638319308012100000
+# Educational Attainment by Race/Ethnicity: Albemarle, county & tract ----
+alb_edu_attain_race_county <- edu_attain_race_county %>% 
+  filter(locality == "Albemarle County, Virginia")
 
-ap_enrollment_va <- read_xlsx("temp_data/ap_classes.xlsx", sheet = "Adv Programs by Race", skip = 3)
+write_csv(alb_edu_attain_race_county, paste0("data/alb_edu_attain_race_county", "_", year, ".csv"))
 
-# Read the Excel file, skipping the first 4 rows
-ap_enrollment_va <- read_xlsx("temp_data/ap_classes.xlsx", sheet = "Adv Programs by Race", skip = 4)
+alb_edu_attain_race_tract <- edu_attain_race_tract %>% 
+  filter(locality == "Albemarle County")
 
-# Read the Excel file again to get the correct header row (assuming the header is on the 4th row)
-headers <- read_xlsx("temp_data/ap_classes.xlsx", sheet = "Adv Programs by Race", skip = 3, n_max = 1)
+write_csv(alb_edu_attain_race_tract, paste0("data/alb_edu_attain_race_tract", "_", year, ".csv"))
 
-# Set the column names of the first dataframe using the second dataframe's header row
-colnames(ap_enrollment_va) <- colnames(headers)
+# Educational Attainment by Race/Ethnicity: Charlottesville, Albemarle Combined Table ----
+region_edu_attain_race <- edu_attain_race_county %>% 
+  group_by(race, edu_level, year) %>% 
+  summarize(estimate = sum(estimate),
+            group_total_moe = moe_sum(moe = group_total_moe, estimate = group_total),
+            group_total = sum(group_total),
+            .groups = 'drop') %>% 
+  mutate(percent = round(100 * (estimate / group_total), digits = 2),
+         locality = region_name,
+         region_fips = paste(county_codes, collapse = ";")) %>% 
+  select(region_fips, locality, race, edu_level, estimate, group_total, group_total_moe, percent, year)
 
-# Generating CSV:
+write_csv(region_edu_attain_race, paste0("data/region_edu_attain_race", "_", year, ".csv"))
 
-write.csv(ap_enrollment_va, "temp_data/ap_enrollment_va.csv")
+## .....................................................
+# AP Course Enrollment by Race/Ethnicity & Disadvantaged ----
+# Source: https://www.doe.virginia.gov/data-policy-funding/data-reports/program-participation-data/advanced-programs
+# TEMP SOLUTION TO HTTP 403
+# Downloaded 2022-2023.xlsx to tempdata
 
-  # Issue with first row... includes years for some reason?
+# Get total for all students enrolled in AP
+# Read excel
+ap_sheet_1 <- read_xlsx("data/tempdata/2022-2023.xlsx", sheet = "Adv Programs", skip = 3) %>% 
+  clean_names()
+ap_sheet_1 <- ap_sheet_1[-c(1), ]
+# Filter for divisions
+ap_sheet_1 <- ap_sheet_1 %>% 
+  filter(division_name %in% c("Albemarle County", "Charlottesville City")) 
 
-# Suspensions (by Race / Ethnicity)
+# Get district totals  
+ap_enroll_all <- ap_sheet_1 %>% 
+  mutate(students_taking_1_or_more_ap_courses = as.numeric(students_taking_1_or_more_ap_courses),
+         label = "All Students") %>% 
+  group_by(division_name, label) %>% 
+  summarise(students_in_ap_courses = sum(students_taking_1_or_more_ap_courses, na.rm = TRUE),
+            .groups = 'drop')
 
-# Source: ACPS report, but available at schoolquality.virginia.gov (go to Download Data, Select Division, Learning Climate, Long/Short Term suspensions, most recent year; download)
+# Get students enrolled in AP by race
+# Read excel
+ap_sheet_2 <- read_xlsx("data/tempdata/2022-2023.xlsx", sheet = "Adv Programs by Race", skip = 3) %>% 
+  clean_names()
+ap_sheet_2 <- ap_sheet_2[-c(1), ]
+# Filter for divisions
+ap_sheet_2 <- ap_sheet_2 %>% 
+  filter(division_name %in% c("Albemarle County", "Charlottesville City")) 
 
-# Charlottesville (Short Term Suspensions, 2022-2023)
+# Get district totals 
+ap_enroll_race <- ap_sheet_2 %>% 
+  mutate(students_taking_1_or_more_ap_courses = as.numeric(students_taking_1_or_more_ap_courses)) %>% 
+  rename(label = race) %>% 
+  group_by(division_name, label) %>% 
+  summarise(students_in_ap_courses = sum(students_taking_1_or_more_ap_courses, na.rm = TRUE),
+            .groups = 'drop')
 
-cville_st_suspensions <- read.csv("temp_data/cville_st_suspensions.csv", skip = 3)
+# Get students enrolled in AP by disadvantage
+# Read excel
+ap_sheet_3 <- read_xlsx("data/tempdata/2022-2023.xlsx", sheet = "Adv Programs by Disadvantage", skip = 3) %>% 
+  clean_names()
+ap_sheet_3 <- ap_sheet_3[-c(1), ]
+# Filter for divisions and disadvantage
+ap_sheet_3 <- ap_sheet_3 %>% 
+  filter(division_name %in% c("Albemarle County", "Charlottesville City") & disadvantage == "Y") 
 
-# Generating CSV:
+# Get district totals for AP enrollment 
+ap_enroll_disadv <- ap_sheet_3 %>% 
+  mutate(students_taking_1_or_more_ap_courses = as.numeric(students_taking_1_or_more_ap_courses),
+         label = "Economically Disadvantaged") %>% 
+  group_by(division_name, label) %>% 
+  summarise(students_in_ap_courses = sum(students_taking_1_or_more_ap_courses, na.rm = TRUE),
+            .groups = 'drop')
 
-write.csv(cville_st_suspensions, "temp_data/cville_st_suspensions.csv")
+# Merge Race and disadvantage tables
+ap_enroll <- rbind(ap_enroll_race, ap_enroll_disadv, ap_enroll_all) %>% 
+  mutate(school_year = "2022-2023")
 
-# Albemarle (Short Term Suspensions, 2022-2023)
+# Get School Enrollment, Fall-Membership numbers
+# Need to compare all hs enrolled vs 10,11,12 enrollment
+# All potential AP students vs students most likely to be enrolled in AP
+# Source: https://p1pe.doe.virginia.gov/apex_captcha/home.do?apexTypeId=304
 
-alb_st_suspensions <- read.csv("temp_data/alb_st_suspensions.csv", skip = 3)
+fall_membership_race <- read_csv("data/tempdata/fall_membership_race_2022_2023.csv") %>% 
+  clean_names()
 
-# Generating CSV:
+fall_membership_race <- fall_membership_race %>%
+  group_by(school_year, division_name, race) %>% 
+  summarise(group_total = sum(gr_9, gr_10, gr_11, gr_12, na.rm = TRUE),
+            .groups = "drop") %>% 
+  mutate(label = race,
+         label = str_replace(label,"Native Hawaiian  or Pacific Islander", "Native Hawaiian or Pacific Islander")) %>%
+  select(division_name, label, group_total, school_year)
 
-write.csv(alb_st_suspensions, "temp_data/alb_st_suspensions.csv")
+fall_membership_disadv <- read_csv("data/tempdata/fall_membership_disadv_2022_2023.csv") %>% 
+  clean_names()
 
-# Chronic Absenteeism (by Race / Ethnicity)
+fall_membership_disadv <- fall_membership_disadv %>%
+  group_by(school_year, division_name) %>% 
+  summarise(group_total = sum(gr_9, gr_10, gr_11, gr_12, na.rm = TRUE),
+            .groups = "drop") %>% 
+  mutate(label = "Economically Disadvantaged") %>% 
+  select(division_name, label, group_total, school_year)
 
-# Source: ACPS report, but available at schoolquality.virginia.gov (go to Download Data, Select Division, Learning Climate, Chronic Absenteeism, most recent year; download)
+fall_membership_total <- read_csv("data/tempdata/fall_membership_total_2022_2023.csv") %>% 
+  clean_names()
 
-# Charlottesville (Chronic Absenteeism), 2022-2023)
+fall_membership_total <- fall_membership_total %>%
+  group_by(school_year, division_name) %>% 
+  summarise(group_total = sum(gr_9, gr_10, gr_11, gr_12, na.rm = TRUE),
+            .groups = "drop") %>% 
+  mutate(label = "All Students") %>% 
+  select(division_name, label, group_total, school_year)
 
-cville_absenteeism <- read.csv("temp_data/cville_absenteeism.csv", skip = 3)
+# Merge membership tables
+fall_membership <- rbind(fall_membership_race, fall_membership_disadv, fall_membership_total)
 
-# Generating CSV:
+# Join AP enrollment and membership tables
+ap_enroll <- ap_enroll %>% 
+    left_join(fall_membership)
 
-write.csv(cville_absenteeism, "temp_data/cville_absenteeism.csv")
+# Create percents
+ap_enroll <- ap_enroll %>%
+  mutate(percent = round(100 * (students_in_ap_courses / group_total), digits = 2))
 
-# Albemarle (Chronic Absenteeism), 2022-2023)
+# AP Course Enrollment: Charlottesville ----
+cville_ap_enroll <- ap_enroll %>% 
+  filter(division_name == "Charlottesville City")
 
-alb_absenteeism <- read.csv("temp_data/alb_absenteeism.csv", skip = 3)
+write_csv(cville_ap_enroll, paste0("data/cville_ap_enroll_2022_2023.csv"))
 
-# Generating CSV:
+# AP Course Enrollment: Albemarle ----
+alb_ap_enroll <- ap_enroll %>% 
+  filter(division_name == "Albemarle County")
 
-write.csv(alb_absenteeism, "temp_data/alb_absenteeism.csv")
+write_csv(alb_ap_enroll, paste0("data/alb_ap_enroll_2022_2023.csv"))
+
+## .......................................................
+# Suspensions by Race/Ethnicity & Chronic Absenteeism ----
+# Source: ACPS report
+# Available at schoolquality.virginia.gov 
+# Go to:  (1) Download Data (https://schoolquality.virginia.gov/download-data) 
+#         (2) Make the following selections:
+#             Select Reporting Level: Division
+#             Select Divisions (multi-select): Albemarle County Public Schools; Charlottesville City Public Schools
+#             Select Data Type: Learning Climate
+#             Select Indicators (multi-select): Long Term suspensions; Short Term suspensions; Chronic Absenteeism
+#             Select School Year: most recent year available
+#         (3) Download Spreadsheet (save zip to tempdata)
+
+# Short Term Suspensions ----
+st_suspensions <- read_csv("data/tempdata/vdoe_data/Short Term Suspensions.csv", skip = 3) %>% 
+  clean_names()
+
+# Long Term Suspensions ----
+lt_suspensions <- read_csv("data/tempdata/vdoe_data/Long Term Suspensions.csv", skip = 3) %>% 
+  clean_names()
+
+# Chronic Absenteeism ----
+absent <- read_csv("data/tempdata/vdoe_data/Chronic Absenteeism.csv", skip = 3) %>% 
+  clean_names()
+
+cville_absenteeism <- absent %>% 
+  filter(division == "Charlottesville City Public Schools")
+
+write_csv(cville_absenteeism, paste0("data/cville_absenteeism_2022_2023.csv"))
+
+alb_absenteeism <- absent %>% 
+  filter(division == "Albemarle County Public Schools")
+
+write_csv(alb_absenteeism, paste0("data/alb_absenteeism_2022_2023.csv"))
+
+# Combined Region
+region_absenteeism <- absent %>% 
+  mutate(count_below_10 = as.numeric(count_below_10),
+         count_above_10 = as.numeric(count_above_10)) %>% 
+  group_by(year, subgroup) %>% 
+  summarize(count_below_10 = sum(count_below_10),
+            count_above_10 = sum(count_above_10),
+            total_count = sum(count_below_10, count_above_10),
+            .groups = "drop") %>% 
+  mutate(percent_below_10 = round(100 * count_below_10 / total_count, 2),
+         percent_above_10 = round(100 * count_above_10 / total_count, 2),
+         division = "ACPS & CCS") %>% 
+  select(year, division, subgroup, count_below_10:percent_above_10)
+
+write_csv(region_absenteeism, paste0("data/region_absenteeism_2022_2023.csv"))
+
+## .....................................................
+## End

@@ -1,0 +1,4 @@
+GEOID,locality,estimate,moe,total_units,percent,level,rent_burden,year
+51540,"Charlottesville city, Virginia",2750,415.2890559598218,11249,24.45,Burdened,30% to 49% household income,2022
+51540,"Charlottesville city, Virginia",4571,489.5947303637979,11249,40.63,Not burdened,Less than 30% household income,2022
+51540,"Charlottesville city, Virginia",3236,374,11249,28.77,Severely Burdened,Over 50% household income,2022

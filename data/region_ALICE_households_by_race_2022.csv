@@ -1,0 +1,19 @@
+locality,region_fips,group,level,number,households,percent,year
+Combined Region,51003;51540,2+ Races,above,1294,2054,63,2022
+Combined Region,51003;51540,2+ Races,alice,591,2054,28.77,2022
+Combined Region,51003;51540,2+ Races,poverty,169,2054,8.23,2022
+Combined Region,51003;51540,All,above_alice_households,36923,64689,57.08,2022
+Combined Region,51003;51540,All,alice_households,19476,64689,30.11,2022
+Combined Region,51003;51540,All,poverty_households,8290,64689,12.82,2022
+Combined Region,51003;51540,Asian,above,1589,2753,57.72,2022
+Combined Region,51003;51540,Asian,alice,783,2753,28.44,2022
+Combined Region,51003;51540,Asian,poverty,381,2753,13.84,2022
+Combined Region,51003;51540,Black,above,2142,6835,31.34,2022
+Combined Region,51003;51540,Black,alice,3306,6835,48.37,2022
+Combined Region,51003;51540,Black,poverty,1387,6835,20.29,2022
+Combined Region,51003;51540,Hispanic,above,1471,2726,53.96,2022
+Combined Region,51003;51540,Hispanic,alice,1167,2726,42.81,2022
+Combined Region,51003;51540,Hispanic,poverty,88,2726,3.23,2022
+Combined Region,51003;51540,White,above,29918,49520,60.42,2022
+Combined Region,51003;51540,White,alice,15817,49520,31.94,2022
+Combined Region,51003;51540,White,poverty,3785,49520,7.64,2022

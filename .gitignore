@@ -53,3 +53,5 @@ rsconnect/
 
 # Other files
 .DS_Store
+images/
+datacode/test.R

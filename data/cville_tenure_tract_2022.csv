@@ -1,0 +1,25 @@
+GEOID,locality,tract,label,estimate,moe,total_households,percent,year,county,locality_num,tract_num,tractnames
+51540000201,Charlottesville city,Census Tract 2.01,Owner occupied,428,132,1326,32.28,2022,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,Renter occupied,898,210,1326,67.72,2022,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Owner occupied,132,108,1857,7.11,2022,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Renter occupied,1725,315,1857,92.89,2022,Charlottesville,540,000202,10th & Page-Venable
+51540000302,Charlottesville city,Census Tract 3.02,Owner occupied,718,145,1614,44.49,2022,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,Renter occupied,896,233,1614,55.51,2022,Charlottesville,540,000302,Woolen Mills
+51540000401,Charlottesville city,Census Tract 4.01,Owner occupied,747,146,1384,53.97,2022,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,Renter occupied,637,129,1384,46.03,2022,Charlottesville,540,000401,Ridge St.
+51540000402,Charlottesville city,Census Tract 4.02,Owner occupied,1168,232,2190,53.33,2022,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,Renter occupied,1022,225,2190,46.67,2022,Charlottesville,540,000402,Belmont
+51540000501,Charlottesville city,Census Tract 5.01,Owner occupied,674,172,1634,41.25,2022,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,Renter occupied,960,191,1634,58.75,2022,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000502,Charlottesville city,Census Tract 5.02,Owner occupied,1095,224,2230,49.1,2022,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,Renter occupied,1135,201,2230,50.9,2022,Charlottesville,540,000502,Fry's Springs
+51540000600,Charlottesville city,Census Tract 6,Owner occupied,121,57,1104,10.96,2022,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,Renter occupied,983,162,1104,89.04,2022,Charlottesville,540,000600,JPA-Fontaine
+51540000700,Charlottesville city,Census Tract 7,Owner occupied,827,134,1663,49.73,2022,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,Renter occupied,836,176,1663,50.27,2022,Charlottesville,540,000700,Barracks-Rugby
+51540000800,Charlottesville city,Census Tract 8,Owner occupied,1042,143,1503,69.33,2022,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,Renter occupied,461,88,1503,30.67,2022,Charlottesville,540,000800,Greenbrier-Meadows
+51540000900,Charlottesville city,Census Tract 9,Owner occupied,665,90,939,70.82,2022,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,Renter occupied,274,77,939,29.18,2022,Charlottesville,540,000900,Locust Grove
+51540001000,Charlottesville city,Census Tract 10,Owner occupied,645,207,2067,31.2,2022,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,Renter occupied,1422,260,2067,68.8,2022,Charlottesville,540,001000,Downtown Area

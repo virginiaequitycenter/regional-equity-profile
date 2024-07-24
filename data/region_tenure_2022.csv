@@ -1,0 +1,3 @@
+region_fips,locality,estimate,moe,total_households,percent,label,year
+003;540,Combined Region,37866,830.5094821854835,63542,59.59,Owner occupied,2022
+003;540,Combined Region,25676,899.4587261236616,63542,40.41,Renter occupied,2022

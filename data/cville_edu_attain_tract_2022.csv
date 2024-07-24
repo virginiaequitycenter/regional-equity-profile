@@ -1,0 +1,37 @@
+GEOID,locality,tract,estimate,moe,pop_25_over,percent,label,year,county,locality_num,tract_num,tractnames
+51540000201,Charlottesville city,Census Tract 2.01,473,139,1943,24.34,Graduate or professional degree,2022,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,1745,321,1943,89.81,High school graduate or higher,2022,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,1055,263,1943,54.3,Bachelor's degree or higher,2022,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000202,Charlottesville city,Census Tract 2.02,597,228,1745,34.21,Graduate or professional degree,2022,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,1494,363,1745,85.62,High school graduate or higher,2022,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,893,295,1745,51.17,Bachelor's degree or higher,2022,Charlottesville,540,000202,10th & Page-Venable
+51540000302,Charlottesville city,Census Tract 3.02,703,210,2405,29.23,Graduate or professional degree,2022,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,2263,402,2405,94.1,High school graduate or higher,2022,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,1289,264,2405,53.6,Bachelor's degree or higher,2022,Charlottesville,540,000302,Woolen Mills
+51540000401,Charlottesville city,Census Tract 4.01,570,143,2803,20.34,Graduate or professional degree,2022,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,2537,341,2803,90.51,High school graduate or higher,2022,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,1201,202,2803,42.85,Bachelor's degree or higher,2022,Charlottesville,540,000401,Ridge St.
+51540000402,Charlottesville city,Census Tract 4.02,821,236,3413,24.06,Graduate or professional degree,2022,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,3033,328,3413,88.87,High school graduate or higher,2022,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,1748,287,3413,51.22,Bachelor's degree or higher,2022,Charlottesville,540,000402,Belmont
+51540000501,Charlottesville city,Census Tract 5.01,415,125,2991,13.87,Graduate or professional degree,2022,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,2647,417,2991,88.5,High school graduate or higher,2022,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,1082,182,2991,36.18,Bachelor's degree or higher,2022,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000502,Charlottesville city,Census Tract 5.02,1440,307,3632,39.65,Graduate or professional degree,2022,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,3515,329,3632,96.78,High school graduate or higher,2022,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,2650,338,3632,72.96,Bachelor's degree or higher,2022,Charlottesville,540,000502,Fry's Springs
+51540000600,Charlottesville city,Census Tract 6,348,124,923,37.7,Graduate or professional degree,2022,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,875,181,923,94.8,High school graduate or higher,2022,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,619,158,923,67.06,Bachelor's degree or higher,2022,Charlottesville,540,000600,JPA-Fontaine
+51540000700,Charlottesville city,Census Tract 7,1214,199,2293,52.94,Graduate or professional degree,2022,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,2198,298,2293,95.86,High school graduate or higher,2022,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,1869,257,2293,81.51,Bachelor's degree or higher,2022,Charlottesville,540,000700,Barracks-Rugby
+51540000800,Charlottesville city,Census Tract 8,670,150,2683,24.97,Graduate or professional degree,2022,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,2420,312,2683,90.2,High school graduate or higher,2022,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,1578,227,2683,58.81,Bachelor's degree or higher,2022,Charlottesville,540,000800,Greenbrier-Meadows
+51540000900,Charlottesville city,Census Tract 9,510,127,1669,30.56,Graduate or professional degree,2022,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,1494,203,1669,89.51,High school graduate or higher,2022,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,1073,167,1669,64.29,Bachelor's degree or higher,2022,Charlottesville,540,000900,Locust Grove
+51540001000,Charlottesville city,Census Tract 10,1337,363,2916,45.85,Graduate or professional degree,2022,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,2836,518,2916,97.26,High school graduate or higher,2022,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,2282,455,2916,78.26,Bachelor's degree or higher,2022,Charlottesville,540,001000,Downtown Area

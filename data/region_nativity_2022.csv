@@ -1,6 +1,6 @@
-locality,estimate,moe,total_pop,percent,year,label
-Combined Region,9068,847.7027781009097,158802,5.71,2022,Not a U.S. citizen
-Combined Region,6895,611.4940719254766,158802,4.34,2022,U.S. citizen by naturalization
-Combined Region,2163,372.4862413566439,158802,1.36,2022,"U.S. citizen, born abroad of American parent(s)"
-Combined Region,389,207.79316639389276,158802,0.24,2022,"U.S. citizen, born in Puerto Rico or U.S. Island Areas"
-Combined Region,140287,895.3490939292897,158802,88.34,2022,"U.S. citizen, born in the United States"
+region_fips,locality,estimate,moe,total_pop,percent,year,label
+003;540,Charlottesville-Albemarle Region,9068,847.7027781009097,158802,5.71,2022,Not a U.S. citizen
+003;540,Charlottesville-Albemarle Region,6895,611.4940719254766,158802,4.34,2022,U.S. citizen by naturalization
+003;540,Charlottesville-Albemarle Region,2163,372.4862413566439,158802,1.36,2022,"U.S. citizen, born abroad of American parent(s)"
+003;540,Charlottesville-Albemarle Region,389,207.79316639389276,158802,0.24,2022,"U.S. citizen, born in Puerto Rico or U.S. Island Areas"
+003;540,Charlottesville-Albemarle Region,140287,895.3490939292897,158802,88.34,2022,"U.S. citizen, born in the United States"

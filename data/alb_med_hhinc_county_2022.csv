@@ -1,0 +1,11 @@
+GEOID,locality,label,group,estimate,moe,year
+51003,"Albemarle County, Virginia",Median Household Income,All Households,97708,3686,2022
+51003,"Albemarle County, Virginia",Median Household Income,White,102640,3738,2022
+51003,"Albemarle County, Virginia",Median Household Income,Black,49134,6089,2022
+51003,"Albemarle County, Virginia",Median Household Income,American Indian and Alaska Native,NA,NA,2022
+51003,"Albemarle County, Virginia",Median Household Income,Asian,127163,34289,2022
+51003,"Albemarle County, Virginia",Median Household Income,NHPI,NA,NA,2022
+51003,"Albemarle County, Virginia",Median Household Income,Other,81192,22025,2022
+51003,"Albemarle County, Virginia",Median Household Income,Multiracial,107623,15218,2022
+51003,"Albemarle County, Virginia",Median Household Income,"White, Not Hispanic or Latino",102888,3712,2022
+51003,"Albemarle County, Virginia",Median Household Income,Hispanic or Latino,92235,6170,2022

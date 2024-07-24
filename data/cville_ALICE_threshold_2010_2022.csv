@@ -1,0 +1,9 @@
+GEOID,locality,year,alice_threshold_hh_under_65,alice_threshold_hh_65_years_and_over,source_american_community_survey,county
+51540,"Charlottesville city, Virginia",2010,45000,40000,3-Year,Charlottesville city
+51540,"Charlottesville city, Virginia",2012,50000,45000,3-Year,Charlottesville city
+51540,"Charlottesville city, Virginia",2014,60000,50000,5-Year,Charlottesville city
+51540,"Charlottesville city, Virginia",2016,60000,60000,5-Year,Charlottesville city
+51540,"Charlottesville city, Virginia",2018,60000,60000,5-Year,Charlottesville city
+51540,"Charlottesville city, Virginia",2019,75000,60000,5-Year,Charlottesville city
+51540,"Charlottesville city, Virginia",2021,60000,60000,5-Year,Charlottesville city
+51540,"Charlottesville city, Virginia",2022,70284.819227819,66096,5-Year,Charlottesville city
