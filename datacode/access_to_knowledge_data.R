@@ -10,19 +10,19 @@
 # Access to Knowledge TOC ----
 # AHDI MEASURES, COUNTY & TRACT LEVEL
 # Educational Attainment, 25 and Over
-# - Source: ACS Table S1501
+# - Source: ACS Table S1501 (COUNTY, TRACT, REGION)
 # - High school graduate or higher: S1501_C01_014
 # - Bachelor's degree or higher: S1501_C01_015
 # - Graduate or professional degree: S1501_C01_013
 # School Enrollment, ages 3-24
-# - Source: ACS Table S1401
+# - Source: ACS Table S1401 (COUNTY, TRACT, REGION)
 # - School enrollment for the population age 3 to 24: 
 #         S1401_C01_014, S1401_C01_016, 
 #         S1401_C01_018, S1401_C01_020, 
 #         S1401_C01_022, S1401_C01_024
 # OTHER MEASURES, COUNTY & TRACT LEVEL
 # Educational Attainment by Race/Ethnicity: 
-# - Source: ACS Table S1501
+# - Source: ACS Table S1501 (COUNTY, TRACT, REGION)
 # OTHER MEASURES, BY DISTRICT
 # Students enrolled in AP classes by race/ethnicity
 # - Source: VDOE

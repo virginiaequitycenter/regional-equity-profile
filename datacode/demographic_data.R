@@ -8,14 +8,15 @@
 # 540 -- Charlottesville
 
 # Demographics TOC ----
+# All measures derived for County and Combined Region
 # Race, 2012-2022
-# - Source: ACS Table B02001
+# - Source: ACS Table B02001 
 # Ethnicity by Race, 2012-2022
-# - Source: ACS Table B03002 (Hispanic or Latino Origin by Race)
+# - Source: ACS Table B03002 Hispanic or Latino Origin by Race 
 # Ethnicity, 2012-2022
-# - Source: ACS Table B03003
+# - Source: ACS Table B03003 
 # Sex by Age, 2012 & 2022
-# - Source: ACS Table: B01001
+# - Source: ACS Table: B01001 
 # Nativity & Citizenship Status, 2022
 # - Source: ACS Table: B05001
 # Place of Birth for Foreign-Born Population, 2022

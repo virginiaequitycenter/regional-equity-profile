@@ -9,31 +9,30 @@
 
 # Living Standards TOC ----
 # AHDI MEASURES, COUNTY & TRACT LEVEL
-# Median personal earnings
-# - Source: ACS Table B20002
-# Median personal earnings, method for aggregating combined region
-# - Source: ACS Table B20001
+# Median personal earnings, 2022 
+# - Source: ACS Table B20002 (COUNTY & TRACT)
+# - Source: ACS Table B20001 (REGION)
 # OTHER MEASURES
-# Median personal earnings by sex and race (COUNTY)
-# - Source: ACS Table B20017A-I
-# Median household income (COUNTY & TRACT)
-# - Sources: ACS Table B19013 & B19013A-I (BY RACE, COUNTY ONLY)
-# - Swap: B19001 & B19001A-I
-# ALICE Households (COUNTY) 
-# - ALICE Thresholds over time 2012-2022
-# - ALICE households, all and by race/ethnicity 2022 
+# Median personal earnings by sex and race, 2022 
+# - Source: ACS Table B20017A-I (COUNTY)
+# Median household income, 2022 
+# - Source: ACS Table B19013 (COUNTY & TRACT)
+# - Source: ACS Table B19013A-I (COUNTY ONLY)
+# - Source: B19001 & B19001A-I (REGION)
+# ALICE Households  
+# - ALICE Thresholds over time 2012-2022 (COUNTY)
+# - ALICE households, all and by race/ethnicity 2022 (COUNTY & REGION)
 # - Source: https://www.unitedforalice.org/state-overview/Virginia
 # Median Gross Rent
-# - Tract (2022)
-# - County (2012-2022)
-# - NEED METHOD FOR REGION
-# - Source: ACS Table B25064
-# Rent-burdened households, 2022 (COUNTY & TRACT)
-# - Source: ACS Table B25070
-# Tenure/Home Ownership, 2022 (COUNTY & TRACT)
-# - Source: ACS Table B25003
-# Tenure/Home Ownership by Race, 2012, 2022 (COUNTY)
-# - Source: ACS Table B25003A-I
+# - County (2012-2022), Tract (2022)
+# - Source: ACS Table B25064 (COUNTY & TRACT)
+# - Source: ACS Table B25063 (REGION)
+# Rent-burdened households, 2022 
+# - Source: ACS Table B25070 (COUNTY, TRACT, REGION)
+# Tenure/Home Ownership, 2022
+# - Source: ACS Table B25003 (COUNTY, TRACT, REGION)
+# Tenure/Home Ownership by Race, 2012, 2022 
+# - Source: ACS Table B25003A-I (COUNTY & REGION)
 
 # Load packages
 library(tidyverse)
