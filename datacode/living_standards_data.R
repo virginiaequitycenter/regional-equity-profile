@@ -23,12 +23,12 @@
 # - ALICE Thresholds over time 2012-2022 (COUNTY)
 # - ALICE households, all and by race/ethnicity 2022 (COUNTY & REGION)
 # - Source: https://www.unitedforalice.org/state-overview/Virginia
+# Rent-burdened households, 2022 
+# - Source: ACS Table B25070 (COUNTY, TRACT, REGION)
 # Median Gross Rent
 # - County (2012-2022), Tract (2022)
 # - Source: ACS Table B25064 (COUNTY & TRACT)
-# - Source: ACS Table B25063 (REGION)
-# Rent-burdened households, 2022 
-# - Source: ACS Table B25070 (COUNTY, TRACT, REGION)
+# - Source: ACS Table B25063 (REGION) !!NEEDS WORK
 # Tenure/Home Ownership, 2022
 # - Source: ACS Table B25003 (COUNTY, TRACT, REGION)
 # Tenure/Home Ownership by Race, 2012, 2022 
@@ -52,7 +52,7 @@ year <- 2022
 county_codes <- c("003", "540") # Albemarle, Charlottesville FIPS Code
 
 # Name for combined region
-region_name <- "Combined Region"
+region_name <- "Charlottesville-Albemarle Region"
 
 # Read in tract names
 tract_names <- read_csv("data/regional_tractnames.csv")
@@ -88,8 +88,8 @@ meta_table <- all_acs_meta()
 # Opens the newly made table
 # View(meta_table)
 
-## .................................................
-# Median Personal Earnings (AHDI MEASURE): B20002 (NEED TO UPDATE TO B20001) ----
+## ...................................................
+# Median Personal Earnings (AHDI MEASURE): B20002 ----
 # Table: B20002 (Median Earnings in the Past 12 Months, Inflation-Adjusted)
 
 # Median Personal Earnings: County & tract
@@ -212,7 +212,7 @@ earnings_df <- earnings_df  %>%
 # choose localities for combined region
 choose <- c("51003", "51540")
 
-# Make a function ----
+# make a function
 agg_earning_median <- function(df, loc){
   agg_earning_range <- df %>% 
     filter(GEOID %in% loc) %>% 
@@ -297,228 +297,8 @@ alb_med_earnings_race_county <- med_earnings_race_county %>%
 write_csv(alb_med_earnings_race_county, paste0("data/alb_med_earnings_race_county", "_", year, ".csv"))
 
 ## ...................................
-# Median Household Income: B19001 (All) & B19001A-I (By Race/Ethnicity) UPDATED METHOD ----
-# A good explanation of finding the median across aggregated geographies
-# https://dof.ca.gov/wp-content/uploads/sites/352/Forecasting/Demographics/Documents/How_to_Recalculate_a_Median.pdf
+# Median Household Income by Race: B19013 & B19013A-I ----
 
-# Median Household Income: ACS Table B19001, County ----
-# Get ACS data
-acs_B19001_county <- get_acs(geography = "county",
-                               state = "51",
-                               county = county_codes,
-                               table = "B19001", 
-                               summary_var = "B19001_001",
-                               year = year,
-                               survey = "acs5",
-                               cache_table = TRUE) 
-
-# acs_B19001_tract <- get_acs(geography = "tract",
-#                              state = "51",
-#                              county = county_codes,
-#                              table = "B19001", 
-#                              summary_var = "B19001_001",
-#                              year = year,
-#                              survey = "acs5",
-#                              cache_table = TRUE) 
-# 
-
-# prep data
-# income range function
-income_ranges_func <- function(df){
-  income_ranges <- df %>% 
-    filter(variable != "B19001_001") %>%
-    mutate(income_bin = as.factor(variable)) %>%
-    mutate(income_bin = fct_recode(income_bin,
-                                   "2500_9999" = "B19001_002",
-                                   "10000_14999" = "B19001_003",
-                                   "15000_19999" = "B19001_004",
-                                   "20000_24999" = "B19001_005",
-                                   "25000_29999" = "B19001_006",
-                                   "30000_34999" = "B19001_007",
-                                   "35000_39999" = "B19001_008",
-                                   "40000_44999" = "B19001_009",
-                                   "45000_49999" = "B19001_010",
-                                   "50000_59999" = "B19001_011",
-                                   "60000_74999" = "B19001_012",
-                                   "75000_99999" = "B19001_013",
-                                   "100000_124999" = "B19001_014",
-                                   "125000_149999" = "B19001_015",
-                                   "150000_199999" = "B19001_016",
-                                   "200000_300000" = "B19001_017" 
-    )) %>% 
-    separate(income_bin, into = c("bin_start", "bin_end"), 
-             sep = "_", remove = FALSE) %>% 
-    mutate(across(starts_with("bin"), as.numeric))
-
-    return(income_ranges)
-}
-
-# Run income ranges function for county and tract
-income_ranges_county <- income_ranges_func(acs_B19001_county)
-# income_ranges_tract <- income_ranges_func(acs_B19001_tract)
-
-# income_ranges_county <- acs_B19001_county %>% 
-#   filter(variable != "B19001_001") %>%
-#   mutate(income_bin = as.factor(variable)) %>%
-#   mutate(income_bin = fct_recode(income_bin,
-#                                  "2500_9999" = "B19001_002",
-#                                  "10000_14999" = "B19001_003",
-#                                  "15000_19999" = "B19001_004",
-#                                  "20000_24999" = "B19001_005",
-#                                  "25000_29999" = "B19001_006",
-#                                  "30000_34999" = "B19001_007",
-#                                  "35000_39999" = "B19001_008",
-#                                  "40000_44999" = "B19001_009",
-#                                  "45000_49999" = "B19001_010",
-#                                  "50000_59999" = "B19001_011",
-#                                  "60000_74999" = "B19001_012",
-#                                  "75000_99999" = "B19001_013",
-#                                  "100000_124999" = "B19001_014",
-#                                  "125000_149999" = "B19001_015",
-#                                  "150000_199999" = "B19001_016",
-#                                  "200000_300000" = "B19001_017" 
-#   )) %>% 
-#   separate(income_bin, into = c("bin_start", "bin_end"), 
-#            sep = "_", remove = FALSE) %>% 
-#   mutate(across(starts_with("bin"), as.numeric))
-
-
-# Derive steps to aggregate and estimate
-# Median Household Income, Combined Region ----
-
-# choose localities for combined region
-choose <- c("51003", "51540")
-
-# generate aggregate sums
-aggregate_range_county <- income_ranges_county %>% 
-  filter(GEOID %in% choose) %>% 
-  group_by(income_bin, bin_start, bin_end) %>% 
-  summarize(estimate = sum(estimate),
-            total = sum(summary_est)) %>% 
-  ungroup() %>% 
-  mutate(cum_sum = cumsum(estimate),
-         cum_per = cum_sum/total)
-
-# identify midpoint observation
-midpoint <- aggregate_range_county$total[1]/2
-
-# find index of row for which cum_sum contains the midpoint
-index_bin <- which(aggregate_range_county$cum_sum > midpoint)[1]
-
-# range_reach = midpoint - cum_sum[x-1]
-#   how many observations into the identified cum_sum do we need to reach
-range_reach <- midpoint-aggregate_range_county$cum_sum[index_bin-1]
-
-# range_prop = range_reach / estimate[x]
-#   what proportion of the total of the identified income_bin is this 
-range_prop <- range_reach / aggregate_range_county$estimate[index_bin]
-
-# income_add = range_prop * (bin_end[x] - bin_start[x] + 1) 
-#   assuming uniform distribution in the range, how far into the income bin is this proportion
-income_add <- range_prop * (aggregate_range_county$bin_end[index_bin] + 1 - aggregate_range_county$bin_start[index_bin])
-
-# median = bin_end[x-1] + income_add 
-#   add this income to the top range of the prior income bin
-median <- aggregate_range_county$bin_end[index_bin-1] + income_add
-
-# Compare to county estimates from B19013
-# Albemarle: estimate 97564, table 97708
-# Charlottesville: estimate 67489, table 67177
-
-# get all tables
-# get all race-ethnicity specific tables
-tables <- c("B19001", "B19001A", "B19001B", "B19001C", "B19001D", "B19001E",
-            "B19001F", "B19001G", "B19001H", "B19001I")
-
-acs_B19001_race_county <- map(tables,
-                         ~get_acs(geography = "county",
-                                  state = "51",
-                                  county = county_codes,
-                                  table = .x, 
-                                  #summary_var = "B19001_001",
-                                  year = year,
-                                  survey = "acs5",
-                                  cache_table = TRUE) %>% 
-                           mutate(table = .x)
-)
-
-# prep all data ----
-# perform processing across list
-income_tables_county <- acs_B19001_race_county %>% 
-  map(~filter(., !(str_detect(variable, fixed("_001")))) %>% 
-        mutate(variable = str_replace(variable, "B19001[:upper:]", "B19001"),
-               income_bin = as.factor(variable),
-               income_bin = fct_recode(income_bin,
-                                       "2500_9999" = "B19001_002",
-                                       "10000_14999" = "B19001_003",
-                                       "15000_19999" = "B19001_004",
-                                       "20000_24999" = "B19001_005",
-                                       "25000_29999" = "B19001_006",
-                                       "30000_34999" = "B19001_007",
-                                       "35000_39999" = "B19001_008",
-                                       "40000_44999" = "B19001_009",
-                                       "45000_49999" = "B19001_010",
-                                       "50000_59999" = "B19001_011",
-                                       "60000_74999" = "B19001_012",
-                                       "75000_99999" = "B19001_013",
-                                       "100000_124999" = "B19001_014",
-                                       "125000_149999" = "B19001_015",
-                                       "150000_199999" = "B19001_016",
-                                       "200000_300000" = "B19001_017")
-        ) %>% 
-        separate(income_bin, into = c("bin_start", "bin_end"), 
-                 sep = "_", remove = FALSE) %>% 
-        mutate(across(starts_with("bin"), as.numeric)) %>% 
-        group_by(GEOID, NAME) %>% 
-        mutate(summary_est = sum(estimate)) %>% 
-        ungroup()
-  )
-
-# Make a function ----
-aggregate_median <- function(aggregate_range, df, loc){
-  aggregate_range <- df %>% 
-    filter(GEOID %in% loc) %>% 
-    group_by(income_bin, bin_start, bin_end) %>% 
-    summarize(estimate = sum(estimate),
-              total = sum(summary_est)) %>% 
-    ungroup() %>% 
-    mutate(cum_sum = cumsum(estimate),
-           cum_per = cum_sum/total)
-  
-  midpoint <- aggregate_range$total[1]/2
-  index_bin <- which(aggregate_range$cum_sum > midpoint)[1]
-  range_reach <- midpoint-aggregate_range$cum_sum[index_bin-1]
-  range_prop <- range_reach / aggregate_range$estimate[index_bin]
-  income_add <- range_prop * (aggregate_range$bin_end[index_bin] + 1 - aggregate_range$bin_start[index_bin])
-  median <- aggregate_range$bin_end[index_bin-1] + income_add
-  return(median)
-}
-
-# apply function 
-median_overall <- aggregate_median(aggregate_range_county,income_tables_county[[1]], choose)
-median_whitealone <- aggregate_median(aggregate_range_county, income_tables_county[[2]], choose)
-median_blackalone <- aggregate_median(aggregate_range_county, income_tables_county[[3]], choose)
-median_aianalone <- aggregate_median(aggregate_range_county, income_tables_county[[4]], choose)
-median_asianalone <- aggregate_median(aggregate_range_county, income_tables_county[[5]], choose)
-median_nhpialone <- aggregate_median(aggregate_range_county, income_tables_county[[6]], choose)
-median_otheralone <- aggregate_median(aggregate_range_county, income_tables_county[[7]], choose)
-median_multialone <- aggregate_median(aggregate_range_county, income_tables_county[[8]], choose)
-median_whitenhalone <- aggregate_median(aggregate_range_county, income_tables_county[[9]], choose)
-median_hispanic <- aggregate_median(aggregate_range_county, income_tables_county[[10]], choose)
-
-# why no nhpi?
-# income_tables[[6]] %>% view()
-
-# combine into data frame
-medians_bygroup <- data.frame(mget(ls(pattern="median_"))) %>% 
-  pivot_longer(everything(), names_to = "group", values_to = "median_hh_inc") %>% 
-  mutate(region_FIPS = paste(choose, collapse = ","),
-         locality = region_name)
-
-
-# Median Household Income by Race: B19013 ----
-
-# Median Household Income by Race: County & tract
 # Get ACS data
 vars_B19013 <- c("Median Household Income; White" = "B19013A_001", 
                  "Median Household Income; Black" = "B19013B_001", 
@@ -586,7 +366,109 @@ alb_med_hhinc_tract <- med_hhinc_tract %>%
 
 write_csv(alb_med_hhinc_tract, paste0("data/alb_med_hhinc_tract", "_", year, ".csv"))
 
-## ..........................................
+# Median Household Income: Combined Region, B19001 & B19001A-I ----
+# A good explanation of finding the median across aggregated geographies
+# https://dof.ca.gov/wp-content/uploads/sites/352/Forecasting/Demographics/Documents/How_to_Recalculate_a_Median.pdf
+
+# choose localities for combined region
+choose <- c("51003", "51540")
+
+# get all tables, B19001 & B19001A-I
+tables <- c("B19001", "B19001A", "B19001B", "B19001C", "B19001D", "B19001E",
+            "B19001F", "B19001G", "B19001H", "B19001I")
+
+acs_B19001_race_county <- map(tables,
+                              ~get_acs(geography = "county",
+                                       state = "51",
+                                       county = county_codes,
+                                       table = .x, 
+                                       year = year,
+                                       survey = "acs5",
+                                       cache_table = TRUE) %>% 
+                                mutate(table = .x))
+
+# prep all data
+# perform processing across list
+income_tables <- acs_B19001_race_county %>% 
+  map(~filter(., !(str_detect(variable, fixed("_001")))) %>% 
+        mutate(variable = str_replace(variable, "B19001[:upper:]", "B19001"),
+               income_bin = as.factor(variable),
+               income_bin = fct_recode(income_bin,
+                                       "2500_9999" = "B19001_002",
+                                       "10000_14999" = "B19001_003",
+                                       "15000_19999" = "B19001_004",
+                                       "20000_24999" = "B19001_005",
+                                       "25000_29999" = "B19001_006",
+                                       "30000_34999" = "B19001_007",
+                                       "35000_39999" = "B19001_008",
+                                       "40000_44999" = "B19001_009",
+                                       "45000_49999" = "B19001_010",
+                                       "50000_59999" = "B19001_011",
+                                       "60000_74999" = "B19001_012",
+                                       "75000_99999" = "B19001_013",
+                                       "100000_124999" = "B19001_014",
+                                       "125000_149999" = "B19001_015",
+                                       "150000_199999" = "B19001_016",
+                                       "200000_300000" = "B19001_017")
+        ) %>% 
+        separate(income_bin, into = c("bin_start", "bin_end"), 
+                 sep = "_", remove = FALSE) %>% 
+        mutate(across(starts_with("bin"), as.numeric)) %>% 
+        group_by(GEOID, NAME) %>% 
+        mutate(summary_est = sum(estimate)) %>% 
+        ungroup()
+  )
+
+# Make a function
+aggregate_median_hhinc <- function(df, loc){
+  aggregate_range <- df %>% 
+    filter(GEOID %in% loc) %>% 
+    group_by(income_bin, bin_start, bin_end) %>% 
+    summarize(estimate = sum(estimate),
+              total = sum(summary_est)) %>% 
+    ungroup() %>% 
+    mutate(cum_sum = cumsum(estimate),
+           cum_per = cum_sum/total)
+  
+  midpoint <- aggregate_range$total[1]/2
+  index_bin <- which(aggregate_range$cum_sum > midpoint)[1]
+  range_reach <- midpoint-aggregate_range$cum_sum[index_bin-1]
+  range_prop <- range_reach / aggregate_range$estimate[index_bin]
+  income_add <- range_prop * (aggregate_range$bin_end[index_bin] + 1 - aggregate_range$bin_start[index_bin])
+  median <- aggregate_range$bin_end[index_bin-1] + income_add
+  return(median)
+}
+
+# apply function 
+median_hhinc_overall <- aggregate_median(income_tables[[1]], choose)
+median_hhinc_whitealone <- aggregate_median(income_tables[[2]], choose)
+median_hhinc_blackalone <- aggregate_median(income_tables[[3]], choose)
+median_hhinc_aianalone <- aggregate_median(income_tables[[4]], choose)
+median_hhinc_asianalone <- aggregate_median(income_tables[[5]], choose)
+median_hhinc_nhpialone <- aggregate_median(income_tables[[6]], choose)
+median_hhinc_otheralone <- aggregate_median(income_tables[[7]], choose)
+median_hhinc_multialone <- aggregate_median(income_tables[[8]], choose)
+median_hhinc_whitenhalone <- aggregate_median(income_tables[[9]], choose)
+median_hhinc_hispanic <- aggregate_median(income_tables[[10]], choose)
+
+# why no nhpi?
+# income_tables[[6]] %>% view()
+
+# Combine into data frame
+region_med_hhinc <- data.frame(mget(ls(pattern="median_hhinc_"))) %>% 
+  pivot_longer(everything(), names_to = "group", values_to = "median_hhinc") %>% 
+  mutate(region_fips = paste(choose, collapse = ","),
+         locality = region_name, 
+         year = year)
+
+region_med_hhinc <- region_med_hhinc %>% 
+  mutate(group = str_remove(group, "median_hhinc_")) %>% 
+  select(region_fips, locality, group, median_hhinc, year)
+
+# Generating CSV:
+write_csv(region_med_hhinc, paste0("data/region_med_hhinc", "_", year, ".csv"))
+
+## ...........................................
 # ALICE Households & Threshold 2010-2022 -----
 # Get ALICE Data (2010-2022): https://www.unitedforalice.org/state-overview/Virginia
 
@@ -695,7 +577,7 @@ write_csv(region_ALICE_households_by_race_2022, "data/region_ALICE_households_by
 #   mutate(percent = round(100 * (number / households), digits = 2)) %>% 
 #   select(GEOID, locality, sub_county, year, level, number, households, percent, source_american_community_survey)
 
-## .....................................................................................
+## ....................................
 # Rent-burdened households: B25070 ----
 
 # get acs data
@@ -792,8 +674,8 @@ region_rent_burden <- rent_burden_county %>%
 
 write_csv(region_rent_burden, paste0("data/region_rent_burden", "_", year, ".csv"))
 
-## ...........................................................
-# Median Gross Rent, 2012-2022: B25064 (Incomplete) ----
+## ........................................
+# Median Gross Rent, 2012-2022: B25064 ----
 # Table: B25064 (Median Gross Rent (Dollars))
 
 # Get ACS
@@ -865,6 +747,79 @@ alb_gross_rent_tract_2022 <- gross_rent_tract_2022 %>%
   filter(locality == "Albemarle County")
 
 write_csv(alb_gross_rent_tract_2022, paste0("data/alb_gross_rent_tract_2022.csv"))
+
+# Median Gross Rent: Combined Region (2012-2022), B25063 (METHOD DOES NOT WORK) ----
+# https://dof.ca.gov/wp-content/uploads/sites/352/Forecasting/Demographics/Documents/How_to_Recalculate_a_Median.pdf
+
+# choose localities for combined region
+choose <- c("51003", "51540")
+
+# get acs data
+acs_B25063_county <- map_df(2022:2012,
+                            ~ get_acs(geography = "county",
+                                      year = .x,
+                                      state = "VA",
+                                      county = county_codes,
+                                      table = "B25063",
+                                      survey = "acs5", 
+                                      cache = TRUE) %>%
+                              mutate(year = .x))
+
+# get labels
+acs_labels <- meta_table %>% filter(str_detect(name, "B25063"))
+
+# prep data
+rent_table <- acs_B25063_county %>% 
+  filter(!variable %in% c("B25063_001", "B25063_002", "B25063_027")) %>% 
+  left_join(acs_labels, join_by("variable" == "name")) %>% 
+  mutate(label = str_remove(label, "Estimate!!Total:!!With cash rent:!!"),
+         rent_bin = str_remove_all(label, "\\$"),
+         rent_bin = str_remove_all(rent_bin, ","),
+         rent_bin = str_replace(rent_bin, " to ", "-"),
+         rent_bin = str_replace(rent_bin, "Less than ", "0-"),
+         rent_bin = str_replace(rent_bin, " or more", "-4000"),
+         rent_bin = as.factor(rent_bin)
+         ) %>% 
+  separate(rent_bin, into = c("bin_start", "bin_end"), 
+         sep = "-", remove = FALSE) %>% 
+  mutate(across(starts_with("bin"), as.numeric)) %>% 
+  group_by(GEOID, NAME, year) %>% 
+  mutate(summary_est = sum(estimate)) %>% 
+  ungroup()
+
+# Make a function
+aggregate_gross_rent <- function(df, yr, loc){
+  aggregate_range <- df %>% 
+    filter(year == yr) %>% 
+    filter(GEOID %in% loc) %>% 
+    group_by(year, rent_bin, bin_start, bin_end) %>% 
+    summarize(estimate = sum(estimate),
+              total = sum(summary_est)) %>% 
+    ungroup() %>% 
+    mutate(cum_sum = cumsum(estimate),
+           cum_per = cum_sum/total)
+  
+  midpoint <- aggregate_range$total[1]/2
+  index_bin <- which(aggregate_range$cum_sum > midpoint)[1]
+  range_reach <- midpoint-aggregate_range$cum_sum[index_bin-1]
+  range_prop <- range_reach / aggregate_range$estimate[index_bin]
+  income_add <- range_prop * (aggregate_range$bin_end[index_bin] + 1 - aggregate_range$bin_start[index_bin])
+  median <- aggregate_range$bin_end[index_bin-1] + income_add
+  return(median)
+}
+
+# apply function 
+gross_rent_combined_2022 <- aggregate_gross_rent(rent_table, 2022, choose)
+
+rent_df <- map(2022:2012,
+       ~ aggregate_gross_rent(rent_table, .x, choose)
+       )
+
+agg_rents <- data.frame(year = c(2022:2012))
+agg_rents$gross_rent <- rent_df
+agg_rents <- agg_rents %>% 
+  mutate(region_fips = paste(choose, collapse = ","),
+         locality = region_name)
 
 ## .....................................
 # Tenure (Own & Rent): B25003 ----
