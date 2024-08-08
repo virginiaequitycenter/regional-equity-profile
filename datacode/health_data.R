@@ -1,32 +1,115 @@
 # R Script for pulling and examining health data
-# Author: Henry DeMarco
+# Authors: Henry DeMarco, Beth Mitchell
 # Date Created: June 17, 2024
-# Last Updated: July 23, 2024
+# Last Updated: Aug 2, 2024
 
 ## County FIPS Codes
 # 003 -- Albemarle
 # 540 -- Charlottesville
 
-#(!) indicates temporary comments to remove
+# Health TOC ----
+# AHDI MEASURES, COUNTY & TRACT LEVEL
+# County-Level Life Expectancy, incld. Race/Ethnicity, 2024
+# - Source: https://www.countyhealthrankings.org/health-data/virginia/data-and-resources
+# Tract-Level Life Expectancy, 2015 - INCOMEPLETE DUE TO 2010 vs 2020 Census tracts
+# - Source: https://www.cdc.gov/nchs/nvss/usaleep/usaleep.html (Source has not updated since 2010-2015 values)
+# OTHER MEASURES
+# Food Insecurity, 2019-2022
+# - Source: https://www.feedingamerica.org/research/map-the-meal-gap/by-county
+# Health Insurance Coverage, 2022 
+# - By Tract
+# - By County, incld. Race/Ethnicity
+# - Source: ACS Table S2701
+# CDC Places Health Measures  
+# - 
+# - 
+# - Source: 
+# EMS Opioid Overdose data
+# - Source: 
 
-#Packages
+# Load packages
 library(tidyverse)
 library(tidycensus)
 library(jsonlite)
 library(readxl)
+library(janitor)
 
 # Census API Key
 # census_api_key("YOUR KEY GOES HERE", install = TRUE)
 
-# Creating basic objects
+# Creating basic objects ----
 
-# Year for all data pull
+# Year for ACS data (single year)
 year <- 2022
 
-# County FIPS codes and name
-county_code <- c("003") #Albemarle FIPS Code
+# County FIPS codes 
+county_codes <- c("003", "540") # Albemarle, Charlottesville FIPS Code
 
-# A custom R function that creates a table of all variable codes and metadata
+# Name for combined region
+region_name <- "Charlottesville-Albemarle Region"
+
+# Read in tract names
+tract_names <- read_csv("data/regional_tractnames.csv")
+tract_names <- tract_names %>% 
+  mutate(GEOID = as.character(GEOID)) %>% 
+  rename("county" = "locality",
+         "tract_num" = "tract") %>% 
+  filter(locality_num %in% county_codes)
+
+cville_tracts <- tract_names %>% 
+  filter(county == "Charlottesville") %>% 
+  mutate(GEOID_TRACT_10 = GEOID)
+
+alb_tracts <- tract_names %>% 
+  filter(county == "Albemarle")
+
+# 2020 Census Tract to 2010 Census Tract Relationship File
+tract_crosswalk <- read_delim("data/tempdata/tab20_tract20_tract10_natl.txt", delim = "|")
+
+alb_tracts_crosswalk <- alb_tracts %>% 
+  left_join(tract_crosswalk, by = join_by(GEOID == GEOID_TRACT_20)) %>% 
+  filter(substr(GEOID_TRACT_10, 1, 5) == "51003") %>% 
+  select(county, locality_num, tract_num, tractnames, GEOID,  GEOID_TRACT_10, NAMELSAD_TRACT_20, NAMELSAD_TRACT_10) %>% 
+  mutate(tract_check = case_when(NAMELSAD_TRACT_20 == NAMELSAD_TRACT_10 ~ TRUE,
+                                 GEOID == "51003011302" & GEOID_TRACT_10 == "51003011301" ~ FALSE,
+                                 substr(NAMELSAD_TRACT_20, 1, 16) == substr(NAMELSAD_TRACT_10, 1, 16) ~ TRUE,
+                                 .default = FALSE)) %>% 
+  filter(tract_check == TRUE) %>% 
+  select(county, GEOID, locality_num, tract_num, tractnames, GEOID_TRACT_10)
+
+tract_names_crosswalk <- rbind(alb_tracts_crosswalk, cville_tracts)
+
+# # Add old tract numbers
+# tract_names_update <- tract_names %>% 
+#   mutate(GEOID_2010 = case_when(GEOID %in% c("51003011101", "51003011102", "51003011103") ~ "51003011100",
+#                                 GEOID %in% c("51003010301", "51003010302", "51003010303") ~ "51003010300",
+#                                 GEOID %in% c("51003010501", "51003010502") ~ "51003010500"))
+# 
+# library(tigris)
+# options(tigris_use_cache = TRUE)
+# library(ggrepel)
+# 
+# tracts_alb_2022 <- tracts(state = "VA", county = c("003"), year = 2022)
+# tracts_alb_2019 <- tracts(state = "VA", county = c("003"), year = 2019)
+# tracts_cville_2022 <- tracts(state = "VA", county = c("540"), year = 2022)
+# tracts_cville_2019 <- tracts(state = "VA", county = c("540"), year = 2019)
+# 
+# ggplot(tracts_alb_2022) +
+#   geom_sf(color = "blue") +
+#   geom_sf_label(aes(label = TRACTCE), size = 2)
+# 
+# ggplot(tracts_alb_2019) +
+#   geom_sf(color = "purple") +
+#   geom_sf_label(aes(label = TRACTCE), size = 2)
+
+
+# Create tempdata folder
+if (!dir.exists("data/tempdata")){
+  dir.create("data/tempdata")}
+
+# ACS Variables ----
+# A custom R function that creates a table of variable codes and metadata 
+# for ACS 5-year, including subject and profile tables
 all_acs_meta <- function(){
   # Gets the list of all variables from all acs5 metadata tables
   vars1 <- load_variables(year, "acs5", cache = TRUE) %>% select(-geography)
@@ -48,296 +131,349 @@ all_acs_meta <- function(){
 meta_table <- all_acs_meta()
 
 # Opens the newly made table
-View(meta_table)
+# View(meta_table)
 
-# Topics of interest (!)
+## .............................................................
+# County-Level Life Expectancy, incld. Race/Ethnicity, 2024 ----
 
-  # Health Insurance Coverage (by race / tract)
-  # Rate of food insecurity in county (overall / among children), 2022
-  # Number / percent without health insurance (by race / ethnicity, tract)
-  # CDC Places Measures (health conditions by tract)
-  # Food Insecurity (by county)
-  # Life expectancy
-     # By race / ethnicity
+# Get Data
+# Source: https://www.countyhealthrankings.org/health-data/virginia/data-and-resources
 
-############################
+url <- "https://www.countyhealthrankings.org/sites/default/files/media/document/2024%20County%20Health%20Rankings%20Virginia%20Data%20-%20v2.xlsx"
 
-# Table: S2701 (Health Insurance Coverage by Race / Ethnicity)
-  # S2701_C01 is total, C02 is insured, C03 is percent insured, C04 is uninsured, C05 is percent uninsured
-  # S2701_C01_016 through S2701_C01_024 is coverage by race / ethnicity
+download.file(url, destfile="data/tempdata/countyhealthrankings2024.xlsx", method="libcurl")
 
-# Charlottesville (Insurance by Race / Ethnicity), 2022
+# Read data
+life_exp_sheet <- read_excel("data/tempdata/countyhealthrankings2024.xlsx", sheet = "Additional Measure Data", skip = 1)
 
-insurance_counts_cville_2022 <- get_acs(
-  geography = "county",
-  state = "VA",
-  county = "540",
-  table = "S2701",
-  survey = "acs5", 
-  cache = TRUE,
-  year = 2022) %>% 
-  filter(variable %in% c("S2701_C04_016", "S2701_C04_017", "S2701_C04_018", "S2701_C04_019",
-                         "S2701_C04_020", "S2701_C04_021", "S2701_C04_022", "S2701_C04_023",
-                         "S2701_C04_024")
-  )
+# Reduce, rename, derive
+life_exp_sheet <- life_exp_sheet %>% 
+  select(FIPS, locality = County, 
+         lifeexp_all_est = `Life Expectancy`, lifeexp_all_lb = `95% CI - Low...5`, lifeexp_all_ub = `95% CI - High...6`,
+         lifeexp_white_est = `Life Expectancy (Non-Hispanic White)`, lifeexp_white_lb = `Life Expectancy (Non-Hispanic White) 95% CI - Low`, lifeexp_white_ub = `Life Expectancy (Non-Hispanic White) 95% CI - High`,
+         lifeexp_black_est = `Life Expectancy (Non-Hispanic Black)`, lifeexp_black_lb = `Life Expectancy (Non-Hispanic Black) 95% CI - Low`, lifeexp_black_ub = `Life Expectancy (Non-Hispanic Black) 95% CI - High`,
+         lifeexp_ltnx_est = `Life Expectancy (Hispanic (all races))`, lifeexp_ltnx_lb = `Life Expectancy (Hispanic (all races)) 95% CI - Low`, lifeexp_ltnx_ub = `Life Expectancy (Hispanic (all races)) 95% CI - High`,
+         lifeexp_asian_est = `Life Expectancy (Non-Hispanic Asian)`, lifeexp_asian_lb = `Life Expectancy (Non-Hispanic Asian) 95% CI - Low`, lifeexp_asian_ub = `Life Expectancy (Non-Hispanic Asian) 95% CI - High`) %>% 
+  mutate(lifeexp_all_moe = (lifeexp_all_ub-lifeexp_all_lb)/2,
+         lifeexp_white_moe = (lifeexp_white_ub-lifeexp_white_lb)/2,
+         lifeexp_black_moe = (lifeexp_black_ub-lifeexp_black_lb)/2,
+         lifeexp_ltnx_moe = (lifeexp_ltnx_ub-lifeexp_ltnx_lb)/2,
+         lifeexp_asian_moe = (lifeexp_asian_ub-lifeexp_asian_lb)/2,
+         fips = str_remove(FIPS, "51")) %>% 
+  mutate_if(is.numeric, round, 1) %>% 
+  select(FIPS, fips, locality, lifeexp_all_est, lifeexp_all_lb, lifeexp_all_ub, lifeexp_all_moe, 
+         lifeexp_black_est, lifeexp_black_lb, lifeexp_black_ub, lifeexp_black_moe, 
+         lifeexp_ltnx_est, lifeexp_ltnx_lb, lifeexp_ltnx_ub, lifeexp_ltnx_moe, 
+         lifeexp_white_est, lifeexp_white_lb, lifeexp_white_ub, lifeexp_white_moe, 
+         lifeexp_asian_est, lifeexp_asian_lb, lifeexp_asian_ub, lifeexp_asian_moe)
 
-# Finalizing table:
-cville_insurance_counts_2022 <- insurance_counts_cville_2022 %>% 
-  mutate(year = "2022",
-    label = case_when(
-    variable == "S2701_C04_016" ~ "White alone",
-    variable == "S2701_C04_017" ~ "Black or African American alone",
-    variable == "S2701_C04_018" ~ "American Indian and Alaska Native alone",
-    variable == "S2701_C04_019" ~ "Asian alone",
-    variable == "S2701_C04_020" ~ "Native Hawaiian and Other Pacific Islander alone",
-    variable == "S2701_C04_021" ~ "Some other race alone",
-    variable == "S2701_C04_022" ~ "Two or more races",
-    variable == "S2701_C04_023" ~ "Hispanic or Latino (of any race)",
-    variable == "S2701_C04_024" ~ "White alone, not Hispanic or Latino")) %>% 
-  rename(uninsured_count = estimate) %>% 
-  mutate(shared_variable = gsub("C04", "", variable))
+# Filter & wrangle
+life_exp_county <- life_exp_sheet %>% 
+  filter(fips %in% county_codes) %>% 
+  pivot_longer(lifeexp_all_est:lifeexp_asian_moe) %>% 
+  mutate(name = str_remove(name, "lifeexp_"),
+         year = 2024) %>% 
+  separate(name, into = c("group", "name")) %>% 
+  pivot_wider(names_from = name, values_from = value) %>% 
+  relocate(year, .after = last_col())
 
-# Percents are calculated by race/ethnicity, so percent table is pulled to join with count table
+names(life_exp_county) <- c("GEOID", "fips", "locality", "group", "lifeexp_est", "lower_bound", "upper_bound", "lifeexp_moe", "year")
 
-insurance_per_cville_2022 <- get_acs(
-           geography = "county",
-           state = "VA",
-           county = "540",
-           table = "S2701",
-           survey = "acs5", 
-           cache = TRUE,
-           year = 2022) %>% 
-           filter(variable %in% c("S2701_C05_016", "S2701_C05_017", "S2701_C05_018", "S2701_C05_019",
-                         "S2701_C05_020", "S2701_C05_021", "S2701_C05_022", "S2701_C05_023",
-                         "S2701_C05_024")
-           )
+# County-Level Life Expectancy, incld. Race/Ethnicity, 2024: Charlottesville ----
+cville_life_exp_county_2024 <- life_exp_county %>% 
+  filter(locality == "Charlottesville City")
 
-# Finalizing table:
-cville_insurance_per_2022 <- insurance_per_cville_2022 %>% 
-  mutate(year = "2022",
-           label = case_when(
-           variable == "S2701_C05_016" ~ "White alone",
-           variable == "S2701_C05_017" ~ "Black or African American alone",
-           variable == "S2701_C05_018" ~ "American Indian and Alaska Native alone",
-           variable == "S2701_C05_019" ~ "Asian alone",
-           variable == "S2701_C05_020" ~ "Native Hawaiian and Other Pacific Islander alone",
-           variable == "S2701_C05_021" ~ "Some other race alone",
-           variable == "S2701_C05_022" ~ "Two or more races",
-           variable == "S2701_C05_023" ~ "Hispanic or Latino (of any race)",
-           variable == "S2701_C05_024" ~ "White alone, not Hispanic or Latino")) %>% 
-  rename(percent_uninsured = estimate) %>% 
-  mutate(shared_variable = gsub("C05", "", variable))
+write_csv(cville_life_exp_county_2024, "data/cville_life_exp_county_2024.csv")
 
-# Joining count table with percent table
+# County-Level Life Expectancy, incld. Race/Ethnicity, 2024: Albemarle ----
+alb_life_exp_county_2024 <- life_exp_county %>% 
+  filter(locality == "Albemarle")
 
-cville_insurance_final_2022 <- left_join(cville_insurance_counts_2022, 
-                                         cville_insurance_per_2022 %>% select(shared_variable, percent_uninsured), 
-                                         by = "shared_variable")
+write_csv(alb_life_exp_county_2024, "data/alb_life_exp_county_2024.csv")
 
-# Generating CSV
+## .....................................
+# Tract-Level Life Expectancy, 2015 ----
+# Source: https://www.cdc.gov/nchs/nvss/usaleep/usaleep.html (Source has not updated since 2010-2015 values)
+url <- "https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/NVSS/USALEEP/CSV/VA_A.CSV"
+download.file(url, destfile="data/tempdata/va_usasleep.csv", method="libcurl")
 
-write.csv(cville_insurance_final_2022, "temp_data/cville_insurance_final_2022.csv")
+# read data and rename
+lifeexp_tract_sheet <- read_csv("data/tempdata/va_usasleep.csv", col_types = c("c","c","c","c","n","n","n"))
+names(lifeexp_tract_sheet) <- c("GEOID", "state", "locality_num", "tract_num", "life_exp", "se", "flag")
 
-# Albemarle (Insurance by Race / Ethnicity), 2022
+# Filter and derive metrics
+lifeexp_tract <- lifeexp_tract_sheet %>%
+  filter(locality_num %in% county_codes) %>% 
+  rename(lifeexpE = life_exp) %>%
+  mutate(lifeexpM = 1.64*se,
+         year = 2015) %>%
+  select(-se, -flag)
 
-insurance_counts_alb_2022 <- get_acs(
-  geography = "county",
-  state = "VA",
-  county = "003",
-  table = "S2701",
-  survey = "acs5", 
-  cache = TRUE,
-  year = 2022) %>% 
-  filter(variable %in% c("S2701_C04_016", "S2701_C04_017", "S2701_C04_018", "S2701_C04_019",
-                         "S2701_C04_020", "S2701_C04_021", "S2701_C04_022", "S2701_C04_023",
-                         "S2701_C04_024")
-  )
+# Join tract names (merging old and new tracts)
+lifeexp_tract <- lifeexp_tract %>% 
+  full_join(tract_names_crosswalk, by = join_by(GEOID == GEOID_TRACT_10), keep = TRUE)  
 
-# Finalizing table:
-alb_insurance_counts_2022 <- insurance_counts_alb_2022 %>% 
-  mutate(year = "2022",
-    label = case_when(
-    variable == "S2701_C04_016" ~ "White alone",
-    variable == "S2701_C04_017" ~ "Black or African American alone",
-    variable == "S2701_C04_018" ~ "American Indian and Alaska Native alone",
-    variable == "S2701_C04_019" ~ "Asian alone",
-    variable == "S2701_C04_020" ~ "Native Hawaiian and Other Pacific Islander alone",
-    variable == "S2701_C04_021" ~ "Some other race alone",
-    variable == "S2701_C04_022" ~ "Two or more races",
-    variable == "S2701_C04_023" ~ "Hispanic or Latino (of any race)",
-    variable == "S2701_C04_024" ~ "White alone, not Hispanic or Latino")) %>% 
-  rename(uninsured_count = estimate) %>% 
-  mutate(shared_variable = gsub("C04", "", variable))
+# Some tracts missing life Expectancy data: 
+# Albemarle: GEOID_2020: 51003010904; GEOID_2010: 51003010902 & 51003010903; Carr's Hill-McCormick Road (UVA)
+# Charlottesville: GEOID_2020/GEOID_2010: 51540000202; 10th & Page-Venable
+# Charlottesville: GEOID_2020/GEOID_2010: 51540000600; JPA-Fontaine
 
-# Percents are calculated by race/ethnicity, so percent table is pulled to join with count table
+## ...............................
+# Food Insecurity, 2019-2022 ----
+# Source: https://map.feedingamerica.org 
+# Dataset request form: https://www.feedingamerica.org/research/map-the-meal-gap/by-county
 
-insurance_per_alb_2022 <- get_acs(
-  geography = "county",
-  state = "VA",
-  county = "003",
-  table = "S2701",
-  survey = "acs5", 
-  cache = TRUE,
-  year = 2022) %>% 
-  filter(variable %in% c("S2701_C05_016", "S2701_C05_017", "S2701_C05_018", "S2701_C05_019",
-                         "S2701_C05_020", "S2701_C05_021", "S2701_C05_022", "S2701_C05_023",
-                         "S2701_C05_024")
-  )
+# Read in data
+# Need to define col_types for each variable
+usda_sheet <- read_excel("data/tempdata/MMG_Data_v2/MMG2024_2019-2022_Data_ToShare_v2.xlsx", sheet = "County", col_types = c(rep("text",3),rep("numeric",16)))
+food_insecure <- usda_sheet %>% 
+  filter(FIPS %in% c("51003", "51540")) %>% 
+  clean_names()
 
-# Finalizing table:
-alb_insurance_per_2022 <- insurance_per_alb_2022 %>% 
-  mutate(year = "2022",
-    label = case_when(
-    variable == "S2701_C05_016" ~ "White alone",
-    variable == "S2701_C05_017" ~ "Black or African American alone",
-    variable == "S2701_C05_018" ~ "American Indian and Alaska Native alone",
-    variable == "S2701_C05_019" ~ "Asian alone",
-    variable == "S2701_C05_020" ~ "Native Hawaiian and Other Pacific Islander alone",
-    variable == "S2701_C05_021" ~ "Some other race alone",
-    variable == "S2701_C05_022" ~ "Two or more races",
-    variable == "S2701_C05_023" ~ "Hispanic or Latino (of any race)",
-    variable == "S2701_C05_024" ~ "White alone, not Hispanic or Latino"))  %>% 
-  rename(percent_uninsured = estimate) %>% 
-  mutate(shared_variable = gsub("C05", "", variable))
+# Food Insecurity, 2019-2022: Charlottesville ----
+cville_food_insecure_2019_2022 <- food_insecure %>% 
+  filter(county_state == "Charlottesville city, Virginia")
 
-# Joining count table with percent table
+write_csv(cville_food_insecure_2019_2022, "data/cville_food_insecure_2019_2022.csv")
 
-alb_insurance_final_2022 <- left_join(alb_insurance_counts_2022, 
-                                         alb_insurance_per_2022 %>% select(shared_variable, percent_uninsured), 
-                                         by = "shared_variable")
+# Food Insecurity, 2019-2022: Albemarle ----
+alb_food_insecure_2019_2022 <- food_insecure %>% 
+  filter(county_state == "Albemarle County, Virginia")
 
-# Generating CSV
+write_csv(alb_food_insecure_2019_2022, "data/alb_food_insecure_2019_2022.csv")
 
-write.csv(alb_insurance_final_2022, "temp_data/alb_insurance_final_2022.csv")
+## ..........................................................
+# Health Insurance Coverage, by Tract: Table S2701, 2022 ----
+# S2701_C01 is total, C02 is insured, C03 is percent insured, C04 is uninsured, C05 is percent uninsured
 
-# Table: S2701 (Health Insurance Coverage by Tract)
-
-# Charlottesville (Health Insurance Coverage by Tract), 2022
-
-insurance_tract_cville_2022 <- get_acs(
+# Get ACS data
+vars_S2701_tract <- get_acs(
   geography = "tract",
   state = "VA",
-  county = "540",
-  table = "S2701",
+  county = county_codes,
+  var = c("S2701_C02_001", "S2701_C04_001"),
   survey = "acs5", 
   cache = TRUE,
   summary_var = "S2701_C01_001",
-  year = 2022) %>% 
-  filter(variable %in% c("S2701_C04_001")
-  )
+  year = year) %>% 
+  mutate(variable = case_when(variable == "S2701_C02_001" ~ "insured",
+                              variable == "S2701_C04_001" ~ "uninsured"))
 
-# Finalizing table:
-cville_insurance_tract_2022 <- insurance_tract_cville_2022 %>% 
-  mutate(percent = 100 * (estimate / summary_est),
-         year = "2022",
-         label = case_when(
-         variable == "S2701_C04_001" ~ "Uninsured"
-         ))
+# Wrangle
+health_insured_tract <- vars_S2701_tract %>% 
+  pivot_wider(names_from = variable, values_from = c(estimate, moe)) %>% 
+  mutate(percent_insured = round(100 * (estimate_insured / summary_est), digits = 2),
+         percent_uninsured = round(100 * (estimate_uninsured / summary_est), digits = 2),
+         year = year) %>% 
+  separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE)
 
-# Generating CSV
+# Join tract names
+health_insured_tract <- health_insured_tract %>% 
+  left_join(tract_names)
 
-write.csv(cville_insurance_tract_2022, "temp_data/cville_insurance_tract_2022.csv")
+# Health Insurance Coverage, by Tract: Charlottesville ----
+cville_health_insured_tract <- health_insured_tract %>% 
+  filter(locality == "Charlottesville city")
 
-# Albemarle (Health Insurance Coverage by Tract), 2022
+write_csv(cville_health_insured_tract, paste0("data/cville_health_insured_tract", "_", year, ".csv"))
 
-insurance_tract_alb_2022 <- get_acs(
-  geography = "tract",
-  state = "VA",
-  county = "003",
-  table = "S2701",
-  survey = "acs5", 
+# Health Insurance Coverage, by Tract: Albemarle ----
+alb_health_insured_tract <- health_insured_tract %>% 
+  filter(locality == "Albemarle County")
+
+write_csv(alb_health_insured_tract, paste0("data/alb_health_insured_tract", "_", year, ".csv"))
+
+## ..........................................................................
+# Health Insurance Coverage, County by Race/Ethnicity: Table S2701, 2022 ----
+
+# Get ACS Data
+# Vars for insured/uninsured
+acs_vars_S2701 <- c("insured; All" = "S2701_C02_001",
+                    "insured; White alone" = "S2701_C02_016",
+                    "insured; Black or African American alone" = "S2701_C02_017",
+                    "insured; American Indian and Alaska Native alone" = "S2701_C02_018",
+                    "insured; Asian alone" = "S2701_C02_019",
+                    "insured; Native Hawaiian and Other Pacific Islander alone" = "S2701_C02_020",
+                    "insured; Some other race alone" = "S2701_C02_021",
+                    "insured; Two or more races" = "S2701_C02_022",
+                    "insured; Hispanic or Latino" = "S2701_C02_023",
+                    "insured; White non Hispanic" = "S2701_C02_024",
+                    "uninsured; All" = "S2701_C04_001",
+                    "uninsured; White alone" = "S2701_C04_016",
+                    "uninsured; Black or African American alone" = "S2701_C04_017",
+                    "uninsured; American Indian and Alaska Native alone" = "S2701_C04_018",
+                    "uninsured; Asian alone" = "S2701_C04_019",
+                    "uninsured; Native Hawaiian and Other Pacific Islander alone" = "S2701_C04_020",
+                    "uninsured; Some other race alone" = "S2701_C04_021",
+                    "uninsured; Two or more races" = "S2701_C04_022",
+                    "uninsured; Hispanic or Latino" = "S2701_C04_023",
+                    "uninsured; White non Hispanic" = "S2701_C04_024")
+
+# Vars for total population counts
+acs_vars_S2701_C01 <- c("All" = "S2701_C01_001",
+                        "White alone" = "S2701_C01_016",
+                        "Black or African American alone" = "S2701_C01_017",
+                        "American Indian and Alaska Native alone" = "S2701_C01_018",
+                        "Asian alone" = "S2701_C01_019",
+                        "Native Hawaiian and Other Pacific Islander alone" = "S2701_C01_020",
+                        "Some other race alone" = "S2701_C01_021",
+                        "Two or more races" = "S2701_C01_022",
+                        "Hispanic or Latino" = "S2701_C01_023",
+                        "White non Hispanic" = "S2701_C01_024")
+
+vars_S2701_county <- get_acs(
+  geography = "county",
+  county = county_codes,
   cache = TRUE,
-  summary_var = "S2701_C01_001",
-  year = 2022) %>% 
-  filter(variable %in% c("S2701_C04_001")
-  )
+  state = "VA",
+  var = acs_vars_S2701,
+  survey = "acs5",
+  year = year)
 
-# Finalizing table:
-alb_insurance_tract_2022 <- insurance_tract_alb_2022 %>% 
-  mutate(percent = 100 * (estimate / summary_est),
-         year = "2022",
-         label = case_when(
-           variable == "S2701_C04_001" ~ "Uninsured"
-         ))
+# Group totals
+vars_S2701_C01 <- get_acs(
+  geography = "county",
+  county = county_codes,
+  cache = TRUE,
+  state = "VA",
+  var = acs_vars_S2701_C01,
+  survey = "acs5",
+  year = year) %>% 
+  rename(group = variable,
+         total_est = estimate,
+         total_moe = moe)
 
-# Generating CSV
+# Prep table
+health_insured_county_race <- vars_S2701_county %>% 
+  separate(variable, into=c("variable","group"), sep="; ", remove=FALSE) %>% 
+  pivot_wider(names_from = variable, values_from = c(estimate, moe))
 
-write.csv(alb_insurance_tract_2022, "temp_data/alb_insurance_tract_2022.csv")
+# Join tables
+health_insured_county_race <- health_insured_county_race %>% 
+  left_join(vars_S2701_C01)
+
+# Create percents
+health_insured_county_race <- health_insured_county_race %>% 
+  mutate(percent_insured = round(100 * (estimate_insured / total_est), digits = 2),
+         percent_uninsured = round(100 * (estimate_uninsured / total_est), digits = 2),
+         year = year) %>% 
+  rename(locality = NAME)
+  
+# Health Insurance Coverage, County by Race/Ethnicity: Charlottesville ----
+cville_health_insured_county_race <- health_insured_county_race %>% 
+  filter(locality == "Charlottesville city, Virginia")
+
+write_csv(cville_health_insured_county_race, paste0("data/cville_health_insured_county_race", "_", year, ".csv"))
+
+# Health Insurance Coverage, County by Race/Ethnicity: Albemarle ----
+alb_health_insured_county_race <- health_insured_county_race %>% 
+  filter(locality == "Albemarle County, Virginia")
+
+write_csv(cville_health_insured_county_race, paste0("data/cville_health_insured_county_race", "_", year, ".csv"))
+
+## .......................................
+# CDC Places Health Measures by Tract ----
+# Source: https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/about_data
 
 # define api endpoint with query for locality (limit is 1000; each locality alone is below this)
+# more on the api here: https://dev.socrata.com/foundry/data.cdc.gov/cwsq-ngmh
 api_alb <- "https://data.cdc.gov/resource/cwsq-ngmh.json/?StateAbbr=VA&countyname=Albemarle"
 api_cvl <- "https://data.cdc.gov/resource/cwsq-ngmh.json/?StateAbbr=VA&countyname=Charlottesville"
-# technically one is supposed to get an app token and include it in the parameter url
-# but you can make a limited number of requests without an app token, 
-# and we should only need to do this once.
-# more on the api here: https://dev.socrata.com/foundry/data.cdc.gov/cwsq-ngmh
 
 # read in data
 df_alb <- fromJSON(api_alb)
 df_cvl <- fromJSON(api_cvl)
 
 # bind rows
-df <- bind_rows(df_alb, df_cvl)
+cdc_df <- bind_rows(df_alb, df_cvl)
 
-# Breaking up into screenings versus prevalence
-
-cdc_outcomes <- df %>% 
+# Filter for measures of interest
+cdc_filtered <- cdc_df %>% 
   filter(measureid %in% c("DIABETES", "OBESITY", "CHD", "BPHIGH", "DEPRESSION", 
-                          "CASTHMA", "COPD", "CANCER", "STROKE",
-                          "HIGHCHOL", "KIDNEY"
-                          ))
+                          "CASTHMA", "COPD", "CANCER", "STROKE", "HIGHCHOL", "KIDNEY",
+                          "CHECKUP", "DENTAL", "CERVICAL", "COLON_SCREEN",
+                          "MAMMOUSE", "MHLTH", "PHLTH"))
 
 # Selecting columns of interest
+cdc_filtered <- cdc_filtered %>% 
+  rename(GEOID = locationname) %>% 
+  select("year", "statedesc", "countyname", "countyfips", "GEOID", 
+         "category", "measureid", "data_value", "data_value_unit", "totalpopulation", "short_question_text", "measure")
 
-cdc_outcomes <- cdc_outcomes %>% 
-  select("year", "stateabbr", "countyname", "countyfips", "locationname", "measure", "category", "measureid", "data_value", "totalpopulation", "short_question_text")
+# Join tract names
+cdc_filtered <- cdc_filtered %>% 
+  left_join(tract_names_crosswalk, by = join_by(GEOID == GEOID_TRACT_10), keep = TRUE)
+
+# CDC data for Data Viz Table
+
+cdc_table_outcomes <- cdc_filtered %>% 
+  filter(category == "Health Outcomes") %>% 
+  select(GEOID.x, GEOID.y, county, tractnames, measureid, data_value) %>% 
+  pivot_wider(names_from = measureid, values_from = data_value)
+
+cdc_table_status <- cdc_filtered %>% 
+  filter(category == "Health Status") %>% 
+  select(GEOID.x, GEOID.y, county, tractnames, measureid, data_value) %>% 
+  pivot_wider(names_from = measureid, values_from = data_value)
+
+  
+cdc_table_prevent <- cdc_filtered %>% 
+  filter(category == "Prevention") %>% 
+  select(GEOID.x, GEOID.y, county, tractnames, measureid, data_value) %>% 
+  pivot_wider(names_from = measureid, values_from = data_value)
 
 
-# Generating CSV
+library(gt)
+library(RColorBrewer)
+library(scales)
+library(palettes)
+library(paletteer)
 
-write.csv(cdc_outcomes, "temp_data/cdc_outcomes.csv")
+pal_blue <- colorRampPalette(brewer.pal(9, "Blues"))(15)
+pal_diverge <- colorRampPalette(brewer.pal(11, "RdYlBu"))(15)
 
-cdc_prevention <- df %>% 
-  filter(measureid %in% c("CHECKUP", "DENTAL", "CERVICAL", "COLON_SCREEN",
-                          "MAMMOUSE", "MHLTH", "PHLTH"
-                          ))
+cdc_table_outcomes %>% 
+  filter(county == "Charlottesville") %>% 
+  select(-GEOID.x, -GEOID.y, -county) %>% 
+  mutate(across(OBESITY:KIDNEY, ~ as.numeric(.x))) %>% 
+  gt(rowname_col = "tractnames") %>% 
+  data_color(
+    columns = -tractnames,
+    direction = "column",
+    # fn= scales::col_numeric(
+    #   "Blues",
+    #   c(0, 50),
+    #   na.color = "#808080",
+    #   alpha = FALSE,
+    #   reverse = FALSE
+    # )
+    domain = c(0, 50),
+    palette = "YlOrRd"
+    # reverse = TRUE
+    # na_color = "white"
+  )
 
-# Selecting columns of interest
+cdc_table_status %>% 
+  filter(county == "Charlottesville") %>% 
+  select(-GEOID.x, -GEOID.y, -county) %>% 
+  gt(rowname_col = "tractnames") %>% 
+  data_color(
+    direction = "column",
+    palette = pal_blue,
+    na_color = "white"
+  )
 
-cdc_prevention <- cdc_prevention %>% 
-  select("year", "stateabbr", "countyname", "countyfips", "locationname", "measure", "category", "measureid", "data_value", "totalpopulation", "short_question_text")
-
-# Generating CSV
-
-write.csv(cdc_prevention, "temp_data/cdc_prevention.csv")
-
-# Food Insecurity Data
-# url: https://map.feedingamerica.org (data was requested)
-# destfile <- temp_data/meal_gap_cville_alb_2022.csv"
-
-meal_gap_cville_alb_2022 <- read.csv("temp_data/meal_gap_cville_alb_2022.csv")
-
-# Meal Gap, Charlottesville (2022)
-
-cville_meal_gap_2022 <- meal_gap_cville_alb_2022 %>% 
-  filter(County..State == "Charlottesville city, Virginia")
-
-# Meal Gap, Albemarle (2022)
-
-alb_meal_gap_2022 <- meal_gap_cville_alb_2022 %>% 
-  filter(County..State == "Albemarle County, Virginia")
-
-# Life Expectancy Data
-# url: https://www.countyhealthrankings.org/health-data/virginia/data-and-resources
-# destfile <- temp_data/county_health_va.xlsx"
-
-va_life_expec <- read_xlsx("temp_data/county_health_va.xlsx", sheet = "Additional Measure Data", skip = 1)
-
-# Filtering for Albemarle, Charlottesville
-
-alb_cville_life_expec <- va_life_expec %>%
-  filter(County %in% c("Albemarle", "Charlottesville City"))
-
-write.csv(alb_cville_life_expec, "temp_data/alb_cville_life_expec.csv")
+cdc_table_prevent %>% 
+  filter(county == "Charlottesville") %>% 
+  select(-GEOID.x, -GEOID.y, -county) %>% 
+  mutate(across(COLON_SCREEN:CHECKUP, ~ as.numeric(.x))) %>% 
+  gt(rowname_col = "tractnames") %>% 
+  data_color(
+    direction = "column",
+    # method = "numeric",
+    domain = c(30,90),
+    palette = "RdYlBu"
+    # na_color = "white"
+  )
 
 

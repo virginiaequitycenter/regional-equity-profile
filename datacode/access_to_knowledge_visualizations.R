@@ -1,44 +1,40 @@
 # Access to Knowledge Visualizations
-# File Created: 7/9/2024
-# Last Updated: 7/9/2024
-# Author: Henry DeMarco
 # Description: Visualizations for access to knowledge section of profile
+# Author: Henry DeMarco, Beth Mitchell
+# File Created: 7/9/2024
+# Last Updated: 8/8/2024
 
-################################################
-
+# Packages
 library(tidycensus)
 library(tidyverse)
 library(scales)
 library(RColorBrewer)
-library("ggspatial")
+library(ggspatial)
 library(tigris)
+library(readxl)
+library(stringr)
+library(sf)
 
-# Table visualizations
-# S1401 (School Enrollment)
-# B15003 (Educational Attainment for the Population 25 Years and Over)
-# Suspensions (by Race / Ethnicity)
-# Chronic Absenteeism (by Race / Ethnicity)
-
-# Table: S1401 (School Enrollment)
-
-# Palette for map
+# Education palette ----
 educ_colors <- c("#e7dbbc", "#e68026")
 
-# Charlottesville (School Enrollment), 2022:
+# Tract geometries ----
+cville_geo <- tracts(state = "VA", county = "540")
+alb_geo <- tracts(state = "VA", county = "003")
 
-cville_enroll_tract <- read.csv("temp_data/cville_school_enrollment_3to24_2022.csv")
+# School Enrollment: Charlottesville, 2022 ----
+cville_enroll_tract <- read_csv("data/cville_enroll_tract_2022.csv") %>%
+  mutate(GEOID = as.character(GEOID))
 
-cville_tract <- tracts(state = "VA", county = "540") %>%
-  mutate(GEOID = as.numeric((GEOID)))
-
-cville_enroll_geo_tract <- cville_tract %>%
-  left_join(cville_enroll_tract, by = "GEOID")
+cville_enroll_tract <- cville_enroll_tract %>%
+  left_join(cville_geo, by = "GEOID") %>% 
+  st_as_sf()
 
 # Geospatial visualization
-
-cville_enroll_map <-
-  ggplot(cville_enroll_geo_tract) +
-  geom_sf( aes(fill = percent_enrolled), color = "black") +
+cville_enroll_map <- cville_enroll_tract %>% 
+  mutate(percent = round(percent, 0)) %>% 
+  ggplot() +
+  geom_sf(aes(fill = percent), color = "black") +
   scale_fill_steps(
     low = educ_colors[1],
     high = educ_colors[2],
@@ -53,7 +49,7 @@ cville_enroll_map <-
            guide_colourbar(title.position="top", title.hjust = 0.5,
                            barwidth = 20)
   ) +
-  labs(fill = "Percent Enrolled in School [Ages 3 - 24]") +
+  labs(fill = "Percent Enrolled in School (Ages 3 - 24)") +
   annotation_scale(location = "br", width_hint = 0.25) +
   annotation_north_arrow(location = "br",
                          which_north = "true",
@@ -74,29 +70,26 @@ cville_enroll_map <-
     panel.border = element_rect(color  = "black",
                                 fill = NA,
                                 size = 1),
-    plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
+    plot.margin = margin(l = .1, r = .1, t = 1, b = 1, "cm")
     
   )
 
-# View the map
-
+# View
 print(cville_enroll_map)
 
-# Albemarle (School Enrollment), 2022:
+# School Enrollment: Albemarle, 2022 ----
+alb_enroll_tract <- read_csv("data/alb_enroll_tract_2022.csv") %>%
+  mutate(GEOID = as.character(GEOID))
 
-alb_enroll_tract <- read.csv("temp_data/alb_school_enrollment_3to24_2022.csv")
-
-alb_tract <- tracts(state = "VA", county = "003") %>%
-  mutate(GEOID = as.numeric((GEOID)))
-
-alb_enroll_geo_tract <- alb_tract %>%
-  left_join(alb_enroll_tract, by = "GEOID")
+alb_enroll_tract <- alb_enroll_tract %>%
+  left_join(alb_geo, by = "GEOID") %>% 
+  st_as_sf()
 
 # Geospatial visualization
-
-alb_enroll_map <-
-  ggplot(alb_enroll_geo_tract) +
-  geom_sf( aes(fill = percent_enrolled), color = "black") +
+alb_enroll_map <- alb_enroll_tract %>% 
+  mutate(percent = round(percent, 0)) %>% 
+  ggplot() +
+  geom_sf(aes(fill = percent), color = "black") +
   scale_fill_steps(
     low = educ_colors[1],
     high = educ_colors[2],
@@ -111,56 +104,97 @@ alb_enroll_map <-
            guide_colourbar(title.position="top", title.hjust = 0.5,
                            barwidth = 20)
   ) +
-  labs(fill = "Percent Enrolled in School [Ages 3 - 24]") +
+  labs(fill = "Percent Enrolled in School (Ages 3 - 24)") +
   annotation_scale(location = "br", width_hint = 0.25) +
   annotation_north_arrow(location = "br",
                          which_north = "true",
+                         height = unit(1, "cm"),
+                         width = unit(1, "cm"),
                          pad_x = unit(0.0, "in"),
                          pad_y = unit(0.5, "in"),
                          style = north_arrow_minimal(
-                           line_width = 1,
-                           line_col = "black",
-                           fill = "black",
-                           text_col = "black",
-                           text_family = "",
-                           text_face = NULL,
+                           # line_width = 1,
+                           # line_col = "black",
+                           # fill = "black",
+                           # text_col = "black",
+                           # text_family = "",
+                           # text_face = NULL,
                            text_size = 0
-                         )) +
+                         )
+                         ) +
   theme(
     legend.position = "top",
     legend.title = element_text(),
     panel.border = element_rect(color  = "black",
                                 fill = NA,
                                 size = 1),
-    plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
-    
+    plot.margin = margin(l = .1, r = .1, t = 1, b = 1, "cm")
   )
 
-# View the map
-
+# View
 print(alb_enroll_map)
 
-# Table: B15003 (Educational Attainment for the Population 25 Years and Over)
+# Educational Attainment by Race (25 Years and Over) Charlottesville, 2022 ----
+cville_edu_attain_race <- read_csv("data/cville_edu_attain_race_county_2022.csv")
 
-educ_colors <- c("#e7dbbc", "#e68026")
+cville_edu_attain_race_plot <- cville_edu_attain_race %>% 
+  filter(group_total != 0) %>% 
+  mutate(label = factor(edu_level, 
+                        levels = c("less_than_hs", 
+                                   "hs_only", 
+                                   "bachelors_up"), 
+                        labels = c("Less than a HS diploma", "High School diploma, no college", "Bachelor's degree or higher")
+                        # labels = c("White", "Black", "Asian", "Multiracial", "American Indian/Alaskan Native", "Native Hawaiian/Pacific Islander", "Other Racial Identities", "Hispanic")
+                        ),
+         text = case_when(percent >= 1 ~ paste0(round(percent, 0), "%"),
+                          percent < 1 ~ "")
+  )
 
-# Charlottesville (Educational Attainment: 25 and Over), 2022
+# Stacked bar
+cville_edu_race_plot <- cville_edu_attain_race_plot %>% 
+  filter(!race %in% c("White", "Other")) %>% 
+  filter(group_total >= 400) %>% 
+  # filter(year %in% c("2012", "2017", "2022")) %>%
+  # mutate(year = factor(year, levels = c("2012", "2017", "2022"))) %>%
+  # mutate(race = factor(race, 
+  #                      levels = c("White_non_hisp","Black","Hispanic","Asian","2016",
+  #                                 "2017","2018","2019","2020","2021"),
+  #                      labels = c("White, Non-Hispanic", "Black", "Hispanic", "Asian", "Multiracial", "American Indian/Alaskan Native", "Native Hawaiian/Pacific Islander")
+  #                      
+  #                      )) %>%
+  ggplot(aes(x = race, y = percent, group = race, fill = label, 
+             label = text)) +
+  geom_bar(stat = "identity") + # width = 0.6
+  geom_text(size = 3, position = position_stack(vjust = 0.5)) +
+  scale_x_discrete(name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     name = "") +
+  labs(color = "", title = "Charlottesville: Educational Attainment 2022") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        panel.grid.major.x = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid.minor = element_blank())
 
-cville_educ_attain_tract <- read.csv("temp_data/cville_educ_attain_2022.csv")
+cville_edu_race_plot
 
-cville_tract <- tracts(state = "VA", county = "540") %>%
-  mutate(GEOID = as.numeric((GEOID)))
 
-cville_attain_geo_tract <- cville_tract %>%
-  left_join(cville_educ_attain_tract, by = "GEOID")
+# Educational Attainment, with BA's by tract, Charlottesville, 2022 ----
+cville_edu_attain_tract <- read_csv("data/cville_edu_attain_tract_2022.csv") %>%
+  mutate(GEOID = as.character(GEOID))
 
-cville_attain_geo_tract_filtered <- cville_attain_geo_tract %>%
+cville_edu_attain_tract <- cville_edu_attain_tract %>%
+  left_join(cville_geo, by = "GEOID") %>% 
+  st_as_sf()
+
+cville_attain_BAs <- cville_edu_attain_tract %>%
   filter(label == "Bachelor's degree or higher")
 
 # Geospatial visualization
-
-cville_educ_attain_map <-
-  ggplot(cville_attain_geo_tract_filtered) + 
+cville_educ_attain_map <- cville_attain_BAs %>% 
+  mutate(percent = round(percent, 0)) %>% 
+  ggplot() + 
   geom_sf( aes(fill = percent), color = "black") +
   scale_fill_steps(
     low = educ_colors[1],
@@ -198,30 +232,26 @@ cville_educ_attain_map <-
                                 fill = NA,
                                 size = 1),
     plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
-    
   )
 
-# View the map
-
+# View
 print(cville_educ_attain_map)
 
-# Albemarle (Educational Attainment: 25 and Over), 2022
+# Educational Attainment (25 Years and Over) Albemarle, 2022 ----
+alb_edu_attain_tract <- read_csv("data/alb_edu_attain_tract_2022.csv") %>%
+  mutate(GEOID = as.character(GEOID))
 
-alb_educ_attain_tract <- read.csv("temp_data/alb_educ_attain_2022.csv")
+alb_edu_attain_tract <- alb_edu_attain_tract %>%
+  left_join(alb_geo, by = "GEOID") %>% 
+  st_as_sf()
 
-alb_tract <- tracts(state = "VA", county = "003") %>%
-  mutate(GEOID = as.numeric((GEOID)))
-
-alb_attain_geo_tract <- alb_tract %>%
-  left_join(alb_educ_attain_tract, by = "GEOID")
-
-alb_attain_geo_tract_filtered <- alb_attain_geo_tract %>%
+alb_attain_BAs <- alb_edu_attain_tract %>%
   filter(label == "Bachelor's degree or higher")
 
 # Geospatial visualization
-
-alb_educ_attain_map <-
-  ggplot(alb_attain_geo_tract_filtered) + 
+alb_educ_attain_map <- alb_attain_BAs %>% 
+  mutate(percent = round(percent, 0)) %>% 
+  ggplot() + 
   geom_sf( aes(fill = percent), color = "black") +
   scale_fill_steps(
     low = educ_colors[1],
@@ -259,199 +289,144 @@ alb_educ_attain_map <-
                                 fill = NA,
                                 size = 1),
     plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
-    
   )
 
-# View the map
-
+# View
 print(alb_educ_attain_map)
 
-# County School Education Stats (Enrollment, AP Courses, Suspensions, Absenteeism)
+# Advanced Courses, AP & Dual Enrollment: Charlottesville ----
 
-# Enrollment (From VSQ Profiles)
+cville_adv_enroll <- read_csv("data/cville_adv_enroll_2022_2023.csv")  
 
-# Charlottesville (Enrollment, 2022-2023)
+# AP Enrollment
+cville_adv_enroll %>% 
+  filter(! label %in% c("American Indian or Alaska Native", "Native Hawaiian or Pacific Islander")) %>% 
+  mutate(label = factor(label,
+                        levels = c("All Students", "Economically Disadvantaged",
+                                   "Asian", "Black, not of Hispanic origin", "Hispanic",
+                                   "Non-Hispanic, two or more races", "White, not of Hispanic origin"),
+                        labels = c("All Students", "Economically \nDisadvantaged",
+                                   "Asian", "Black", "Hispanic",
+                                   "Multiracial", "White")),
+         ap_percent = round(ap_percent, 0),
+         text = paste0(ap_percent, "%")) %>% 
+  ggplot(aes(x = label, y = ap_percent)) +
+  geom_bar(stat = "identity", width = 0.7, fill = "#3B8EA5") + 
+  geom_text(aes(label = text), 
+            vjust = -1,
+            size = 3,
+            color = "black") +
+  # geom_text(size = 3, position = position_stack(vjust = 0.5)) +
+  scale_x_discrete(name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "") +
+  labs(color = "", title = "CCS AP Enrollment 2022-2023") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        panel.grid.major.x = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid.minor = element_blank())
 
-cville_enrollment <- read.csv("temp_data/cville_enrollment.csv", skip = 3) 
+# AP & Dual Enrollment
+cville_adv_enroll %>% 
+  filter(! label %in% c("American Indian or Alaska Native", "Native Hawaiian or Pacific Islander")) %>% 
+  select(label, ap_percent, dual_percent) %>% 
+  pivot_longer(ap_percent:dual_percent, names_to = "type") %>% 
+  mutate(label = factor(label,
+                        levels = c("All Students", "Economically Disadvantaged",
+                                   "Asian", "Black, not of Hispanic origin", "Hispanic",
+                                   "Non-Hispanic, two or more races", "White, not of Hispanic origin"),
+                        labels = c("All Students", "Economically \nDisadvantaged",
+                                   "Asian", "Black", "Hispanic",
+                                   "Multiracial", "White")),
+         type = factor(type,
+                       levels = c("ap_percent", "dual_percent"),
+                       labels= c("Students taking 1 or more AP Courses", "Students taking 1 or more Dual Enrollment Courses")),
+         value = round(value, 0),
+         text = paste0(value, "%")) %>% 
+  ggplot(aes(x = label, y = value, fill = type)) +
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) + 
+  geom_text(aes(label = text), 
+              position = position_dodge2(width = 0.9, preserve = "single"), 
+              vjust = -1,
+              # hjust = -0.2,
+              size = 3) +
+  scale_x_discrete(name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "") +
+  scale_fill_manual(values = c("#3B8EA5", "#8C96C6")) +
+  labs(color = "", title = "CCS AP & Dual Enrollment 2022-2023") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        panel.grid.major.x = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid.minor = element_blank())
 
-# Enrollment total: 4444
+# Short Term Suspensions: Charlottesville ----
+cville_suspensions <- read_csv("data/cville_st_suspensions_2022_2023.csv")  
 
-# Albemarle (Enrollment, 2022-2023)
+cville_suspensions %>% 
+  filter(! subgroup %in% c("American Indian", "Native Hawaiian")) %>% 
+  select(subgroup, percent_of_the_student_population, percent_of_short_term_suspensions) %>% 
+  pivot_longer(percent_of_the_student_population:percent_of_short_term_suspensions, names_to = "type") %>% 
+  mutate(subgroup = factor(subgroup,
+                        levels = c("White", "Multiple Races", "Hispanic", "Black", "Asian")),
+         type = factor(type,
+                       levels = c("percent_of_the_student_population", "percent_of_short_term_suspensions"),
+                       labels= c("Percent of the student population", "Percent of short term suspensions")),
+         value = round(value, 0),
+         text = paste0(value, "%")) %>% 
+  ggplot(aes(x = subgroup, y = value, fill = type)) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(aes(label = text), 
+            position = position_dodge2(width = 0.9, preserve = "single"), 
+            vjust = 0.5,
+            hjust = -0.2,
+            size = 3) +
+  scale_x_discrete(name = "") +
+  scale_y_continuous(labels = scales::percent_format(scale = 1),
+                     limits = c(0,100),
+                     expand = expansion(mult = c(0, 0)),
+                     name = "") +
+  scale_fill_manual(values = c("#b2b8be", "#ff641e")) + 
+  coord_flip() +
+  theme_minimal() +
+  theme(legend.position = "top",
+        panel.grid.minor.x = element_blank()) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(fill = "", title = "CCS Short Term Suspension Incidents, by Race/Ethnicity")
 
-alb_enrollment <- read.csv("temp_data/alb_enrollment.csv", skip = 3) 
+# Chronic Absenteeism: Charlottesville ----
+cville_absent <- read_csv("data/cville_absenteeism_2022_2023.csv")  
 
-# Enrollment total: 13835
+cville_absent %>% 
+  filter(! subgroup %in% c("American Indian", "Native Hawaiian")) %>% 
+  mutate(subgroup = factor(subgroup,
+                        levels = c("All Students", "Economically Disadvantaged", "Students with Disabilities",
+                                   "Male", "Female",
+                                   "Asian", "Black", "Hispanic", "Multiple Races", "White"),
+                        labels = c("All Students", "Economically \nDisadvantaged", "Students with \nDisabilities",
+                                   "Male", "Female",
+                                   "Asian", "Black", "Hispanic", "Multiracial", "White")),
+         percent_above_10 = round(percent_above_10, 0),
+         text = paste0(percent_above_10, "%")) %>% 
+  ggplot(aes(x = subgroup, y = percent_above_10)) +
+  geom_bar(stat = "identity", width = 0.7, fill = "#3B8EA5") + 
+  geom_text(aes(label = text), 
+            vjust = -1,
+            size = 3,
+            color = "black") +
+  scale_x_discrete(name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     limits = c(0,60),
+                     name = "") +
+  labs(color = "", title = "CCS Chronic Absenteeism 2022-2023") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        panel.grid.major.x = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid.minor = element_blank())
 
-# Suspensions (by Race / Ethnicity)
-
-# Charlottesville (Short Term Suspensions, 2022-2023)
-
-cville_st_suspensions <- read.csv("temp_data/cville_st_suspensions.csv")
-
-# Manually add enrollment totals
-cville_st_suspensions <- cville_st_suspensions %>%
-  mutate(
-    Enrollment_Total = 4444,
-    Enrollment_Group = Enrollment_Total * (Percent.of.the.Student.Population / 100),
-    Percent_Suspended = (Number.Suspended.Short.Term / Enrollment_Group) * 100
-  )
-
-cville_st_suspensions <- cville_st_suspensions %>%
-  filter(!is.na(Percent_Suspended)) %>%
-  mutate(
-    Subgroup = factor(Subgroup, levels = rev(unique(Subgroup))),
-    Suspended = Percent_Suspended
-  )
-
-cville_short_term_suspended_plot <- ggplot(cville_st_suspensions) +
-  geom_segment(aes(xend = Suspended, x = 0, y = Subgroup, yend = Subgroup), size = 1) +
-  geom_point(aes(x = Suspended, y = Subgroup), color = "blue", size = 3) +
-  geom_vline(xintercept = mean(cville_st_suspensions$Suspended, na.rm = TRUE), linetype = "dashed", color = "black", size = .2) +
-  annotate("text", x = mean(cville_st_suspensions$Suspended, na.rm = TRUE), y = nrow(cville_st_suspensions), label = "All Students", vjust = -1, hjust = -0.8, color = "black", size = 3.5) +
-  geom_text(aes(x = Suspended + .2, y = Subgroup, label = paste0(round(Suspended), "%")), hjust = -0.5) +
-  scale_x_continuous(limits = c(0, 20), breaks = seq(0, 20, 5), labels = function(x) paste0(x, "%")) +
-  scale_y_discrete(labels = function(x) str_wrap(x, width = 20)) +
-  labs(x = "Percent of Each Group Suspended Short-Term", y = "", title = "Charlottesville: Short Term Suspensions (By Race / Ethnicity)") +
-  theme_classic() +
-  theme(
-    plot.title = element_text(hjust = .5, vjust = 6, face = "bold"),
-    legend.position = "top",
-    panel.grid.major.x = element_blank(),
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.y = element_line(linetype = "dashed"),
-    axis.line.x = element_line(),
-    axis.ticks.x = element_line(),
-    plot.margin = margin(l = .5, r = 1, t = 2, b = 1, "cm")
-  )
-
-print(cville_short_term_suspended_plot)
-
-# Note: dotted line for 'average' is improperly calculated, need to fix this...
-
-# Albemarle (Short Term Suspensions, 2022-2023)
-
-alb_st_suspensions <- read.csv("temp_data/alb_st_suspensions.csv")
-
-# Manually add enrollment totals
-alb_st_suspensions <- alb_st_suspensions %>%
-  mutate(
-    Enrollment_Total = 13835,
-    Enrollment_Group = Enrollment_Total * (Percent.of.the.Student.Population / 100),
-    Percent_Suspended = (Number.Suspended.Short.Term / Enrollment_Group) * 100
-  )
-
-alb_st_suspensions <- alb_st_suspensions %>%
-  filter(!is.na(Percent_Suspended)) %>%
-  mutate(
-    Subgroup = factor(Subgroup, levels = rev(unique(Subgroup))),
-    Suspended = Percent_Suspended
-  )
-
-alb_short_term_suspended_plot <- ggplot(alb_st_suspensions) +
-  geom_segment(aes(xend = Suspended, x = 0, y = Subgroup, yend = Subgroup), size = 1) +
-  geom_point(aes(x = Suspended, y = Subgroup), color = "blue", size = 3) +
-  geom_vline(xintercept = mean(alb_st_suspensions$Suspended, na.rm = TRUE), linetype = "dashed", color = "black", size = .2) +
-  annotate("text", x = mean(alb_st_suspensions$Suspended, na.rm = TRUE), y = nrow(alb_st_suspensions), label = "All Students", vjust = -1, hjust = -0.8, color = "black", size = 3.5) +
-  geom_text(aes(x = Suspended + .2, y = Subgroup, label = paste0(round(Suspended), "%")), hjust = -0.5) +
-  scale_x_continuous(limits = c(0, 20), breaks = seq(0, 20, 5), labels = function(x) paste0(x, "%")) +
-  scale_y_discrete(labels = function(x) str_wrap(x, width = 20)) +
-  labs(x = "Percent of Each Group Suspended Short-Term", y = "", title = "Albemarle: Short Term Suspensions (By Race / Ethnicity)") +
-  theme_classic() +
-  theme(
-    plot.title = element_text(hjust = .5, vjust = 6, face = "bold"),
-    legend.position = "top",
-    panel.grid.major.x = element_blank(),
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.y = element_line(linetype = "dashed"),
-    axis.line.x = element_line(),
-    axis.ticks.x = element_line(),
-    plot.margin = margin(l = .5, r = 1, t = 2, b = 1, "cm")
-  )
-
-print(alb_short_term_suspended_plot)
-
-# Note: dotted line for 'average' is improperly calculated, need to fix this...
-
-# Chronic Absenteeism (by Race / Ethnicity)
-
-# Charlottesville (Chronic Absenteeism), 2022-2023
-
-cville_absenteeism <- read.csv("temp_data/cville_absenteeism.csv")
-
-# Manually add enrollment totals
-cville_absenteeism <- cville_absenteeism %>%
-  mutate(
-    Enrollment_Total = 4444
-  )
-
-cville_absenteeism <- cville_absenteeism %>%
-  filter(!is.na(Percent.above.10)) %>%
-  mutate(
-    Subgroup = factor(Subgroup, levels = rev(unique(Subgroup)))
-  )
-
-cville_absenteeism <- ggplot(cville_absenteeism) +
-  geom_segment(aes(xend = Percent.above.10, x = 0, y = Subgroup, yend = Subgroup), size = 1) +
-  geom_point(aes(x = Percent.above.10, y = Subgroup), color = "blue", size = 3) +
-  geom_vline(xintercept = mean(cville_absenteeism$Percent.above.10, na.rm = TRUE), linetype = "dashed", color = "black", size = .2) +
-  annotate("text", x = mean(cville_absenteeism$Percent.above.10, na.rm = TRUE), y = nrow(cville_absenteeism), label = "All Students", vjust = -1, hjust = -0.8, color = "black", size = 3.5) +
-  geom_text(aes(x = Percent.above.10 + .2, y = Subgroup, label = paste0(round(Percent.above.10), "%")), hjust = -0.5) +
-  scale_x_continuous(limits = c(0, 50), breaks = seq(0, 50, 10), labels = function(x) paste0(x, "%")) +
-  scale_y_discrete(labels = function(x) str_wrap(x, width = 20)) +
-  labs(x = "Percent of Each Group Chronically Absent", y = "", title = "Charlottesville: Chronic Absenteeism (By Race / Ethnicity)") +
-  theme_classic() +
-  theme(
-    plot.title = element_text(hjust = .5, vjust = 6, face = "bold"),
-    legend.position = "top",
-    panel.grid.major.x = element_blank(),
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.y = element_line(linetype = "dashed"),
-    axis.line.x = element_line(),
-    axis.ticks.x = element_line(),
-    plot.margin = margin(l = .5, r = 1, t = 2, b = 1, "cm")
-  )
-
-print(cville_absenteeism)
-
-# Note: dotted line for 'average' is improperly calculated, need to fix this...
-
-# Albemarle (Chronic Absenteeism), 2022-2023
-
-alb_absenteeism <- read.csv("temp_data/alb_absenteeism.csv")
-
-# Manually add enrollment totals
-alb_absenteeism <- alb_absenteeism %>%
-  mutate(
-    Enrollment_Total = 13835
-  )
-
-alb_absenteeism <- alb_absenteeism %>%
-  filter(!is.na(Percent.above.10)) %>%
-  mutate(
-    Subgroup = factor(Subgroup, levels = rev(unique(Subgroup)))
-  )
-
-alb_absenteeism <- ggplot(alb_absenteeism) +
-  geom_segment(aes(xend = Percent.above.10, x = 0, y = Subgroup, yend = Subgroup), size = 1) +
-  geom_point(aes(x = Percent.above.10, y = Subgroup), color = "blue", size = 3) +
-  geom_vline(xintercept = mean(alb_absenteeism$Percent.above.10, na.rm = TRUE), linetype = "dashed", color = "black", size = .2) +
-  annotate("text", x = mean(alb_absenteeism$Percent.above.10, na.rm = TRUE), y = nrow(alb_absenteeism), label = "All Students", vjust = -1, hjust = -0.8, color = "black", size = 3.5) +
-  geom_text(aes(x = Percent.above.10 + .2, y = Subgroup, label = paste0(round(Percent.above.10), "%")), hjust = -0.5) +
-  scale_x_continuous(limits = c(0, 50), breaks = seq(0, 50, 10), labels = function(x) paste0(x, "%")) +
-  scale_y_discrete(labels = function(x) str_wrap(x, width = 20)) +
-  labs(x = "Percent of Each Group Chronically Absent", y = "", title = "Albemarle: Chronic Absenteeism (By Race / Ethnicity)") +
-  theme_classic() +
-  theme(
-    plot.title = element_text(hjust = .5, vjust = 6, face = "bold"),
-    legend.position = "top",
-    panel.grid.major.x = element_blank(),
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.y = element_line(linetype = "dashed"),
-    axis.line.x = element_line(),
-    axis.ticks.x = element_line(),
-    plot.margin = margin(l = .5, r = 1, t = 2, b = 1, "cm")
-  )
-
-print(alb_absenteeism)
-
-# Note: 'all students' dashed line and 'all students' percentage are misaligned...

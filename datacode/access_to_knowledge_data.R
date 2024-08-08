@@ -24,7 +24,7 @@
 # Educational Attainment by Race/Ethnicity: 
 # - Source: ACS Table S1501 (COUNTY, TRACT, REGION)
 # OTHER MEASURES, BY DISTRICT
-# Students enrolled in AP & Dual Enrollment
+# Students in AP & Dual Enrollment
 # - Source: VDOE
 # Short term suspensions
 # - Source: https://schoolquality.virginia.gov/download-data
@@ -581,7 +581,7 @@ st_suspensions <- read_csv("data/tempdata/vdoe_data/Short Term Suspensions.csv",
 cville_st_suspensions <- st_suspensions %>% 
   filter(division == "Charlottesville City Public Schools")
 
-write_csv(cville_adv_enroll, "data/cville_adv_enroll_2022_2023.csv")
+write_csv(cville_st_suspensions, "data/cville_st_suspensions_2022_2023.csv")
 
 # Short Term Suspensions: Albemarle ----
 alb_st_suspensions <- st_suspensions %>% 
