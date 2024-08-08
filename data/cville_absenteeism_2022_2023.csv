@@ -1,15 +1,13 @@
 year,level,division,subgroup,count_below_10,count_above_10,percent_below_10,percent_above_10
 2022 - 2023,DIV,Charlottesville City Public Schools,All Students,3306,895,78.7,21.3
-2022 - 2023,DIV,Charlottesville City Public Schools,American Indian,<,<,NA,NA
+2022 - 2023,DIV,Charlottesville City Public Schools,American Indian,NA,NA,NA,NA
 2022 - 2023,DIV,Charlottesville City Public Schools,Asian,183,30,85.9,14.1
 2022 - 2023,DIV,Charlottesville City Public Schools,Black,785,351,69.1,30.9
 2022 - 2023,DIV,Charlottesville City Public Schools,Economically Disadvantaged,1531,700,68.6,31.4
-2022 - 2023,DIV,Charlottesville City Public Schools,English Learners,591,215,73.3,26.7
 2022 - 2023,DIV,Charlottesville City Public Schools,Female,1627,413,79.8,20.2
 2022 - 2023,DIV,Charlottesville City Public Schools,Hispanic,408,141,74.3,25.7
-2022 - 2023,DIV,Charlottesville City Public Schools,Homeless,41,41,NA,NA
 2022 - 2023,DIV,Charlottesville City Public Schools,Male,1679,482,77.7,22.3
 2022 - 2023,DIV,Charlottesville City Public Schools,Multiple Races,410,152,73,27
-2022 - 2023,DIV,Charlottesville City Public Schools,Native Hawaiian,<,<,NA,NA
+2022 - 2023,DIV,Charlottesville City Public Schools,Native Hawaiian,NA,NA,NA,NA
 2022 - 2023,DIV,Charlottesville City Public Schools,Students with Disabilities,403,147,73.3,26.7
 2022 - 2023,DIV,Charlottesville City Public Schools,White,1517,221,87.3,12.7

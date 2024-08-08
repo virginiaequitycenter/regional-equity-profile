@@ -1,0 +1,10 @@
+division_name,label,students_in_ap,students_in_dual_enrollment,school_year,total_10to12,total_12,total_allgrades,ap_percent,dual_percent
+Charlottesville City,American Indian or Alaska Native,0,0,2022-2023,1,1,2,0,0
+Charlottesville City,Asian,21,12,2022-2023,43,18,61,48.84,66.67
+Charlottesville City,"Black, not of Hispanic origin",47,24,2022-2023,251,82,394,18.73,29.27
+Charlottesville City,Hispanic,33,11,2022-2023,132,34,193,25,32.35
+Charlottesville City,Native Hawaiian or Pacific Islander,1,0,2022-2023,0,0,1,Inf,NA
+Charlottesville City,"Non-Hispanic, two or more races",43,11,2022-2023,94,21,140,45.74,52.38
+Charlottesville City,"White, not of Hispanic origin",380,126,2022-2023,402,132,568,94.53,95.45
+Charlottesville City,Economically Disadvantaged,77,39,2022-2023,424,126,661,18.16,30.95
+Charlottesville City,All Students,525,184,2022-2023,923,288,1359,56.88,63.89

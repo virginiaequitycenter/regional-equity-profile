@@ -1,0 +1,5 @@
+fips,state,county_state,year,overall_food_insecurity_rate,number_of_food_insecure_persons_overall,food_insecurity_rate_among_black_persons_all_ethnicities,food_insecurity_rate_among_hispanic_persons_any_race,food_insecurity_rate_among_white_non_hispanic_persons,snap_threshold,percent_fi_snap_threshold,percent_fi_snap_threshold_2,child_food_insecurity_rate,number_of_food_insecure_children,percent_food_insecure_children_in_hh_w_hh_incomes_below_185_fpl,percent_food_insecure_children_in_hh_w_hh_incomes_above_185_fpl,cost_per_meal,weighted_weekly_needed_by_fi,weighted_annual_food_budget_shortfall
+51540,VA,"Charlottesville city, Virginia",2019,0.124,5850,0.23,0.18,0.12,1.3,0.734,0.266,0.126,930,0.67,0.34,4.51,25.4441234,4515000
+51540,VA,"Charlottesville city, Virginia",2020,0.124,5880,0.23,0.19,0.09,2,0.835,0.165,0.146,1070,0.8,0.2,4.55,24.16522787,4310000
+51540,VA,"Charlottesville city, Virginia",2021,0.112,5230,0.25,0.17,0.1,2,0.795,0.205,0.121,890,0.83,0.18,4.89,28.45460271,4514000
+51540,VA,"Charlottesville city, Virginia",2022,0.141,6540,0.32,0.22,0.13,2,0.777,0.223,0.173,1250,0.73,0.27,5.37,33.26,6597000

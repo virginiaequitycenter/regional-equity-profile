@@ -1,2 +1,2 @@
-locality,estimate,moe,pop_3_to_24yr,percent,label,year
-Combined Region,40931,1115.0354254462052,47584,86.02,3 to 24 year olds enrolled in school,2022
+region_fips,locality,estimate,moe,pop_3_to_24yr,percent,label,year
+003;540,Charlottesville-Albemarle Region,40931,1115.0354254462052,47584,86.02,3 to 24 year olds enrolled in school,2022

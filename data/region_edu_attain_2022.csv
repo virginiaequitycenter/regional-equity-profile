@@ -1,4 +1,4 @@
-locality,estimate,moe,pop_25_over,percent,label,year
-Combined Region,63601,1340.180584846684,106352,59.8,Bachelor's degree or higher,2022
-Combined Region,32224,1121.3652393399752,106352,30.3,Graduate or professional degree,2022
-Combined Region,99243,719.6721475783261,106352,93.32,High school graduate or higher,2022
+region_fips,locality,estimate,moe,pop_25_over,percent,label,year
+003;540,Charlottesville-Albemarle Region,63601,1340.180584846684,106352,59.8,Bachelor's degree or higher,2022
+003;540,Charlottesville-Albemarle Region,32224,1121.3652393399752,106352,30.3,Graduate or professional degree,2022
+003;540,Charlottesville-Albemarle Region,99243,719.6721475783261,106352,93.32,High school graduate or higher,2022

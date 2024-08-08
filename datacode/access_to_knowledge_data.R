@@ -24,11 +24,11 @@
 # Educational Attainment by Race/Ethnicity: 
 # - Source: ACS Table S1501 (COUNTY, TRACT, REGION)
 # OTHER MEASURES, BY DISTRICT
-# Students enrolled in AP classes by race/ethnicity
+# Students enrolled in AP & Dual Enrollment
 # - Source: VDOE
-# Students suspended by race/ethnicity (Incomplete)
+# Short term suspensions
 # - Source: https://schoolquality.virginia.gov/download-data
-# Students chronically absent by race/ethnicity
+# Chronic Absenteeism 
 # - Source: https://schoolquality.virginia.gov/download-data
 
 # Packages
@@ -411,69 +411,75 @@ region_edu_attain_race <- edu_attain_race_county %>%
 
 write_csv(region_edu_attain_race, paste0("data/region_edu_attain_race", "_", year, ".csv"))
 
-## .....................................................
-# AP Course Enrollment by Race/Ethnicity & Disadvantaged ----
+## ..........................................................
+# AP & Dual Enrollment by Race/Ethnicity & Disadvantaged ----
 # Source: https://www.doe.virginia.gov/data-policy-funding/data-reports/program-participation-data/advanced-programs
 # TEMP SOLUTION TO HTTP 403
 # Downloaded 2022-2023.xlsx to tempdata
 
 # Get total for all students enrolled in AP
 # Read excel
-ap_sheet_1 <- read_xlsx("data/tempdata/2022-2023.xlsx", sheet = "Adv Programs", skip = 3) %>% 
+adv_sheet_1 <- read_xlsx("data/tempdata/2022-2023.xlsx", sheet = "Adv Programs", skip = 3) %>% 
   clean_names()
-ap_sheet_1 <- ap_sheet_1[-c(1), ]
+adv_sheet_1 <- adv_sheet_1[-c(1), ]
 # Filter for divisions
-ap_sheet_1 <- ap_sheet_1 %>% 
+adv_sheet_1 <- adv_sheet_1 %>% 
   filter(division_name %in% c("Albemarle County", "Charlottesville City")) 
 
 # Get district totals  
-ap_enroll_all <- ap_sheet_1 %>% 
+adv_enroll_all <- adv_sheet_1 %>% 
   mutate(students_taking_1_or_more_ap_courses = as.numeric(students_taking_1_or_more_ap_courses),
+         students_taking_1_or_more_dual_enrollment_courses_1 = as.numeric(students_taking_1_or_more_dual_enrollment_courses_1),
          label = "All Students") %>% 
   group_by(division_name, label) %>% 
-  summarise(students_in_ap_courses = sum(students_taking_1_or_more_ap_courses, na.rm = TRUE),
+  summarise(students_in_ap = sum(students_taking_1_or_more_ap_courses, na.rm = TRUE),
+            students_in_dual_enrollment = sum(students_taking_1_or_more_dual_enrollment_courses_1, na.rm = TRUE),
             .groups = 'drop')
 
 # Get students enrolled in AP by race
 # Read excel
-ap_sheet_2 <- read_xlsx("data/tempdata/2022-2023.xlsx", sheet = "Adv Programs by Race", skip = 3) %>% 
+adv_sheet_2 <- read_xlsx("data/tempdata/2022-2023.xlsx", sheet = "Adv Programs by Race", skip = 3) %>% 
   clean_names()
-ap_sheet_2 <- ap_sheet_2[-c(1), ]
+adv_sheet_2 <- adv_sheet_2[-c(1), ]
 # Filter for divisions
-ap_sheet_2 <- ap_sheet_2 %>% 
+adv_sheet_2 <- adv_sheet_2 %>% 
   filter(division_name %in% c("Albemarle County", "Charlottesville City")) 
 
 # Get district totals 
-ap_enroll_race <- ap_sheet_2 %>% 
-  mutate(students_taking_1_or_more_ap_courses = as.numeric(students_taking_1_or_more_ap_courses)) %>% 
+adv_enroll_race <- adv_sheet_2 %>% 
+  mutate(students_taking_1_or_more_ap_courses = as.numeric(students_taking_1_or_more_ap_courses),
+         students_taking_1_or_more_dual_enrollment_courses_1 = as.numeric(students_taking_1_or_more_dual_enrollment_courses_1)) %>% 
   rename(label = race) %>% 
   group_by(division_name, label) %>% 
-  summarise(students_in_ap_courses = sum(students_taking_1_or_more_ap_courses, na.rm = TRUE),
+  summarise(students_in_ap = sum(students_taking_1_or_more_ap_courses, na.rm = TRUE),
+            students_in_dual_enrollment = sum(students_taking_1_or_more_dual_enrollment_courses_1, na.rm = TRUE),
             .groups = 'drop')
 
 # Get students enrolled in AP by disadvantage
 # Read excel
-ap_sheet_3 <- read_xlsx("data/tempdata/2022-2023.xlsx", sheet = "Adv Programs by Disadvantage", skip = 3) %>% 
+adv_sheet_3 <- read_xlsx("data/tempdata/2022-2023.xlsx", sheet = "Adv Programs by Disadvantage", skip = 3) %>% 
   clean_names()
-ap_sheet_3 <- ap_sheet_3[-c(1), ]
+adv_sheet_3 <- adv_sheet_3[-c(1), ]
 # Filter for divisions and disadvantage
-ap_sheet_3 <- ap_sheet_3 %>% 
+adv_sheet_3 <- adv_sheet_3 %>% 
   filter(division_name %in% c("Albemarle County", "Charlottesville City") & disadvantage == "Y") 
 
 # Get district totals for AP enrollment 
-ap_enroll_disadv <- ap_sheet_3 %>% 
+adv_enroll_disadv <- adv_sheet_3 %>% 
   mutate(students_taking_1_or_more_ap_courses = as.numeric(students_taking_1_or_more_ap_courses),
+         students_taking_1_or_more_dual_enrollment_courses_1 = as.numeric(students_taking_1_or_more_dual_enrollment_courses_1), 
          label = "Economically Disadvantaged") %>% 
   group_by(division_name, label) %>% 
-  summarise(students_in_ap_courses = sum(students_taking_1_or_more_ap_courses, na.rm = TRUE),
+  summarise(students_in_ap = sum(students_taking_1_or_more_ap_courses, na.rm = TRUE),
+            students_in_dual_enrollment = sum(students_taking_1_or_more_dual_enrollment_courses_1, na.rm = TRUE),
             .groups = 'drop')
 
 # Merge Race and disadvantage tables
-ap_enroll <- rbind(ap_enroll_race, ap_enroll_disadv, ap_enroll_all) %>% 
+adv_enroll <- rbind(adv_enroll_race, adv_enroll_disadv, adv_enroll_all) %>% 
   mutate(school_year = "2022-2023")
 
 # Get School Enrollment, Fall-Membership numbers
-# Need to compare all hs enrolled vs 10,11,12 enrollment
+# Using 10th-12th grade enrollment for AP / 12th grade only for Dual Enrollment
 # All potential AP students vs students most likely to be enrolled in AP
 # Source: https://p1pe.doe.virginia.gov/apex_captcha/home.do?apexTypeId=304
 
@@ -482,54 +488,77 @@ fall_membership_race <- read_csv("data/tempdata/fall_membership_race_2022_2023.c
 
 fall_membership_race <- fall_membership_race %>%
   group_by(school_year, division_name, race) %>% 
-  summarise(group_total = sum(gr_9, gr_10, gr_11, gr_12, na.rm = TRUE),
+  summarise(total_allgrades = sum(gr_9, gr_10, gr_11, gr_12, na.rm = TRUE),
+            total_10to12 = sum(gr_10, gr_11, gr_12, na.rm = TRUE),
+            total_12 = sum(gr_12, na.rm = TRUE),
             .groups = "drop") %>% 
   mutate(label = race,
          label = str_replace(label,"Native Hawaiian  or Pacific Islander", "Native Hawaiian or Pacific Islander")) %>%
-  select(division_name, label, group_total, school_year)
+  select(division_name, label, total_10to12, total_12, total_allgrades, school_year)
 
 fall_membership_disadv <- read_csv("data/tempdata/fall_membership_disadv_2022_2023.csv") %>% 
   clean_names()
 
 fall_membership_disadv <- fall_membership_disadv %>%
   group_by(school_year, division_name) %>% 
-  summarise(group_total = sum(gr_9, gr_10, gr_11, gr_12, na.rm = TRUE),
+  summarise(total_allgrades = sum(gr_9, gr_10, gr_11, gr_12, na.rm = TRUE),
+            total_10to12 = sum(gr_10, gr_11, gr_12, na.rm = TRUE),
+            total_12 = sum(gr_12, na.rm = TRUE),
             .groups = "drop") %>% 
   mutate(label = "Economically Disadvantaged") %>% 
-  select(division_name, label, group_total, school_year)
+  select(division_name, label, total_10to12, total_12, total_allgrades, school_year)
 
 fall_membership_total <- read_csv("data/tempdata/fall_membership_total_2022_2023.csv") %>% 
   clean_names()
 
 fall_membership_total <- fall_membership_total %>%
   group_by(school_year, division_name) %>% 
-  summarise(group_total = sum(gr_9, gr_10, gr_11, gr_12, na.rm = TRUE),
+  summarise(total_allgrades = sum(gr_9, gr_10, gr_11, gr_12, na.rm = TRUE),
+            total_10to12 = sum(gr_10, gr_11, gr_12, na.rm = TRUE),
+            total_12 = sum(gr_12, na.rm = TRUE),
             .groups = "drop") %>% 
   mutate(label = "All Students") %>% 
-  select(division_name, label, group_total, school_year)
+  select(division_name, label, total_10to12, total_12, total_allgrades, school_year)
 
 # Merge membership tables
 fall_membership <- rbind(fall_membership_race, fall_membership_disadv, fall_membership_total)
 
 # Join AP enrollment and membership tables
-ap_enroll <- ap_enroll %>% 
+adv_enroll <- adv_enroll %>% 
     left_join(fall_membership)
 
 # Create percents
-ap_enroll <- ap_enroll %>%
-  mutate(percent = round(100 * (students_in_ap_courses / group_total), digits = 2))
+adv_enroll <- adv_enroll %>%
+  mutate(ap_percent = round(100 * (students_in_ap / total_10to12), digits = 2),
+         dual_percent = round(100 * (students_in_dual_enrollment / total_12), digits = 2))
 
-# AP Course Enrollment: Charlottesville ----
-cville_ap_enroll <- ap_enroll %>% 
+# AP & Dual Enrollment: Charlottesville ----
+cville_adv_enroll <- adv_enroll %>% 
   filter(division_name == "Charlottesville City")
 
-write_csv(cville_ap_enroll, paste0("data/cville_ap_enroll_2022_2023.csv"))
+write_csv(cville_adv_enroll, "data/cville_adv_enroll_2022_2023.csv")
 
-# AP Course Enrollment: Albemarle ----
-alb_ap_enroll <- ap_enroll %>% 
+# AP & Dual Enrollment: Albemarle ----
+alb_adv_enroll <- adv_enroll %>% 
   filter(division_name == "Albemarle County")
 
-write_csv(alb_ap_enroll, paste0("data/alb_ap_enroll_2022_2023.csv"))
+write_csv(alb_adv_enroll, "data/alb_adv_enroll_2022_2023.csv")
+
+# AP & Dual Enrollment: Charlottesville, Albemarle Combined Table ----
+region_adv_enroll <- adv_enroll %>% 
+  group_by(label, school_year) %>% 
+  summarize(students_in_ap = sum(students_in_ap),
+            students_in_dual_enrollment = sum(students_in_dual_enrollment),
+            total_10to12 = sum(total_10to12),
+            total_12 = sum(total_12),
+            total_allgrades = sum(total_allgrades),
+            .groups = 'drop') %>% 
+  mutate(ap_percent = round(100 * (students_in_ap / total_10to12), digits = 2),
+         dual_percent = round(100 * (students_in_dual_enrollment / total_12), digits = 2),
+         division = "CCS + ACPS Combined") %>% 
+  select(division, label, students_in_ap, ap_percent, students_in_dual_enrollment, dual_percent, total_10to12, total_12, total_allgrades, school_year)
+
+write_csv(region_adv_enroll, "data/region_adv_enroll_2022_2023.csv")
 
 ## .......................................................
 # Suspensions by Race/Ethnicity & Chronic Absenteeism ----
@@ -548,13 +577,76 @@ write_csv(alb_ap_enroll, paste0("data/alb_ap_enroll_2022_2023.csv"))
 st_suspensions <- read_csv("data/tempdata/vdoe_data/Short Term Suspensions.csv", skip = 3) %>% 
   clean_names()
 
-# Long Term Suspensions ----
-lt_suspensions <- read_csv("data/tempdata/vdoe_data/Long Term Suspensions.csv", skip = 3) %>% 
+# Short Term Suspensions: Charlottesville
+cville_st_suspensions <- st_suspensions %>% 
+  filter(division == "Charlottesville City Public Schools")
+
+write_csv(cville_adv_enroll, "data/cville_adv_enroll_2022_2023.csv")
+
+# Short Term Suspensions: Albemarle ----
+alb_st_suspensions <- st_suspensions %>% 
+  filter(division == "Albemarle County Public Schools")
+
+write_csv(alb_st_suspensions, "data/alb_st_suspensions_2022_2023.csv")
+
+# Short Term Suspensions: Charlottesville, Albemarle Combined Table ----
+region_st_suspensions <- st_suspensions %>% 
+  group_by(subgroup, year) %>% 
+  summarize(number_suspended_short_term = sum(number_suspended_short_term, na.rm = TRUE),
+            number_of_short_term_suspendable_incidents = sum(number_of_short_term_suspendable_incidents, na.rm = TRUE),
+            .groups = 'drop') %>% 
+  mutate(percent_of_short_term_suspensions = round(100 * (number_suspended_short_term / number_of_short_term_suspendable_incidents), digits = 2),
+         division = "CCS + ACPS Combined") 
+
+# District wide fall membership totals 
+school_comp_race <- read_csv("data/tempdata/fall_membership_district_race_2022_2023.csv") %>% 
   clean_names()
+
+school_comp_race <- school_comp_race %>% 
+  group_by(school_year, race) %>% 
+  summarize(div_count = sum(total_count, na.rm = TRUE),
+            .groups = 'drop') %>% 
+  mutate(race = case_when(race == "Native Hawaiian  or Pacific Islander" ~ "Native Hawaiian",
+                          race == "American Indian or Alaska Native" ~ "American Indian",
+                          race == "Black, not of Hispanic origin" ~ "Black",
+                          race == "Non-Hispanic, two or more races" ~ "Multiple Races",
+                          race == "White, not of Hispanic origin" ~ "White",
+                          .default = race))
+
+school_comp_total <- read_csv("data/tempdata/fall_membership_division_all_2022_2023.csv") %>% 
+  clean_names()
+
+school_comp_total <- school_comp_total %>% 
+  group_by(school_year) %>% 
+  summarize(div_total = sum(total_count, na.rm = TRUE),
+            .groups = 'drop')
+
+school_comp <- school_comp_race %>% 
+  left_join(school_comp_total) %>% 
+  mutate(div_percent = round(100 * (div_count / div_total), digits = 2),
+         division = "CCS + ACPS Combined") %>% 
+  rename(subgroup = race)
+
+# Join division totals with region wide short term suspensions
+region_st_suspensions <- region_st_suspensions %>% 
+  left_join(school_comp) %>% 
+  select(division, school_year, subgroup, number_suspended_short_term, number_of_short_term_suspendable_incidents, percent_of_short_term_suspensions, div_count, div_total, div_percent)
+
+# Save 
+write_csv(region_st_suspensions, "data/region_st_suspensions_2022_2023.csv")
+
+# Long Term Suspensions - Not using ----
+# lt_suspensions <- read_csv("data/tempdata/vdoe_data/Long Term Suspensions.csv", skip = 3) %>% 
+#   clean_names()
 
 # Chronic Absenteeism ----
 absent <- read_csv("data/tempdata/vdoe_data/Chronic Absenteeism.csv", skip = 3) %>% 
   clean_names()
+
+absent <- absent %>% 
+  filter(!subgroup %in% c("Homeless", "English Learners")) %>% 
+  mutate(count_below_10 = as.numeric(count_below_10),
+         count_above_10 = as.numeric(count_above_10))
 
 cville_absenteeism <- absent %>% 
   filter(division == "Charlottesville City Public Schools")
@@ -567,9 +659,7 @@ alb_absenteeism <- absent %>%
 write_csv(alb_absenteeism, paste0("data/alb_absenteeism_2022_2023.csv"))
 
 # Combined Region
-region_absenteeism <- absent %>% 
-  mutate(count_below_10 = as.numeric(count_below_10),
-         count_above_10 = as.numeric(count_above_10)) %>% 
+region_absenteeism <- absent %>%
   group_by(year, subgroup) %>% 
   summarize(count_below_10 = sum(count_below_10),
             count_above_10 = sum(count_above_10),

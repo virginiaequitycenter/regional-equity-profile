@@ -1,0 +1,30 @@
+GEOID,NAME,tract,locality,state,summary_est,summary_moe,estimate_insured,estimate_uninsured,moe_insured,moe_uninsured,percent_insured,percent_uninsured,year,county,locality_num,tract_num,tractnames
+51003010100,Census Tract 101; Albemarle County; Virginia,Census Tract 101,Albemarle County,Virginia,4592,465,4384,208,468,149,95.47,4.53,2022,Albemarle,003,010100,Free Union
+51003010201,Census Tract 102.01; Albemarle County; Virginia,Census Tract 102.01,Albemarle County,Virginia,6060,750,5943,117,745,82,98.07,1.93,2022,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010202,Census Tract 102.02; Albemarle County; Virginia,Census Tract 102.02,Albemarle County,Virginia,3158,425,3139,19,426,20,99.4,0.6,2022,Albemarle,003,010202,Earlysville
+51003010301,Census Tract 103.01; Albemarle County; Virginia,Census Tract 103.01,Albemarle County,Virginia,2293,522,2122,171,532,84,92.54,7.46,2022,Albemarle,003,010301,Berkmar Drive
+51003010302,Census Tract 103.02; Albemarle County; Virginia,Census Tract 103.02,Albemarle County,Virginia,1408,138,1389,19,134,25,98.65,1.35,2022,Albemarle,003,010302,Polo Grounds Road
+51003010303,Census Tract 103.03; Albemarle County; Virginia,Census Tract 103.03,Albemarle County,Virginia,5359,564,5100,259,567,177,95.17,4.83,2022,Albemarle,003,010303,Hollymead
+51003010401,Census Tract 104.01; Albemarle County; Virginia,Census Tract 104.01,Albemarle County,Virginia,4353,635,4128,225,635,142,94.83,5.17,2022,Albemarle,003,010401,Stony Point-Keswick
+51003010402,Census Tract 104.02; Albemarle County; Virginia,Census Tract 104.02,Albemarle County,Virginia,3456,460,3338,118,471,95,96.59,3.41,2022,Albemarle,003,010402,Village of Rivanna
+51003010501,Census Tract 105.01; Albemarle County; Virginia,Census Tract 105.01,Albemarle County,Virginia,3014,501,2940,74,524,106,97.54,2.46,2022,Albemarle,003,010501,Darden-Key West
+51003010502,Census Tract 105.02; Albemarle County; Virginia,Census Tract 105.02,Albemarle County,Virginia,2689,442,2607,82,448,85,96.95,3.05,2022,Albemarle,003,010502,Pantops
+51003010602,Census Tract 106.02; Albemarle County; Virginia,Census Tract 106.02,Albemarle County,Virginia,4671,430,4489,182,393,141,96.1,3.9,2022,Albemarle,003,010602,Dunlora-Stone Henge
+51003010603,Census Tract 106.03; Albemarle County; Virginia,Census Tract 106.03,Albemarle County,Virginia,2231,586,2214,17,588,20,99.24,0.76,2022,Albemarle,003,010603,Branchland
+51003010604,Census Tract 106.04; Albemarle County; Virginia,Census Tract 106.04,Albemarle County,Virginia,4090,493,3969,121,458,99,97.04,2.96,2022,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010701,Census Tract 107.01; Albemarle County; Virginia,Census Tract 107.01,Albemarle County,Virginia,2630,539,2323,307,533,178,88.33,11.67,2022,Albemarle,003,010701,Hydraulic
+51003010702,Census Tract 107.02; Albemarle County; Virginia,Census Tract 107.02,Albemarle County,Virginia,2924,558,2478,446,504,285,84.75,15.25,2022,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010801,Census Tract 108.01; Albemarle County; Virginia,Census Tract 108.01,Albemarle County,Virginia,3359,495,2967,392,346,264,88.33,11.67,2022,Albemarle,003,010801,Barracks-Hessian Hills
+51003010802,Census Tract 108.02; Albemarle County; Virginia,Census Tract 108.02,Albemarle County,Virginia,2518,355,1852,666,273,355,73.55,26.45,2022,Albemarle,003,010802,Albemarle High School
+51003010901,Census Tract 109.01; Albemarle County; Virginia,Census Tract 109.01,Albemarle County,Virginia,1927,191,1838,89,190,64,95.38,4.62,2022,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010904,Census Tract 109.04; Albemarle County; Virginia,Census Tract 109.04,Albemarle County,Virginia,7707,398,7370,337,390,177,95.63,4.37,2022,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003011000,Census Tract 110; Albemarle County; Virginia,Census Tract 110,Albemarle County,Virginia,6671,792,6338,333,696,294,95.01,4.99,2022,Albemarle,003,011000,Ivy
+51003011101,Census Tract 111.01; Albemarle County; Virginia,Census Tract 111.01,Albemarle County,Virginia,2399,300,2384,15,294,26,99.37,0.63,2022,Albemarle,003,011101,Crozet-Beaver Creek
+51003011102,Census Tract 111.02; Albemarle County; Virginia,Census Tract 111.02,Albemarle County,Virginia,3145,427,3128,17,435,34,99.46,0.54,2022,Albemarle,003,011102,Western Ridge-Westhall
+51003011103,Census Tract 111.03; Albemarle County; Virginia,Census Tract 111.03,Albemarle County,Virginia,4144,613,4046,98,606,94,97.64,2.36,2022,Albemarle,003,011103,Old Trail
+51003011201,Census Tract 112.01; Albemarle County; Virginia,Census Tract 112.01,Albemarle County,Virginia,4142,530,3930,212,514,100,94.88,5.12,2022,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011202,Census Tract 112.02; Albemarle County; Virginia,Census Tract 112.02,Albemarle County,Virginia,3850,347,3678,172,334,103,95.53,4.47,2022,Albemarle,003,011202,North Garden
+51003011301,Census Tract 113.01; Albemarle County; Virginia,Census Tract 113.01,Albemarle County,Virginia,4929,620,4656,273,543,191,94.46,5.54,2022,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011302,Census Tract 113.02; Albemarle County; Virginia,Census Tract 113.02,Albemarle County,Virginia,5106,637,4266,840,413,365,83.55,16.45,2022,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011303,Census Tract 113.03; Albemarle County; Virginia,Census Tract 113.03,Albemarle County,Virginia,3569,460,3379,190,397,155,94.68,5.32,2022,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011400,Census Tract 114; Albemarle County; Virginia,Census Tract 114,Albemarle County,Virginia,4697,555,4273,424,561,180,90.97,9.03,2022,Albemarle,003,011400,Southern Albemarle-Scottsville

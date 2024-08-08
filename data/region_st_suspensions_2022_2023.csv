@@ -1,0 +1,8 @@
+division,school_year,subgroup,number_suspended_short_term,number_of_short_term_suspendable_incidents,percent_of_short_term_suspensions,div_count,div_total,div_percent
+CCS + ACPS Combined,2022-2023,American Indian,0,0,NA,15,18461,0.08
+CCS + ACPS Combined,2022-2023,Asian,11,639,1.72,1046,18461,5.67
+CCS + ACPS Combined,2022-2023,Black,311,639,48.67,2923,18461,15.83
+CCS + ACPS Combined,2022-2023,Hispanic,85,639,13.3,2800,18461,15.17
+CCS + ACPS Combined,2022-2023,Multiple Races,68,639,10.64,1614,18461,8.74
+CCS + ACPS Combined,2022-2023,Native Hawaiian,0,0,NA,11,18461,0.06
+CCS + ACPS Combined,2022-2023,White,164,639,25.67,10052,18461,54.45
