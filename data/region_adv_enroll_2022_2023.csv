@@ -1,10 +1,10 @@
-division,label,students_in_ap,ap_percent,students_in_dual_enrollment,dual_percent,total_10to12,total_12,total_allgrades,school_year
-CCS + ACPS Combined,All Students,1514,35.34,1042,73.02,4284,1427,5842,2022-2023
+division,label,students_in_ap,ap_percent,students_in_dual_enrollment,dual_percent,total_10to12,total_11and12,total_allgrades,school_year
+CCS + ACPS Combined,All Students,1514,35.34,1042,37.64,4284,2768,5842,2022-2023
 CCS + ACPS Combined,American Indian or Alaska Native,0,0,1,25,6,4,9,2022-2023
-CCS + ACPS Combined,Asian,127,54.51,70,82.35,233,85,304,2022-2023
-CCS + ACPS Combined,"Black, not of Hispanic origin",101,15.93,91,41.55,634,219,902,2022-2023
-CCS + ACPS Combined,Economically Disadvantaged,194,14.46,180,45.92,1342,392,1924,2022-2023
-CCS + ACPS Combined,Hispanic,114,17.95,87,50.29,635,173,871,2022-2023
+CCS + ACPS Combined,Asian,127,54.51,70,46.36,233,151,304,2022-2023
+CCS + ACPS Combined,"Black, not of Hispanic origin",101,15.93,91,22.25,634,409,902,2022-2023
+CCS + ACPS Combined,Economically Disadvantaged,194,14.46,180,22.22,1342,810,1924,2022-2023
+CCS + ACPS Combined,Hispanic,114,17.95,87,22.25,635,391,871,2022-2023
 CCS + ACPS Combined,Native Hawaiian or Pacific Islander,1,100,0,NA,1,0,3,2022-2023
-CCS + ACPS Combined,"Non-Hispanic, two or more races",95,33.22,56,58.95,286,95,415,2022-2023
-CCS + ACPS Combined,"White, not of Hispanic origin",1076,43.23,737,86.6,2489,851,3338,2022-2023
+CCS + ACPS Combined,"Non-Hispanic, two or more races",95,33.22,56,32,286,175,415,2022-2023
+CCS + ACPS Combined,"White, not of Hispanic origin",1076,43.23,737,44.99,2489,1638,3338,2022-2023

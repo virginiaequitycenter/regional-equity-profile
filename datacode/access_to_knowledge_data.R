@@ -479,7 +479,7 @@ adv_enroll <- rbind(adv_enroll_race, adv_enroll_disadv, adv_enroll_all) %>%
   mutate(school_year = "2022-2023")
 
 # Get School Enrollment, Fall-Membership numbers
-# Using 10th-12th grade enrollment for AP / 12th grade only for Dual Enrollment
+# Using 10th-12th grade enrollment for AP / 11th & 12th grade for Dual Enrollment
 # All potential AP students vs students most likely to be enrolled in AP
 # Source: https://p1pe.doe.virginia.gov/apex_captcha/home.do?apexTypeId=304
 
@@ -490,11 +490,11 @@ fall_membership_race <- fall_membership_race %>%
   group_by(school_year, division_name, race) %>% 
   summarise(total_allgrades = sum(gr_9, gr_10, gr_11, gr_12, na.rm = TRUE),
             total_10to12 = sum(gr_10, gr_11, gr_12, na.rm = TRUE),
-            total_12 = sum(gr_12, na.rm = TRUE),
+            total_11and12 = sum(gr_11, gr_12, na.rm = TRUE),
             .groups = "drop") %>% 
   mutate(label = race,
          label = str_replace(label,"Native Hawaiian  or Pacific Islander", "Native Hawaiian or Pacific Islander")) %>%
-  select(division_name, label, total_10to12, total_12, total_allgrades, school_year)
+  select(division_name, label, total_10to12, total_11and12, total_allgrades, school_year)
 
 fall_membership_disadv <- read_csv("data/tempdata/fall_membership_disadv_2022_2023.csv") %>% 
   clean_names()
@@ -503,10 +503,10 @@ fall_membership_disadv <- fall_membership_disadv %>%
   group_by(school_year, division_name) %>% 
   summarise(total_allgrades = sum(gr_9, gr_10, gr_11, gr_12, na.rm = TRUE),
             total_10to12 = sum(gr_10, gr_11, gr_12, na.rm = TRUE),
-            total_12 = sum(gr_12, na.rm = TRUE),
+            total_11and12 = sum(gr_11, gr_12, na.rm = TRUE),
             .groups = "drop") %>% 
   mutate(label = "Economically Disadvantaged") %>% 
-  select(division_name, label, total_10to12, total_12, total_allgrades, school_year)
+  select(division_name, label, total_10to12, total_11and12, total_allgrades, school_year)
 
 fall_membership_total <- read_csv("data/tempdata/fall_membership_total_2022_2023.csv") %>% 
   clean_names()
@@ -515,10 +515,10 @@ fall_membership_total <- fall_membership_total %>%
   group_by(school_year, division_name) %>% 
   summarise(total_allgrades = sum(gr_9, gr_10, gr_11, gr_12, na.rm = TRUE),
             total_10to12 = sum(gr_10, gr_11, gr_12, na.rm = TRUE),
-            total_12 = sum(gr_12, na.rm = TRUE),
+            total_11and12 = sum(gr_11, gr_12, na.rm = TRUE),
             .groups = "drop") %>% 
   mutate(label = "All Students") %>% 
-  select(division_name, label, total_10to12, total_12, total_allgrades, school_year)
+  select(division_name, label, total_10to12, total_11and12, total_allgrades, school_year)
 
 # Merge membership tables
 fall_membership <- rbind(fall_membership_race, fall_membership_disadv, fall_membership_total)
@@ -530,7 +530,7 @@ adv_enroll <- adv_enroll %>%
 # Create percents
 adv_enroll <- adv_enroll %>%
   mutate(ap_percent = round(100 * (students_in_ap / total_10to12), digits = 2),
-         dual_percent = round(100 * (students_in_dual_enrollment / total_12), digits = 2))
+         dual_percent = round(100 * (students_in_dual_enrollment / total_11and12), digits = 2))
 
 # AP & Dual Enrollment: Charlottesville ----
 cville_adv_enroll <- adv_enroll %>% 
@@ -550,13 +550,13 @@ region_adv_enroll <- adv_enroll %>%
   summarize(students_in_ap = sum(students_in_ap),
             students_in_dual_enrollment = sum(students_in_dual_enrollment),
             total_10to12 = sum(total_10to12),
-            total_12 = sum(total_12),
+            total_11and12 = sum(total_11and12),
             total_allgrades = sum(total_allgrades),
             .groups = 'drop') %>% 
   mutate(ap_percent = round(100 * (students_in_ap / total_10to12), digits = 2),
-         dual_percent = round(100 * (students_in_dual_enrollment / total_12), digits = 2),
+         dual_percent = round(100 * (students_in_dual_enrollment / total_11and12), digits = 2),
          division = "CCS + ACPS Combined") %>% 
-  select(division, label, students_in_ap, ap_percent, students_in_dual_enrollment, dual_percent, total_10to12, total_12, total_allgrades, school_year)
+  select(division, label, students_in_ap, ap_percent, students_in_dual_enrollment, dual_percent, total_10to12, total_11and12, total_allgrades, school_year)
 
 write_csv(region_adv_enroll, "data/region_adv_enroll_2022_2023.csv")
 
