@@ -1,37 +1,37 @@
 region_fips,locality,group,label,estimate,moe,total_households,percent,year
-003;540,Combined Region,American Indian/Native Alaskan,Owner occupied,22,35.22782990761707,175,12.57,2012
-003;540,Combined Region,American Indian/Native Alaskan,Owner occupied,9,33.28663395418648,105,8.57,2022
-003;540,Combined Region,American Indian/Native Alaskan,Renter occupied,153,85.42833253669417,175,87.43,2012
-003;540,Combined Region,American Indian/Native Alaskan,Renter occupied,96,46.51881339845203,105,91.43,2022
-003;540,Combined Region,Asian,Owner occupied,804,164.51443705644803,2120,37.92,2012
-003;540,Combined Region,Asian,Owner occupied,1299,224.66419385384935,2753,47.18,2022
-003;540,Combined Region,Asian,Renter occupied,1316,237.42788378789885,2120,62.08,2012
-003;540,Combined Region,Asian,Renter occupied,1454,254.02362094891885,2753,52.82,2022
-003;540,Combined Region,Black,Owner occupied,2310,252.00198411917316,6595,35.03,2012
-003;540,Combined Region,Black,Owner occupied,2645,341.45863585506225,6835,38.7,2022
-003;540,Combined Region,Black,Renter occupied,4285,420.7517082555934,6595,64.97,2012
-003;540,Combined Region,Black,Renter occupied,4190,376.2884531845217,6835,61.3,2022
-003;540,Combined Region,Hispanic or Latino,Owner occupied,675,178.10109488714548,1783,37.86,2012
-003;540,Combined Region,Hispanic or Latino,Owner occupied,1025,241.8594633252956,2726,37.6,2022
-003;540,Combined Region,Hispanic or Latino,Renter occupied,1108,195.50959055759898,1783,62.14,2012
-003;540,Combined Region,Hispanic or Latino,Renter occupied,1701,254.70178640912593,2726,62.4,2022
-003;540,Combined Region,Mutiracial,Owner occupied,197,83.24061508662703,655,30.08,2012
-003;540,Combined Region,Mutiracial,Owner occupied,1062,255.69708641280997,2054,51.7,2022
-003;540,Combined Region,Mutiracial,Renter occupied,458,136.02940858505562,655,69.92,2012
-003;540,Combined Region,Mutiracial,Renter occupied,992,195.78048932414077,2054,48.3,2022
-003;540,Combined Region,Native Hawaiian/Pacific Islander,Owner occupied,0,38.948684188300895,8,0,2012
-003;540,Combined Region,Native Hawaiian/Pacific Islander,Owner occupied,0,41.773197148410844,0,NA,2022
-003;540,Combined Region,Native Hawaiian/Pacific Islander,Renter occupied,8,32.64965543462902,8,100,2012
-003;540,Combined Region,Native Hawaiian/Pacific Islander,Renter occupied,0,41.773197148410844,0,NA,2022
-003;540,Combined Region,Other,Owner occupied,135,75.8023746329889,405,33.33,2012
-003;540,Combined Region,Other,Owner occupied,188,106.7941945987702,754,24.93,2022
-003;540,Combined Region,Other,Renter occupied,270,126.24579200908045,405,66.67,2012
-003;540,Combined Region,Other,Renter occupied,566,199.48433522459854,754,75.07,2022
-003;540,Combined Region,White,Owner occupied,28241,641.78656888408,44910,62.88,2012
-003;540,Combined Region,White,Owner occupied,32663,749.1341668886822,51041,63.99,2022
-003;540,Combined Region,White,Renter occupied,16669,779.6332471104603,44910,37.12,2012
-003;540,Combined Region,White,Renter occupied,18378,853.9847773818922,51041,36.01,2022
-003;540,Combined Region,"White, Not Hispanic or Latino",Owner occupied,27746,611.9101241195475,43606,63.63,2012
-003;540,Combined Region,"White, Not Hispanic or Latino",Owner occupied,32143,745.5233061413976,49534,64.89,2022
-003;540,Combined Region,"White, Not Hispanic or Latino",Renter occupied,15860,746.6840027749356,43606,36.37,2012
-003;540,Combined Region,"White, Not Hispanic or Latino",Renter occupied,17391,867.977534271481,49534,35.11,2022
+003;540,Charlottesville-Albemarle Region,American Indian/Native Alaskan,Owner occupied,22,35.22782990761707,175,12.57,2012
+003;540,Charlottesville-Albemarle Region,American Indian/Native Alaskan,Owner occupied,9,33.28663395418648,105,8.57,2022
+003;540,Charlottesville-Albemarle Region,American Indian/Native Alaskan,Renter occupied,153,85.42833253669417,175,87.43,2012
+003;540,Charlottesville-Albemarle Region,American Indian/Native Alaskan,Renter occupied,96,46.51881339845203,105,91.43,2022
+003;540,Charlottesville-Albemarle Region,Asian,Owner occupied,804,164.51443705644803,2120,37.92,2012
+003;540,Charlottesville-Albemarle Region,Asian,Owner occupied,1299,224.66419385384935,2753,47.18,2022
+003;540,Charlottesville-Albemarle Region,Asian,Renter occupied,1316,237.42788378789885,2120,62.08,2012
+003;540,Charlottesville-Albemarle Region,Asian,Renter occupied,1454,254.02362094891885,2753,52.82,2022
+003;540,Charlottesville-Albemarle Region,Black,Owner occupied,2310,252.00198411917316,6595,35.03,2012
+003;540,Charlottesville-Albemarle Region,Black,Owner occupied,2645,341.45863585506225,6835,38.7,2022
+003;540,Charlottesville-Albemarle Region,Black,Renter occupied,4285,420.7517082555934,6595,64.97,2012
+003;540,Charlottesville-Albemarle Region,Black,Renter occupied,4190,376.2884531845217,6835,61.3,2022
+003;540,Charlottesville-Albemarle Region,Hispanic or Latino,Owner occupied,675,178.10109488714548,1783,37.86,2012
+003;540,Charlottesville-Albemarle Region,Hispanic or Latino,Owner occupied,1025,241.8594633252956,2726,37.6,2022
+003;540,Charlottesville-Albemarle Region,Hispanic or Latino,Renter occupied,1108,195.50959055759898,1783,62.14,2012
+003;540,Charlottesville-Albemarle Region,Hispanic or Latino,Renter occupied,1701,254.70178640912593,2726,62.4,2022
+003;540,Charlottesville-Albemarle Region,Multiracial,Owner occupied,197,83.24061508662703,655,30.08,2012
+003;540,Charlottesville-Albemarle Region,Multiracial,Owner occupied,1062,255.69708641280997,2054,51.7,2022
+003;540,Charlottesville-Albemarle Region,Multiracial,Renter occupied,458,136.02940858505562,655,69.92,2012
+003;540,Charlottesville-Albemarle Region,Multiracial,Renter occupied,992,195.78048932414077,2054,48.3,2022
+003;540,Charlottesville-Albemarle Region,Native Hawaiian/Pacific Islander,Owner occupied,0,38.948684188300895,8,0,2012
+003;540,Charlottesville-Albemarle Region,Native Hawaiian/Pacific Islander,Owner occupied,0,41.773197148410844,0,NA,2022
+003;540,Charlottesville-Albemarle Region,Native Hawaiian/Pacific Islander,Renter occupied,8,32.64965543462902,8,100,2012
+003;540,Charlottesville-Albemarle Region,Native Hawaiian/Pacific Islander,Renter occupied,0,41.773197148410844,0,NA,2022
+003;540,Charlottesville-Albemarle Region,Other,Owner occupied,135,75.8023746329889,405,33.33,2012
+003;540,Charlottesville-Albemarle Region,Other,Owner occupied,188,106.7941945987702,754,24.93,2022
+003;540,Charlottesville-Albemarle Region,Other,Renter occupied,270,126.24579200908045,405,66.67,2012
+003;540,Charlottesville-Albemarle Region,Other,Renter occupied,566,199.48433522459854,754,75.07,2022
+003;540,Charlottesville-Albemarle Region,White,Owner occupied,28241,641.78656888408,44910,62.88,2012
+003;540,Charlottesville-Albemarle Region,White,Owner occupied,32663,749.1341668886822,51041,63.99,2022
+003;540,Charlottesville-Albemarle Region,White,Renter occupied,16669,779.6332471104603,44910,37.12,2012
+003;540,Charlottesville-Albemarle Region,White,Renter occupied,18378,853.9847773818922,51041,36.01,2022
+003;540,Charlottesville-Albemarle Region,"White, Not Hispanic or Latino",Owner occupied,27746,611.9101241195475,43606,63.63,2012
+003;540,Charlottesville-Albemarle Region,"White, Not Hispanic or Latino",Owner occupied,32143,745.5233061413976,49534,64.89,2022
+003;540,Charlottesville-Albemarle Region,"White, Not Hispanic or Latino",Renter occupied,15860,746.6840027749356,43606,36.37,2012
+003;540,Charlottesville-Albemarle Region,"White, Not Hispanic or Latino",Renter occupied,17391,867.977534271481,49534,35.11,2022

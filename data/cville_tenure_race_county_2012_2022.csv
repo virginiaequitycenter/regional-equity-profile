@@ -23,10 +23,10 @@ GEOID,locality,label,group,estimate,moe,total_households,percent,year
 51540,"Charlottesville city, Virginia",Renter occupied,Other,206,145,281,73.31,2022
 51540,"Charlottesville city, Virginia",Owner occupied,Other,38,39,115,33.04,2012
 51540,"Charlottesville city, Virginia",Renter occupied,Other,77,67,115,66.96,2012
-51540,"Charlottesville city, Virginia",Owner occupied,Mutiracial,374,170,822,45.5,2022
-51540,"Charlottesville city, Virginia",Renter occupied,Mutiracial,448,127,822,54.5,2022
-51540,"Charlottesville city, Virginia",Owner occupied,Mutiracial,16,23,229,6.99,2012
-51540,"Charlottesville city, Virginia",Renter occupied,Mutiracial,213,90,229,93.01,2012
+51540,"Charlottesville city, Virginia",Owner occupied,Multiracial,374,170,822,45.5,2022
+51540,"Charlottesville city, Virginia",Renter occupied,Multiracial,448,127,822,54.5,2022
+51540,"Charlottesville city, Virginia",Owner occupied,Multiracial,16,23,229,6.99,2012
+51540,"Charlottesville city, Virginia",Renter occupied,Multiracial,213,90,229,93.01,2012
 51540,"Charlottesville city, Virginia",Owner occupied,"White, Not Hispanic or Latino",6541,379,13729,47.64,2022
 51540,"Charlottesville city, Virginia",Renter occupied,"White, Not Hispanic or Latino",7188,468,13729,52.36,2022
 51540,"Charlottesville city, Virginia",Owner occupied,"White, Not Hispanic or Latino",5779,297,12649,45.69,2012

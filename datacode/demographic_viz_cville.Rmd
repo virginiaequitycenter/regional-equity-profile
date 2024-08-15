@@ -10,11 +10,12 @@ max-width: 1200px;
   padding: 0 4.167%;
 }
 
-
 ```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
+# Load packages ----
 library(tidycensus)
 library(tidyverse)
 library(scales)
@@ -27,6 +28,9 @@ library(readxl)
 library(ggpol)
 library(patchwork)
 
+# Common Items
+locality_name <- "City of Charlottesville"
+source_acs <- "Data Source: American Community Survey, 2022"
 
 ```
 
@@ -62,7 +66,10 @@ region_line <- region_1790_2020 %>%
                      labels = label_percent(scale = 1),
                      name = "") +
     scale_color_manual(values = c("#3B8EA5", "#b2b8be")) +
-  labs(color = "", title = "White and non-white populations in the Charlottesville/Albemarle Region, 1790-2020") +
+  labs(color = "",
+       title = "White and Non-White Population Composition, 1790-2020", 
+       subtitle = "Charlottesville/Albemarle Region", 
+       caption = "Data Source: U.S. Census Bureau, Decennial Census, 1790-2020") +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
@@ -102,7 +109,10 @@ cville_line <- cville_1900_2020 %>%
                      labels = label_percent(scale = 1),
                      name = "") +
   scale_color_manual(values = c("#3B8EA5", "#b2b8be")) +
-  labs(color = "", title = "White and non-white populations in Charlottesville, 1900-2020") +
+  labs(color = "",
+       title = "White and Non-White Population Composition, 1900-2020", 
+       subtitle = locality_name, 
+       caption = "Data Source: U.S. Census Bureau, Decennial Census, 1900-2020") +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
@@ -115,7 +125,7 @@ cville_line
 ```
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.height=6}
 # Ethnicity by Race, 2012-2022 ----
 
 cville_ethn_race_2012_2022 <- read_csv("../data/cville_ethn_race_2012_2022.csv")
@@ -140,11 +150,13 @@ cville_ethn_race_plot <- cville_ethn_race_2012_2022 %>%
   scale_x_discrete(name = "") +
   scale_y_continuous(labels = label_percent(scale = 1),
                      name = "") +
-  labs(color = "", title = "Charlottesville: Race/Ethnic Composition, 2012-2022") +
   # scale_fill_manual(values = color_blind_pal) +
   # scale_fill_manual(values = c("#b2b8be", "#ff641e", "#009ddc", "#fbb12d", "#b4cd23", "#ee2b75", "#b69cfd", "#43daed")) +
   scale_fill_manual(values = c("#b2b8be", "#ff641e", "#b4cd23", "#ee2b75","#009ddc", "#fbb12d", "#b69cfd", "#43daed")) +
   theme_minimal() +
+  labs(title = "Race & Ethnicity", 
+       subtitle = locality_name, 
+       caption = source_acs) +
   theme(legend.title=element_blank(),
         legend.position = "top",
         panel.grid.minor.x = element_blank(),
@@ -192,7 +204,7 @@ cville_age_plot <- cville_age_2012_2022 %>%
   labs(fill = "", title = "Age of Charlottesville Residents, 2012 v. 2022")
   
 
-cville_age_plot
+# cville_age_plot
 
 
 ```
@@ -283,6 +295,9 @@ ggplot() +
               reverse_num = TRUE) +
   coord_flip() +
   theme_light() +
+  labs(title = "Age of Residents, 2012 & 2022", 
+       subtitle = locality_name, 
+       caption = source_acs) +
   theme(legend.position = "none",
         panel.grid.minor.x = element_blank(),
         panel.border = element_blank(),
@@ -336,7 +351,7 @@ cville_age_sex_plot <- cville_sex_age_2022 %>%
   # guides(fill = guide_legend(reverse = TRUE)) +
   labs(fill = "", title = "Sex by Age Groups for Charlottesville, 2022")
 
-cville_age_sex_plot
+# cville_age_sex_plot
 
 
 ```
@@ -379,6 +394,9 @@ ggplot() +
               reverse_num = TRUE) +
   coord_flip() +
   theme_light() +
+  labs(title = "Sex by Age Group", 
+       subtitle = locality_name, 
+       caption = source_acs) +
   theme(legend.position = "none",
         panel.grid.minor.x = element_blank(),
         panel.border = element_blank(),
@@ -392,7 +410,7 @@ ggplot() +
 ```
 
 
-```{r, echo=FALSE, fig.width=10, fig.height=3}
+```{r, echo=FALSE, fig.width=5, fig.height=3}
 
 # Charlottesville, Resident Status & Foreign Born, 2022 ----
 cville_nativity_2022 <- read_csv("../data/cville_nativity_2022.csv")
@@ -439,7 +457,9 @@ cville_nativity_stacked <- cville_nativity_2022 %>%
   scale_x_continuous(labels = label_percent(scale = 1),
                      name = "") +
   scale_y_discrete(name = "") +
-  labs(color = "", title = "Nativity of Charlottesville Residents, 2022") +
+  labs(title = "Nativity of Residents", 
+       subtitle = locality_name, 
+       caption = source_acs) +
   scale_fill_manual(values = c("#b2b8be", "#8856A7")) +  
   theme_minimal() +
   theme(legend.title=element_blank(),
@@ -448,11 +468,13 @@ cville_nativity_stacked <- cville_nativity_2022 %>%
         panel.grid.major.y = element_blank(),
         axis.text.y = element_blank())
 
-ggarrange(cville_nativity_chart_2022, cville_nativity_stacked, nrow = 1)
+cville_nativity_stacked
+
+# ggarrange(cville_nativity_chart_2022, cville_nativity_stacked, nrow = 1)
 
 ```
 
-```{r, echo=FALSE, fig.width=10}
+```{r, echo=FALSE, fig.width=8}
 pal_6 <- c("#BFD3E6", "#9EBCDA", "#8C96C6", "#8C6BB1", "#88419D", "#6E016B")
 
 # Charlottesville, Foreign-born by location, 2022 ----
@@ -520,9 +542,14 @@ cville_foreign_born_plot <- cville_foreign_born %>%
   theme_minimal() +
   theme(legend.position = "top",
         panel.grid.minor.x = element_blank()) +
-  labs(fill = "", title = "")
+  labs(fill = "", 
+       title = "Foreign-Born Residents by Place of Birth", 
+       subtitle = locality_name, 
+       caption = source_acs)
 
-ggarrange(cville_foreign_born_donut, cville_foreign_born_plot, nrow = 1)
+cville_foreign_born_plot
+
+# ggarrange(cville_foreign_born_donut, cville_foreign_born_plot, nrow = 1)
 
 ```
 
@@ -610,7 +637,9 @@ cville_lang_stacked <- cville_lang_all %>%
                      name = "",
                      expand = expansion(mult = c(0, .15))) +
   scale_y_discrete(name = "") +
-  labs(color = "", title = "Charlottesville household languages, 2022") +
+  labs(title = "Limited & Non-Limited English Speaking Households", 
+       subtitle = locality_name, 
+       caption = source_acs) +
   scale_fill_manual(values = c("#b2b8be", "#8C96C6", "#6E016B")) +
   theme_minimal() +
   theme(legend.title=element_blank(),
@@ -622,7 +651,7 @@ cville_lang_stacked <- cville_lang_all %>%
 cville_lang_stacked
 ```
 
-```{r, echo=FALSE, fig.height=5}
+```{r, echo=FALSE, fig.height=5, fig.width=8}
 # Household, by language and status ---
 cville_lang_stat <- cville_language %>% 
   filter(label != "English only") %>% 
@@ -668,7 +697,9 @@ cville_lang_stat_stacked <- cville_lang_stat %>%
   # geom_text(size = 3, position = position_stack(vjust = 0.5)) +
   scale_x_continuous(name = "Number of Households") +
   scale_y_discrete(name = "") +
-  labs(color = "", title = "Charlottesville languages by household and status, 2022") +
+  labs(title = "Limited & Non-Limited English Speaking Households by Language", 
+       subtitle = locality_name, 
+       caption = source_acs) +
   scale_fill_manual(values = c("#6E016B", "#8C96C6")) +
   theme_minimal() +
   theme(legend.title=element_blank(),
@@ -698,32 +729,32 @@ cville_dis <- cville_disability_dat %>% left_join(cville_disability_stat) %>%
   mutate(per_age_group = round(estimate/total_age * 100, 2))
 
 # Grouped bar chart (as percent of total pop)
-cville_dis_age_stacked_a <- cville_disability_dat %>% 
-  mutate(percent = case_when(round(estimate/total_pop * 100, 2) < 1 ~ round(estimate/total_pop * 100, 2),
-                             round(estimate/total_pop * 100, 2) >= 1 ~ round(estimate/total_pop * 100, 0)),
-         label = case_when(percent < 1 ~ paste0(scales::percent(percent / 100, accuracy = 0.1), " (", scales::comma(estimate),")"),
-                           percent >= 1 ~ paste0(scales::percent(percent / 100, accuracy = 1), " (", scales::comma(estimate),")"))
-         )%>% 
-  ggplot(aes(x = round(percent, 1), y = age_group, group = age_group, fill = disability_status, label = scales::comma(estimate))) +
-  # geom_bar(stat = "identity") +
-  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
-  geom_text(aes(label = label), 
-            position = position_dodge2(width = 0.9, preserve = "single"), 
-            vjust = 0.5,
-            hjust = -0.1,
-            size = 3) +
-  scale_x_continuous(labels = scales::percent_format(scale = 1),
-                     limits = c(0,45),
-                     expand = expansion(mult = c(0, 0)),
-                     name = "") +
-  scale_y_discrete(name = "") +
-  scale_fill_manual(values = c("#b2b8be","#3B8EA5")) +
-  labs(color = "", title = "Charlottesville disability status by age, 2022\n(as percent of total population)") +
-  theme_minimal() +
-  theme(legend.title=element_blank(),
-        legend.position = "top",
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_blank())
+# cville_dis_age_stacked_a <- cville_disability_dat %>% 
+#   mutate(percent = case_when(round(estimate/total_pop * 100, 2) < 1 ~ round(estimate/total_pop * 100, 2),
+#                              round(estimate/total_pop * 100, 2) >= 1 ~ round(estimate/total_pop * 100, 0)),
+#          label = case_when(percent < 1 ~ paste0(scales::percent(percent / 100, accuracy = 0.1), " (", scales::comma(estimate),")"),
+#                            percent >= 1 ~ paste0(scales::percent(percent / 100, accuracy = 1), " (", scales::comma(estimate),")"))
+#          )%>% 
+#   ggplot(aes(x = round(percent, 1), y = age_group, group = age_group, fill = disability_status, label = scales::comma(estimate))) +
+#   # geom_bar(stat = "identity") +
+#   geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+#   geom_text(aes(label = label), 
+#             position = position_dodge2(width = 0.9, preserve = "single"), 
+#             vjust = 0.5,
+#             hjust = -0.1,
+#             size = 3) +
+#   scale_x_continuous(labels = scales::percent_format(scale = 1),
+#                      limits = c(0,45),
+#                      expand = expansion(mult = c(0, 0)),
+#                      name = "") +
+#   scale_y_discrete(name = "") +
+#   scale_fill_manual(values = c("#b2b8be","#3B8EA5")) +
+#   labs(color = "", title = "Charlottesville disability status by age, 2022\n(as percent of total population)") +
+#   theme_minimal() +
+#   theme(legend.title=element_blank(),
+#         legend.position = "top",
+#         panel.grid.minor.y = element_blank(),
+#         panel.grid.major.y = element_blank())
 
 
 # As percents of age group
@@ -752,7 +783,9 @@ cville_dis_by_age_stacked <- cville_dis %>%
                      name = "") +
   scale_y_discrete(name = "") +
   scale_fill_manual(values = c("No disability"="#b2b8be","With a disability"="#3B8EA5")) +
-  labs(color = "", title = "Charlottesville disability status, 2022\n (as percent of age group)") +
+  labs(title = "Disability Status by Age Group", 
+       subtitle = locality_name, 
+       caption = source_acs) +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
@@ -761,11 +794,9 @@ cville_dis_by_age_stacked <- cville_dis %>%
 
 cville_dis_by_age_stacked
 
-# ggarrange(cville_dis_age_stacked_a, cville_dis_by_age_stacked, nrow=1)
-
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.height=4}
 # Disability categories ----
 cville_disability_cat <- read_csv("../data/cville_disability_cat_2022.csv")
 cville_disability_cat <- cville_disability_cat %>% 
@@ -775,37 +806,37 @@ cville_disability_cat <- cville_disability_cat %>%
          # label = str_replace(label, " living", "\nliving"),
          label = str_to_title(label))
 
-dis_donut <- cville_disability_cat %>%
-  mutate(label = factor(label, levels = c("Vision\nDifficulty", "Self-Care\nDifficulty", "Hearing\nDifficulty", "Cognitive\nDifficulty", "Independent Living\nDifficulty", "Ambulatory\nDifficulty"))) %>% 
-ggplot(aes(x = 2, y = percent, fill = label)) +
-  geom_bar(stat = "identity", width = 1, color = "white") +
-  coord_polar(theta = "y") +
-  xlim(0.5, 3.2) +
-  geom_text(aes(label = paste0(round(percent, 0), "%")),
-            position = position_stack(vjust = 0.5),
-            color = "white", fontface = "bold") +
-  # geom_text(aes(label = label, x = 3.15),
-  #           position = position_stack(vjust = 0.5)) +
-  geom_label_repel(aes(label = label, x = 3.15),
-                   size = 3, 
-                   fontface = "bold",
-                   position = position_stack(vjust = 0.5),
-                   force = 0,
-                   color = "white",
-                   # nudge_x = 1, 
-                   # direction = "x",
-                   # min.segment.length = 0,
-                   # box.padding = 0.5,
-                   # segment.curvature = -0.1,
-                   # segment.ncp = 3,
-                   # segment.angle = 20,
-                   seed = 123
-  ) +
-  scale_fill_manual(values = c("#3CA69A", "#3C6DA6", "#3C8FA6", "#3CA676", "#3C4CA6", "#739BA6")) +
-  # geom_segment(aes(x = 2.5, xend = 2.8, y = 2, yend = 2.1)) +
-  labs(fill = "Category",title = "Charlottesville Disability Status by type for 2022") +
-  theme_void() +
-  theme(legend.position = "none")
+# dis_donut <- cville_disability_cat %>%
+#   mutate(label = factor(label, levels = c("Vision\nDifficulty", "Self-Care\nDifficulty", "Hearing\nDifficulty", "Cognitive\nDifficulty", "Independent Living\nDifficulty", "Ambulatory\nDifficulty"))) %>% 
+# ggplot(aes(x = 2, y = percent, fill = label)) +
+#   geom_bar(stat = "identity", width = 1, color = "white") +
+#   coord_polar(theta = "y") +
+#   xlim(0.5, 3.2) +
+#   geom_text(aes(label = paste0(round(percent, 0), "%")),
+#             position = position_stack(vjust = 0.5),
+#             color = "white", fontface = "bold") +
+#   # geom_text(aes(label = label, x = 3.15),
+#   #           position = position_stack(vjust = 0.5)) +
+#   geom_label_repel(aes(label = label, x = 3.15),
+#                    size = 3, 
+#                    fontface = "bold",
+#                    position = position_stack(vjust = 0.5),
+#                    force = 0,
+#                    color = "white",
+#                    # nudge_x = 1, 
+#                    # direction = "x",
+#                    # min.segment.length = 0,
+#                    # box.padding = 0.5,
+#                    # segment.curvature = -0.1,
+#                    # segment.ncp = 3,
+#                    # segment.angle = 20,
+#                    seed = 123
+#   ) +
+#   scale_fill_manual(values = c("#3CA69A", "#3C6DA6", "#3C8FA6", "#3CA676", "#3C4CA6", "#739BA6")) +
+#   # geom_segment(aes(x = 2.5, xend = 2.8, y = 2, yend = 2.1)) +
+#   labs(fill = "Category",title = "Charlottesville Disability Status by type for 2022") +
+#   theme_void() +
+#   theme(legend.position = "none")
 
 # bar chart
 dis_bar <- cville_disability_cat %>%
@@ -820,17 +851,16 @@ dis_bar <- cville_disability_cat %>%
             size = 3,
             color = "black") +
   scale_y_continuous(expand = expansion(mult = c(0, .1))) +
-  labs(
-    x = "",
-    y = "Number of people with a disability",
-    title = "Charlottesville Disability Status by type for 2022"
-  ) +
+  labs(x = "",
+       y = "Number of people with a disability",
+       title = "Disability Status by Type", 
+       subtitle = locality_name, 
+       caption = source_acs) +
   theme_minimal() +
   theme(legend.position = "none")
 
 dis_bar
 
-# ggarrange(dis_donut, dis_bar, nrow = 1)
 
 ```
 

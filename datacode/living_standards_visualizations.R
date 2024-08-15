@@ -1,977 +1,403 @@
 # Living Standards Visualizations
-# File Created: 7/9/2024
-# Last Updated: 7/9/2024
-# Author: Henry DeMarco
 # Description: Visualizations for living standards section of profile
+# Authors: Beth Mitchell, Henry DeMarco
+# File Created: 7/9/2024
+# Last Updated: 8/15/2024
 
-################################################
 
-library(tidycensus)
+# Load packages ----
 library(tidyverse)
 library(scales)
 library(RColorBrewer)
-library("ggspatial")
+library(ggspatial)
 library(tigris)
+library(readxl)
+library(stringr)
+library(sf)
+library(ggthemes)
+library(rcartocolor)
+library(patchwork)
 
-# Table visualizations
-# B20002 (Median Earnings in the Past 12 Months, Inflation-Adjusted)
-# ALICE Households
-# B19013 (Median Household Income: By Tract)
-# B25064 (Median Gross Rent (Dollars)) - Tract Level, 2022
-# B25003 (Home Ownership) - Tract Level, 2022
+# Education palette ----
+pal_inc <- carto_pal(7, "Emrld")
 
-# Table: B20002 (Median Earnings in the Past 12 Months, Inflation-Adjusted)
+# Tract geometries ----
+alb_geo <- tracts(state = "VA", county = "003")
 
-# Palette for map
-inc_colors <- c("#b1c5be", "#106449")
+# Common Items ----
+locality_name <- "Albemarle County"
+source_acs <- "Data Source: American Community Survey, 2022"
 
-# Charlottesville (Median Earnings), 2022
+## ..............................................................
+# Median personal earnings, by sex and race: Albemarle, 2022 ----
+alb_med_earnings_race_county <- read_csv("../data/alb_med_earnings_race_county_2022.csv")
 
-cville_med_hh_inc <- read.csv("temp_data/cville_median_earnings_2022.csv") 
-
-cville_tract <- tracts(state = "VA", county = "540") %>%
-  mutate(GEOID = as.numeric((GEOID)))
-
-cville_med_hhinc_tract_map <-
-  cville_tract %>%
-  left_join(cville_med_hh_inc, by = "GEOID")
-
-# Geospatial visualization
-
-cville_med_hhinc_map  <-
-  ggplot(cville_med_hhinc_tract_map) +
-  geom_sf( aes(fill = estimate), color = "black", alpha = .9) +
-  scale_fill_steps(
-    low = inc_colors[1],
-    high = inc_colors[2],
-    space = "Lab",
-    na.value = "grey50",
-    guide = "coloursteps",
-    aesthetics = "fill",
-    n.breaks = 8,
-  ) +
-  theme_void() +
-  guides(fill =
-           guide_colourbar(title.position="top", title.hjust = 0.5,
-                           barwidth = 20)
-  ) +
-  labs(fill = "Median Household Income") +
-  annotation_scale(location = "br", width_hint = 0.25) +
-  annotation_north_arrow(location = "br",
-                         which_north = "true",
-                         pad_x = unit(0.0, "in"),
-                         pad_y = unit(0.5, "in"),
-                         style = north_arrow_minimal(
-                           line_width = 1,
-                           line_col = "black",
-                           fill = "black",
-                           text_col = "black",
-                           text_family = "",
-                           text_face = NULL,
-                           text_size = 0
-                         )) +
-  theme(
-    legend.position = "top",
-    legend.text = element_text(angle = -45, hjust = 0),
-    legend.title = element_text(),
-    panel.border = element_rect(color  = "black",
-                                fill = NA,
-                                size = 1),
-    plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
-  )
-
-# View the map
-
-print(cville_med_hhinc_map)
-
-# Alternate visualization (change in county-level median earnings over time):
-
-cville_median_earnings_2012_2022 <- read.csv("temp_data/cville_median_earnings_2012_2022.csv") 
-
-# Line graph: changes in median income over time (county-level)
-
-cville_median_earnings_2012_2022 %>% 
-  filter(label == "Median Earnings in Past 12 Months (Inflation Adjusted): Total") %>% 
-  ggplot(aes(x=year, y=estimate)) +
-  geom_line() +
-  geom_point() +
-  labs(title = "Median Income Change over Time: Charlottesville") +
-  ylim(20000, 40000) +
-  scale_x_continuous(breaks = pretty_breaks())
-
-# Adding Lines for Total, Male, and Female
-
-cville_median_earnings_2012_2022 %>% 
-  filter(label %in% c(
-    "Median Earnings in Past 12 Months (Inflation Adjusted): Total",
-    "Median Earnings in Past 12 Months (Inflation Adjusted): Male",
-    "Median Earnings in Past 12 Months (Inflation Adjusted): Female"
-  )) %>%
-  ggplot(aes(x=year, y=estimate, color=label)) +
-  geom_line() +
-  geom_point() +
-  ylim(20000, 45000) +
-  labs(title = "Median Income Change over Time: Charlottesville") +
-  scale_x_continuous(breaks = pretty_breaks()) +
-  scale_color_discrete(name = "Label Type")
-
-# Stacked Bar Chart
-
-cville_median_earnings_2012_2022 %>% 
-  filter(year %in% c("2012", "2022")) %>% 
-  mutate(year = factor(year, levels = c("2012", "2022"))) %>%
-  ggplot(aes(x = label, y = estimate, fill = year)) +
-  coord_flip() +
-  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.7) +
-  geom_text(aes(label = scales::dollar(estimate)), 
+alb_med_earnings_race_county %>% 
+  filter(race != "White") %>% 
+  mutate(race = factor(race, levels = c("White, Not Hispanic or Latino", "Mutiracial", "Hispanic or Latino", "Black", "Asian"),
+                       labels = c("White", "Mutiracial", "Hispanic", "Black", "Asian")),
+         text = paste0("$", prettyNum(estimate, big.mark=",", preserve.width="none"))) %>%
+  ggplot(aes(x = race, y = estimate, fill = sex)) +  
+  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
+  geom_text(aes(label = text), 
             position = position_dodge2(width = 0.9, preserve = "single"), 
-            vjust = 0.5,
-            hjust = 1.2,
-            size = 3,
-            color = "white") +
-  labs(
-    x = "Categories",
-    y = "Median Earnings",
-    fill = "Year",
-    title = "Charlottesville Median Earnings by Year"
-  ) +
-  scale_fill_manual(values = c("2012" = "#3B8EA5", "2022" = "#AB3428")) +
-  theme_minimal(base_size = 12) +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    legend.position = "top",
-    legend.title = element_text(face = "bold")
-  ) +
-  guides(fill = guide_legend(reverse = TRUE))
-
-# Albemarle (Median Earnings), 2022
-
-alb_med_hh_inc <- read.csv("temp_data/alb_median_earnings_2022.csv") 
-
-alb_tract <- tracts(state = "VA", county = "003") %>%
-  mutate(GEOID = as.numeric((GEOID)))
-
-alb_med_hhinc_tract_map <-
-  alb_tract %>%
-  left_join(alb_med_hh_inc, by = "GEOID")
-
-# Geospatial visualization
-
-alb_med_hhinc_map  <-
-  ggplot(alb_med_hhinc_tract_map) +
-  geom_sf( aes(fill = estimate), color = "black", alpha = .9) +
-  scale_fill_steps(
-    low = inc_colors[1],
-    high = inc_colors[2],
-    space = "Lab",
-    na.value = "grey50",
-    guide = "coloursteps",
-    aesthetics = "fill",
-    n.breaks = 8,
-  ) +
-  theme_void() +
-  guides(fill =
-           guide_colourbar(title.position="top", title.hjust = 0.5,
-                           barwidth = 20)
-  ) +
-  labs(fill = "Median Personal Income") +
-  annotation_scale(location = "br", width_hint = 0.25) +
-  annotation_north_arrow(location = "br",
-                         which_north = "true",
-                         pad_x = unit(0.0, "in"),
-                         pad_y = unit(0.5, "in"),
-                         style = north_arrow_minimal(
-                           line_width = 1,
-                           line_col = "black",
-                           fill = "black",
-                           text_col = "black",
-                           text_family = "",
-                           text_face = NULL,
-                           text_size = 0
-                         )) +
-  theme(
-    legend.position = "top",
-    legend.text = element_text(angle = -45, hjust = 0),
-    legend.title = element_text(),
-    panel.border = element_rect(color  = "black",
-                                fill = NA,
-                                size = 1),
-    plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
-  )
-
-# View the map
-
-print(alb_med_hhinc_map)
-
-# Alternate visualization (change in county-level median earnings over time):
-
-alb_median_earnings_2012_2022 <- read.csv("temp_data/alb_median_earnings_2012_2022.csv") 
-
-# Line graph: changes in median income over time (county-level)
-
-alb_median_earnings_2012_2022 %>% 
-  filter(label == "Median Earnings in Past 12 Months (Inflation Adjusted): Total") %>% 
-  ggplot(aes(x=year, y=estimate)) +
-  geom_line() +
-  geom_point() +
-  ylim(20000, 60000) +
-  labs(title = "Median Income Change over Time: Albemarle") +
-  scale_x_continuous(breaks = pretty_breaks())
-
-# Adding Lines for Total, Male, and Female
-
-alb_median_earnings_2012_2022 %>% 
-  filter(label %in% c(
-    "Median Earnings in Past 12 Months (Inflation Adjusted): Total",
-    "Median Earnings in Past 12 Months (Inflation Adjusted): Male",
-    "Median Earnings in Past 12 Months (Inflation Adjusted): Female"
-  )) %>%
-  ggplot(aes(x=year, y=estimate, color=label)) +
-  geom_line() +
-  geom_point() +
-  labs(title = "Median Income Change over Time: Albemarle") +
-  ylim(20000, 60000) +
-  scale_x_continuous(breaks = pretty_breaks()) +
-  scale_color_discrete(name = "Label Type")
-
-# Stacked Bar Chart
-
-alb_median_earnings_2012_2022 %>% 
-  filter(year %in% c("2012", "2022")) %>% 
-  mutate(year = factor(year, levels = c("2012", "2022"))) %>%
-  ggplot(aes(x = label, y = estimate, fill = year)) +
+            # vjust = 0.5,
+            hjust = -0.15,
+            size = 3) +
+  scale_x_discrete(expand = expansion(mult = c(0, 0)),
+                   name = "") +
+  scale_y_continuous(labels = scales::label_currency(scale = 1, scale_cut = cut_short_scale()),
+                     limits = c(0,70000),
+                     expand = expansion(mult = c(0, 0)),
+                     name = "") +
+  scale_fill_manual(values = c("#b2b8be","#3B8EA5", "#6CC08B")) + 
   coord_flip() +
-  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.7) +
-  geom_text(aes(label = scales::dollar(estimate)), 
-            position = position_dodge2(width = 0.9, preserve = "single"), 
+  theme_minimal() +
+  theme(legend.position = "top",
+        panel.grid.minor.x = element_blank()) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(fill = "",
+       title = "Median Personal Earnings, by Sex and Race", 
+       subtitle = locality_name, 
+       caption = source_acs) 
+
+# Median household income by tract: Albemarle, 2022 ----
+alb_med_hhinc_tract <- read_csv("../data/alb_med_hhinc_tract_2022.csv") %>%
+  mutate(GEOID = as.character(GEOID))
+
+alb_med_hhinc_tract <- alb_med_hhinc_tract %>%
+  left_join(alb_geo, by = "GEOID") %>% 
+  st_as_sf()
+
+# Geospatial visualization
+alb_med_hhinc_tract %>%
+  filter(group == "All Households") %>%
+  mutate(text = paste0("$", prettyNum(estimate, big.mark=",", preserve.width="none"))) %>%
+  ggplot() +
+  annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
+  geom_sf(aes(fill = estimate), color = "white") +
+  geom_sf_text(aes(label = text), size = 2.5, color = "black") +
+  scale_fill_stepsn(colors = pal_inc,
+                    labels = scales::label_currency(scale = 1),
+                    n.breaks = 6,
+                    guide = guide_colourbar(title = "Median Household Income",
+                                            title.position = "top",
+                                            direction = "horizontal",
+                                            title.hjust = 0.5,
+                                            # nbin = 6,
+                                            theme = theme(legend.key.height  = unit(0.5, "lines"),
+                                                          legend.key.width = unit(20, "lines"),
+                                                          text = element_text(size = 11)) 
+                    )
+  )+
+  labs(title = "Median Household Income", 
+       subtitle = locality_name, 
+       caption = source_acs) +
+  theme_map()+
+  theme(legend.position.inside=c(1, 1.04),
+        legend.justification="right",
+        plot.title = element_text(size = 14),
+        plot.subtitle = element_text(size = 14))
+
+## ....................................................
+# Median household income by Race: Albemarle, 2022 ----
+alb_med_hhinc_county <- read_csv("../data/alb_med_hhinc_county_2022.csv")
+
+alb_med_hhinc_county %>%
+  filter(!group %in% c("White", "American Indian and Alaska Native", "NHPI", "Other")) %>% 
+  mutate(group = factor(group, levels = c("White, Not Hispanic or Latino", "Multiracial", "Hispanic or Latino", "Black", "Asian", "All Households"),
+                        labels = c("White", "	Multiracial", "Hispanic", "Black", "Asian", "All Households")),
+         text = paste0("$", prettyNum(estimate, big.mark=",", preserve.width="none"))) %>%
+  ggplot(aes(x = group, y = estimate, fill = group)) +
+  coord_flip() +
+  geom_bar(stat = "identity", width = 0.7) +
+  geom_text(aes(label = text), 
             vjust = 0.5,
-            hjust = 1.2,
+            hjust = -0.2,
             size = 3,
-            color = "white") +
+            color = "black") +
+  scale_y_continuous(labels = scales::label_currency(scale = 1, scale_cut = cut_short_scale()),
+                     breaks = c(0, 25000, 50000, 75000, 100000, 125000, 150000),
+                     limits = c(0,150000),
+                     expand = expansion(mult = c(0, .1))) +
+  scale_fill_manual(values = c(rep("#6CC08B",5),"#b2b8be"))+
   labs(
-    x = "Categories",
-    y = "Median Earnings",
-    fill = "Year",
-    title = "Albemarle Median Earnings by Year"
+    x = "",
+    y = "Median Household Income",
+    title = "Median Household Income by Race",
+    subtitle = locality_name, 
+    caption = source_acs
   ) +
-  scale_fill_manual(values = c("2012" = "#3B8EA5", "2022" = "#AB3428")) +
-  theme_minimal(base_size = 12) +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    legend.position = "top",
-    legend.title = element_text(face = "bold")
-  ) +
-  guides(fill = guide_legend(reverse = TRUE))
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid.minor.x = element_blank())
 
-inc_pal <- function(x) rgb(colorRamp(inc_colors)(x), maxColorValue = 255) 
+## ..........................................
+# ALICE thresholds: Albemarle, 2010-2022 ----
+alb_ALICE_threshold <- read_csv("../data/alb_ALICE_threshold_2010_2022.csv")
 
-# ALICE Households
+alb_ALICE_threshold %>% 
+  pivot_longer(alice_threshold_hh_under_65:alice_threshold_hh_65_years_and_over, names_to = "level", values_to = "threshold") %>% 
+  mutate(pos = case_when(level == "alice_threshold_hh_under_65" ~ 1,
+                         level == "alice_threshold_hh_65_years_and_over" ~ -1
+  ),
+  text = paste0("$", prettyNum(threshold, big.mark=",", preserve.width="none"))) %>% 
+  ggplot(aes(x = year, y = threshold, color = level, label = text)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  geom_text(aes(y = (threshold + sign(pos)*6000)), size = 3, show.legend = FALSE, color = "black") +
+  scale_x_continuous(
+    breaks = seq(from = 2010, to = 2022, by = 1),
+    name = "") +
+  scale_y_continuous(labels = label_currency(scale = 1, scale_cut = cut_short_scale()),
+                     breaks = c(0, 20000, 40000, 60000, 80000, 100000),
+                     limits = c(0,100000),
+                     name = "") +
+  scale_color_manual(values = c("#b2b8be", "#3B8EA5")) +
+  guides(color = guide_legend(reverse = TRUE)) +
+  labs(color = "", 
+       title = "ALICE Thresholds 2010-2022", 
+       subtitle = locality_name, 
+       caption = "Data Sources: ALICE Threshold, 2010–2022; U.S. Census Bureau, American Community Survey, 2010–2022") +  
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        panel.grid.minor = element_blank())
 
-# Charlottesville (ALICE Households), 2010-2022
+## .......................................................
+# ALICE households by race/ethnicity: Albemarle, 2022 ----
+alb_ALICE_households_by_race <- read_csv("../data/alb_ALICE_households_by_race_2022.csv")
 
-cville_alice_2010_2022 <- read.csv("temp_data/cville_alice_2010_2022.csv")
+alb_ALICE_households_by_race <- alb_ALICE_households_by_race %>% 
+  mutate(level = case_when(level == "above_alice_households" ~ "above",
+                           level == "alice_households" ~ "alice",
+                           level == "poverty_households" ~ "poverty",
+                           .default = level))
 
-# Plugging into old script:
+alb_ALICE_households_by_race <- alb_ALICE_households_by_race[order(alb_ALICE_households_by_race$level),]
 
-alice_cville_hhs_graph <- cville_alice_2010_2022 %>% 
-  mutate(level = case_when(
-    level == "poverty_households" ~ "Poverty",
-    level == "alice_households" ~ "ALICE",
-    level == "above_alice_households" ~ "Above ALICE"
+alb_ALICE_households_by_race %>% 
+  arrange(desc(level)) %>% 
+  mutate(group = factor(group,
+                        levels = c("Asian", "Black", "Hispanic", "2+ Races", "White", "All"),
+                        labels = c("Asian", "Black", "Hispanic", "Multiracial", "White", "All Households")),
+         text = case_when(percent >= 1 ~ paste0(round(percent, 0), "%"),
+                          percent < 1 ~ paste0(round(percent, 1), "%"))) %>%
+  ggplot(aes(x = group, y = percent, group = group, fill = level, 
+             label = text)) +
+  geom_bar(stat = "identity") + 
+  geom_text(size = 3, position = position_stack(vjust = 0.5)) +
+  scale_fill_manual(values = c("#b2b8be", "#3B8EA5", "#97E196")) +
+  scale_x_discrete(name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     name = "") +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(color = "", 
+       title = "ALICE households by race/ethnicity", 
+       subtitle = locality_name, 
+       caption = "Data Sources: ALICE Threshold, 2022; U.S. Census Bureau, American Community Survey, 2022") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        panel.grid.major.x = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid.minor = element_blank())
+
+## .............................................
+# Rent Burdened Households: Albemarle, 2022 ----
+
+alb_rent_burden_county <- read_csv("../data/alb_rent_burden_county_2022.csv")  
+alb_rent_burden_tract <- read_csv("../data/alb_rent_burden_tract_2022.csv")  
+
+alb_rent_burden_tract <- alb_rent_burden_tract %>% 
+  mutate(label = paste0(level, "\n", rent_burden),
+         text = case_when(percent >= 1 ~ paste0(round(percent, 0), "%"),
+                          percent < 1 ~ ""),
+         rentallabel = prettyNum(total_units, big.mark=",", preserve.width="none")
+         # rentallabel = paste0("Total Units: ", as.character(alb_rent_burden_tract$total_units))
   )
-  ) %>%
-  group_by(year) %>%
-  arrange(year, desc(level)) %>%
-  mutate(height = cumsum(pct) - pct/2) %>%
-  mutate(display = ifelse(pct > 2, paste0(round(pct),"%" ), ""))
+alb_rent_burden_tract <- alb_rent_burden_tract[order(alb_rent_burden_tract$tractnames, decreasing=TRUE),]
+rentallabel <- as.list(alb_rent_burden_tract$rentallabel) %>% unique()
 
-alice_pal <- inc_pal( seq(0, 1, length = 3))
+unburdened_plot <- alb_rent_burden_tract %>% 
+  filter(level %in% c("Not burdened")) %>% 
+  ggplot(aes(y = tractnames, x = percent, fill = factor(label), label= text)) +  
+  geom_bar(stat = "identity") +
+  geom_text(position = position_stack(vjust = 0.3), 
+            # vjust = 0.5,
+            # hjust = 0.5,
+            size = 3) +
+  scale_y_discrete(position = "left",
+                   limits=rev,
+                   name = "") +
+  scale_x_reverse(labels = scales::percent_format(scale = 1),
+                  breaks = seq(from = 25, to = 100, by = 25),
+                  limits = c(100,0),
+                  expand = expansion(mult = c(0, 0)),
+                  name = "") +
+  scale_fill_manual(values = c("#b2b8be")) + 
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.justification="right",
+        legend.position = c(0.65, 1.04),
+        legend.direction = 'horizontal',
+        panel.grid.minor.x = element_blank(),
+        plot.margin = unit(c(0,0,0,0), "line"),
+        axis.text = element_text(color = "black"))
 
-alice_cville_hhs_graph<-
-  ggplot(alice_cville_hhs_graph, aes(x = year, y = pct, fill = level, group = level)) +
-  geom_area(alpha=0.6 , size=.5, colour = "white") +
-  # end label
-  geom_text(data = alice_cville_hhs_graph %>%
-              group_by( level) %>%
-              arrange(desc(year)) %>%
-              slice(1),
-            aes(x = year, label = display, y = height ), color = "Black", alpha = 1.2, hjust = 1, size = 4) +
-  # front Label
-  geom_text(data = alice_cville_hhs_graph %>%
-              group_by( level) %>%
-              arrange(year) %>%
-              slice(3),
-            aes(x = year, label = display, y = height ), color = "Black", alpha = 1, hjust = -.2, size = 4) +
-  # middle label
-  geom_text(data = alice_cville_hhs_graph %>%
-              group_by( level) %>%
-              arrange(year) %>%
-              slice(1),
-            aes(x = year, label = display, y = height ), color = "Black", alpha = 1, hjust = .5, size = 4) +
-  scale_y_continuous(labels = function(x) paste0(round(x), "%"), expand = c(0, 0 ), limits = c(0, 100), breaks=seq(0,100, 25)) +
-  scale_x_continuous( breaks=seq(2010,2022, 2), limits = c( 2010, 2022) )  +
-  scale_fill_manual(values = alice_pal) +
-  guides(fill = guide_legend(nrow = 1, label.position = "top", reverse = TRUE)) +
-  coord_cartesian(clip = 'off') +
-  labs(x="Year", y="Population %", fill = "Income Status", title = "Asset Limited, Income Constrained, Employed Population in Charlottesville")  +
-  theme_bw()+
-  theme(
-    plot.title = element_text( face="bold", hjust = .5, size = 12),
-    legend.title = element_blank(),
-    legend.position = "top",
-    axis.title.x = element_text(face = "bold", vjust=-2.5, size = 10),
-    axis.title.y = element_text(face = "bold", size = 10),
-    axis.text.x=element_text(),
-    axis.ticks.x = element_blank(),
-    axis.ticks.y = element_blank(),
-    axis.line =  element_line(color  = "white"),
-    panel.spacing = unit(1.5, "lines"),
-    strip.background = element_blank(),
-    strip.text = element_text(face="bold", size = 10),
-    panel.border = element_blank(),
-    plot.margin=unit(c(t = .25, r = 1, b = 1.5, l = .1),"cm")
-  )
+burdened_plot <- alb_rent_burden_tract %>% 
+  filter(level %in% c("Burdened", "Severely Burdened")) %>% 
+  ggplot(aes(y = tractnames, x = percent, fill = factor(label), group = tractnames, label = text)) +  
+  geom_bar(stat = "identity", color = "white") +
+  geom_text(position = position_stack(vjust = 0.5),
+            # vjust = 0.5,
+            hjust = 0.001,
+            size = 3) +
+  scale_y_discrete(position = "right",
+                   labels = rentallabel,
+                   limits=rev,
+                   name = "Total Rental Units by Census Tract") +
+  scale_x_continuous(labels = scales::percent_format(scale = 1),
+                     breaks = seq(from = 25, to = 100, by = 25),
+                     limits = c(0,100),
+                     expand = expansion(mult = c(0.005, 0)),
+                     name = "") +
+  scale_fill_manual(values = c("#ff641e", "#3B8EA5")) + 
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.justification="right",
+        legend.position = c(1.3, 1.04),
+        legend.direction = 'horizontal',
+        panel.grid.minor.x = element_blank(),
+        plot.margin = unit(c(1.6,0,0,0), "line"),
+        axis.text = element_text(color = "black"))
 
-# Alternate attempt:
-# Adjust the data
 
-alice_cville_hhs_graph <- cville_alice_2010_2022 %>% 
-  mutate(level = case_when(
-    level == "poverty_households" ~ "Poverty",
-    level == "alice_households" ~ "ALICE",
-    level == "above_alice_households" ~ "Above ALICE"
-  )) %>%
-  group_by(year) %>%
-  arrange(year, desc(level)) %>%
-  mutate(height = cumsum(pct) - pct / 2) %>%
-  mutate(display = ifelse(pct > 2, paste0(round(pct), "%"), ""))
+(unburdened_plot + burdened_plot) + 
+  plot_annotation(title = 'Rent Burdened Households by Tract',
+                  subtitle = locality_name,
+                  caption = source_acs)
 
-alice_pal <- c("#d73027", "#fc8d59", "#fee08b")
+## ............................................
+# Home Ownership by tract: Albemarle, 2022 ----
+alb_tenure_tract <- read_csv("../data/alb_tenure_tract_2022.csv") %>%
+  mutate(GEOID = as.character(GEOID))
 
-alice_cville_hhs_graph_plot <- ggplot(alice_cville_hhs_graph, aes(x = year, y = pct, fill = level, group = level)) +
-  geom_area(alpha = 0.6, size = 0.5, colour = "white") +
-  geom_text(aes(x = year, y = height, label = display), color = "black", size = 4) +
-  scale_y_continuous(labels = function(x) paste0(round(x), "%"), expand = c(0, 0), limits = c(0, 100), breaks = seq(0, 100, 25)) +
-  scale_x_continuous(breaks = seq(2010, 2022, 1), limits = c(2010, 2022)) +
-  scale_fill_manual(values = alice_pal) +
-  guides(fill = guide_legend(nrow = 1, label.position = "top", reverse = TRUE)) +
-  coord_cartesian(clip = 'off') +
-  labs(x = "Year", y = "Population %", fill = "Income Status", title = "Asset Limited, Income Constrained, Employed Population in Charlottesville") +
-  theme_bw() +
-  theme(
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 12),
-    legend.title = element_blank(),
-    legend.position = "top",
-    axis.title.x = element_text(face = "bold", vjust = -2.5, size = 10),
-    axis.title.y = element_text(face = "bold", size = 10),
-    axis.text.x = element_text(),
-    axis.ticks.x = element_blank(),
-    axis.ticks.y = element_blank(),
-    axis.line = element_line(color = "white"),
-    panel.spacing = unit(1.5, "lines"),
-    strip.background = element_blank(),
-    strip.text = element_text(face = "bold", size = 10),
-    panel.border = element_blank(),
-    plot.margin = unit(c(t = 0.25, r = 1, b = 1.5, l = 0.1), "cm")
-  )
-
-# Still not quite right, might be an issue with scale... (!)
-
-# Albemarle (ALICE Households), 2010-2022
-
-alb_alice_2010_2022 <- read.csv("temp_data/alb_alice_2010_2022.csv")
-
-# Plugging into old script:
-
-alice_alb_hhs_graph <- alb_alice_2010_2022 %>% 
-  mutate(level = case_when(
-    level == "poverty_households" ~ "Poverty",
-    level == "alice_households" ~ "ALICE",
-    level == "above_alice_households" ~ "Above ALICE"
-  )
-  ) %>%
-  group_by(year) %>%
-  arrange(year, desc(level)) %>%
-  mutate(height = cumsum(pct) - pct/2) %>%
-  mutate(display = ifelse(pct > 2, paste0(round(pct),"%" ), ""))
-
-alice_pal <- inc_pal( seq(0, 1, length = 3))
-
-alice_alb_hhs_graph<-
-  ggplot(alice_alb_hhs_graph, aes(x = year, y = pct, fill = level, group = level)) +
-  geom_area(alpha=0.6 , size=.5, colour = "white") +
-  # end label
-  geom_text(data = alice_alb_hhs_graph %>%
-              group_by( level) %>%
-              arrange(desc(year)) %>%
-              slice(1),
-            aes(x = year, label = display, y = height ), color = "Black", alpha = 1.2, hjust = 1, size = 4) +
-  # front Label
-  geom_text(data = alice_alb_hhs_graph %>%
-              group_by( level) %>%
-              arrange(year) %>%
-              slice(1),
-            aes(x = year, label = display, y = height ), color = "Black", alpha = 1, hjust = -.2, size = 4) +
-  # middle label
-  geom_text(data = alice_alb_hhs_graph %>%
-              group_by( level) %>%
-              arrange(year) %>%
-              slice(3),
-            aes(x = year, label = display, y = height ), color = "Black", alpha = 1, hjust = .5, size = 4) +
-  scale_y_continuous(labels = function(x) paste0(round(x), "%"), expand = c(0, 0 ), limits = c(0, 100), breaks=seq(0,100, 25)) +
-  scale_x_continuous( breaks=seq(2010,2022, 2), limits = c( 2010, 2022) )  +
-  scale_fill_manual(values = alice_pal) +
-  guides(fill = guide_legend(nrow = 1, label.position = "top", reverse = TRUE)) +
-  coord_cartesian(clip = 'off') +
-  labs(x="Year", y="Population %", fill = "Income Status", title = "Asset Limited, Income Constrained, Employed Population in Albemarle")  +
-  theme_bw()+
-  theme(
-    plot.title = element_text( face="bold", hjust = .5, size = 12),
-    legend.title = element_blank(),
-    legend.position = "top",
-    axis.title.x = element_text(face = "bold", vjust=-2.5, size = 10),
-    axis.title.y = element_text(face = "bold", size = 10),
-    axis.text.x=element_text(),
-    axis.ticks.x = element_blank(),
-    axis.ticks.y = element_blank(),
-    axis.line =  element_line(color  = "white"),
-    panel.spacing = unit(1.5, "lines"),
-    strip.background = element_blank(),
-    strip.text = element_text(face="bold", size = 10),
-    panel.border = element_blank(),
-    plot.margin=unit(c(t = .25, r = 1, b = 1.5, l = .1),"cm")
-  )
-
-# Alternate graph
-
-# Adjust the data
-alice_alb_hhs_graph <- alb_alice_2010_2022 %>% 
-  mutate(level = case_when(
-    level == "poverty_households" ~ "Poverty",
-    level == "alice_households" ~ "ALICE",
-    level == "above_alice_households" ~ "Above ALICE"
-  )) %>%
-  group_by(year) %>%
-  arrange(year, desc(level)) %>%
-  mutate(height = cumsum(pct) - pct / 2) %>%
-  mutate(display = ifelse(pct > 2, paste0(round(pct), "%"), ""))
-
-alice_pal <- c("#d73027", "#fc8d59", "#fee08b")
-
-# Create the plot
-alice_alb_hhs_graph_plot <- ggplot(alice_alb_hhs_graph, aes(x = year, y = pct, fill = level, group = level)) +
-  geom_area(alpha = 0.6, size = 0.5, colour = "white") +
-  geom_text(aes(x = year, y = height, label = display), color = "black", size = 4) +
-  scale_y_continuous(labels = function(x) paste0(round(x), "%"), expand = c(0, 0), limits = c(0, 100), breaks = seq(0, 100, 25)) +
-  scale_x_continuous(breaks = seq(2010, 2022, 1), limits = c(2010, 2022)) +
-  scale_fill_manual(values = alice_pal) +
-  guides(fill = guide_legend(nrow = 1, label.position = "top", reverse = TRUE)) +
-  coord_cartesian(clip = 'off') +
-  labs(x = "Year", y = "Population %", fill = "Income Status", title = "Asset Limited, Income Constrained, Employed Population in Albemarle") +
-  theme_bw() +
-  theme(
-    plot.title = element_text(face = "bold", hjust = 0.5, size = 12),
-    legend.title = element_blank(),
-    legend.position = "top",
-    axis.title.x = element_text(face = "bold", vjust = -2.5, size = 10),
-    axis.title.y = element_text(face = "bold", size = 10),
-    axis.text.x = element_text(),
-    axis.ticks.x = element_blank(),
-    axis.ticks.y = element_blank(),
-    axis.line = element_line(color = "white"),
-    panel.spacing = unit(1.5, "lines"),
-    strip.background = element_blank(),
-    strip.text = element_text(face = "bold", size = 10),
-    panel.border = element_blank(),
-    plot.margin = unit(c(t = 0.25, r = 1, b = 1.5, l = 0.1), "cm")
-  )
-
-# Scales are wrong or something, this graph isn't working... (!)
-
-# Table: B19013 (Median Household Income: By Tract)
-
-# Charlottesville (Median Household Income: By Tract), 2022
-
-cville_median_household_income_2022 <- read.csv("temp_data/cville_median_household_income_2022.csv")
-
-# Median income visualization:
-
-income_colors <- c("#B48291", "#A5243D")
-
-cville_income_tract <- read.csv("temp_data/cville_median_household_income_2022.csv")
-
-cville_tract <- tracts(state = "VA", county = "540") %>%
-  mutate(GEOID = as.numeric((GEOID)))
-
-cville_income_geo_tract <- cville_tract %>%
-  left_join(cville_income_tract, by = "GEOID")
+alb_tenure_tract <- alb_tenure_tract %>%
+  left_join(alb_geo, by = "GEOID") %>% 
+  st_as_sf()
 
 # Geospatial visualization
-
-cville_income_map <-
-  ggplot(cville_income_geo_tract) +
-  geom_sf(aes(fill = estimate), color = "black") +
-  scale_fill_steps(
-    low = income_colors[1],
-    high = income_colors[2],
-    space = "Lab",
-    na.value = "grey50",
-    guide = "coloursteps",
-    aesthetics = "fill",
-    n.breaks = 4,
-    labels = scales::dollar_format()
-  ) +
-  theme_void() +
-  guides(fill =
-           guide_colourbar(title.position="top", title.hjust = 0.5,
-                           barwidth = 20)
-  ) +
-  labs(fill = "Median Household Income") +
-  annotation_scale(location = "br", width_hint = 0.25) +
-  annotation_north_arrow(location = "br",
-                         which_north = "true",
-                         pad_x = unit(0.0, "in"),
-                         pad_y = unit(0.5, "in"),
-                         style = north_arrow_minimal(
-                           line_width = 1,
-                           line_col = "black",
-                           fill = "black",
-                           text_col = "black",
-                           text_family = "",
-                           text_face = NULL,
-                           text_size = 0
-                         )) +
-  theme(
-    legend.position = "top",
-    legend.title = element_text(),
-    panel.border = element_rect(color  = "black",
-                                fill = NA,
-                                size = 1),
-    plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
-  )
-
-# Albemarle (Median Household Income: By Tract), 2022
-
-alb_median_household_income_2022 <- read.csv("temp_data/alb_median_household_income_2022.csv")
-
-# Median income visualization:
-
-income_colors <- c("#EDBF85", "#A5243D")
-
-alb_income_tract <- read.csv("temp_data/alb_median_household_income_2022.csv")
-
-alb_tract <- tracts(state = "VA", county = "003") %>%
-  mutate(GEOID = as.numeric((GEOID)))
-
-alb_income_geo_tract <- alb_tract %>%
-  left_join(alb_income_tract, by = "GEOID")
-
-# Geospatial visualization
-
-alb_income_map <-
-  ggplot(alb_income_geo_tract) +
-  geom_sf(aes(fill = estimate), color = "black") +
-  scale_fill_steps(
-    low = income_colors[1],
-    high = income_colors[2],
-    space = "Lab",
-    na.value = "grey50",
-    guide = "coloursteps",
-    aesthetics = "fill",
-    n.breaks = 4,
-    labels = scales::dollar_format()
-  ) +
-  theme_void() +
-  guides(fill =
-           guide_colourbar(title.position="top", title.hjust = 0.5,
-                           barwidth = 20)
-  ) +
-  labs(fill = "Median Household Income") +
-  annotation_scale(location = "br", width_hint = 0.25) +
-  annotation_north_arrow(location = "br",
-                         which_north = "true",
-                         pad_x = unit(0.0, "in"),
-                         pad_y = unit(0.5, "in"),
-                         style = north_arrow_minimal(
-                           line_width = 1,
-                           line_col = "black",
-                           fill = "black",
-                           text_col = "black",
-                           text_family = "",
-                           text_face = NULL,
-                           text_size = 0
-                         )) +
-  theme(
-    legend.position = "top",
-    legend.title = element_text(),
-    panel.border = element_rect(color  = "black",
-                                fill = NA,
-                                size = 1),
-    plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
-  )
-
-# Table: B25064 (Median Gross Rent (Dollars)) - Tract Level, 2022
-
-# Charlottesville (Gross Rent: Tracts), 2022
-
-cville_gross_rent_tract_2022 <- read.csv("temp_data/cville_gross_rent_tract_2022.csv")
-
-# Gross rent visualization:
-
-rent_colors <- c("#FFB49A", "#FF4F79")
-
-cville_rent_tract <- read.csv("temp_data/cville_gross_rent_tract_2022.csv")
-
-cville_tract <- tracts(state = "VA", county = "540") %>%
-  mutate(GEOID = as.numeric((GEOID)))
-
-cville_rent_geo_tract <- cville_tract %>%
-  left_join(cville_rent_tract, by = "GEOID")
-
-# Geospatial visualization
-
-cville_rent_map <-
-  ggplot(cville_rent_geo_tract) +
-  geom_sf(aes(fill = estimate), color = "black") +
-  scale_fill_steps(
-    low = rent_colors[1],
-    high = rent_colors[2],
-    space = "Lab",
-    na.value = "grey50",
-    guide = "coloursteps",
-    aesthetics = "fill",
-    n.breaks = 6,
-    labels = scales::dollar_format()
-  ) +
-  theme_void() +
-  guides(fill =
-           guide_colourbar(title.position="top", title.hjust = 0.5,
-                           barwidth = 20)
-  ) +
-  labs(fill = "Median Gross Rent") +
-  annotation_scale(location = "br", width_hint = 0.25) +
-  annotation_north_arrow(location = "br",
-                         which_north = "true",
-                         pad_x = unit(0.0, "in"),
-                         pad_y = unit(0.5, "in"),
-                         style = north_arrow_minimal(
-                           line_width = 1,
-                           line_col = "black",
-                           fill = "black",
-                           text_col = "black",
-                           text_family = "",
-                           text_face = NULL,
-                           text_size = 0
-                         )) +
-  theme(
-    legend.position = "top",
-    legend.title = element_text(),
-    panel.border = element_rect(color  = "black",
-                                fill = NA,
-                                size = 1),
-    plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
-  )
-
-# Albemarle (Gross Rent: Tracts), 2022
-
-alb_gross_rent_tract_2022 <- read.csv("temp_data/alb_gross_rent_tract_2022.csv")
-
-# Gross rent visualization:
-
-rent_colors <- c("#FFB49A", "#FF4F79")
-
-alb_rent_tract <- read.csv("temp_data/alb_gross_rent_tract_2022.csv")
-
-alb_tract <- tracts(state = "VA", county = "003") %>%
-  mutate(GEOID = as.numeric((GEOID)))
-
-alb_rent_geo_tract <- alb_tract %>%
-  left_join(alb_rent_tract, by = "GEOID")
-
-# Geospatial visualization
-
-alb_rent_map <-
-  ggplot(alb_rent_geo_tract) +
-  geom_sf(aes(fill = estimate), color = "black") +
-  scale_fill_steps(
-    low = rent_colors[1],
-    high = rent_colors[2],
-    space = "Lab",
-    na.value = "grey50",
-    guide = "coloursteps",
-    aesthetics = "fill",
-    n.breaks = 6,
-    labels = scales::dollar_format()
-  ) +
-  theme_void() +
-  guides(fill =
-           guide_colourbar(title.position="top", title.hjust = 0.5,
-                           barwidth = 20)
-  ) +
-  labs(fill = "Median Gross Rent") +
-  annotation_scale(location = "br", width_hint = 0.25) +
-  annotation_north_arrow(location = "br",
-                         which_north = "true",
-                         pad_x = unit(0.0, "in"),
-                         pad_y = unit(0.5, "in"),
-                         style = north_arrow_minimal(
-                           line_width = 1,
-                           line_col = "black",
-                           fill = "black",
-                           text_col = "black",
-                           text_family = "",
-                           text_face = NULL,
-                           text_size = 0
-                         )) +
-  theme(
-    legend.position = "top",
-    legend.title = element_text(),
-    panel.border = element_rect(color  = "black",
-                                fill = NA,
-                                size = 1),
-    plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
-  )
-
-# Table: B25003 (Home Ownership) - Tract Level, 2022
-
-# Charlottesville (Home Ownership), 2022
-
-cville_home_ownership_2022 <- read.csv("temp_data/cville_home_ownership_2022.csv")
-
-# Home owneship visualization
-
-home_colors <- c("#FEFFA5", "#7B886F")
-
-cville_home_tract <- read.csv("temp_data/cville_home_ownership_2022.csv")
-
-cville_tract <- tracts(state = "VA", county = "540") %>%
-  mutate(GEOID = as.numeric((GEOID)))
-
-cville_home_geo_tract <- cville_tract %>%
-  left_join(cville_home_tract, by = "GEOID") %>% 
+alb_tenure_tract %>%
   filter(label == "Owner occupied") %>%
-  mutate(percent = percent / 100)  # Convert percent to fractions if necessary
+  mutate(text = paste0(round(percent,0), "%")) %>%
+  ggplot() +
+  annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
+  geom_sf(aes(fill = percent), color = "white") +
+  geom_sf_text(aes(label = text), size = 2.5, color = "black") +
+  scale_fill_stepsn(colors = pal_inc,
+                    labels = scales::label_percent(scale = 1),
+                    n.breaks = 8,
+                    guide = guide_colourbar(title = "Percent Home Ownership",
+                                            title.position = "top",
+                                            direction = "horizontal",
+                                            title.hjust = 0.5,
+                                            # nbin = 6,
+                                            theme = theme(legend.key.height  = unit(0.5, "lines"),
+                                                          legend.key.width = unit(18, "lines"),
+                                                          text = element_text(size = 11)) 
+                    )
+  )+
+  labs(title = "Home Ownership", 
+       subtitle = locality_name, 
+       caption = source_acs) +
+  theme_map()+
+  theme(legend.position.inside=c(1, 1.04),
+        legend.justification="right",
+        plot.title = element_text(size = 14),
+        plot.subtitle = element_text(size = 14))
+
+## .................................................
+# Home Ownership by Race, Albemarle 2012 & 2022 ----
+alb_tenure_race_county <- read_csv("../data/alb_tenure_race_county_2012_2022.csv")
+
+alb_homeowner_race <- alb_tenure_race_county %>% 
+  filter(label == "Owner occupied") %>% 
+  filter(!group %in% c("White", "American Indian/Native Alaskan", "Native Hawaiian/Pacific Islander", "Other")) %>% 
+  select(group, percent, year) %>% 
+  pivot_wider(names_from = year, values_from = percent) %>% 
+  mutate(difference = `2022` - `2012`) %>% 
+  pivot_longer(`2022`:`2012`) %>% 
+  mutate(year = as.numeric(name))
+
+# anno_list = as.list(alb_homeowner_race$difference) %>% unique()
+
+alb_homeowner_race %>% 
+  mutate(text = paste0(round(value, 0), "%"),
+         group = factor(group, levels = c("Asian", "Black", "Hispanic or Latino", "Multiracial", "White, Not Hispanic or Latino"),
+                        labels = c("Asian", "Black", "Hispanic", "Multiracial", "White"))) %>% 
+  ggplot(aes(x = year, y = value, label = text)) +
+  geom_line(linewidth = 1, color = "#3B8EA5") +
+  geom_point(color = "#3B8EA5") +
+  geom_text(size = 4, nudge_y = 15, color = "#3B8EA5", fontface = "bold") +
+  # geom_text(data = annot_list, size = 4, nudge_y = -25, color = "#3B8EA5", fontface = "bold") +
+  # annotate("text", x = 2017, y = 25, label = c("1", "2", "3", "4", "5"), color = "#3B8EA5", fontface = "bold") +
+  scale_x_continuous(breaks = c(2012,2022),
+                     expand = expansion(mult = c(0.1, .1)),
+                     name = "") +
+  scale_y_continuous(labels = scales::label_percent(scale = 1),
+                     breaks = c(0,100),
+                     limits = c(0,100),
+                     name = "") + 
+  facet_wrap(~group, scales = "free") +
+  labs(color = "", 
+       title = "Home Ownership by Race: 2012 & 2022", 
+       subtitle = locality_name, 
+       caption = source_acs) +  
+  theme_minimal() +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.x = element_blank(),
+        strip.text = element_text(size = 12))
+
+## .........................................
+# Gross Rent by tract: Albemarle, 2022 ----
+alb_gross_rent_tract <- read_csv("../data/alb_gross_rent_tract_2022.csv") %>%
+  mutate(GEOID = as.character(GEOID))
+
+alb_gross_rent_tract <- alb_gross_rent_tract %>%
+  left_join(alb_geo, by = "GEOID") %>% 
+  st_as_sf()
 
 # Geospatial visualization
+alb_gross_rent_tract %>%
+  mutate(text = case_when(is.na(estimate) ~ "",
+                          !is.na(estimate) ~ paste0("$", prettyNum(estimate, big.mark=",", preserve.width="none")))) %>%
+  ggplot() +
+  annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
+  geom_sf(aes(fill = estimate), color = "white") +
+  geom_sf_text(aes(label = scales::label_currency(scale = 1)(estimate)), size = 2.5, color = "black") +
+  scale_fill_stepsn(colors = pal_inc,
+                    labels = scales::label_currency(scale = 1),
+                    n.breaks = 6,
+                    guide = guide_colourbar(title = "Gross Rent",
+                                            title.position = "top",
+                                            direction = "horizontal",
+                                            title.hjust = 0.5,
+                                            # nbin = 6,
+                                            theme = theme(legend.key.height  = unit(0.5, "lines"),
+                                                          legend.key.width = unit(20, "lines"),
+                                                          text = element_text(size = 11)) 
+                    )
+  )+
+  labs(title = "Gross Rent 2022", 
+       subtitle = locality_name, 
+       caption = source_acs) +
+  theme_map()+
+  theme(legend.position.inside=c(1, 1.04),
+        legend.justification="right",
+        plot.title = element_text(size = 14),
+        plot.subtitle = element_text(size = 14))
 
-cville_home_geo_tract_map <-
-  ggplot(cville_home_geo_tract) +
-  geom_sf(aes(fill = percent), color = "black") +
-  scale_fill_steps(
-    low = home_colors[1],
-    high = home_colors[2],
-    space = "Lab",
-    na.value = "grey50",
-    guide = "coloursteps",
-    aesthetics = "fill",
-    n.breaks = 6,
-    labels = scales::percent_format()
-  ) +
-  theme_void() +
-  guides(fill =
-           guide_colourbar(title.position="top", title.hjust = 0.5,
-                           barwidth = 20)
-  ) +
-  labs(fill = "Owner Occupied (%)") +
-  annotation_scale(location = "br", width_hint = 0.25) +
-  annotation_north_arrow(location = "br",
-                         which_north = "true",
-                         pad_x = unit(0.0, "in"),
-                         pad_y = unit(0.5, "in"),
-                         style = north_arrow_minimal(
-                           line_width = 1,
-                           line_col = "black",
-                           fill = "black",
-                           text_col = "black",
-                           text_family = "",
-                           text_face = NULL,
-                           text_size = 0
-                         )) +
-  theme(
-    legend.position = "top",
-    legend.title = element_text(),
-    panel.border = element_rect(color  = "black",
-                                fill = NA,
-                                size = 1),
-    plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
-  )
-
-# Renter visualization
-
-home_colors <- c("#FEFFA5", "#7B886F")
-
-cville_renter_tract <- read.csv("temp_data/cville_home_ownership_2022.csv")
-
-cville_tract <- tracts(state = "VA", county = "540") %>%
-  mutate(GEOID = as.numeric((GEOID)))
-
-cville_renter_geo_tract <- cville_tract %>%
-  left_join(cville_renter_tract, by = "GEOID") %>% 
-  filter(label == "Renter occupied") %>%
-  mutate(percent = percent / 100)  # Convert percent to fractions if necessary
-
-# Geospatial visualization
-
-cville_renter_geo_tract_map <-
-  ggplot(cville_renter_geo_tract) +
-  geom_sf(aes(fill = percent), color = "black") +
-  scale_fill_steps(
-    low = home_colors[1],
-    high = home_colors[2],
-    space = "Lab",
-    na.value = "grey50",
-    guide = "coloursteps",
-    aesthetics = "fill",
-    n.breaks = 6,
-    labels = scales::percent_format()
-  ) +
-  theme_void() +
-  guides(fill =
-           guide_colourbar(title.position="top", title.hjust = 0.5,
-                           barwidth = 20)
-  ) +
-  labs(fill = "Renter Occupied (%)") +
-  annotation_scale(location = "br", width_hint = 0.25) +
-  annotation_north_arrow(location = "br",
-                         which_north = "true",
-                         pad_x = unit(0.0, "in"),
-                         pad_y = unit(0.5, "in"),
-                         style = north_arrow_minimal(
-                           line_width = 1,
-                           line_col = "black",
-                           fill = "black",
-                           text_col = "black",
-                           text_family = "",
-                           text_face = NULL,
-                           text_size = 0
-                         )) +
-  theme(
-    legend.position = "top",
-    legend.title = element_text(),
-    panel.border = element_rect(color  = "black",
-                                fill = NA,
-                                size = 1),
-    plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
-  )
-
-# Albemarle (Home Ownership), 2022
-
-alb_home_ownership_2022 <- read.csv("temp_data/alb_home_ownership_2022.csv")
-
-# Home owneship visualization
-
-home_colors <- c("#FEFFA5", "#7B886F")
-
-alb_home_tract <- read.csv("temp_data/alb_home_ownership_2022.csv")
-
-alb_tract <- tracts(state = "VA", county = "003") %>%
-  mutate(GEOID = as.numeric((GEOID)))
-
-alb_home_geo_tract <- alb_tract %>%
-  left_join(alb_home_tract, by = "GEOID") %>% 
-  filter(label == "Owner occupied") %>%
-  mutate(percent = percent / 100)  # Convert percent to fractions if necessary
-
-# Geospatial visualization
-
-alb_home_geo_tract_map <-
-  ggplot(alb_home_geo_tract) +
-  geom_sf(aes(fill = percent), color = "black") +
-  scale_fill_steps(
-    low = home_colors[1],
-    high = home_colors[2],
-    space = "Lab",
-    na.value = "grey50",
-    guide = "coloursteps",
-    aesthetics = "fill",
-    n.breaks = 6,
-    labels = scales::percent_format()
-  ) +
-  theme_void() +
-  guides(fill =
-           guide_colourbar(title.position="top", title.hjust = 0.5,
-                           barwidth = 20)
-  ) +
-  labs(fill = "Owner Occupied (%)") +
-  annotation_scale(location = "br", width_hint = 0.25) +
-  annotation_north_arrow(location = "br",
-                         which_north = "true",
-                         pad_x = unit(0.0, "in"),
-                         pad_y = unit(0.5, "in"),
-                         style = north_arrow_minimal(
-                           line_width = 1,
-                           line_col = "black",
-                           fill = "black",
-                           text_col = "black",
-                           text_family = "",
-                           text_face = NULL,
-                           text_size = 0
-                         )) +
-  theme(
-    legend.position = "top",
-    legend.title = element_text(),
-    panel.border = element_rect(color  = "black",
-                                fill = NA,
-                                size = 1),
-    plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
-  )
-
-# Renter visualization
-
-home_colors <- c("#FEFFA5", "#7B886F")
-
-alb_renter_tract <- read.csv("temp_data/alb_home_ownership_2022.csv")
-
-alb_tract <- tracts(state = "VA", county = "003") %>%
-  mutate(GEOID = as.numeric((GEOID)))
-
-alb_renter_geo_tract <- alb_tract %>%
-  left_join(alb_renter_tract, by = "GEOID") %>% 
-  filter(label == "Renter occupied") %>%
-  mutate(percent = percent / 100)  # Convert percent to fractions if necessary
-
-# Geospatial visualization
-
-alb_renter_geo_tract_map <-
-  ggplot(alb_renter_geo_tract) +
-  geom_sf(aes(fill = percent), color = "black") +
-  scale_fill_steps(
-    low = home_colors[1],
-    high = home_colors[2],
-    space = "Lab",
-    na.value = "grey50",
-    guide = "coloursteps",
-    aesthetics = "fill",
-    n.breaks = 6,
-    labels = scales::percent_format()
-  ) +
-  theme_void() +
-  guides(fill =
-           guide_colourbar(title.position="top", title.hjust = 0.5,
-                           barwidth = 20)
-  ) +
-  labs(fill = "Renter Occupied (%)") +
-  annotation_scale(location = "br", width_hint = 0.25) +
-  annotation_north_arrow(location = "br",
-                         which_north = "true",
-                         pad_x = unit(0.0, "in"),
-                         pad_y = unit(0.5, "in"),
-                         style = north_arrow_minimal(
-                           line_width = 1,
-                           line_col = "black",
-                           fill = "black",
-                           text_col = "black",
-                           text_family = "",
-                           text_face = NULL,
-                           text_size = 0
-                         )) +
-  theme(
-    legend.position = "top",
-    legend.title = element_text(),
-    panel.border = element_rect(color  = "black",
-                                fill = NA,
-                                size = 1),
-    plot.margin = margin(l =  .1, r = .1, t = 1, b =1, "cm")
-  )
+## ....................................................
+## End

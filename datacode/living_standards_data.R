@@ -1041,7 +1041,7 @@ tenure_race_county <- acs_B25003_race_county %>%
            str_detect(variable, "D_") ~ "Asian",
            str_detect(variable, "E_") ~ "Native Hawaiian/Pacific Islander",
            str_detect(variable, "F_") ~ "Other",
-           str_detect(variable, "G_") ~ "Mutiracial",
+           str_detect(variable, "G_") ~ "Multiracial",
            str_detect(variable, "H_") ~ "White, Not Hispanic or Latino",
            str_detect(variable, "I_") ~ "Hispanic or Latino")
          ) %>% 

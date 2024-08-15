@@ -23,10 +23,10 @@ GEOID,locality,label,group,estimate,moe,total_households,percent,year
 51003,"Albemarle County, Virginia",Renter occupied,Other,360,137,473,76.11,2022
 51003,"Albemarle County, Virginia",Owner occupied,Other,97,65,290,33.45,2012
 51003,"Albemarle County, Virginia",Renter occupied,Other,193,107,290,66.55,2012
-51003,"Albemarle County, Virginia",Owner occupied,Mutiracial,688,191,1232,55.84,2022
-51003,"Albemarle County, Virginia",Renter occupied,Mutiracial,544,149,1232,44.16,2022
-51003,"Albemarle County, Virginia",Owner occupied,Mutiracial,181,80,426,42.49,2012
-51003,"Albemarle County, Virginia",Renter occupied,Mutiracial,245,102,426,57.51,2012
+51003,"Albemarle County, Virginia",Owner occupied,Multiracial,688,191,1232,55.84,2022
+51003,"Albemarle County, Virginia",Renter occupied,Multiracial,544,149,1232,44.16,2022
+51003,"Albemarle County, Virginia",Owner occupied,Multiracial,181,80,426,42.49,2012
+51003,"Albemarle County, Virginia",Renter occupied,Multiracial,245,102,426,57.51,2012
 51003,"Albemarle County, Virginia",Owner occupied,"White, Not Hispanic or Latino",25602,642,35805,71.5,2022
 51003,"Albemarle County, Virginia",Renter occupied,"White, Not Hispanic or Latino",10203,731,35805,28.5,2022
 51003,"Albemarle County, Virginia",Owner occupied,"White, Not Hispanic or Latino",21967,535,30957,70.96,2012

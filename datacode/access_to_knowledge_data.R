@@ -414,7 +414,6 @@ write_csv(region_edu_attain_race, paste0("data/region_edu_attain_race", "_", yea
 ## ..........................................................
 # AP & Dual Enrollment by Race/Ethnicity & Disadvantaged ----
 # Source: https://www.doe.virginia.gov/data-policy-funding/data-reports/program-participation-data/advanced-programs
-# TEMP SOLUTION TO HTTP 403
 # Downloaded 2022-2023.xlsx to tempdata
 
 # Get total for all students enrolled in AP

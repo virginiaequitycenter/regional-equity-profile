@@ -16,7 +16,7 @@ max-width: 1200px;
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 
-library(tidycensus)
+# Load packages ----
 library(tidyverse)
 library(scales)
 library(RColorBrewer)
@@ -34,6 +34,12 @@ pal_edu <- carto_pal(7, "PinkYl")
 
 # Tract geometries ----
 cville_geo <- tracts(state = "VA", county = "540")
+
+# Common Items ----
+locality_name <- "City of Charlottesville"
+school_district <- "Charlottesville City Schools (CCS)"
+source_acs <- "Data Source: American Community Survey, 2022"
+source_vdoe <- "Data Source: Virginia Department of Education, 2022-2023"
 
 ```
 
@@ -80,9 +86,9 @@ cville_enroll_map <- cville_enroll_tract %>%
                                                                               )) 
                                             )
                     )+
-  labs(title = "School Enrollment (Ages 3 - 24)", 
-      subtitle = "Charlottesville", 
-      caption = NULL) +
+  labs(title = "School Enrollment (Ages 3-24)", 
+      subtitle = locality_name, 
+      caption = source_acs) +
   theme_map()+
   theme(
     # legend.position="top",
@@ -122,17 +128,16 @@ cville_edu_race_plot <- cville_edu_attain_race_plot %>%
   filter(group_total >= 400) %>% 
   ggplot(aes(x = race, y = percent, group = race, fill = label, 
              label = text)) +
-  geom_bar(stat = "identity") + 
+  geom_bar(stat = "identity", color="white") + 
   geom_text(size = 3, position = position_stack(vjust = 0.5)) +
   scale_fill_manual(values = c("#3B8EA5", "#8C96C6", "#FFA679")) +
   # scale_fill_manual(values = c("#FEF6B5", "#FFA679", "#E15383")) +
   scale_x_discrete(name = "") +
   scale_y_continuous(labels = label_percent(scale = 1),
                      name = "") +
-  labs(color = "", 
-       title = "Educational Attainment 2022", 
-      subtitle = "Charlottesville", 
-      caption = NULL) +
+  labs(title = "Educational Attainment by Race/Ethnicity (25 Years and Over)", 
+       subtitle = locality_name,
+       caption = source_acs) +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
@@ -182,8 +187,8 @@ cville_educ_attain_map <- cville_attain_BAs %>%
                                                                               )) )
                     )+
   labs(title = "Education Level: Bachelor's Degree or Higher", 
-      subtitle = "Charlottesville", 
-      caption = NULL) +
+      subtitle = locality_name, 
+      caption = source_acs) +
   theme_map()+
   theme(legend.position.inside=c(1, 1.04),
         legend.justification="right",
@@ -231,7 +236,9 @@ cville_adv_enroll %>%
                      limits = c(0,100),
                      name = "") +
   scale_fill_manual(values = c("#3B8EA5", "#8C96C6")) +
-  labs(color = "", title = "CCS AP & Dual Enrollment 2022-2023") +
+  labs(title = "AP & Dual Enrollment",
+       subtitle = school_district, 
+       caption = source_vdoe) +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
@@ -271,7 +278,10 @@ cville_suspensions %>%
   theme(legend.position = "top",
         panel.grid.minor.x = element_blank()) +
   guides(fill = guide_legend(reverse = TRUE)) +
-  labs(fill = "", title = "CCS Short Term Suspension Incidents, by Race/Ethnicity")
+  labs(fill = "", 
+       title = "Short Term Suspension Incidents by Race/Ethnicity",
+       subtitle = school_district, 
+       caption = source_vdoe)
 
 ```
 
@@ -300,7 +310,9 @@ cville_absent %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      limits = c(0,60),
                      name = "") +
-  labs(color = "", title = "CCS Chronic Absenteeism 2022-2023") +
+  labs(title = "Chronic Absenteeism",
+       subtitle = school_district, 
+       caption = source_vdoe) +
   theme_minimal() +
   theme(legend.title=element_blank(),
         panel.grid.major.x = element_blank(),
