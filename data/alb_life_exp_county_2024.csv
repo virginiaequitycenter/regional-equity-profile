@@ -1,0 +1,6 @@
+GEOID,fips,locality,group,lifeexp_est,lower_bound,upper_bound,lifeexp_moe,year
+51003,003,Albemarle,all,81.9,81.4,82.4,0.5,2024
+51003,003,Albemarle,black,76.6,74.7,78.5,1.9,2024
+51003,003,Albemarle,ltnx,87.2,82.6,91.8,4.6,2024
+51003,003,Albemarle,white,82.2,81.6,82.8,0.6,2024
+51003,003,Albemarle,asian,86,82.5,89.6,3.6,2024

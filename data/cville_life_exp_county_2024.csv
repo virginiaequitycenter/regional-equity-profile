@@ -1,0 +1,6 @@
+GEOID,fips,locality,group,lifeexp_est,lower_bound,upper_bound,lifeexp_moe,year
+51540,540,Charlottesville City,all,78.7,77.9,79.5,0.8,2024
+51540,540,Charlottesville City,black,71.6,69.6,73.7,2.1,2024
+51540,540,Charlottesville City,ltnx,98.8,55.6,141.9,43.2,2024
+51540,540,Charlottesville City,white,80.6,79.7,81.5,0.9,2024
+51540,540,Charlottesville City,asian,90.2,77,103.4,13.2,2024

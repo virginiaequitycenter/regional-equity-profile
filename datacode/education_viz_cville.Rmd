@@ -300,8 +300,8 @@ cville_absent %>%
                                    "Asian", "Black", "Hispanic", "Multiracial", "White")),
          percent_above_10 = round(percent_above_10, 0),
          text = paste0(percent_above_10, "%")) %>% 
-  ggplot(aes(x = subgroup, y = percent_above_10)) +
-  geom_bar(stat = "identity", width = 0.7, fill = "#3B8EA5") + 
+  ggplot(aes(x = subgroup, y = percent_above_10, fill = subgroup)) +
+  geom_bar(stat = "identity", width = 0.8) + 
   geom_text(aes(label = text), 
             vjust = -1,
             size = 3,
@@ -310,11 +310,13 @@ cville_absent %>%
   scale_y_continuous(labels = label_percent(scale = 1),
                      limits = c(0,60),
                      name = "") +
+  scale_fill_manual(values = c("#b2b8be", rep("#3B8EA5",9)))+
   labs(title = "Chronic Absenteeism",
        subtitle = school_district, 
        caption = source_vdoe) +
   theme_minimal() +
   theme(legend.title=element_blank(),
+        legend.position = "none",
         panel.grid.major.x = element_blank(),
         axis.ticks = element_blank(),
         panel.grid.minor = element_blank())

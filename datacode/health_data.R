@@ -1,7 +1,7 @@
 # R Script for pulling and examining health data
-# Authors: Henry DeMarco, Beth Mitchell
+# Authors: Beth Mitchell, Henry DeMarco
 # Date Created: June 17, 2024
-# Last Updated: Aug 2, 2024
+# Last Updated: Aug 16, 2024
 
 ## County FIPS Codes
 # 003 -- Albemarle
@@ -11,7 +11,7 @@
 # AHDI MEASURES, COUNTY & TRACT LEVEL
 # County-Level Life Expectancy, incld. Race/Ethnicity, 2024
 # - Source: https://www.countyhealthrankings.org/health-data/virginia/data-and-resources
-# Tract-Level Life Expectancy, 2015 - INCOMEPLETE DUE TO 2010 vs 2020 Census tracts
+# Tract-Level Life Expectancy, 2015 
 # - Source: https://www.cdc.gov/nchs/nvss/usaleep/usaleep.html (Source has not updated since 2010-2015 values)
 # OTHER MEASURES
 # Food Insecurity, 2019-2022
@@ -21,9 +21,11 @@
 # - By County, incld. Race/Ethnicity
 # - Source: ACS Table S2701
 # CDC Places Health Measures  
-# - 
-# - 
-# - Source: 
+# - Health Outcomes: "DIABETES", "OBESITY", "CHD", "BPHIGH", "DEPRESSION",
+#                     "CASTHMA", "COPD", "CANCER", "STROKE", "HIGHCHOL", "KIDNEY"
+# - Prevention: "CHECKUP", "DENTAL", "CERVICAL", "COLON_SCREEN", "MAMMOUSE"
+# - (Removed: Health Status: "MHLTH", "PHLTH")
+# - Source: https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh/about_data
 # EMS Opioid Overdose data
 # - Source: 
 
@@ -218,6 +220,18 @@ lifeexp_tract <- lifeexp_tract %>%
 # Charlottesville: GEOID_2020/GEOID_2010: 51540000202; 10th & Page-Venable
 # Charlottesville: GEOID_2020/GEOID_2010: 51540000600; JPA-Fontaine
 
+# Tract-Level Life Expectancy, 2015: Charlottesville ----
+cville_life_exp_tract_2015 <- lifeexp_tract %>% 
+  filter(county == "Charlottesville")
+
+write_csv(cville_life_exp_tract_2015, "data/cville_life_exp_tract_2015.csv")
+
+# Tract-Level Life Expectancy, 2015: Albemarle ----
+alb_life_exp_tract_2015 <- lifeexp_tract %>% 
+  filter(county == "Albemarle")
+
+write_csv(alb_life_exp_tract_2015, "data/alb_life_exp_tract_2015.csv")
+
 ## ...............................
 # Food Insecurity, 2019-2022 ----
 # Source: https://map.feedingamerica.org 
@@ -369,7 +383,7 @@ write_csv(cville_health_insured_county_race, paste0("data/cville_health_insured_
 alb_health_insured_county_race <- health_insured_county_race %>% 
   filter(locality == "Albemarle County, Virginia")
 
-write_csv(cville_health_insured_county_race, paste0("data/cville_health_insured_county_race", "_", year, ".csv"))
+write_csv(alb_health_insured_county_race, paste0("data/alb_health_insured_county_race", "_", year, ".csv"))
 
 ## .......................................
 # CDC Places Health Measures by Tract ----
@@ -416,64 +430,101 @@ cdc_table_status <- cdc_filtered %>%
   select(GEOID.x, GEOID.y, county, tractnames, measureid, data_value) %>% 
   pivot_wider(names_from = measureid, values_from = data_value)
 
-  
 cdc_table_prevent <- cdc_filtered %>% 
   filter(category == "Prevention") %>% 
   select(GEOID.x, GEOID.y, county, tractnames, measureid, data_value) %>% 
   pivot_wider(names_from = measureid, values_from = data_value)
 
+# CDC Places Health Measures by Tract: Charlottesville ----
+# Health Outcomes
+cville_cdc_table_outcomes <- cdc_table_outcomes %>% 
+  filter(county == "Charlottesville")
 
-library(gt)
-library(RColorBrewer)
-library(scales)
-library(palettes)
-library(paletteer)
+write_csv(cville_cdc_table_outcomes, "data/cville_cdc_table_outcomes_2023.csv")
 
-pal_blue <- colorRampPalette(brewer.pal(9, "Blues"))(15)
-pal_diverge <- colorRampPalette(brewer.pal(11, "RdYlBu"))(15)
+# Health Prevention
+cville_cdc_table_prevent <- cdc_table_prevent %>% 
+  filter(county == "Charlottesville")
 
-cdc_table_outcomes %>% 
-  filter(county == "Charlottesville") %>% 
-  select(-GEOID.x, -GEOID.y, -county) %>% 
-  mutate(across(OBESITY:KIDNEY, ~ as.numeric(.x))) %>% 
-  gt(rowname_col = "tractnames") %>% 
-  data_color(
-    columns = -tractnames,
-    direction = "column",
-    # fn= scales::col_numeric(
-    #   "Blues",
-    #   c(0, 50),
-    #   na.color = "#808080",
-    #   alpha = FALSE,
-    #   reverse = FALSE
-    # )
-    domain = c(0, 50),
-    palette = "YlOrRd"
-    # reverse = TRUE
-    # na_color = "white"
-  )
+write_csv(cville_cdc_table_prevent, "data/cville_cdc_table_prevent_2023.csv")
 
-cdc_table_status %>% 
-  filter(county == "Charlottesville") %>% 
-  select(-GEOID.x, -GEOID.y, -county) %>% 
-  gt(rowname_col = "tractnames") %>% 
-  data_color(
-    direction = "column",
-    palette = pal_blue,
-    na_color = "white"
-  )
+# Heatlh Status
+cville_cdc_table_status <- cdc_table_status %>% 
+  filter(county == "Charlottesville")
 
-cdc_table_prevent %>% 
-  filter(county == "Charlottesville") %>% 
-  select(-GEOID.x, -GEOID.y, -county) %>% 
-  mutate(across(COLON_SCREEN:CHECKUP, ~ as.numeric(.x))) %>% 
-  gt(rowname_col = "tractnames") %>% 
-  data_color(
-    direction = "column",
-    # method = "numeric",
-    domain = c(30,90),
-    palette = "RdYlBu"
-    # na_color = "white"
-  )
+write_csv(cville_cdc_table_status, "data/cville_cdc_table_status_2023.csv")
 
+# CDC Places Health Measures by Tract: Albemarle ----
+# Health Outcomes
+alb_cdc_table_outcomes <- cdc_table_outcomes %>% 
+  filter(county == "Albemarle")
+
+write_csv(alb_cdc_table_outcomes, "data/alb_cdc_table_outcomes_2023.csv")
+
+# Health Prevention
+alb_cdc_table_prevent <- cdc_table_prevent %>% 
+  filter(county == "Albemarle")
+
+write_csv(alb_cdc_table_prevent, "data/alb_cdc_table_prevent_2023.csv")
+
+# Heatlh Status
+alb_cdc_table_status <- cdc_table_status %>% 
+  filter(county == "Albemarle")
+
+write_csv(alb_cdc_table_status, "data/alb_cdc_table_status_2023.csv")
+
+# Data Viz testings
+# library(gt)
+# library(RColorBrewer)
+# library(scales)
+# library(palettes)
+# library(paletteer)
+# 
+# pal_blue <- colorRampPalette(brewer.pal(9, "Blues"))(15)
+# pal_diverge <- colorRampPalette(brewer.pal(11, "RdYlBu"))(15)
+# 
+# cdc_table_outcomes %>% 
+#   filter(county == "Charlottesville") %>% 
+#   select(-GEOID.x, -GEOID.y, -county) %>% 
+#   mutate(across(OBESITY:KIDNEY, ~ as.numeric(.x))) %>% 
+#   gt(rowname_col = "tractnames") %>% 
+#   data_color(
+#     columns = -tractnames,
+#     direction = "column",
+#     # fn= scales::col_numeric(
+#     #   "Blues",
+#     #   c(0, 50),
+#     #   na.color = "#808080",
+#     #   alpha = FALSE,
+#     #   reverse = FALSE
+#     # )
+#     domain = c(0, 50),
+#     palette = "YlOrRd"
+#     # reverse = TRUE
+#     # na_color = "white"
+#   )
+# 
+# cdc_table_status %>% 
+#   filter(county == "Charlottesville") %>% 
+#   select(-GEOID.x, -GEOID.y, -county) %>% 
+#   gt(rowname_col = "tractnames") %>% 
+#   data_color(
+#     direction = "column",
+#     palette = pal_blue,
+#     na_color = "white"
+#   )
+# 
+# cdc_table_prevent %>% 
+#   filter(county == "Charlottesville") %>% 
+#   select(-GEOID.x, -GEOID.y, -county) %>% 
+#   mutate(across(COLON_SCREEN:CHECKUP, ~ as.numeric(.x))) %>% 
+#   gt(rowname_col = "tractnames") %>% 
+#   data_color(
+#     direction = "column",
+#     # method = "numeric",
+#     domain = c(30,90),
+#     palette = "RdYlBu"
+#     # na_color = "white"
+#   )
+# 
 

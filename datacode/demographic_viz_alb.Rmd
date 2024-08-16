@@ -499,19 +499,19 @@ alb_donut_dat$ymax = cumsum(alb_donut_dat$fraction)
 alb_donut_dat$ymin = c(0, head(alb_donut_dat$ymax, n=-1))
 
 # Plot the donut chart
-alb_foreign_born_donut <- alb_donut_dat %>% 
-  filter(round(fraction, 2) >= 0.01) %>% 
-  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = region)) +
-  geom_rect(color = "white") +
-  coord_polar(theta = "y") +
-  xlim(c(1.5, 4)) +
-  scale_fill_manual(values = pal_6) +
-  geom_text(aes(label = paste0(round(fraction * 100, 0), "%"), x = 3.5, y = (ymin + ymax) / 2)) +
-  theme_void() +
-  theme(legend.position = c(.525, .5)) +
-  theme(legend.title = element_blank()) +
-  theme(legend.text = element_text(size = 8)) +
-  labs(title = "Foreign-Born Albemarle Residents, by place of birth, 2022")
+# alb_foreign_born_donut <- alb_donut_dat %>% 
+#   filter(round(fraction, 2) >= 0.01) %>% 
+#   ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = region)) +
+#   geom_rect(color = "white") +
+#   coord_polar(theta = "y") +
+#   xlim(c(1.5, 4)) +
+#   scale_fill_manual(values = pal_6) +
+#   geom_text(aes(label = paste0(round(fraction * 100, 0), "%"), x = 3.5, y = (ymin + ymax) / 2)) +
+#   theme_void() +
+#   theme(legend.position = c(.525, .5)) +
+#   theme(legend.title = element_blank()) +
+#   theme(legend.text = element_text(size = 8)) +
+#   labs(title = "Foreign-Born Albemarle Residents, by place of birth, 2022")
 
 
 # Bar chart
