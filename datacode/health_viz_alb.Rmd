@@ -208,8 +208,10 @@ pal_blue <- colorRampPalette(brewer.pal(9, "Blues"))(15)
 pal_diverge <- colorRampPalette(brewer.pal(11, "RdYlBu"))(15)
 
 alb_cdc_outcomes %>%
-  select(-GEOID.x, -GEOID.y, -county) %>%
-  mutate(across(OBESITY:KIDNEY, ~ as.numeric(.x))) %>%
+  select(tractnames, CASTHMA, BPHIGH, CANCER, DIABETES, DEPRESSION, HIGHCHOL, OBESITY) %>% 
+  rename(ASTHMA = CASTHMA) %>% 
+  # select(-GEOID.x, -GEOID.y, -county, -STROKE, -COPD, -CHD, -KIDNEY) %>%
+  mutate(across(OBESITY:CANCER, ~ as.numeric(.x))) %>%
   gt(rowname_col = "tractnames") %>%
   data_color(
     columns = -tractnames,
@@ -225,7 +227,7 @@ alb_cdc_outcomes %>%
 ```
 
 ```{r, echo=FALSE, fig.height=9, fig.width=8}
-# CDC Places: Health Prevention: Albemarle, 2023
+# CDC Places: Health Prevention: Albemarle, 2023 ----
 alb_cdc_prevent <- read_csv("../data/alb_cdc_table_prevent_2023.csv")
 alb_cdc_prevent <- alb_cdc_prevent[order(alb_cdc_prevent$tractnames, decreasing=FALSE),]
 
@@ -234,7 +236,8 @@ pal_blue <- colorRampPalette(brewer.pal(9, "Blues"))(15)
 pal_diverge <- colorRampPalette(brewer.pal(11, "RdYlBu"))(15)
 
 alb_cdc_prevent %>%
-  select(-GEOID.x, -GEOID.y, -county) %>%
+  # select(-GEOID.x, -GEOID.y, -county) %>%
+  select(tractnames, CHECKUP, DENTAL, MAMMOUSE, CERVICAL, COLON_SCREEN) %>% 
   mutate(across(COLON_SCREEN:CHECKUP, ~ as.numeric(.x))) %>%
   gt(rowname_col = "tractnames") %>%
   data_color(
@@ -247,3 +250,16 @@ alb_cdc_prevent %>%
 
 
 ```
+
+```{r, echo=FALSE}
+# Food Insecurity: Albemarle, 2022 ----
+alb_food_insecure <- read_csv("../data/alb_food_insecure_2019_2022.csv")
+
+alb_food_insecure <- alb_food_insecure %>% 
+  filter(year == 2022) %>% 
+  select(county_state, year, overall_food_insecurity_rate, food_insecurity_rate_among_black_persons_all_ethnicities, food_insecurity_rate_among_hispanic_persons_any_race, food_insecurity_rate_among_white_non_hispanic_persons, child_food_insecurity_rate, number_of_food_insecure_persons_overall) %>% 
+  pivot_longer(overall_food_insecurity_rate:child_food_insecurity_rate)
+
+
+```
+
