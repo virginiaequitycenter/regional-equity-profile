@@ -416,23 +416,27 @@ cdc_filtered <- cdc_filtered %>%
 
 # Join tract names
 cdc_filtered <- cdc_filtered %>% 
-  left_join(tract_names_crosswalk, by = join_by(GEOID == GEOID_TRACT_10), keep = TRUE)
+  left_join(tract_names)
+
+# # Join tract names
+# cdc_filtered <- cdc_filtered %>% 
+#   left_join(tract_names_crosswalk, by = join_by(GEOID == GEOID_TRACT_10), keep = TRUE)
 
 # CDC data for Data Viz Table
 
 cdc_table_outcomes <- cdc_filtered %>% 
   filter(category == "Health Outcomes") %>% 
-  select(GEOID.x, GEOID.y, county, tractnames, measureid, data_value) %>% 
+  select(GEOID, county, tractnames, measureid, data_value) %>% 
   pivot_wider(names_from = measureid, values_from = data_value)
 
 cdc_table_status <- cdc_filtered %>% 
   filter(category == "Health Status") %>% 
-  select(GEOID.x, GEOID.y, county, tractnames, measureid, data_value) %>% 
+  select(GEOID, county, tractnames, measureid, data_value) %>% 
   pivot_wider(names_from = measureid, values_from = data_value)
 
 cdc_table_prevent <- cdc_filtered %>% 
   filter(category == "Prevention") %>% 
-  select(GEOID.x, GEOID.y, county, tractnames, measureid, data_value) %>% 
+  select(GEOID, county, tractnames, measureid, data_value) %>% 
   pivot_wider(names_from = measureid, values_from = data_value)
 
 # CDC Places Health Measures by Tract: Charlottesville ----

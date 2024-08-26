@@ -1,13 +1,13 @@
-GEOID.x,GEOID.y,county,tractnames,COLON_SCREEN,CERVICAL,DENTAL,MAMMOUSE,CHECKUP
-51540000900,51540000900,Charlottesville,Locust Grove,75.6,86.3,73.9,77.2,75.5
-51540000800,51540000800,Charlottesville,Greenbrier-Meadows,74.6,85.2,70.5,76.8,77.8
-51540000402,51540000402,Charlottesville,Belmont,72.4,83.9,65.6,76.1,73.1
-51540000201,51540000201,Charlottesville,Rose Hill-Harris-Venable,71.8,75.8,64.5,79.9,71.4
-51540001000,51540001000,Charlottesville,Downtown Area,76.5,85.7,74.1,78.9,75.3
-51540000502,51540000502,Charlottesville,Fry's Springs,75.3,84.9,71.4,78.3,73.0
-51540000700,51540000700,Charlottesville,Barracks-Rugby,74.9,77.5,72.2,78.5,72.3
-51540000202,51540000202,Charlottesville,10th & Page-Venable,64.4,57.8,49.6,81.5,69.4
-51540000401,51540000401,Charlottesville,Ridge St.,68.8,82.1,55.3,79.4,75.3
-51540000501,51540000501,Charlottesville,Fifeville-Cherry Avenue,67.6,79.7,51.8,80.5,74.7
-51540000600,51540000600,Charlottesville,JPA-Fontaine,64.1,54.6,51.0,76.3,68.0
-51540000302,51540000302,Charlottesville,Woolen Mills,73.7,85.6,71.3,78.3,74.0
+GEOID,county,tractnames,DENTAL,CHECKUP,COLON_SCREEN,MAMMOUSE
+51540000201,Charlottesville,Rose Hill-Harris-Venable,66.4,75.3,67.9,78.8
+51540000402,Charlottesville,Belmont,65.6,75.5,66.6,74.6
+51540000501,Charlottesville,Fifeville-Cherry Avenue,58.8,76.2,66.4,79.2
+51540000900,Charlottesville,Locust Grove,72.7,78.2,70.8,74.1
+51540000600,Charlottesville,JPA-Fontaine,49.4,71.6,57.6,69.7
+51540000502,Charlottesville,Fry's Springs,73.1,76.0,70.2,80.5
+51540000800,Charlottesville,Greenbrier-Meadows,72.4,80.6,70.1,77.9
+51540000202,Charlottesville,10th & Page-Venable,55.3,74.2,57.9,72.3
+51540000401,Charlottesville,Ridge St.,62.9,77.9,65.8,74.8
+51540000302,Charlottesville,Woolen Mills,70.2,76.6,73.4,80.4
+51540000700,Charlottesville,Barracks-Rugby,67.3,74.7,72.0,76.6
+51540001000,Charlottesville,Downtown Area,76.5,78.5,77.5,79.2

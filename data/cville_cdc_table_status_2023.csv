@@ -1,13 +1,13 @@
-GEOID.x,GEOID.y,county,tractnames,MHLTH,PHLTH
-51540000501,51540000501,Charlottesville,Fifeville-Cherry Avenue,20.8,12.8
-51540000600,51540000600,Charlottesville,JPA-Fontaine,27.5,8.8
-51540000900,51540000900,Charlottesville,Locust Grove,13.7,8.3
-51540000202,51540000202,Charlottesville,10th & Page-Venable,30.7,10.8
-51540000700,51540000700,Charlottesville,Barracks-Rugby,16.9,7.2
-51540000302,51540000302,Charlottesville,Woolen Mills,14.9,8.3
-51540000402,51540000402,Charlottesville,Belmont,16.6,9.9
-51540001000,51540001000,Charlottesville,Downtown Area,12.9,7.7
-51540000800,51540000800,Charlottesville,Greenbrier-Meadows,13.3,10.0
-51540000502,51540000502,Charlottesville,Fry's Springs,14.7,7.6
-51540000401,51540000401,Charlottesville,Ridge St.,19.3,12.3
-51540000201,51540000201,Charlottesville,Rose Hill-Harris-Venable,19.7,8.3
+GEOID,county,tractnames,MHLTH,PHLTH
+51540000402,Charlottesville,Belmont,18.4,12.3
+51540001000,Charlottesville,Downtown Area,14.0,9.3
+51540000800,Charlottesville,Greenbrier-Meadows,13.9,11.5
+51540000401,Charlottesville,Ridge St.,18.3,12.9
+51540000502,Charlottesville,Fry's Springs,15.5,9.0
+51540000201,Charlottesville,Rose Hill-Harris-Venable,20.3,10.3
+51540000900,Charlottesville,Locust Grove,15.2,11.2
+51540000700,Charlottesville,Barracks-Rugby,20.5,10.7
+51540000501,Charlottesville,Fifeville-Cherry Avenue,20.8,13.1
+51540000302,Charlottesville,Woolen Mills,16.5,10.7
+51540000202,Charlottesville,10th & Page-Venable,27.6,12.2
+51540000600,Charlottesville,JPA-Fontaine,27.7,12.0
