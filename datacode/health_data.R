@@ -418,10 +418,6 @@ cdc_filtered <- cdc_filtered %>%
 cdc_filtered <- cdc_filtered %>% 
   left_join(tract_names)
 
-# # Join tract names
-# cdc_filtered <- cdc_filtered %>% 
-#   left_join(tract_names_crosswalk, by = join_by(GEOID == GEOID_TRACT_10), keep = TRUE)
-
 # CDC data for Data Viz Table
 
 cdc_table_outcomes <- cdc_filtered %>% 

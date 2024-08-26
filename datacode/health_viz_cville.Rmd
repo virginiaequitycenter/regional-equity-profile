@@ -1,0 +1,321 @@
+---
+title: "Equity Profile Health - Charlottesville"
+output: html_document
+---
+
+```{css, echo=FALSE}
+.main-container.container-fluid {
+max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 4.167%;
+}
+
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+# Load packages ----
+library(tidyverse)
+library(scales)
+library(RColorBrewer)
+library(ggspatial)
+library(tigris)
+library(readxl)
+library(stringr)
+library(sf)
+library(ggthemes)
+library(rcartocolor)
+library(patchwork)
+library(gt)
+
+# Education palette ----
+pal_health <- carto_pal(7, "Teal")
+# "#D1EEEA" "#A8DBD9" "#85C4C9" "#68ABB8" "#4F90A6" "#3B738F" "#2A5674"
+
+
+# Tract geometries ----
+cville_geo <- tracts(state = "VA", county = "540")
+
+# Common Items
+locality_name <- "City of Charlottesville"
+source_acs <- "Data Source: U.S. Census Bureau, American Community Survey, 2022"
+
+```
+
+```{r, echo=FALSE, fig.height=4}
+# Life Expectancy by Race: Charlottesville, 2024 ----
+cville_life_exp_county <- read_csv("../data/cville_life_exp_county_2024.csv")
+
+cville_life_exp_county %>% 
+  mutate(group = factor(group, levels = c("white", "ltnx", "black", "asian", "all"),
+                       labels = c("White", "Hispanic", "Black", "Asian", "All Residents")),
+         text = paste0(round(lifeexp_est, 0), " years")) %>%
+  ggplot(aes(x = group, y = lifeexp_est, fill = group)) +  
+  geom_segment(aes(x = group, yend = lower_bound, y = upper_bound), linewidth=10, color= c("#b2b8be",rep("#3B8EA5",4)), alpha = 0.8) +
+  geom_segment(aes(y=lifeexp_est, yend = lifeexp_est+0.15), linewidth=12) +
+  # geom_bar(stat = "identity", width = 0.8) +
+  geom_text(aes(x = group, y = lifeexp_est, label = text),
+            vjust = -2.5,
+            # hjust = -0.2,
+            size = 3,
+            color = "black") +
+  scale_x_discrete(name = "") +
+  scale_y_continuous(
+    # labels = scales::label_currency(scale = 1, scale_cut = cut_short_scale()),
+                     limits = c(50,150),
+                     expand = expansion(mult = c(0, 0)),
+                     name = "") +
+   # scale_color_manual(values = c(rep("#3B8EA5",4),"#b2b8be"))+
+  coord_flip() +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid.minor.x = element_blank()) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(fill = "",
+       title = "Life Expectancy by Race", 
+      subtitle = locality_name, 
+      caption = "Data Source: County Health Rankings, 2024") 
+
+
+```
+
+
+```{r, echo=FALSE, fig.height=8}
+# Life Expectancy by tract: Charlottesville, 2022 ----
+cville_life_exp_tract <- read_csv("../data/cville_life_exp_tract_2015.csv") %>%
+  mutate(GEOID.y = as.character(GEOID.y))
+
+cville_life_exp_tract <- cville_life_exp_tract %>%
+  left_join(cville_geo, by = join_by(GEOID.y == GEOID), keep = TRUE) %>% 
+  st_as_sf()
+
+# Geospatial visualization
+cville_life_exp_tract %>%
+  mutate(text =  case_when(is.na(lifeexpE) ~ "",
+                          !is.na(lifeexpE) ~ paste0(round(lifeexpE, 0)))
+         ) %>%
+  ggplot() +
+  annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
+  geom_sf(aes(fill = lifeexpE), color = "white") +
+  geom_sf_text(aes(label = text), size = 2.5, color = "black") +
+  scale_fill_stepsn(colors = pal_health,
+                    # labels = scales::label_currency(scale = 1),
+                    n.breaks = 6,
+                    guide = guide_colourbar(title = "Life Expectancy",
+                                            title.position = "top",
+                                            direction = "horizontal",
+                                            title.hjust = 0.5,
+                                            # nbin = 6,
+                                            theme = theme(legend.key.height  = unit(0.5, "lines"),
+                                                          legend.key.width = unit(12, "lines"),
+                                                          text = element_text(size = 11)) 
+                                            )
+                    )+
+  labs(title = "Life Expectancy by Census Tract", 
+      subtitle = locality_name, 
+      caption = "Data Source: USALEEP, 2008-2015") +
+  theme_map()+
+  theme(legend.position.inside=c(1, 1.04),
+        legend.justification="right",
+        plot.title = element_text(size = 14),
+        plot.subtitle = element_text(size = 14))
+
+
+```
+
+```{r, echo=FALSE, fig.height=4}
+# Health Insurance by Race: Charlottesville, 2022 ----
+cville_health_insured_county <- read_csv("../data/cville_health_insured_county_race_2022.csv")
+
+cville_health_insured_county %>%
+  filter(!group %in% c("White alone", "American Indian and Alaska Native alone", "Native Hawaiian and Other Pacific Islander alone", "Some other race alone")) %>% 
+  mutate(group = factor(group, levels = c("White non Hispanic", "Two or more races", "Hispanic or Latino", "Black or African American alone", "Asian alone", "All"),
+                       labels = c("White", "Multiracial", "Hispanic", "Black", "Asian", "All Residents")),
+         text = paste0(round(percent_uninsured,0), "%")) %>%
+  ggplot(aes(x = group, y = percent_uninsured, fill = group)) +
+  coord_flip() +
+  geom_bar(stat = "identity", width = 0.8) +
+  geom_text(aes(label = text), 
+            vjust = 0.5,
+            hjust = -0.2,
+            size = 3,
+            color = "black") +
+  scale_y_continuous(labels = scales::label_percent(scale = 1),
+                     limits = c(0,40),
+                     expand = expansion(mult = c(0, .1))) +
+  scale_fill_manual(values = c(rep("#3B8EA5",5),"#b2b8be"))+
+  labs(
+    x = "",
+    y = "Percent Uninsured",
+    title = "Residents with No Health Insurance by Race",
+    subtitle = locality_name, 
+    caption = source_acs
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid.minor.x = element_blank())
+
+```
+
+```{r, echo=FALSE, fig.height=8}
+# Health Insurance by tract: Charlottesville, 2022 ----
+cville_health_insured_tract <- read_csv("../data/cville_health_insured_tract_2022.csv") %>%
+  mutate(GEOID = as.character(GEOID))
+
+cville_health_insured_tract <- cville_health_insured_tract %>%
+  left_join(cville_geo, by = "GEOID") %>% 
+  st_as_sf()
+
+# Geospatial visualization
+cville_health_insured_tract %>%
+  mutate(text = paste0(round(percent_uninsured,0), "%")) %>%
+  ggplot() +
+  annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
+  geom_sf(aes(fill = round(percent_uninsured,0)), color = "white") +
+  geom_sf_text(aes(label = text), size = 2.5, color = "black") +
+  scale_fill_stepsn(colors = pal_health,
+                    labels = scales::label_percent(scale = 1),
+                    n.breaks = 6,
+                    guide = guide_colourbar(title = "Percent Uninsured",
+                                            title.position = "top",
+                                            direction = "horizontal",
+                                            title.hjust = 0.5,
+                                            # nbin = 6,
+                                            theme = theme(legend.key.height  = unit(0.5, "lines"),
+                                                          legend.key.width = unit(12, "lines"),
+                                                          text = element_text(size = 11)) 
+                                            )
+                    )+
+  labs(title = "No Health Insurance by Tract", 
+      subtitle = locality_name, 
+      caption = source_acs) +
+  theme_map()+
+  theme(legend.position.inside=c(1, 1.04),
+        legend.justification="right",
+        plot.title = element_text(size = 14),
+        plot.subtitle = element_text(size = 14))
+
+
+```
+
+```{r, echo=FALSE, fig.height=9, fig.width=8}
+# CDC Places: Health Outcomes: Charlottesville, 2023
+cville_cdc_outcomes <- read_csv("../data/cville_cdc_table_outcomes_2023.csv")
+cville_cdc_outcomes <- cville_cdc_outcomes[order(cville_cdc_outcomes$tractnames, decreasing=FALSE),]
+
+
+pal_blue <- colorRampPalette(brewer.pal(9, "Blues"))(15)
+pal_diverge <- colorRampPalette(brewer.pal(11, "RdYlBu"))(15)
+
+cville_cdc_outcomes %>%
+  select(tractnames, CASTHMA, BPHIGH, CANCER, DIABETES, DEPRESSION, HIGHCHOL, OBESITY) %>% 
+  rename(ASTHMA = CASTHMA) %>% 
+  # select(-GEOID.x, -GEOID.y, -county, -STROKE, -COPD, -CHD, -KIDNEY) %>%
+  mutate(across(OBESITY:CANCER, ~ as.numeric(.x))) %>%
+  gt(rowname_col = "tractnames") %>%
+  data_color(
+    columns = -tractnames,
+    direction = "column",
+    # domain = c(0, 50),
+    palette = pal_health
+    # palette = "Blues"
+    # reverse = TRUE
+    # na_color = "white"
+  )
+
+
+```
+
+```{r, echo=FALSE, fig.height=9, fig.width=8}
+# CDC Places: Health Prevention: Charlottesville, 2023 ----
+cville_cdc_prevent <- read_csv("../data/cville_cdc_table_prevent_2023.csv")
+cville_cdc_prevent <- cville_cdc_prevent[order(cville_cdc_prevent$tractnames, decreasing=FALSE),]
+
+
+pal_blue <- colorRampPalette(brewer.pal(9, "Blues"))(15)
+pal_diverge <- colorRampPalette(brewer.pal(11, "RdYlBu"))(15)
+
+cville_cdc_prevent %>%
+  # select(-GEOID.x, -GEOID.y, -county) %>%
+  select(tractnames, CHECKUP, DENTAL, MAMMOUSE, COLON_SCREEN) %>% 
+  mutate(across(COLON_SCREEN:CHECKUP, ~ as.numeric(.x))) %>%
+  gt(rowname_col = "tractnames") %>%
+  data_color(
+    direction = "column",
+    # method = "numeric",
+    domain = c(30,90),
+    palette = "RdYlBu"
+    # na_color = "white"
+  )
+
+
+```
+
+```{r, echo=FALSE, fig.width=6}
+# Food Insecurity: Charlottesville, 2022 ----
+cville_food_insecure <- read_csv("../data/cville_food_insecure_2019_2022.csv")
+
+cville_food_insecure <- cville_food_insecure %>% 
+  filter(year == 2022) %>% 
+  select(county_state, year, overall_food_insecurity_rate, food_insecurity_rate_among_black_persons_all_ethnicities, food_insecurity_rate_among_hispanic_persons_any_race, food_insecurity_rate_among_white_non_hispanic_persons, child_food_insecurity_rate, number_of_food_insecure_persons_overall) %>% 
+  pivot_longer(overall_food_insecurity_rate:child_food_insecurity_rate)
+
+food <- cville_food_insecure %>% 
+  mutate(secure_value = 1 - value)
+
+overall <- food %>% filter(name == "overall_food_insecurity_rate") %>% select(value, secure_value) %>% as.list()
+black <- food %>% filter(name == "food_insecurity_rate_among_black_persons_all_ethnicities") %>% select(value, secure_value) %>% as.list()
+hispanic <- food %>% filter(name == "food_insecurity_rate_among_hispanic_persons_any_race") %>% select(value, secure_value) %>% as.list()
+white <- food %>% filter(name == "food_insecurity_rate_among_white_non_hispanic_persons") %>% select(value, secure_value) %>% as.list()
+
+child <- food %>% filter(name == "child_food_insecurity_rate") %>% select(value, secure_value) %>% as.list()
+
+
+library(personograph)
+
+personograph(overall, 
+             icon.style=6,
+             # n.icons=10,
+             # dimensions=c(2,5),
+             colors=list(secure_value="grey", value="blue"),
+             # plot.width=0.75,
+             fig.title = "Overall Food Insecurity")
+
+personograph(black,
+             icon.style=6,
+             # n.icons=4,
+             # dimensions=c(1,4),
+             colors=list(secure_value="grey", value="blue"),
+             # plot.width=0.75,
+             fig.title = "Food Insecurity Rate Among Black Residents")
+
+personograph(hispanic,
+             icon.style=6,
+             # n.icons=6,
+             # dimensions=c(1,5),
+             colors=list(secure_value="grey", value="blue"),
+             # plot.width=0.75,
+             fig.title = "Food Insecurity Rate Among Hispanic Residents")
+
+personograph(white, 
+             icon.style=6,
+             # n.icons=15,
+             # dimensions=c(3,5),\
+             colors=list(secure_value="grey", value="blue"),
+             # plot.width=0.75,
+             fig.title = "Food Insecurity Rate Among White Residents")
+
+personograph(child, 
+             icon.style=6,
+             # n.icons=12,
+             # dimensions=c(2,6),\
+             colors=list(secure_value="grey", value="blue"),
+             # plot.width=0.75,
+             fig.title = "Child Food Insecurity Rate")
+
+
+
+```
+
