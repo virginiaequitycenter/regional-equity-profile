@@ -212,9 +212,12 @@ pal_diverge <- colorRampPalette(brewer.pal(11, "RdYlBu"))(15)
 cville_cdc_outcomes %>%
   select(tractnames, CASTHMA, BPHIGH, CANCER, DIABETES, DEPRESSION, HIGHCHOL, OBESITY) %>% 
   rename(ASTHMA = CASTHMA) %>% 
-  # select(-GEOID.x, -GEOID.y, -county, -STROKE, -COPD, -CHD, -KIDNEY) %>%
-  mutate(across(OBESITY:CANCER, ~ as.numeric(.x))) %>%
+  mutate(across(ASTHMA:OBESITY, ~ (as.numeric(.x)/100))) %>%
   gt(rowname_col = "tractnames") %>%
+  fmt_percent(
+    columns = -tractnames,
+    decimals = 0
+  ) %>% 
   data_color(
     columns = -tractnames,
     direction = "column",
@@ -238,14 +241,18 @@ pal_blue <- colorRampPalette(brewer.pal(9, "Blues"))(15)
 pal_diverge <- colorRampPalette(brewer.pal(11, "RdYlBu"))(15)
 
 cville_cdc_prevent %>%
-  # select(-GEOID.x, -GEOID.y, -county) %>%
   select(tractnames, CHECKUP, DENTAL, MAMMOUSE, COLON_SCREEN) %>% 
-  mutate(across(COLON_SCREEN:CHECKUP, ~ as.numeric(.x))) %>%
+  mutate(across(CHECKUP:COLON_SCREEN, ~ (as.numeric(.x)/100))) %>%
   gt(rowname_col = "tractnames") %>%
+  fmt_percent(
+    columns = -tractnames,
+    decimals = 0
+  ) %>% 
   data_color(
+    columns = -tractnames,
     direction = "column",
     # method = "numeric",
-    domain = c(30,90),
+    domain = c(0.30,0.90),
     palette = "RdYlBu"
     # na_color = "white"
   )
@@ -253,7 +260,7 @@ cville_cdc_prevent %>%
 
 ```
 
-```{r, echo=FALSE, fig.width=6}
+```{r, echo=FALSE, fig.width=12, fig.height=2}
 # Food Insecurity: Charlottesville, 2022 ----
 cville_food_insecure <- read_csv("../data/cville_food_insecure_2019_2022.csv")
 
@@ -277,43 +284,48 @@ library(personograph)
 
 personograph(overall, 
              icon.style=6,
-             # n.icons=10,
-             # dimensions=c(2,5),
-             colors=list(secure_value="grey", value="blue"),
+             n.icons=10,
+             dimensions=c(1,10),
+             colors=list(value="blue", secure_value="grey"),
              # plot.width=0.75,
-             fig.title = "Overall Food Insecurity")
+             fig.title = "Overall Food Insecurity",
+             draw.legend = FALSE)
 
 personograph(black,
              icon.style=6,
-             # n.icons=4,
-             # dimensions=c(1,4),
+             n.icons=10,
+             dimensions=c(1,10),
              colors=list(secure_value="grey", value="blue"),
              # plot.width=0.75,
-             fig.title = "Food Insecurity Rate Among Black Residents")
+             fig.title = "Food Insecurity Rate Among Black Residents",
+             draw.legend = FALSE)
 
 personograph(hispanic,
              icon.style=6,
-             # n.icons=6,
-             # dimensions=c(1,5),
+             n.icons=10,
+             dimensions=c(1,10),
              colors=list(secure_value="grey", value="blue"),
              # plot.width=0.75,
-             fig.title = "Food Insecurity Rate Among Hispanic Residents")
+             fig.title = "Food Insecurity Rate Among Hispanic Residents",
+             draw.legend = FALSE)
 
 personograph(white, 
              icon.style=6,
-             # n.icons=15,
-             # dimensions=c(3,5),\
+             n.icons=10,
+             dimensions=c(1,10),
              colors=list(secure_value="grey", value="blue"),
              # plot.width=0.75,
-             fig.title = "Food Insecurity Rate Among White Residents")
+             fig.title = "Food Insecurity Rate Among White Residents",
+             draw.legend = FALSE)
 
 personograph(child, 
              icon.style=6,
-             # n.icons=12,
-             # dimensions=c(2,6),\
+             n.icons=10,
+             dimensions=c(1,10),
              colors=list(secure_value="grey", value="blue"),
              # plot.width=0.75,
-             fig.title = "Child Food Insecurity Rate")
+             fig.title = "Child Food Insecurity Rate",
+             draw.legend = FALSE)
 
 
 
