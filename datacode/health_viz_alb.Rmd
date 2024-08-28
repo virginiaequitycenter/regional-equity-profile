@@ -85,7 +85,8 @@ alb_life_exp_county %>%
 ```{r, echo=FALSE, fig.height=8}
 # Life Expectancy by tract: Albemarle, 2022 ----
 alb_life_exp_tract <- read_csv("../data/alb_life_exp_tract_2015.csv") %>%
-  mutate(GEOID.y = as.character(GEOID.y))
+  mutate(GEOID.y = as.character(GEOID.y),
+         lifeexp_round = round(lifeexpE, digits = 0))
 
 alb_life_exp_tract <- alb_life_exp_tract %>%
   left_join(alb_geo, by = join_by(GEOID.y == GEOID), keep = TRUE) %>% 
@@ -124,6 +125,57 @@ alb_life_exp_tract %>%
 
 
 ```
+
+```{r, echo=FALSE, message=FALSE, fig.width=4, fig.height=8.75}
+# Life Expectancy by Tract, Gap chart, 2022 ----
+
+alb_life <- alb_life_exp_tract %>% 
+  group_by(lifeexp_round) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "\n")) %>% 
+  na.exclude() 
+
+names <- alb_life$tractnames
+lifeexp <- alb_life$lifeexp_round
+
+  ggplot(alb_life, aes(x = 0, y = lifeexp_round, label = names)) +
+    geom_line(color = "grey", size = 1)+
+    geom_point(aes(color=as.factor(lifeexp_round)), size=5)+
+    geom_text(label = names, hjust = 0, nudge_x = 0.005, 
+              # nudge_y = .05, 
+              size = 3.5, 
+              # angle=55, 
+              lineheight = 0.8) +
+   scale_color_carto_d(name = "Life expectancy: ",
+                           type = "diverging", palette = "Teal", direction = 1) +
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0))+
+    scale_y_continuous(
+      # limits = c(min(lifeexp), max(lifeexp)+10),
+                       breaks = lifeexp,
+                       labels = paste0(lifeexp," yrs")
+                       ) +
+    labs(title = "Life Expectancy by Census Tract", 
+      subtitle = locality_name, 
+      caption = "Data Source: USALEEP, 2008-2015") +
+  # coord_flip() +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 11),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+
+```
+
 
 ```{r, echo=FALSE, fig.height=4}
 # Health Insurance by Race: Albemarle, 2022 ----

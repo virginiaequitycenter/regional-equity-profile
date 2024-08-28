@@ -86,7 +86,9 @@ cville_life_exp_county %>%
 ```{r, echo=FALSE, fig.height=8}
 # Life Expectancy by tract: Charlottesville, 2022 ----
 cville_life_exp_tract <- read_csv("../data/cville_life_exp_tract_2015.csv") %>%
-  mutate(GEOID.y = as.character(GEOID.y))
+  mutate(GEOID.y = as.character(GEOID.y),
+         lifeexp_round = round(lifeexpE, digits = 0))
+
 
 cville_life_exp_tract <- cville_life_exp_tract %>%
   left_join(cville_geo, by = join_by(GEOID.y == GEOID), keep = TRUE) %>% 
@@ -125,6 +127,53 @@ cville_life_exp_tract %>%
 
 
 ```
+
+```{r, echo=FALSE, message=FALSE, fig.width=4, fig.height=5}
+# Life Expectancy by Tract, Gap chart, 2022 ----
+
+cville_life <- cville_life_exp_tract %>% 
+  group_by(lifeexp_round) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "\n")) %>% 
+  na.exclude() 
+
+names <- cville_life$tractnames
+lifeexp <- cville_life$lifeexp_round
+
+  ggplot(cville_life, aes(x = 0, y = lifeexp_round, label = names)) +
+    geom_line(color = "grey", size = 1)+
+    geom_point(aes(color=as.factor(lifeexp_round)), size=5)+
+    geom_text(label = names, hjust = 0, nudge_x = 0.005, size = 4, lineheight = 0.8) +
+   scale_color_carto_d(name = "Life expectancy: ",
+                           type = "diverging", palette = "Teal", direction = 1) +
+    # scale_color_brewer(palette = "YlOrRd")+
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0))+
+    scale_y_continuous(
+      # limits = c(min(lifeexp), max(lifeexp)+10),
+                       breaks = lifeexp,
+                       labels = paste0(lifeexp," yrs")
+                       ) +
+    labs(title = "Life Expectancy by Census Tract", 
+      subtitle = locality_name, 
+      caption = "Data Source: USALEEP, 2008-2015") +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 11),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+
+```
+
 
 ```{r, echo=FALSE, fig.height=4}
 # Health Insurance by Race: Charlottesville, 2022 ----
