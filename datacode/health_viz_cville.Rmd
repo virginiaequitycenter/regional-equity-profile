@@ -184,7 +184,7 @@ cville_lifeexp_gap <-  ggplot(cville_life, aes(x = 0, y = lifeexp_round, label =
 ```{r, echo=FALSE, fig.height=4}
 # Health Insurance by Race: Charlottesville, 2022 ----
 cville_health_insured_county <- read_csv("../data/cville_health_insured_county_race_2022.csv")
-
+  
 cville_health_insured_county %>%
   filter(!group %in% c("White alone", "American Indian and Alaska Native alone", "Native Hawaiian and Other Pacific Islander alone", "Some other race alone")) %>% 
   mutate(group = factor(group, levels = c("White non Hispanic", "Two or more races", "Hispanic or Latino", "Black or African American alone", "Asian alone", "All"),
