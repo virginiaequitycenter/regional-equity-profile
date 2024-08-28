@@ -95,7 +95,7 @@ cville_life_exp_tract <- cville_life_exp_tract %>%
   st_as_sf()
 
 # Geospatial visualization
-cville_life_exp_tract %>%
+cville_map <- cville_life_exp_tract %>%
   mutate(text =  case_when(is.na(lifeexpE) ~ "",
                           !is.na(lifeexpE) ~ paste0(round(lifeexpE, 0)))
          ) %>%
@@ -116,11 +116,11 @@ cville_life_exp_tract %>%
                                                           text = element_text(size = 11)) 
                                             )
                     )+
-  labs(title = "Life Expectancy by Census Tract", 
-      subtitle = locality_name, 
-      caption = "Data Source: USALEEP, 2008-2015") +
+  # labs(title = "Life Expectancy by Census Tract", 
+  #     subtitle = locality_name, 
+  #     caption = "Data Source: USALEEP, 2008-2015") +
   theme_map()+
-  theme(legend.position.inside=c(1, 1.04),
+  theme(legend.position.inside=c(1, 1.06),
         legend.justification="right",
         plot.title = element_text(size = 14),
         plot.subtitle = element_text(size = 14))
@@ -128,7 +128,7 @@ cville_life_exp_tract %>%
 
 ```
 
-```{r, echo=FALSE, message=FALSE, fig.width=4, fig.height=5}
+```{r, echo=FALSE, message=FALSE, fig.width=9, fig.height=7}
 # Life Expectancy by Tract, Gap chart, 2022 ----
 
 cville_life <- cville_life_exp_tract %>% 
@@ -139,7 +139,7 @@ cville_life <- cville_life_exp_tract %>%
 names <- cville_life$tractnames
 lifeexp <- cville_life$lifeexp_round
 
-  ggplot(cville_life, aes(x = 0, y = lifeexp_round, label = names)) +
+cville_lifeexp_gap <-  ggplot(cville_life, aes(x = 0, y = lifeexp_round, label = names)) +
     geom_line(color = "grey", size = 1)+
     geom_point(aes(color=as.factor(lifeexp_round)), size=5)+
     geom_text(label = names, hjust = 0, nudge_x = 0.005, size = 4, lineheight = 0.8) +
@@ -153,9 +153,9 @@ lifeexp <- cville_life$lifeexp_round
                        breaks = lifeexp,
                        labels = paste0(lifeexp," yrs")
                        ) +
-    labs(title = "Life Expectancy by Census Tract", 
-      subtitle = locality_name, 
-      caption = "Data Source: USALEEP, 2008-2015") +
+    # labs(title = "Life Expectancy by Census Tract", 
+    #   subtitle = locality_name, 
+    #   caption = "Data Source: USALEEP, 2008-2015") +
   theme_minimal()+
     theme(axis.line.x = element_blank(),
           axis.ticks.x = element_blank(),
@@ -171,6 +171,12 @@ lifeexp <- cville_life$lifeexp_round
           plot.caption.position = "plot",
           plot.caption = element_text(hjust = 0),
           legend.position="none")
+  
+  (cville_map + cville_lifeexp_gap) +
+  plot_layout(widths = c(2, 1)) +
+  plot_annotation(title = 'Life Expectancy by Census Tract',
+                  subtitle = locality_name,
+                  caption = "Data Source: USALEEP, 2008-2015")
 
 ```
 

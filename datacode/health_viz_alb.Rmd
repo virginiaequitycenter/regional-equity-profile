@@ -93,7 +93,7 @@ alb_life_exp_tract <- alb_life_exp_tract %>%
   st_as_sf()
 
 # Geospatial visualization
-alb_life_exp_tract %>%
+alb_map <- alb_life_exp_tract %>%
   mutate(text =  case_when(is.na(lifeexpE) ~ "",
                           !is.na(lifeexpE) ~ paste0(round(lifeexpE, 0)))
          ) %>%
@@ -114,11 +114,11 @@ alb_life_exp_tract %>%
                                                           text = element_text(size = 11)) 
                                             )
                     )+
-  labs(title = "Life Expectancy by Census Tract", 
-      subtitle = locality_name, 
-      caption = "Data Source: USALEEP, 2008-2015") +
+  # labs(title = "Life Expectancy by Census Tract", 
+  #     subtitle = locality_name, 
+  #     caption = "Data Source: USALEEP, 2008-2015") +
   theme_map()+
-  theme(legend.position.inside=c(1, 1.04),
+  theme(legend.position.inside=c(1, 1.06),
         legend.justification="right",
         plot.title = element_text(size = 14),
         plot.subtitle = element_text(size = 14))
@@ -126,7 +126,7 @@ alb_life_exp_tract %>%
 
 ```
 
-```{r, echo=FALSE, message=FALSE, fig.width=4, fig.height=8.75}
+```{r, echo=FALSE, message=FALSE, fig.width=10, fig.height=8.75}
 # Life Expectancy by Tract, Gap chart, 2022 ----
 
 alb_life <- alb_life_exp_tract %>% 
@@ -137,7 +137,7 @@ alb_life <- alb_life_exp_tract %>%
 names <- alb_life$tractnames
 lifeexp <- alb_life$lifeexp_round
 
-  ggplot(alb_life, aes(x = 0, y = lifeexp_round, label = names)) +
+alb_lifeexp_gap <-  ggplot(alb_life, aes(x = 0, y = lifeexp_round, label = names)) +
     geom_line(color = "grey", size = 1)+
     geom_point(aes(color=as.factor(lifeexp_round)), size=5)+
     geom_text(label = names, hjust = 0, nudge_x = 0.005, 
@@ -154,9 +154,9 @@ lifeexp <- alb_life$lifeexp_round
                        breaks = lifeexp,
                        labels = paste0(lifeexp," yrs")
                        ) +
-    labs(title = "Life Expectancy by Census Tract", 
-      subtitle = locality_name, 
-      caption = "Data Source: USALEEP, 2008-2015") +
+    # labs(title = "Life Expectancy by Census Tract", 
+    #   subtitle = locality_name, 
+    #   caption = "Data Source: USALEEP, 2008-2015") +
   # coord_flip() +
   theme_minimal()+
     theme(axis.line.x = element_blank(),
@@ -173,6 +173,12 @@ lifeexp <- alb_life$lifeexp_round
           plot.caption.position = "plot",
           plot.caption = element_text(hjust = 0),
           legend.position="none")
+  
+  (alb_map + alb_lifeexp_gap) +
+  plot_layout(widths = c(2, 1)) +
+  plot_annotation(title = 'Life Expectancy by Census Tract',
+                  subtitle = locality_name,
+                  caption = "Data Source: USALEEP, 2008-2015")
 
 ```
 
