@@ -303,7 +303,7 @@ burdened_plot <- alb_rent_burden_tract %>%
                      limits = c(0,100),
                      expand = expansion(mult = c(0.005, 0)),
                      name = "") +
-  scale_fill_manual(values = c("#ff641e", "#3B8EA5")) + 
+  scale_fill_manual(values = c("#3B8EA5","#ff641e")) + 
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.justification="right",
