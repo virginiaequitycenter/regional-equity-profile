@@ -44,7 +44,7 @@ source_acs <- "Data Source: U.S. Census Bureau, American Community Survey, 2022"
 
 ```
 
-```{r, echo=FALSE, fig.height=4}
+```{r, echo=FALSE, fig.height=3}
 # Life Expectancy by Race: Charlottesville, 2024 ----
 cville_life_exp_county <- read_csv("../data/cville_life_exp_county_2024.csv")
 
@@ -52,8 +52,9 @@ cville_life_exp_county %>%
   mutate(group = factor(group, levels = c("white", "ltnx", "black", "asian", "all"),
                        labels = c("White", "Hispanic", "Black", "Asian", "All Residents")),
          text = paste0(round(lifeexp_est, 0), " years")) %>%
+  filter(! group %in% c("Hispanic", "Asian")) %>% 
   ggplot(aes(x = group, y = lifeexp_est, fill = group)) +  
-  geom_segment(aes(x = group, yend = lower_bound, y = upper_bound), linewidth=10, color= c("#b2b8be",rep("#3B8EA5",4)), alpha = 0.8) +
+  geom_segment(aes(x = group, yend = lower_bound, y = upper_bound), linewidth=10, color= c("#b2b8be",rep("#3B8EA5",2)), alpha = 0.8) +
   geom_segment(aes(y=lifeexp_est, yend = lifeexp_est+0.15), linewidth=12) +
   # geom_bar(stat = "identity", width = 0.8) +
   geom_text(aes(x = group, y = lifeexp_est, label = text),
@@ -64,7 +65,7 @@ cville_life_exp_county %>%
   scale_x_discrete(name = "") +
   scale_y_continuous(
     # labels = scales::label_currency(scale = 1, scale_cut = cut_short_scale()),
-                     limits = c(50,150),
+                     limits = c(60,95),
                      expand = expansion(mult = c(0, 0)),
                      name = "") +
    # scale_color_manual(values = c(rep("#3B8EA5",4),"#b2b8be"))+
@@ -76,7 +77,7 @@ cville_life_exp_county %>%
   labs(fill = "",
        title = "Life Expectancy by Race", 
       subtitle = locality_name, 
-      caption = "Data Source: County Health Rankings, 2024") 
+      caption = "Note: Life expectancy values are not provided for Asian and Hispanic populations because the total\n  population counts for these groups are too small for reliable values. See Data Methods for more.\nData Source: County Health Rankings, 2024") 
 
 
 ```
