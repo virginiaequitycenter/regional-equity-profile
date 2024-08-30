@@ -17,3 +17,6 @@ __Living Standards__
 __Health__
     - [Charlottesville](https://virginiaequitycenter.github.io/regional-equity-profile/datacode/health_viz_cville.html)
     - [Albemarle](https://virginiaequitycenter.github.io/regional-equity-profile/datacode/health_viz_alb.html)
+
+__AHDI__
+    - [Albermale & Charlottesville](https://virginiaequitycenter.github.io/regional-equity-profile/datacode/ahdi_viz.html)
