@@ -37,6 +37,11 @@ pal_edu <- carto_pal(7, "RedOr")
 pal_inc <- carto_pal(7, "Emrld")
 pal_ahdi <-carto_pal(7, "Purp")
 
+pal_safe <- c("#332288", "#88CCEE", "#CC6677", "#117733")
+# pal_safe <- carto_pal(12, "Safe")
+# "#88CCEE" "#CC6677" "#DDCC77" "#117733" "#332288" "#AA4499" "#44AA99" "#999933" "#882255" "#661100" "#6699CC"
+
+
 # Tract geometries ----
 alb_geo <- tracts(state = "VA", county = "003")
 cville_geo <- tracts(state = "VA", county = "540")
@@ -117,7 +122,7 @@ ahdi_table %>%
 ```
 
 ```{r, echo=FALSE, fig.width=10, fig.height=8.75}
-# AHDI Albemarle tracts ----
+# AHDI Albemarle tracts, geospatial ----
 
 ahdi_tract_alb <- read_csv("../data/ahdi_tract_alb.csv") %>% 
   mutate(GEOID = as.character(GEOID),
@@ -154,21 +159,21 @@ ahdi_alb_map <- ahdi_tract_alb %>%
         plot.title = element_text(size = 14),
         plot.subtitle = element_text(size = 14))
 
-# Rank/gap chart
-alb_gap_data <- ahdi_tract_alb %>% 
+# Rank plot
+alb_rank_data <- ahdi_tract_alb %>% 
   group_by(ahdi) %>% 
   summarise(tractnames = paste(tractnames, collapse = "\n")) %>% 
   na.exclude() 
 
-names <- alb_gap_data$tractnames
-ahdi_label <- alb_gap_data$ahdi
+names <- alb_rank_data$tractnames
+ahdi_label <- alb_rank_data$ahdi
 
-alb_ahdi_gap <-  ggplot(alb_gap_data, aes(x = 0, y = ahdi, label = names)) +
+alb_ahdi_rank <-  ggplot(alb_rank_data, aes(x = 0, y = ahdi, label = names)) +
     geom_line(color = "grey", size = 1)+
     geom_point(aes(color=as.factor(ahdi)), size=5)+
     geom_text(label = names, hjust = 0, nudge_x = 0.005, 
-              nudge_y = case_when(alb_gap_data$ahdi %in% c(6.8,8.1) ~ -0.04,
-                                  alb_gap_data$ahdi %in% c(6.9,8.2) ~ 0.05,
+              nudge_y = case_when(alb_rank_data$ahdi %in% c(6.8,8.1) ~ -0.04,
+                                  alb_rank_data$ahdi %in% c(6.9,8.2) ~ 0.05,
                              .default = 0.01),
               size = 3.25, 
               # angle=55, 
@@ -197,7 +202,7 @@ alb_ahdi_gap <-  ggplot(alb_gap_data, aes(x = 0, y = ahdi, label = names)) +
           plot.caption = element_text(hjust = 0),
           legend.position="none")
   
-  (ahdi_alb_map + patchwork::free(alb_ahdi_gap)) +
+  (ahdi_alb_map + patchwork::free(alb_ahdi_rank)) +
   plot_layout(widths = c(2, 1)) +
   plot_annotation(title = 'American HD Index by Census Tract',
                   subtitle = alb_name,
@@ -207,7 +212,7 @@ alb_ahdi_gap <-  ggplot(alb_gap_data, aes(x = 0, y = ahdi, label = names)) +
 
 
 ```{r, echo=FALSE, fig.width=9, fig.height=7}
-# AHDI Charlottesville tracts ----
+# AHDI Charlottesville tracts, geospatial ----
 
 ahdi_tract_cville <- read_csv("../data/ahdi_tract_cville.csv") %>% 
   mutate(GEOID = as.character(GEOID),
@@ -244,16 +249,16 @@ ahdi_cville_map <- ahdi_tract_cville %>%
         plot.title = element_text(size = 14),
         plot.subtitle = element_text(size = 14))
 
-# Rank/gap chart
-cville_gap_data <- ahdi_tract_cville %>% 
+# Rank plot
+cville_rank_data <- ahdi_tract_cville %>% 
   group_by(ahdi) %>% 
   summarise(tractnames = paste(tractnames, collapse = "\n")) %>% 
   na.exclude() 
 
-names <- cville_gap_data$tractnames
-ahdi_label <- cville_gap_data$ahdi
+names <- cville_rank_data$tractnames
+ahdi_label <- cville_rank_data$ahdi
 
-cville_ahdi_gap <-  ggplot(cville_gap_data, aes(x = 0, y = ahdi, label = names)) +
+cville_ahdi_rank <-  ggplot(cville_rank_data, aes(x = 0, y = ahdi, label = names)) +
     geom_line(color = "grey", size = 1)+
     geom_point(aes(color=as.factor(ahdi)), size=5)+
     geom_text(label = names, hjust = 0, nudge_x = 0.005, 
@@ -285,10 +290,126 @@ cville_ahdi_gap <-  ggplot(cville_gap_data, aes(x = 0, y = ahdi, label = names))
           plot.caption = element_text(hjust = 0),
           legend.position="none")
   
-  (ahdi_cville_map + patchwork::free(cville_ahdi_gap)) +
+  (ahdi_cville_map + patchwork::free(cville_ahdi_rank)) +
   plot_layout(widths = c(2, 1)) +
   plot_annotation(title = 'American HD Index by Census Tract',
                   subtitle = cville_name,
                   caption = "")
+
+```
+
+```{r, echo=FALSE, warning=FALSE, fig.height=9, fig.width=9}
+# AHDI Albemarle tracts, gap chart ----
+alb_ahdi_gap <- ahdi_tract_alb %>% 
+  select(tractnames, health_index, education_index, income_index, ahdi) %>% 
+  group_by(tractnames, health_index, education_index, income_index, ahdi) %>% 
+  summarise(min = min(health_index, education_index, income_index, ahdi),
+            max = max(health_index, education_index, income_index, ahdi)) %>% 
+  ungroup() %>% 
+  mutate(isna = case_when(is.na(ahdi) ~ TRUE,
+                          .default = FALSE),
+         rank = ahdi) %>% 
+    pivot_longer(c(health_index, education_index, income_index, ahdi)) %>% 
+  mutate(name = factor(name, levels = c("ahdi", "health_index", "education_index", "income_index"),
+                       labels = c("American Human \nDevelopment Index (AHDI)", "Health Index", "Education Index", "Earnings Index")))
+
+
+
+alb_ahdi_plot <- ggplot(alb_ahdi_gap %>% filter(isna == FALSE), 
+                        aes(x = value, y = reorder(tractnames, rank), color = name, group = tractnames)) + 
+  geom_segment(aes(x = min, xend = max), size = 0.5, show.legend = FALSE, color = "#b2b8be") +
+  geom_point(size = 3.5) +
+  scale_x_continuous(limits = c(1,12),
+                     breaks = seq(from = 1, to = 12, by = 1),
+                     sec.axis = dup_axis()) +
+  scale_color_manual(values = pal_safe) +
+  theme_minimal()+
+  theme(axis.title = element_blank(),
+        panel.grid.minor = element_blank())
+
+alb_ahdi_na <- ggplot(alb_ahdi_gap %>% filter(isna == TRUE), 
+                      aes(x = value, y = tractnames, color = name, group = tractnames)) +
+  geom_segment(aes(x = min, xend = max), size = 0.5, show.legend = FALSE, color = "#b2b8be") +
+  geom_point(size = 3.5) +
+  scale_x_continuous(limits = c(1,12),
+                     breaks = seq(from = 1, to = 12, by = 1),
+                     sec.axis = dup_axis()) +
+  scale_color_manual(values = pal_safe) +
+  theme_minimal()+
+  theme(axis.title = element_blank(),
+        panel.grid.minor = element_blank())
+
+
+(alb_ahdi_plot / alb_ahdi_na) + 
+  plot_layout(axes = "collect",
+              guides = "collect",
+              heights = c(28,1)) +
+  plot_annotation(title = 'Dimensions of the American Human Development Index by Census Tract',
+                  subtitle = alb_name,
+                  caption = "") &
+  theme(legend.position='top',
+        legend.title = element_blank(),
+        axis.text = element_text(size = 11),
+        legend.margin = margin(l = -50),
+        legend.text = element_text(size = 11))
+  
+
+```
+
+```{r, echo=FALSE, warning=FALSE, fig.height=5, fig.width=9}
+# AHDI Charlottesville tracts, gap chart ----
+cville_ahdi_gap <- ahdi_tract_cville %>% 
+  select(tractnames, health_index, education_index, income_index, ahdi) %>% 
+  group_by(tractnames, health_index, education_index, income_index, ahdi) %>% 
+  summarise(min = min(health_index, education_index, income_index, ahdi),
+            max = max(health_index, education_index, income_index, ahdi)) %>% 
+  ungroup() %>% 
+  mutate(isna = case_when(is.na(ahdi) ~ TRUE,
+                          .default = FALSE),
+         rank = ahdi) %>% 
+    pivot_longer(c(health_index, education_index, income_index, ahdi)) %>% 
+  mutate(name = factor(name, levels = c("ahdi", "health_index", "education_index", "income_index"),
+                       labels = c("American Human \nDevelopment Index (AHDI)", "Health Index", "Education Index", "Earnings Index")))
+
+
+
+cville_ahdi_plot <- ggplot(cville_ahdi_gap %>% filter(isna == FALSE), 
+                        aes(x = value, y = reorder(tractnames, rank), color = name, group = tractnames)) + 
+  geom_segment(aes(x = min, xend = max), size = 0.5, show.legend = FALSE, color = "#b2b8be") +
+  geom_point(size = 3.5) +
+  scale_x_continuous(limits = c(0,11),
+                     breaks = seq(from = 0, to = 11, by = 1),
+                     sec.axis = dup_axis()) +
+  scale_color_manual(values = pal_safe) +
+  theme_minimal()+
+  theme(axis.title = element_blank(),
+        panel.grid.minor = element_blank())
+
+cville_ahdi_na <- ggplot(cville_ahdi_gap %>% filter(isna == TRUE), 
+                      aes(x = value, y = tractnames, color = name, group = tractnames)) +
+  geom_segment(aes(x = min, xend = max), size = 0.5, show.legend = FALSE, color = "#b2b8be") +
+  geom_point(size = 3.5) +
+  scale_x_continuous(limits = c(0,11),
+                     breaks = seq(from = 0, to = 11, by = 1),
+                     sec.axis = dup_axis()) +
+  scale_color_manual(values = pal_safe) +
+  theme_minimal()+
+  theme(axis.title = element_blank(),
+        panel.grid.minor = element_blank())
+
+
+(cville_ahdi_plot / cville_ahdi_na) + 
+  plot_layout(axes = "collect",
+              guides = "collect",
+              heights = c(10,2)) +
+  plot_annotation(title = 'Dimensions of the American Human Development Index by Census Tract',
+                  subtitle = cville_name,
+                  caption = "") &
+  theme(legend.position='top',
+        legend.title = element_blank(),
+        axis.text = element_text(size = 11),
+        legend.margin = margin(l = -50),
+        legend.text = element_text(size = 11))
+  
 
 ```
