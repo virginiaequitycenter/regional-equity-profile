@@ -1,0 +1,294 @@
+---
+title: "AHDI Visuals - Albemarle, Charlottesville"
+output: html_document
+---
+
+```{css, echo=FALSE}
+.main-container.container-fluid {
+max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 4.167%;
+}
+
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+# Load packages ----
+library(tidyverse)
+library(scales)
+library(RColorBrewer)
+library(ggspatial)
+library(tigris)
+library(readxl)
+library(stringr)
+library(sf)
+library(ggthemes)
+library(rcartocolor)
+library(patchwork)
+library(gt)
+
+# Palettes ----
+pal_health <- carto_pal(7, "Teal")
+# pal_edu <- carto_pal(7, "PinkYl")
+pal_edu <- carto_pal(7, "RedOr")
+pal_inc <- carto_pal(7, "Emrld")
+pal_ahdi <-carto_pal(7, "Purp")
+
+# Tract geometries ----
+alb_geo <- tracts(state = "VA", county = "003")
+cville_geo <- tracts(state = "VA", county = "540")
+
+# Common Items
+alb_name <- "Albemarle County"
+cville_name <- "City of Charlottesville"
+
+
+```
+
+```{r, echo=FALSE, fig.width=9}
+# AHDI Benchmarks ----
+ahdi_county <- read_csv("../data/ahdi_county.csv")
+
+ahdi_table <- ahdi_county %>% 
+  mutate(`American HD Index` = round(ahdi, 1),
+         across(lifeexp_est:enrollment_per, ~ round(.x, 0))) %>% 
+  select(locality, `American HD Index`, lifeexp_est:med_earnings) %>% 
+  rename(`Life Expectancy (years)` = lifeexp_est,
+         `At Least High School Diploma` = hs_grad_per,
+         `At Least Bachelor’s Degree` = bac_deg_per,
+         `Graduate Degree` = grad_deg_per,
+         `School Enrollment` = enrollment_per, 
+         `Median Earnings (2022 $)` = med_earnings)
+  
+ahdi_table %>%
+  select(locality:`Median Earnings (2022 $)`) %>% 
+  # mutate(across(ASTHMA:OBESITY, ~ (as.numeric(.x)/100))) %>%
+  gt(rowname_col = "locality") %>%
+  tab_spanner(
+    label = "Health",
+    columns = c(`Life Expectancy (years)`)
+  ) %>% 
+  tab_spanner(
+    label = "Access to Knowledge",
+    columns = c(`At Least High School Diploma`, `At Least Bachelor’s Degree`, `Graduate Degree`, `School Enrollment`)
+  ) %>%
+  tab_spanner(
+    label = "Living Standards",
+    columns = c(`Median Earnings (2022 $)`)
+  ) %>% 
+  tab_style(
+    style = cell_text(align = "center", v_align = "middle"),
+    locations = cells_column_labels()
+  ) %>% 
+  # fmt_percent(
+  #   columns = hs_grad_per:grad_deg_per,
+  #   decimals = 0
+  # ) %>% 
+  data_color(
+    columns = `Life Expectancy (years)`,
+    direction = "column",
+    # domain = c(0, 50),
+    palette = pal_health
+    # reverse = TRUE
+    # na_color = "white"
+  ) %>% 
+  data_color(
+    columns = `At Least High School Diploma`:`School Enrollment`,
+    direction = "column",
+    palette = pal_edu
+  ) %>% 
+  data_color(
+    columns = `Median Earnings (2022 $)`,
+    direction = "column",
+    palette = pal_inc
+  ) %>% 
+    data_color(
+    columns = `American HD Index`,
+    direction = "column",
+    palette = pal_ahdi
+  )
+
+
+
+
+```
+
+```{r, echo=FALSE, fig.width=10, fig.height=8.75}
+# AHDI Albemarle tracts ----
+
+ahdi_tract_alb <- read_csv("../data/ahdi_tract_alb.csv") %>% 
+  mutate(GEOID = as.character(GEOID),
+         ahdi = round(ahdi, digits = 1))
+ahdi_tract_alb <- ahdi_tract_alb[order(ahdi_tract_alb$tractnames, decreasing=FALSE),]
+
+ahdi_tract_alb <- ahdi_tract_alb %>%
+  left_join(alb_geo, by = join_by(GEOID == GEOID), keep = TRUE) %>% 
+  st_as_sf()
+
+
+# Geospatial visualization
+ahdi_alb_map <- ahdi_tract_alb %>%
+  ggplot() +
+  annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
+  geom_sf(aes(fill = ahdi), color = "white") +
+  geom_sf_text(aes(label = ahdi), size = 2.5, color = "black") +
+  scale_fill_stepsn(colors = pal_ahdi,
+                    # labels = scales::label_currency(scale = 1),
+                    n.breaks = 6,
+                    guide = guide_colourbar(title = "American HD Index",
+                                            title.position = "top",
+                                            direction = "horizontal",
+                                            title.hjust = 0.5,
+                                            # nbin = 6,
+                                            theme = theme(legend.key.height  = unit(0.5, "lines"),
+                                                          legend.key.width = unit(12, "lines"),
+                                                          text = element_text(size = 11)) 
+                                            )
+                    )+
+  theme_map()+
+  theme(legend.position.inside=c(1, 1.06),
+        legend.justification="right",
+        plot.title = element_text(size = 14),
+        plot.subtitle = element_text(size = 14))
+
+# Rank/gap chart
+alb_gap_data <- ahdi_tract_alb %>% 
+  group_by(ahdi) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "\n")) %>% 
+  na.exclude() 
+
+names <- alb_gap_data$tractnames
+ahdi_label <- alb_gap_data$ahdi
+
+alb_ahdi_gap <-  ggplot(alb_gap_data, aes(x = 0, y = ahdi, label = names)) +
+    geom_line(color = "grey", size = 1)+
+    geom_point(aes(color=as.factor(ahdi)), size=5)+
+    geom_text(label = names, hjust = 0, nudge_x = 0.005, 
+              nudge_y = case_when(alb_gap_data$ahdi %in% c(6.8,8.1) ~ -0.04,
+                                  alb_gap_data$ahdi %in% c(6.9,8.2) ~ 0.05,
+                             .default = 0.01),
+              size = 3.25, 
+              # angle=55, 
+              lineheight = 0.8) +
+   scale_color_carto_d(name = "American HD Index: ",
+                           type = "diverging", palette = "Purp", direction = 1) +
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0))+
+    scale_y_continuous(
+                       breaks = ahdi_label,
+                       labels = ahdi_label
+                       ) +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 10),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+  
+  (ahdi_alb_map + patchwork::free(alb_ahdi_gap)) +
+  plot_layout(widths = c(2, 1)) +
+  plot_annotation(title = 'American HD Index by Census Tract',
+                  subtitle = alb_name,
+                  caption = "")
+
+```
+
+
+```{r, echo=FALSE, fig.width=9, fig.height=7}
+# AHDI Charlottesville tracts ----
+
+ahdi_tract_cville <- read_csv("../data/ahdi_tract_cville.csv") %>% 
+  mutate(GEOID = as.character(GEOID),
+         ahdi = round(ahdi, digits = 1))
+ahdi_tract_cville <- ahdi_tract_cville[order(ahdi_tract_cville$tractnames, decreasing=FALSE),]
+
+ahdi_tract_cville <- ahdi_tract_cville %>%
+  left_join(cville_geo, by = join_by(GEOID == GEOID), keep = TRUE) %>% 
+  st_as_sf()
+
+
+# Geospatial visualization
+ahdi_cville_map <- ahdi_tract_cville %>%
+  ggplot() +
+  annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
+  geom_sf(aes(fill = ahdi), color = "white") +
+  geom_sf_text(aes(label = ahdi), size = 3, color = "black") +
+  scale_fill_stepsn(colors = pal_ahdi,
+                    # labels = scales::label_currency(scale = 1),
+                    n.breaks = 6,
+                    guide = guide_colourbar(title = "American HD Index",
+                                            title.position = "top",
+                                            direction = "horizontal",
+                                            title.hjust = 0.5,
+                                            # nbin = 6,
+                                            theme = theme(legend.key.height  = unit(0.5, "lines"),
+                                                          legend.key.width = unit(12, "lines"),
+                                                          text = element_text(size = 11)) 
+                                            )
+                    )+
+  theme_map()+
+  theme(legend.position.inside=c(1, 1.06),
+        legend.justification="right",
+        plot.title = element_text(size = 14),
+        plot.subtitle = element_text(size = 14))
+
+# Rank/gap chart
+cville_gap_data <- ahdi_tract_cville %>% 
+  group_by(ahdi) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "\n")) %>% 
+  na.exclude() 
+
+names <- cville_gap_data$tractnames
+ahdi_label <- cville_gap_data$ahdi
+
+cville_ahdi_gap <-  ggplot(cville_gap_data, aes(x = 0, y = ahdi, label = names)) +
+    geom_line(color = "grey", size = 1)+
+    geom_point(aes(color=as.factor(ahdi)), size=5)+
+    geom_text(label = names, hjust = 0, nudge_x = 0.005, 
+              nudge_y = 0.01,
+              size = 3.5, 
+              # angle=55, 
+              lineheight = 0.8) +
+   scale_color_carto_d(name = "American HD Index: ",
+                           type = "diverging", palette = "Purp", direction = 1) +
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0.001))+
+    scale_y_continuous(
+                       breaks = ahdi_label,
+                       labels = ahdi_label
+                       ) +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 11),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+  
+  (ahdi_cville_map + patchwork::free(cville_ahdi_gap)) +
+  plot_layout(widths = c(2, 1)) +
+  plot_annotation(title = 'American HD Index by Census Tract',
+                  subtitle = cville_name,
+                  caption = "")
+
+```

@@ -257,7 +257,7 @@ cville_health_insured_tract %>%
 ```
 
 ```{r, echo=FALSE, fig.height=9, fig.width=8}
-# CDC Places: Health Outcomes: Charlottesville, 2023
+# CDC Places: Health Outcomes: Charlottesville, 2023 ----
 cville_cdc_outcomes <- read_csv("../data/cville_cdc_table_outcomes_2023.csv")
 cville_cdc_outcomes <- cville_cdc_outcomes[order(cville_cdc_outcomes$tractnames, decreasing=FALSE),]
 
