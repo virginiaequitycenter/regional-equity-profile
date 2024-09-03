@@ -35,7 +35,9 @@ pal_health <- carto_pal(7, "Teal")
 # pal_edu <- carto_pal(7, "PinkYl")
 pal_edu <- carto_pal(7, "RedOr")
 pal_inc <- carto_pal(7, "Emrld")
+# "#D3F2A3" "#97E196" "#6CC08B" "#4C9B82" "#217A79" "#105965" "#074050"
 pal_ahdi <-carto_pal(7, "Purp")
+# "#F3E0F7" "#E4C7F1" "#D1AFE8" "#B998DD" "#9F82CE" "#826DBA" "#63589F"
 
 pal_safe <- c("#332288", "#85C4C9", "#CC6677", "#117733")
 # pal_safe <- carto_pal(12, "Safe")
@@ -130,7 +132,14 @@ ahdi_table %>%
     method = "numeric",
     palette = c("#EBE9F3", "#332288")
     # palette = pal_ahdi
+  ) %>% 
+  tab_header(
+    title = md("**American Human Developement Index: Comparison Across Benchmark Locations**")
+  ) %>% 
+  tab_source_note(
+    source_note = md("Data Sources: *Life Expectancy:* County Health Rankings, 2024. *Education and Earnings:* US Census ACS, 2022.")
   )
+
 
 
 
