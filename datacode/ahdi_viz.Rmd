@@ -37,10 +37,10 @@ pal_edu <- carto_pal(7, "RedOr")
 pal_inc <- carto_pal(7, "Emrld")
 pal_ahdi <-carto_pal(7, "Purp")
 
-pal_safe <- c("#332288", "#88CCEE", "#CC6677", "#117733")
+pal_safe <- c("#332288", "#85C4C9", "#CC6677", "#117733")
 # pal_safe <- carto_pal(12, "Safe")
 # "#88CCEE" "#CC6677" "#DDCC77" "#117733" "#332288" "#AA4499" "#44AA99" "#999933" "#882255" "#661100" "#6699CC"
-
+# "#85C4C9"
 
 # Tract geometries ----
 alb_geo <- tracts(state = "VA", county = "003")
@@ -104,24 +104,32 @@ ahdi_table %>%
     columns = `Life Expectancy (years)`,
     direction = "column",
     # domain = c(0, 50),
-    palette = pal_health
+    method = "numeric",
+    palette = c("#D1EEEA", "#3B738F")
+    # palette = pal_health
     # reverse = TRUE
     # na_color = "white"
   ) %>% 
   data_color(
     columns = `At Least High School Diploma`:`School Enrollment`,
     direction = "column",
-    palette = pal_edu
+    method = "numeric",
+    palette = c("#FAF0F1", "#CC6677")
+    # palette = pal_edu
   ) %>% 
   data_color(
     columns = `Median Earnings (2022 $)`,
     direction = "column",
-    palette = pal_inc
+    method = "numeric",
+    palette = c("#E7F1EB", "#117733")
+    # palette = pal_inc
   ) %>% 
   data_color(
     columns = `American HD Index`,
     direction = "column",
-    palette = pal_ahdi
+    method = "numeric",
+    palette = c("#EBE9F3", "#332288")
+    # palette = pal_ahdi
   )
 
 
