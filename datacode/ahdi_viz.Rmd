@@ -55,12 +55,12 @@ cville_name <- "City of Charlottesville"
 
 ```{r, echo=FALSE, fig.width=9}
 # AHDI Benchmarks ----
-ahdi_county <- read_csv("../data/ahdi_county.csv")
+ahdi_benchmarks <- read_csv("../data/ahdi_benchmarks.csv")
 
-ahdi_table <- ahdi_county %>% 
+ahdi_table <- ahdi_benchmarks %>% 
   mutate(`American HD Index` = round(ahdi, 1),
          across(lifeexp_est:enrollment_per, ~ round(.x, 0))) %>% 
-  select(locality, `American HD Index`, lifeexp_est:med_earnings) %>% 
+  select(name, `American HD Index`, lifeexp_est:med_earnings) %>% 
   rename(`Life Expectancy (years)` = lifeexp_est,
          `At Least High School Diploma` = hs_grad_per,
          `At Least Bachelor’s Degree` = bac_deg_per,
@@ -69,9 +69,9 @@ ahdi_table <- ahdi_county %>%
          `Median Earnings (2022 $)` = med_earnings)
   
 ahdi_table %>%
-  select(locality:`Median Earnings (2022 $)`) %>% 
-  # mutate(across(ASTHMA:OBESITY, ~ (as.numeric(.x)/100))) %>%
-  gt(rowname_col = "locality") %>%
+  select(name:`Median Earnings (2022 $)`) %>% 
+  mutate(across(`At Least High School Diploma`:`School Enrollment`, ~ (as.numeric(.x)/100))) %>%
+  gt(rowname_col = "name") %>%
   tab_spanner(
     label = "Health",
     columns = c(`Life Expectancy (years)`)
@@ -80,18 +80,26 @@ ahdi_table %>%
     label = "Access to Knowledge",
     columns = c(`At Least High School Diploma`, `At Least Bachelor’s Degree`, `Graduate Degree`, `School Enrollment`)
   ) %>%
+  fmt_percent(
+    columns = `At Least High School Diploma`:`School Enrollment`,
+    decimals = 0
+  ) %>% 
   tab_spanner(
     label = "Living Standards",
     columns = c(`Median Earnings (2022 $)`)
   ) %>% 
+  fmt_currency(
+    columns = `Median Earnings (2022 $)`,
+    currency = currency(
+      html = "&#36;",
+      default = "$"
+    ),
+    decimals = 0
+  ) %>% 
   tab_style(
     style = cell_text(align = "center", v_align = "middle"),
-    locations = cells_column_labels()
-  ) %>% 
-  # fmt_percent(
-  #   columns = hs_grad_per:grad_deg_per,
-  #   decimals = 0
-  # ) %>% 
+    locations = list(cells_column_labels(), cells_body())
+  ) %>%
   data_color(
     columns = `Life Expectancy (years)`,
     direction = "column",
@@ -110,7 +118,7 @@ ahdi_table %>%
     direction = "column",
     palette = pal_inc
   ) %>% 
-    data_color(
+  data_color(
     columns = `American HD Index`,
     direction = "column",
     palette = pal_ahdi

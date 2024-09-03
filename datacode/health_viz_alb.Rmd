@@ -259,7 +259,7 @@ alb_health_insured_tract %>%
 ```
 
 ```{r, echo=FALSE, fig.height=9, fig.width=10}
-# CDC Places: Health Outcomes: Albemarle, 2023
+# CDC Places: Health Outcomes: Albemarle, 2023 ----
 alb_cdc_outcomes <- read_csv("../data/alb_cdc_table_outcomes_2023.csv")
 alb_cdc_outcomes <- alb_cdc_outcomes[order(alb_cdc_outcomes$tractnames, decreasing=FALSE),]
 
