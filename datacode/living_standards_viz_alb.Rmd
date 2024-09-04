@@ -373,7 +373,7 @@ burdened_plot <- alb_rent_burden_tract %>%
                   caption = source_acs)
 ```
 
-```{r, echo=FALSE, fig.height=10, fig.width=10}
+```{r, echo=FALSE, fig.height=10, fig.width=11}
 # Home Ownership by tract: Albemarle, 2022 ----
 alb_tenure_tract <- read_csv("../data/alb_tenure_tract_2022.csv") %>%
   mutate(GEOID = as.character(GEOID),
@@ -433,7 +433,7 @@ alb_homeowner_rank <- ggplot(alb_tenure_data, aes(x = 0, y = percent, label = na
               nudge_y = case_when(alb_tenure_data$percent %in% c(5,6) ~ 0.1,
                                   alb_tenure_data$percent %in% c(4) ~ -0.1,
                              .default = 0.05),
-              size = 3.25,
+              size = 3.5,
               lineheight = 0.7) +
    scale_color_carto_d(name = "Percent Home Ownership: ",
                            type = "diverging", palette = "Emrld", direction = 1) +
@@ -451,7 +451,7 @@ alb_homeowner_rank <- ggplot(alb_tenure_data, aes(x = 0, y = percent, label = na
           axis.title.y = element_blank(),
           panel.grid.minor = element_blank(),
           panel.grid.major = element_blank(),
-          axis.text.y = element_text(size = 10),
+          axis.text.y = element_text(size = 11),
           axis.ticks = element_line(linewidth = .5),
           axis.ticks.length.y = unit(.25, "cm"),
           plot.title.position= "plot",
@@ -459,7 +459,7 @@ alb_homeowner_rank <- ggplot(alb_tenure_data, aes(x = 0, y = percent, label = na
           plot.caption = element_text(hjust = 0),
           legend.position="none")
   
-  (alb_homeowner_map + alb_homeowner_rank) +
+  (alb_homeowner_map + patchwork::free(alb_homeowner_rank)) +
   plot_layout(widths = c(2, 1)) +
   plot_annotation(title = "Home Ownership by Census Tract", 
       subtitle = locality_name,
