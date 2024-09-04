@@ -217,17 +217,18 @@ alb_health_insured_county %>%
 
 ```
 
-```{r, echo=FALSE, fig.height=8}
+```{r, echo=FALSE, fig.width=10, fig.height=8.75}
 # Health Insurance by tract: Albemarle, 2022 ----
 alb_health_insured_tract <- read_csv("../data/alb_health_insured_tract_2022.csv") %>%
-  mutate(GEOID = as.character(GEOID))
+  mutate(GEOID = as.character(GEOID),
+         per_uninsured_rounded = round(percent_uninsured,0))
 
 alb_health_insured_tract <- alb_health_insured_tract %>%
   left_join(alb_geo, by = "GEOID") %>% 
   st_as_sf()
 
 # Geospatial visualization
-alb_health_insured_tract %>%
+alb_insured_map <- alb_health_insured_tract %>%
   mutate(text = paste0(round(percent_uninsured,0), "%")) %>%
   ggplot() +
   annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
@@ -246,14 +247,66 @@ alb_health_insured_tract %>%
                                                           text = element_text(size = 11)) 
                                             )
                     )+
-  labs(title = "No Health Insurance by Tract", 
-      subtitle = locality_name, 
-      caption = source_acs) +
+  # labs(title = "No Health Insurance by Tract", 
+  #     subtitle = locality_name, 
+  #     caption = source_acs) +
   theme_map()+
   theme(legend.position.inside=c(1, 1.04),
         legend.justification="right",
         plot.title = element_text(size = 14),
         plot.subtitle = element_text(size = 14))
+
+# Gap chart ----
+alb_insured <- alb_health_insured_tract %>% 
+  group_by(per_uninsured_rounded) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "; ")) %>% 
+  # mutate(tractnames = case_when(per_uninsured_rounded == 1 ~ "Earlysville; Polo Grounds Road;\nBranchland; Crozet-Beaver Creek;\nWestern Ridge-Westhall",
+  #                               per_uninsured_rounded == 1 ~ 
+  #                               .default = tractnames)) %>% 
+  na.exclude() 
+
+names <- alb_insured$tractnames
+uninsured <- alb_insured$per_uninsured_rounded
+
+alb_insured_gap <-  ggplot(alb_insured, aes(x = 0, y = per_uninsured_rounded, label = names)) +
+    geom_line(color = "grey", size = 1)+
+    geom_point(aes(color=as.factor(per_uninsured_rounded)), size=5)+
+    geom_text(label = str_wrap(names, width = 50), hjust = 0, nudge_x = 0.005, 
+              nudge_y = case_when(alb_insured$per_uninsured_rounded %in% c(5,6) ~ 0.1,
+                                  alb_insured$per_uninsured_rounded %in% c(4) ~ -0.1,
+                             .default = 0.05),
+              # nudge_y = .05, 
+              size = 3.5, 
+              # angle=55, 
+              lineheight = 0.8) +
+   scale_color_carto_d(name = "Percent Uninsured: ",
+                           type = "diverging", palette = "Teal", direction = 1) +
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0))+
+    scale_y_continuous(breaks = uninsured,
+                       labels = paste0(uninsured,"%")
+                       ) +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 11),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+  
+  (alb_insured_map + alb_insured_gap) +
+  plot_layout(widths = c(2, 1)) +
+  plot_annotation(title = 'No Health Insurance by Tract',
+                  subtitle = locality_name,
+                  caption = source_acs)
 
 
 ```

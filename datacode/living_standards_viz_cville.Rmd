@@ -45,7 +45,8 @@ source_acs <- "Data Source: American Community Survey, 2022"
 
 ```{r, echo=FALSE, fig.height=5}
 # Median personal earnings, by sex and race: Charlottesville, 2022 ----
-cville_med_earnings_race_county <- read_csv("../data/cville_med_earnings_race_county_2022.csv")
+cville_med_earnings_race_county <- read_csv("../data/cville_med_earnings_race_county_2022.csv") %>%
+  mutate(estimate = round(estimate, -2))
 
 
 cville_med_earnings_race_county %>% 
@@ -81,17 +82,18 @@ cville_med_earnings_race_county %>%
 ```
 
 
-```{r, echo=FALSE, fig.height=8}
+```{r, echo=FALSE, fig.width=9, fig.height=7.5}
 # Median household income by tract: Charlottesville, 2022 ----
 cville_med_hhinc_tract <- read_csv("../data/cville_med_hhinc_tract_2022.csv") %>%
-  mutate(GEOID = as.character(GEOID))
+  mutate(GEOID = as.character(GEOID),
+         estimate = round(estimate, -2))
 
 cville_med_hhinc_tract <- cville_med_hhinc_tract %>%
   left_join(cville_geo, by = "GEOID") %>% 
   st_as_sf()
 
 # Geospatial visualization
-cville_med_hhinc_tract %>%
+cville_inc_map <- cville_med_hhinc_tract %>%
   filter(group == "All Households") %>%
   mutate(text = paste0("$", prettyNum(estimate, big.mark=",", preserve.width="none"))) %>%
   ggplot() +
@@ -111,21 +113,69 @@ cville_med_hhinc_tract %>%
                                                           text = element_text(size = 11)) 
                                             )
                     )+
-  labs(title = "Median Household Income by Tract", 
-      subtitle = locality_name, 
-      caption = source_acs) +
+  # labs(title = "Median Household Income by Tract", 
+  #     subtitle = locality_name, 
+  #     caption = source_acs) +
   theme_map()+
-  theme(legend.position.inside=c(1, 1.04),
+  theme(legend.position.inside=c(1, 1.06),
         legend.justification="right",
         plot.title = element_text(size = 14),
         plot.subtitle = element_text(size = 14))
+
+# Rank plot
+cville_inc_data <- cville_med_hhinc_tract %>% 
+  filter(group == "All Households") %>%
+  group_by(estimate) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "\n")) %>% 
+  na.exclude() 
+
+names <- cville_inc_data$tractnames
+estimate_label <- cville_inc_data$estimate
+
+cville_inc_rank <- ggplot(cville_inc_data, aes(x = 0, y = estimate, label = names)) +
+    geom_line(color = "grey", size = 1)+
+    geom_point(aes(color=as.factor(estimate)), size=5)+
+    geom_text(label = names, hjust = 0, nudge_x = 0.006, 
+              nudge_y = 0.03,
+              size = 4,
+              lineheight = 0.8) +
+   scale_color_carto_d(name = "Median Household Income: ",
+                           type = "diverging", palette = "Emrld", direction = 1) +
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0.003))+
+    scale_y_continuous(
+                       breaks = estimate_label,
+                       labels = paste0("$",prettyNum(estimate_label, big.mark=",", preserve.width="none"))
+                       ) +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 11),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+  
+  (cville_inc_map + patchwork::free(cville_inc_rank)) +
+  plot_layout(widths = c(2, 1)) +
+  plot_annotation(title = "Median Household Income by Tract", 
+      subtitle = locality_name, 
+      caption = source_acs)
 
 
 ```
 
 ```{r, echo=FALSE, fig.height=4}
 # Median household income by Race: Charlottesville, 2022 ----
-cville_med_hhinc_county <- read_csv("../data/cville_med_hhinc_county_2022.csv")
+cville_med_hhinc_county <- read_csv("../data/cville_med_hhinc_county_2022.csv") %>%
+  mutate(estimate = round(estimate, -2))
 
 cville_med_hhinc_county %>%
   filter(!group %in% c("White", "American Indian and Alaska Native", "NHPI", "Other")) %>% 
@@ -321,17 +371,18 @@ burdened_plot <- cville_rent_burden_tract %>%
                   caption = source_acs)
 ```
 
-```{r, echo=FALSE, fig.height=8}
+```{r, echo=FALSE, fig.width=10, fig.height=8}
 # Home Ownership by tract: Charlottesville, 2022 ----
 cville_tenure_tract <- read_csv("../data/cville_tenure_tract_2022.csv") %>%
-  mutate(GEOID = as.character(GEOID))
+  mutate(GEOID = as.character(GEOID),
+         percent = round(percent,0))
 
 cville_tenure_tract <- cville_tenure_tract %>%
   left_join(cville_geo, by = "GEOID") %>% 
   st_as_sf()
 
 # Geospatial visualization
-cville_tenure_tract %>%
+cville_homeowner_map <- cville_tenure_tract %>%
   filter(label == "Owner occupied") %>%
   mutate(text = paste0(round(percent,0), "%")) %>%
   ggplot() +
@@ -351,17 +402,65 @@ cville_tenure_tract %>%
                                                           text = element_text(size = 11)) 
                                             )
                     )+
-  labs(title = "Home Ownership by Census Tract", 
-      subtitle = locality_name, 
-      caption = source_acs) +
+  # labs(title = "Home Ownership by Census Tract", 
+  #     subtitle = locality_name, 
+  #     caption = source_acs) +
   theme_map()+
-  theme(legend.position.inside=c(1, 1.04),
+  theme(legend.position.inside=c(1, 1.06),
         legend.justification="right",
         plot.title = element_text(size = 14),
         plot.subtitle = element_text(size = 14))
 
+# Rank plot
+cville_tenure_data <- cville_tenure_tract %>% 
+  filter(label == "Owner occupied") %>%
+  group_by(percent) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "\n")) %>% 
+  na.exclude() 
+
+names <- cville_tenure_data$tractnames
+homeowner <- cville_tenure_data$percent
+
+cville_homeowner_rank <- ggplot(cville_tenure_data, aes(x = 0, y = percent, label = names)) +
+    geom_line(color = "grey", size = 1)+
+    geom_point(aes(color=as.factor(percent)), size=5)+
+    geom_text(label = names, hjust = 0, nudge_x = 0.006, 
+              nudge_y = 0.03,
+              size = 3.5,
+              lineheight = 0.8) +
+   scale_color_carto_d(name = "Percent Home Ownership: ",
+                           type = "diverging", palette = "Emrld", direction = 1) +
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0.003))+
+    scale_y_continuous(
+                       breaks = homeowner,
+                       labels = paste0(homeowner, "%")
+                       ) +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 11),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+  
+  (cville_homeowner_map + cville_homeowner_rank) +
+  plot_layout(widths = c(2, 1)) +
+  plot_annotation(title = "Home Ownership by Census Tract", 
+      subtitle = locality_name,
+      caption = source_acs)
+
 
 ```
+
 ```{r, echo=FALSE}
 # Home Ownership by Race, Charlottesville 2012 & 2022 ----
 cville_tenure_race_county <- read_csv("../data/cville_tenure_race_county_2012_2022.csv")
@@ -406,17 +505,18 @@ cville_homeowner_race %>%
 
 ```
 
-```{r, echo=FALSE, fig.height=8}
+```{r, echo=FALSE, fig.height=8, fig.width=9}
 # Gross Rent by tract: Charlottesville, 2022 ----
 cville_gross_rent_tract <- read_csv("../data/cville_gross_rent_tract_2022.csv") %>%
-  mutate(GEOID = as.character(GEOID))
+  mutate(GEOID = as.character(GEOID),
+         estimate = round(estimate, -1))
 
 cville_gross_rent_tract <- cville_gross_rent_tract %>%
   left_join(cville_geo, by = "GEOID") %>% 
   st_as_sf()
 
 # Geospatial visualization
-cville_gross_rent_tract %>%
+cville_rent_map <- cville_gross_rent_tract %>%
   mutate(text = case_when(is.na(estimate) ~ "",
                           !is.na(estimate) ~ paste0("$", prettyNum(estimate, big.mark=",", preserve.width="none")))) %>%
   ggplot() +
@@ -436,14 +536,59 @@ cville_gross_rent_tract %>%
                                                           text = element_text(size = 11)) 
                                             )
                     )+
-  labs(title = "Gross Rent by Census Tract", 
-      subtitle = locality_name, 
-      caption = source_acs) +
+  # labs(title = "Gross Rent by Census Tract", 
+  #     subtitle = locality_name, 
+  #     caption = source_acs) +
   theme_map()+
-  theme(legend.position.inside=c(1, 1.04),
+  theme(legend.position.inside=c(1, 1.06),
         legend.justification="right",
         plot.title = element_text(size = 14),
         plot.subtitle = element_text(size = 14))
 
+# Rank plot
+cville_rent_data <- cville_gross_rent_tract %>%
+  group_by(estimate) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "\n")) %>% 
+  na.exclude() 
+
+names <- cville_rent_data$tractnames
+estimate_label <- cville_rent_data$estimate
+
+cville_rent_rank <- ggplot(cville_rent_data, aes(x = 0, y = estimate, label = names)) +
+    geom_line(color = "grey", size = 1)+
+    geom_point(aes(color=as.factor(estimate)), size=5)+
+    geom_text(label = names, hjust = 0, nudge_x = 0.006, 
+              nudge_y = 0.03,
+              size = 4,
+              lineheight = 0.8) +
+   scale_color_carto_d(name = "Gross Rent: ",
+                           type = "diverging", palette = "Emrld", direction = 1) +
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0.003))+
+    scale_y_continuous(
+                       breaks = estimate_label,
+                       labels = paste0("$",prettyNum(estimate_label, big.mark=",", preserve.width="none"))
+                       ) +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 11),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+  
+  (cville_rent_map + patchwork::free(cville_rent_rank)) +
+  plot_layout(widths = c(2, 1)) +
+  plot_annotation(title = "Gross Rent by Census Tract", 
+      subtitle = locality_name, 
+      caption = source_acs)
 
 ```

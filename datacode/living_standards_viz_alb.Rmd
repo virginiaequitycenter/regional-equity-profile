@@ -45,8 +45,8 @@ source_acs <- "Data Source: U.S. Census Bureau, American Community Survey, 2022"
 
 ```{r, echo=FALSE, fig.height=5}
 # Median personal earnings, by sex and race: Albemarle, 2022 ----
-alb_med_earnings_race_county <- read_csv("../data/alb_med_earnings_race_county_2022.csv")
-
+alb_med_earnings_race_county <- read_csv("../data/alb_med_earnings_race_county_2022.csv") %>%
+  mutate(estimate = round(estimate, -2))
 
 alb_med_earnings_race_county %>% 
   filter(race != "White") %>% 
@@ -81,25 +81,28 @@ alb_med_earnings_race_county %>%
 ```
 
 
-```{r, echo=FALSE, fig.height=8}
+```{r, echo=FALSE, fig.width=12, fig.height=12}
 # Median household income by tract: Albemarle, 2022 ----
 alb_med_hhinc_tract <- read_csv("../data/alb_med_hhinc_tract_2022.csv") %>%
-  mutate(GEOID = as.character(GEOID))
+  mutate(GEOID = as.character(GEOID),
+         estimate = round(estimate, -3))
 
 alb_med_hhinc_tract <- alb_med_hhinc_tract %>%
   left_join(alb_geo, by = "GEOID") %>% 
   st_as_sf()
 
 # Geospatial visualization
-alb_med_hhinc_tract %>%
+alb_inc_map <- alb_med_hhinc_tract %>%
   filter(group == "All Households") %>%
-  mutate(text = paste0("$", prettyNum(estimate, big.mark=",", preserve.width="none"))) %>%
+  mutate(text = paste0("$", prettyNum((estimate/1000), big.mark=",", preserve.width="none"), "K")
+         ) %>%
   ggplot() +
   annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
   geom_sf(aes(fill = estimate), color = "white") +
   geom_sf_text(aes(label = text), size = 2.5, color = "black") +
   scale_fill_stepsn(colors = pal_inc,
-                    labels = scales::label_currency(scale = 1),
+                    labels = scales::label_currency(scale = .001, suffix = "K"),
+                    # labels = scales::label_currency(scale = 1),
                     n.breaks = 6,
                     guide = guide_colourbar(title = "Median Household Income",
                                             title.position = "top",
@@ -111,21 +114,70 @@ alb_med_hhinc_tract %>%
                                                           text = element_text(size = 11)) 
                                             )
                     )+
-  labs(title = "Median Household Income", 
-      subtitle = locality_name, 
-      caption = source_acs) +
+  # labs(title = "Median Household Income", 
+  #     subtitle = locality_name, 
+  #     caption = source_acs) +
   theme_map()+
   theme(legend.position.inside=c(1, 1.04),
         legend.justification="right",
         plot.title = element_text(size = 14),
         plot.subtitle = element_text(size = 14))
 
+# Rank plot
+alb_inc_data <- alb_med_hhinc_tract %>% 
+  filter(group == "All Households") %>%
+  group_by(estimate) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "; ")) %>% 
+  na.exclude() 
+
+names <- alb_inc_data$tractnames
+estimate_label <- alb_inc_data$estimate
+
+alb_inc_rank <- ggplot(alb_inc_data, aes(x = 0, y = estimate, label = names)) +
+    geom_line(color = "grey", size = 1)+
+    geom_point(aes(color=as.factor(estimate)), size=5)+
+    geom_text(label = names, hjust = 0, nudge_x = 0.006, 
+              nudge_y = 0.03,
+              size = 3.5,
+              lineheight = 0.8) +
+   scale_color_carto_d(name = "Median Household Income: ",
+                           type = "diverging", palette = "Emrld", direction = 1) +
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0.003))+
+    scale_y_continuous(
+                       breaks = estimate_label,
+                       labels = scales::label_currency(scale = .001, suffix = "K")
+                       # labels = paste0("$",prettyNum(estimate_label, big.mark=",", preserve.width="none")
+                                       # )
+                       ) +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 11),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+  
+  (alb_inc_map + patchwork::free(alb_inc_rank)) +
+  plot_layout(widths = c(2, 1)) +
+  plot_annotation(title = "Median Household Income by Tract", 
+      subtitle = locality_name, 
+      caption = source_acs)
 
 ```
 
 ```{r, echo=FALSE, fig.height=4}
 # Median household income by Race: Albemarle, 2022 ----
-alb_med_hhinc_county <- read_csv("../data/alb_med_hhinc_county_2022.csv")
+alb_med_hhinc_county <- read_csv("../data/alb_med_hhinc_county_2022.csv") %>%
+  mutate(estimate = round(estimate, -2))
 
 alb_med_hhinc_county %>%
   filter(!group %in% c("White", "American Indian and Alaska Native", "NHPI", "Other")) %>% 
@@ -321,23 +373,25 @@ burdened_plot <- alb_rent_burden_tract %>%
                   caption = source_acs)
 ```
 
-```{r, echo=FALSE, fig.height=8}
+```{r, echo=FALSE, fig.height=10, fig.width=10}
 # Home Ownership by tract: Albemarle, 2022 ----
 alb_tenure_tract <- read_csv("../data/alb_tenure_tract_2022.csv") %>%
-  mutate(GEOID = as.character(GEOID))
+  mutate(GEOID = as.character(GEOID),
+         percent = round(percent,0),
+         text_color = case_when(percent >= 70 ~ "white",
+                                percent <70 ~ "black"))
 
 alb_tenure_tract <- alb_tenure_tract %>%
   left_join(alb_geo, by = "GEOID") %>% 
   st_as_sf()
 
 # Geospatial visualization
-alb_tenure_tract %>%
+alb_homeowner_map <- alb_tenure_tract %>%
   filter(label == "Owner occupied") %>%
   mutate(text = paste0(round(percent,0), "%")) %>%
   ggplot() +
   annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
   geom_sf(aes(fill = percent), color = "white") +
-  geom_sf_text(aes(label = text), size = 2.5, color = "black") +
   scale_fill_stepsn(colors = pal_inc,
                     labels = scales::label_percent(scale = 1),
                     n.breaks = 7,
@@ -351,17 +405,68 @@ alb_tenure_tract %>%
                                                           text = element_text(size = 11)) 
                                             )
                     )+
-  labs(title = "Home Ownership by Tract", 
-      subtitle = locality_name, 
-      caption = source_acs) +
+  geom_sf_text(aes(label = text, color = text_color), size = 2.5, show.legend = FALSE) +
+  scale_color_manual(values = c("black", "white")) +
+  # labs(title = "Home Ownership by Tract", 
+  #     subtitle = locality_name, 
+  #     caption = source_acs) +
   theme_map()+
-  theme(legend.position.inside=c(1, 1.04),
+  theme(legend.position.inside=c(1, 1.06),
         legend.justification="right",
         plot.title = element_text(size = 14),
         plot.subtitle = element_text(size = 14))
 
+# Rank plot
+alb_tenure_data <- alb_tenure_tract %>% 
+  filter(label == "Owner occupied") %>%
+  group_by(percent) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "; ")) %>% 
+  na.exclude() 
+
+names <- alb_tenure_data$tractnames
+homeowner <- alb_tenure_data$percent
+
+alb_homeowner_rank <- ggplot(alb_tenure_data, aes(x = 0, y = percent, label = names)) +
+    geom_line(color = "grey", size = 1)+
+    geom_point(aes(color=as.factor(percent)), size=5)+
+    geom_text(label = str_wrap(names, width = 50), hjust = 0, nudge_x = 0.006, 
+              nudge_y = case_when(alb_tenure_data$percent %in% c(5,6) ~ 0.1,
+                                  alb_tenure_data$percent %in% c(4) ~ -0.1,
+                             .default = 0.05),
+              size = 3.25,
+              lineheight = 0.7) +
+   scale_color_carto_d(name = "Percent Home Ownership: ",
+                           type = "diverging", palette = "Emrld", direction = 1) +
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0.003))+
+    scale_y_continuous(
+                       breaks = homeowner,
+                       labels = paste0(homeowner, "%")
+                       ) +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 10),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+  
+  (alb_homeowner_map + alb_homeowner_rank) +
+  plot_layout(widths = c(2, 1)) +
+  plot_annotation(title = "Home Ownership by Census Tract", 
+      subtitle = locality_name,
+      caption = source_acs)
 
 ```
+
 ```{r, echo=FALSE}
 # Home Ownership by Race, Albemarle 2012 & 2022 ----
 alb_tenure_race_county <- read_csv("../data/alb_tenure_race_county_2012_2022.csv")
@@ -406,25 +511,26 @@ alb_homeowner_race %>%
 
 ```
 
-```{r, echo=FALSE, fig.height=8}
+```{r, echo=FALSE, fig.height=9, fig.width=10}
 # Gross Rent by tract: Albemarle, 2022 ----
 alb_gross_rent_tract <- read_csv("../data/alb_gross_rent_tract_2022.csv") %>%
-  mutate(GEOID = as.character(GEOID))
+  mutate(GEOID = as.character(GEOID),
+         estimate = round(estimate, -2))
 
 alb_gross_rent_tract <- alb_gross_rent_tract %>%
   left_join(alb_geo, by = "GEOID") %>% 
   st_as_sf()
 
 # Geospatial visualization
-alb_gross_rent_tract %>%
+alb_rent_map <- alb_gross_rent_tract %>%
   mutate(text = case_when(is.na(estimate) ~ "",
-                          !is.na(estimate) ~ paste0("$", prettyNum(estimate, big.mark=",", preserve.width="none")))) %>%
+                          !is.na(estimate) ~ paste0("$", prettyNum((estimate/1000), big.mark=",", preserve.width="none"), "K"))) %>%
   ggplot() +
   annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
   geom_sf(aes(fill = estimate), color = "white") +
-  geom_sf_text(aes(label = scales::label_currency(scale = 1)(estimate)), size = 2.5, color = "black") +
+  geom_sf_text(aes(label = text), size = 2.5, color = "black") +
   scale_fill_stepsn(colors = pal_inc,
-                    labels = scales::label_currency(scale = 1),
+                    labels = scales::label_currency(scale = .001, suffix = "K"),
                     n.breaks = 6,
                     guide = guide_colourbar(title = "Gross Rent",
                                             title.position = "top",
@@ -436,14 +542,59 @@ alb_gross_rent_tract %>%
                                                           text = element_text(size = 11)) 
                                             )
                     )+
-  labs(title = "Gross Rent by Census Tract", 
-      subtitle = locality_name, 
-      caption = source_acs) +
+  # labs(title = "Gross Rent by Census Tract", 
+  #     subtitle = locality_name, 
+  #     caption = source_acs) +
   theme_map()+
   theme(legend.position.inside=c(1, 1.04),
         legend.justification="right",
         plot.title = element_text(size = 14),
         plot.subtitle = element_text(size = 14))
 
+# Rank plot
+alb_rent_data <- alb_gross_rent_tract %>%
+  group_by(estimate) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "\n")) %>% 
+  na.exclude() 
 
+names <- alb_rent_data$tractnames
+estimate_label <- alb_rent_data$estimate
+
+alb_rent_rank <- ggplot(alb_rent_data, aes(x = 0, y = estimate, label = names)) +
+    geom_line(color = "grey", size = 1)+
+    geom_point(aes(color=as.factor(estimate)), size=5)+
+    geom_text(label = names, hjust = 0, nudge_x = 0.006, 
+              nudge_y = 0.03,
+              size = 3.5,
+              lineheight = 0.8) +
+   scale_color_carto_d(name = "Gross Rent: ",
+                           type = "diverging", palette = "Emrld", direction = 1) +
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0.003))+
+    scale_y_continuous(
+                       breaks = estimate_label,
+                       labels = scales::label_currency(scale = .001, suffix = "K")
+                       # labels = paste0("$",prettyNum(estimate_label, big.mark=",", preserve.width="none"))
+                       ) +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 11),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+  
+  (alb_rent_map + patchwork::free(alb_rent_rank)) +
+  plot_layout(widths = c(2, 1)) +
+  plot_annotation(title = "Gross Rent by Census Tract", 
+      subtitle = locality_name, 
+      caption = source_acs)
 ```
