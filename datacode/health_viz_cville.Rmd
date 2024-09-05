@@ -72,7 +72,9 @@ cville_life_exp_county %>%
   coord_flip() +
   theme_minimal() +
   theme(legend.position = "none",
-        panel.grid.minor.x = element_blank()) +
+        panel.grid.minor.x = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot") +
   guides(fill = guide_legend(reverse = TRUE)) +
   labs(fill = "",
        title = "Life Expectancy by Race", 
@@ -211,7 +213,9 @@ cville_health_insured_county %>%
   ) +
   theme_minimal() +
   theme(legend.position = "none",
-        panel.grid.minor.x = element_blank())
+        panel.grid.minor.x = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 ```
 

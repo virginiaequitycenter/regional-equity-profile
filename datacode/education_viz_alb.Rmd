@@ -27,6 +27,7 @@ library(stringr)
 library(sf)
 library(ggthemes)
 library(rcartocolor)
+library(patchwork)
 
 # Education palette ----
 # pal_edu <- colorRampPalette(brewer.pal(9, "PuRd"))(15)
@@ -43,10 +44,11 @@ source_vdoe <- "Data Source: Virginia Department of Education, 2022-2023"
 
 ```
 
-```{r, echo=FALSE, fig.height=8}
+```{r, echo=FALSE, fig.height=9, fig.width=11}
 # School Enrollment: Albemarle, 2022 ----
 alb_enroll_tract <- read_csv("../data/alb_enroll_tract_2022.csv") %>%
-  mutate(GEOID = as.character(GEOID))
+  mutate(GEOID = as.character(GEOID),
+         percent = round(percent, 0))
 
 alb_enroll_tract <- alb_enroll_tract %>%
   left_join(alb_geo, by = "GEOID") %>% 
@@ -54,8 +56,7 @@ alb_enroll_tract <- alb_enroll_tract %>%
 
 # Geospatial visualization
 alb_enroll_map <- alb_enroll_tract %>% 
-  mutate(percent = round(percent, 0),
-         text = paste0(percent, "%")) %>% 
+  mutate(text = paste0(percent, "%")) %>% 
   ggplot() +
     annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
   geom_sf(aes(fill = percent), color = "white") +
@@ -86,9 +87,9 @@ alb_enroll_map <- alb_enroll_tract %>%
                                                                               )) 
                                             )
                     )+
-  labs(title = "School Enrollment (Ages 3-24)", 
-      subtitle = locality_name, 
-      caption = source_acs) +
+  # labs(title = "School Enrollment (Ages 3-24)", 
+  #     subtitle = locality_name, 
+  #     caption = source_acs) +
   theme_map()+
   theme(
     # legend.position="top",
@@ -99,7 +100,52 @@ alb_enroll_map <- alb_enroll_tract %>%
         plot.subtitle = element_text(size = 14)
         )
 
-alb_enroll_map
+# Rank plot
+alb_enroll_data <- alb_enroll_tract %>%
+  group_by(percent) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "; ")) %>% 
+  na.exclude() 
+
+names <- alb_enroll_data$tractnames
+enrollment <- alb_enroll_data$percent
+
+alb_enroll_rank <- ggplot(alb_enroll_data, aes(x = 0, y = percent, label = names)) +
+    geom_line(color = "grey", size = 1)+
+    geom_point(aes(color=as.factor(percent)), size=5)+
+    geom_text(label = str_wrap(names, width = 50), hjust = 0, nudge_x = 0.006, 
+              nudge_y = 0.03,
+              size = 3.5,
+              lineheight = 0.8) +
+   scale_color_carto_d(name = "Percent Enrolled: ",
+                           type = "diverging", palette = "PinkYl", direction = 1) +
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0.003))+
+    scale_y_continuous(
+                       breaks = enrollment,
+                       labels = paste0(enrollment, "%")
+                       ) +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 11),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+  
+  (alb_enroll_map + patchwork::free(alb_enroll_rank)) +
+  plot_layout(widths = c(1.75, 1)) +
+  plot_annotation(title = "School Enrollment (Ages 3-24)", 
+      subtitle = locality_name, 
+      caption = source_acs)
+
 
 ```
 
@@ -143,16 +189,19 @@ alb_edu_race_plot <- alb_edu_attain_race_plot %>%
         legend.position = "top",
         panel.grid.major.x = element_blank(),
         axis.ticks = element_blank(),
-        panel.grid.minor = element_blank())
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 alb_edu_race_plot
 
 ```
 
-```{r, echo=FALSE, fig.height=8}
+```{r, echo=FALSE, fig.height=9, fig.width=11}
 # Educational Attainment, with BA's by tract, Albemarle, 2022 ----
 alb_edu_attain_tract <- read_csv("../data/alb_edu_attain_tract_2022.csv") %>%
-  mutate(GEOID = as.character(GEOID))
+  mutate(GEOID = as.character(GEOID),
+         percent = round(percent, 0))
 
 alb_edu_attain_tract <- alb_edu_attain_tract %>%
   left_join(alb_geo, by = "GEOID") %>% 
@@ -163,8 +212,7 @@ alb_attain_BAs <- alb_edu_attain_tract %>%
 
 # Geospatial visualization
 alb_educ_attain_map <- alb_attain_BAs %>% 
-  mutate(percent = round(percent, 0),
-         text = paste0(percent, "%")) %>% 
+  mutate(text = paste0(percent, "%")) %>% 
   ggplot() +
   annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
   geom_sf(aes(fill = percent), color = "white") +
@@ -186,9 +234,9 @@ alb_educ_attain_map <- alb_attain_BAs %>%
                                                                               # colour = "gray40"
                                                                               )) )
                     )+
-  labs(title = "Education Level: Bachelor's Degree or Higher", 
-      subtitle = locality_name, 
-      caption = source_acs) +
+  # labs(title = "Education Level: Bachelor's Degree or Higher", 
+  #     subtitle = locality_name, 
+  #     caption = source_acs) +
   theme_map()+
   theme(legend.position.inside=c(1, 1.04),
         legend.justification="right",
@@ -198,7 +246,52 @@ alb_educ_attain_map <- alb_attain_BAs %>%
         plot.subtitle = element_text(size = 14)
         )
 
-alb_educ_attain_map
+# Rank plot
+alb_BA_data <- alb_attain_BAs %>%
+  group_by(percent) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "; ")) %>% 
+  na.exclude() 
+
+names <- alb_BA_data$tractnames
+BA_attain <- alb_BA_data$percent
+
+alb_educ_attain_rank <- ggplot(alb_BA_data, aes(x = 0, y = percent, label = names)) +
+    geom_line(color = "grey", size = 1)+
+    geom_point(aes(color=as.factor(percent)), size=5)+
+    geom_text(label = str_wrap(names, width = 50), hjust = 0, nudge_x = 0.006, 
+              nudge_y = 0.03,
+              size = 3.5,
+              lineheight = 0.8) +
+   scale_color_carto_d(name = "Percent BA or Higher: ",
+                           type = "diverging", palette = "PinkYl", direction = 1) +
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0.003))+
+    scale_y_continuous(
+                       breaks = BA_attain,
+                       labels = paste0(BA_attain, "%")
+                       ) +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 11),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+  
+  (alb_educ_attain_map + patchwork::free(alb_educ_attain_rank)) +
+  plot_layout(widths = c(1.75, 1)) +
+  plot_annotation(title = "Education Level: Bachelor's Degree or Higher", 
+      subtitle = locality_name, 
+      caption = source_acs)
+
 
 ```
 
@@ -244,7 +337,9 @@ alb_adv_enroll %>%
         legend.position = "top",
         panel.grid.major.x = element_blank(),
         axis.ticks = element_blank(),
-        panel.grid.minor = element_blank())
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 # Short Term Suspensions: Albemarle ----
 alb_suspensions <- read_csv("../data/alb_st_suspensions_2022_2023.csv")  
@@ -276,7 +371,9 @@ alb_suspensions %>%
   coord_flip() +
   theme_minimal() +
   theme(legend.position = "top",
-        panel.grid.minor.x = element_blank()) +
+        panel.grid.minor.x = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot") +
   guides(fill = guide_legend(reverse = TRUE)) +
   labs(fill = "", 
        title = "Short Term Suspension Incidents by Race/Ethnicity",
@@ -319,7 +416,9 @@ alb_absent %>%
         legend.position = "none",
         panel.grid.major.x = element_blank(),
         axis.ticks = element_blank(),
-        panel.grid.minor = element_blank())
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 
 

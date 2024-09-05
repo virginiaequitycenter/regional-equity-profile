@@ -71,7 +71,9 @@ cville_med_earnings_race_county %>%
   coord_flip() +
   theme_minimal() +
   theme(legend.position = "top",
-        panel.grid.minor.x = element_blank()) +
+        panel.grid.minor.x = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot") +
   guides(fill = guide_legend(reverse = TRUE)) +
   labs(fill = "",
        title = "Median Personal Earnings by Sex and Race", 
@@ -204,7 +206,9 @@ cville_med_hhinc_county %>%
   ) +
   theme_minimal() +
   theme(legend.position = "none",
-        panel.grid.minor.x = element_blank())
+        panel.grid.minor.x = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 ```
 
@@ -239,7 +243,9 @@ labs(color = "",
   theme(legend.title=element_blank(),
         legend.position = "top",
         axis.text.x = element_text(angle = 45, hjust = 1),
-        panel.grid.minor = element_blank())
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 
 # ALICE households by race/ethnicity: Charlottesville, 2022 ----
@@ -278,7 +284,9 @@ cville_ALICE_households_by_race %>%
         legend.position = "top",
         panel.grid.major.x = element_blank(),
         axis.ticks = element_blank(),
-        panel.grid.minor = element_blank())
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 
 
@@ -501,7 +509,9 @@ cville_homeowner_race %>%
   theme_minimal() +
   theme(panel.grid.minor = element_blank(),
         panel.grid.major.x = element_blank(),
-        strip.text = element_text(size = 12))
+        strip.text = element_text(size = 12),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 ```
 

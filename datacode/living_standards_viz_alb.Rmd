@@ -70,7 +70,9 @@ alb_med_earnings_race_county %>%
   coord_flip() +
   theme_minimal() +
   theme(legend.position = "top",
-        panel.grid.minor.x = element_blank()) +
+        panel.grid.minor.x = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot") +
   guides(fill = guide_legend(reverse = TRUE)) +
   labs(fill = "",
        title = "Median Personal Earnings by Sex and Race", 
@@ -81,7 +83,7 @@ alb_med_earnings_race_county %>%
 ```
 
 
-```{r, echo=FALSE, fig.width=12, fig.height=12}
+```{r, echo=FALSE, fig.height=9, fig.width=11.5}
 # Median household income by tract: Albemarle, 2022 ----
 alb_med_hhinc_tract <- read_csv("../data/alb_med_hhinc_tract_2022.csv") %>%
   mutate(GEOID = as.character(GEOID),
@@ -137,7 +139,7 @@ alb_inc_rank <- ggplot(alb_inc_data, aes(x = 0, y = estimate, label = names)) +
     geom_line(color = "grey", size = 1)+
     geom_point(aes(color=as.factor(estimate)), size=5)+
     geom_text(label = names, hjust = 0, nudge_x = 0.006, 
-              nudge_y = 0.03,
+              nudge_y = 0.05,
               size = 3.5,
               lineheight = 0.8) +
    scale_color_carto_d(name = "Median Household Income: ",
@@ -167,7 +169,7 @@ alb_inc_rank <- ggplot(alb_inc_data, aes(x = 0, y = estimate, label = names)) +
           legend.position="none")
   
   (alb_inc_map + patchwork::free(alb_inc_rank)) +
-  plot_layout(widths = c(2, 1)) +
+  plot_layout(widths = c(1.75, 1)) +
   plot_annotation(title = "Median Household Income by Tract", 
       subtitle = locality_name, 
       caption = source_acs)
@@ -206,7 +208,9 @@ alb_med_hhinc_county %>%
   ) +
   theme_minimal() +
   theme(legend.position = "none",
-        panel.grid.minor.x = element_blank())
+        panel.grid.minor.x = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 ```
 
@@ -241,7 +245,9 @@ labs(color = "",
   theme(legend.title=element_blank(),
         legend.position = "top",
         axis.text.x = element_text(angle = 45, hjust = 1),
-        panel.grid.minor = element_blank())
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 
 # ALICE households by race/ethnicity: Albemarle, 2022 ----
@@ -280,7 +286,9 @@ alb_ALICE_households_by_race %>%
         legend.position = "top",
         panel.grid.major.x = element_blank(),
         axis.ticks = element_blank(),
-        panel.grid.minor = element_blank())
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 
 
@@ -373,7 +381,7 @@ burdened_plot <- alb_rent_burden_tract %>%
                   caption = source_acs)
 ```
 
-```{r, echo=FALSE, fig.height=10, fig.width=11}
+```{r, echo=FALSE, fig.height=9, fig.width=11}
 # Home Ownership by tract: Albemarle, 2022 ----
 alb_tenure_tract <- read_csv("../data/alb_tenure_tract_2022.csv") %>%
   mutate(GEOID = as.character(GEOID),
@@ -460,7 +468,7 @@ alb_homeowner_rank <- ggplot(alb_tenure_data, aes(x = 0, y = percent, label = na
           legend.position="none")
   
   (alb_homeowner_map + patchwork::free(alb_homeowner_rank)) +
-  plot_layout(widths = c(2, 1)) +
+  plot_layout(widths = c(1.75, 1)) +
   plot_annotation(title = "Home Ownership by Census Tract", 
       subtitle = locality_name,
       caption = source_acs)
@@ -507,11 +515,13 @@ alb_homeowner_race %>%
   theme_minimal() +
   theme(panel.grid.minor = element_blank(),
         panel.grid.major.x = element_blank(),
-        strip.text = element_text(size = 12))
+        strip.text = element_text(size = 12),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 ```
 
-```{r, echo=FALSE, fig.height=9, fig.width=10}
+```{r, echo=FALSE, fig.height=9, fig.width=11}
 # Gross Rent by tract: Albemarle, 2022 ----
 alb_gross_rent_tract <- read_csv("../data/alb_gross_rent_tract_2022.csv") %>%
   mutate(GEOID = as.character(GEOID),
@@ -564,7 +574,7 @@ alb_rent_rank <- ggplot(alb_rent_data, aes(x = 0, y = estimate, label = names)) 
     geom_line(color = "grey", size = 1)+
     geom_point(aes(color=as.factor(estimate)), size=5)+
     geom_text(label = names, hjust = 0, nudge_x = 0.006, 
-              nudge_y = 0.03,
+              nudge_y = 0.05,
               size = 3.5,
               lineheight = 0.8) +
    scale_color_carto_d(name = "Gross Rent: ",
@@ -593,7 +603,7 @@ alb_rent_rank <- ggplot(alb_rent_data, aes(x = 0, y = estimate, label = names)) 
           legend.position="none")
   
   (alb_rent_map + patchwork::free(alb_rent_rank)) +
-  plot_layout(widths = c(2, 1)) +
+  plot_layout(widths = c(1.75, 1)) +
   plot_annotation(title = "Gross Rent by Census Tract", 
       subtitle = locality_name, 
       caption = source_acs)

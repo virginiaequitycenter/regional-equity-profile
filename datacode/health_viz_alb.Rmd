@@ -71,7 +71,9 @@ alb_life_exp_county %>%
   coord_flip() +
   theme_minimal() +
   theme(legend.position = "none",
-        panel.grid.minor.x = element_blank()) +
+        panel.grid.minor.x = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot") +
   guides(fill = guide_legend(reverse = TRUE)) +
   labs(fill = "",
        title = "Life Expectancy by Race", 
@@ -82,7 +84,7 @@ alb_life_exp_county %>%
 ```
 
 
-```{r, echo=FALSE, fig.height=8}
+```{r, echo=FALSE}
 # Life Expectancy by tract: Albemarle, 2022 ----
 alb_life_exp_tract <- read_csv("../data/alb_life_exp_tract_2015.csv") %>%
   mutate(GEOID.y = as.character(GEOID.y),
@@ -126,7 +128,7 @@ alb_map <- alb_life_exp_tract %>%
 
 ```
 
-```{r, echo=FALSE, message=FALSE, fig.width=10, fig.height=8.75}
+```{r, echo=FALSE, message=FALSE, fig.width=11.25, fig.height=9}
 # Life Expectancy by Tract, Gap chart, 2022 ----
 
 alb_life <- alb_life_exp_tract %>% 
@@ -142,7 +144,7 @@ alb_lifeexp_gap <-  ggplot(alb_life, aes(x = 0, y = lifeexp_round, label = names
     geom_point(aes(color=as.factor(lifeexp_round)), size=5)+
     geom_text(label = names, hjust = 0, nudge_x = 0.005, 
               # nudge_y = .05, 
-              size = 3.5, 
+              size = 3.75, 
               # angle=55, 
               lineheight = 0.8) +
    scale_color_carto_d(name = "Life expectancy: ",
@@ -175,7 +177,7 @@ alb_lifeexp_gap <-  ggplot(alb_life, aes(x = 0, y = lifeexp_round, label = names
           legend.position="none")
   
   (alb_map + alb_lifeexp_gap) +
-  plot_layout(widths = c(2, 1)) +
+  plot_layout(widths = c(1.75, 1)) +
   plot_annotation(title = 'Life Expectancy by Census Tract',
                   subtitle = locality_name,
                   caption = "Data Source: USALEEP, 2008-2015")
@@ -213,11 +215,13 @@ alb_health_insured_county %>%
   ) +
   theme_minimal() +
   theme(legend.position = "none",
-        panel.grid.minor.x = element_blank())
+        panel.grid.minor.x = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 ```
 
-```{r, echo=FALSE, fig.width=10, fig.height=8.75}
+```{r, echo=FALSE, fig.height=9, fig.width=11.25}
 # Health Insurance by tract: Albemarle, 2022 ----
 alb_health_insured_tract <- read_csv("../data/alb_health_insured_tract_2022.csv") %>%
   mutate(GEOID = as.character(GEOID),
@@ -259,10 +263,7 @@ alb_insured_map <- alb_health_insured_tract %>%
 # Gap chart ----
 alb_insured <- alb_health_insured_tract %>% 
   group_by(per_uninsured_rounded) %>% 
-  summarise(tractnames = paste(tractnames, collapse = "; ")) %>% 
-  # mutate(tractnames = case_when(per_uninsured_rounded == 1 ~ "Earlysville; Polo Grounds Road;\nBranchland; Crozet-Beaver Creek;\nWestern Ridge-Westhall",
-  #                               per_uninsured_rounded == 1 ~ 
-  #                               .default = tractnames)) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "; ")) %>%
   na.exclude() 
 
 names <- alb_insured$tractnames
@@ -272,11 +273,11 @@ alb_insured_gap <-  ggplot(alb_insured, aes(x = 0, y = per_uninsured_rounded, la
     geom_line(color = "grey", size = 1)+
     geom_point(aes(color=as.factor(per_uninsured_rounded)), size=5)+
     geom_text(label = str_wrap(names, width = 50), hjust = 0, nudge_x = 0.005, 
-              nudge_y = case_when(alb_insured$per_uninsured_rounded %in% c(5,6) ~ 0.1,
+              nudge_y = case_when(alb_insured$per_uninsured_rounded %in% c(5,6) ~ 0.2,
                                   alb_insured$per_uninsured_rounded %in% c(4) ~ -0.1,
                              .default = 0.05),
               # nudge_y = .05, 
-              size = 3.5, 
+              size = 3.75, 
               # angle=55, 
               lineheight = 0.8) +
    scale_color_carto_d(name = "Percent Uninsured: ",
@@ -303,7 +304,7 @@ alb_insured_gap <-  ggplot(alb_insured, aes(x = 0, y = per_uninsured_rounded, la
           legend.position="none")
   
   (alb_insured_map + alb_insured_gap) +
-  plot_layout(widths = c(2, 1)) +
+  plot_layout(widths = c(1.75, 1)) +
   plot_annotation(title = 'No Health Insurance by Tract',
                   subtitle = locality_name,
                   caption = source_acs)
