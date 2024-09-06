@@ -521,6 +521,43 @@ alb_homeowner_race %>%
 
 ```
 
+```{r, echo=FALSE}
+# Zillow Observed Rent Index (ZORI), 2015-2024 ----
+zillow_rent <- read_csv("../data/zillow_rent_2015_2024.csv") %>% 
+  filter(RegionName == "Albemarle County") %>% 
+  rename_with(~ substr(.x, start = 1, stop = 4), ends_with("06-30")) %>% 
+  pivot_longer(cols = "2015":"2024") %>% 
+  mutate(name = as.numeric(name)) %>% 
+  rename(year = name, rent = value)
+
+alb_rent_2015_2024 <- zillow_rent %>% 
+  mutate(text = paste0("$", prettyNum(round(rent, -1), big.mark=",", preserve.width="none"))) %>% 
+  ggplot(aes(x = year, y = round(rent, -1), color = RegionName, label = text)) +
+  geom_line(linewidth = 1) +
+  geom_point() +
+  geom_text(size = 3.5, hjust=0.5, vjust=-1.15, color="black") +
+  scale_x_continuous(breaks = seq(from = 2015, to = 2024, by = 1),
+                     name = "") +
+  scale_y_continuous(limits = c(800,2000),
+                     labels = scales::label_currency(scale = 1),
+                     name = "") +
+  scale_color_manual(values = c("#3B8EA5")) +
+  labs(color = "",
+       title = "Zillow Observed Rent Index (ZORI), 2015-2024", 
+       subtitle = locality_name, 
+       caption = "Data Source: Zillow Observed Rent Index (ZORI), 2015-2024") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "none",
+        panel.grid.minor.x = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+
+alb_rent_2015_2024
+
+```
+
+
 ```{r, echo=FALSE, fig.height=9, fig.width=11}
 # Gross Rent by tract: Albemarle, 2022 ----
 alb_gross_rent_tract <- read_csv("../data/alb_gross_rent_tract_2022.csv") %>%

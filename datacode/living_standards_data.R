@@ -29,6 +29,8 @@
 # - County (2012-2022), Tract (2022)
 # - Source: ACS Table B25064 (COUNTY & TRACT)
 # - Source: ACS Table B25063 (REGION) !!NEEDS WORK
+# Zillow Observed Rent Index (ZORI)
+# - Source: https://www.zillow.com/research/data/
 # Tenure/Home Ownership, 2022
 # - Source: ACS Table B25003 (COUNTY, TRACT, REGION)
 # Tenure/Home Ownership by Race, 2012, 2022 
@@ -748,78 +750,104 @@ alb_gross_rent_tract_2022 <- gross_rent_tract_2022 %>%
 
 write_csv(alb_gross_rent_tract_2022, paste0("data/alb_gross_rent_tract_2022.csv"))
 
-# Median Gross Rent: Combined Region (2012-2022), B25063 (METHOD DOES NOT WORK) ----
-# https://dof.ca.gov/wp-content/uploads/sites/352/Forecasting/Demographics/Documents/How_to_Recalculate_a_Median.pdf
+# # Median Gross Rent: Combined Region (2012-2022), B25063 (METHOD DOES NOT WORK) ----
+# # https://dof.ca.gov/wp-content/uploads/sites/352/Forecasting/Demographics/Documents/How_to_Recalculate_a_Median.pdf
+# 
+# # choose localities for combined region
+# choose <- c("51003", "51540")
+# 
+# # get acs data
+# acs_B25063_county <- map_df(2022:2012,
+#                             ~ get_acs(geography = "county",
+#                                       year = .x,
+#                                       state = "VA",
+#                                       county = county_codes,
+#                                       table = "B25063",
+#                                       survey = "acs5", 
+#                                       cache = TRUE) %>%
+#                               mutate(year = .x))
+# 
+# # get labels
+# acs_labels <- meta_table %>% filter(str_detect(name, "B25063"))
+# 
+# # prep data
+# rent_table <- acs_B25063_county %>% 
+#   filter(!variable %in% c("B25063_001", "B25063_002", "B25063_027")) %>% 
+#   left_join(acs_labels, join_by("variable" == "name")) %>% 
+#   mutate(label = str_remove(label, "Estimate!!Total:!!With cash rent:!!"),
+#          rent_bin = str_remove_all(label, "\\$"),
+#          rent_bin = str_remove_all(rent_bin, ","),
+#          rent_bin = str_replace(rent_bin, " to ", "-"),
+#          rent_bin = str_replace(rent_bin, "Less than ", "0-"),
+#          rent_bin = str_replace(rent_bin, " or more", "-4000"),
+#          rent_bin = as.factor(rent_bin)
+#          ) %>% 
+#   separate(rent_bin, into = c("bin_start", "bin_end"), 
+#          sep = "-", remove = FALSE) %>% 
+#   mutate(across(starts_with("bin"), as.numeric)) %>% 
+#   group_by(GEOID, NAME, year) %>% 
+#   mutate(summary_est = sum(estimate)) %>% 
+#   ungroup()
+# 
+# # Make a function
+# aggregate_gross_rent <- function(df, yr, loc){
+#   aggregate_range <- df %>% 
+#     filter(year == yr) %>% 
+#     filter(GEOID %in% loc) %>% 
+#     group_by(year, rent_bin, bin_start, bin_end) %>% 
+#     summarize(estimate = sum(estimate),
+#               total = sum(summary_est)) %>% 
+#     ungroup() %>% 
+#     mutate(cum_sum = cumsum(estimate),
+#            cum_per = cum_sum/total)
+#   
+#   midpoint <- aggregate_range$total[1]/2
+#   index_bin <- which(aggregate_range$cum_sum > midpoint)[1]
+#   range_reach <- midpoint-aggregate_range$cum_sum[index_bin-1]
+#   range_prop <- range_reach / aggregate_range$estimate[index_bin]
+#   income_add <- range_prop * (aggregate_range$bin_end[index_bin] + 1 - aggregate_range$bin_start[index_bin])
+#   median <- aggregate_range$bin_end[index_bin-1] + income_add
+#   return(median)
+# }
+# 
+# # apply function 
+# gross_rent_combined_2022 <- aggregate_gross_rent(rent_table, 2022, choose)
+# 
+# rent_df <- map(2022:2012,
+#        ~ aggregate_gross_rent(rent_table, .x, choose)
+#        )
+# 
+# agg_rents <- data.frame(year = c(2022:2012))
+# agg_rents$gross_rent <- rent_df
+# agg_rents <- agg_rents %>% 
+#   mutate(region_fips = paste(choose, collapse = ","),
+#          locality = region_name)
 
-# choose localities for combined region
-choose <- c("51003", "51540")
+## .....................................
+# Zillow Observed Rent Index (ZORI), 2015-2024 ----
+# Source: https://www.zillow.com/research/data/
+# Download Data:
+# (1) Scroll to RENTALS: Zillow Observed Rent Index (ZORI)
+# (2) Select: 
+#  - Data Source: ZORI (Smoothed): All Homes Plus Multifamily Time Series ($)
+#  - Geography: County
 
-# get acs data
-acs_B25063_county <- map_df(2022:2012,
-                            ~ get_acs(geography = "county",
-                                      year = .x,
-                                      state = "VA",
-                                      county = county_codes,
-                                      table = "B25063",
-                                      survey = "acs5", 
-                                      cache = TRUE) %>%
-                              mutate(year = .x))
+# Get data & filter for June rent data
+# Albemarle & Charlottesville
+zillow_rent_county <- read_csv("data/tempdata/County_zori_uc_sfrcondomfr_sm_month.csv") %>% 
+  filter(StateCodeFIPS == 51 & MunicipalCodeFIPS %in% county_codes) %>% 
+  select(RegionName, RegionType, contains("06-30"))
 
-# get labels
-acs_labels <- meta_table %>% filter(str_detect(name, "B25063"))
+# Charlottesville MSA
+zillow_rent_metro <- read_csv("data/tempdata/Metro_zori_uc_sfrcondomfr_sm_month.csv") %>% 
+  filter(RegionName %in% c("Charlottesville, VA","United States")) %>% 
+  select(RegionName, RegionType, contains("06-30"))
 
-# prep data
-rent_table <- acs_B25063_county %>% 
-  filter(!variable %in% c("B25063_001", "B25063_002", "B25063_027")) %>% 
-  left_join(acs_labels, join_by("variable" == "name")) %>% 
-  mutate(label = str_remove(label, "Estimate!!Total:!!With cash rent:!!"),
-         rent_bin = str_remove_all(label, "\\$"),
-         rent_bin = str_remove_all(rent_bin, ","),
-         rent_bin = str_replace(rent_bin, " to ", "-"),
-         rent_bin = str_replace(rent_bin, "Less than ", "0-"),
-         rent_bin = str_replace(rent_bin, " or more", "-4000"),
-         rent_bin = as.factor(rent_bin)
-         ) %>% 
-  separate(rent_bin, into = c("bin_start", "bin_end"), 
-         sep = "-", remove = FALSE) %>% 
-  mutate(across(starts_with("bin"), as.numeric)) %>% 
-  group_by(GEOID, NAME, year) %>% 
-  mutate(summary_est = sum(estimate)) %>% 
-  ungroup()
+# Join tables
+zillow_rent_2015_2024 <- rbind(zillow_rent_metro, zillow_rent_county)
 
-# Make a function
-aggregate_gross_rent <- function(df, yr, loc){
-  aggregate_range <- df %>% 
-    filter(year == yr) %>% 
-    filter(GEOID %in% loc) %>% 
-    group_by(year, rent_bin, bin_start, bin_end) %>% 
-    summarize(estimate = sum(estimate),
-              total = sum(summary_est)) %>% 
-    ungroup() %>% 
-    mutate(cum_sum = cumsum(estimate),
-           cum_per = cum_sum/total)
-  
-  midpoint <- aggregate_range$total[1]/2
-  index_bin <- which(aggregate_range$cum_sum > midpoint)[1]
-  range_reach <- midpoint-aggregate_range$cum_sum[index_bin-1]
-  range_prop <- range_reach / aggregate_range$estimate[index_bin]
-  income_add <- range_prop * (aggregate_range$bin_end[index_bin] + 1 - aggregate_range$bin_start[index_bin])
-  median <- aggregate_range$bin_end[index_bin-1] + income_add
-  return(median)
-}
-
-# apply function 
-gross_rent_combined_2022 <- aggregate_gross_rent(rent_table, 2022, choose)
-
-rent_df <- map(2022:2012,
-       ~ aggregate_gross_rent(rent_table, .x, choose)
-       )
-
-agg_rents <- data.frame(year = c(2022:2012))
-agg_rents$gross_rent <- rent_df
-agg_rents <- agg_rents %>% 
-  mutate(region_fips = paste(choose, collapse = ","),
-         locality = region_name)
+# Save CSV
+write_csv(zillow_rent_2015_2024, "data/zillow_rent_2015_2024.csv")
 
 ## .....................................
 # Tenure (Own & Rent): B25003 ----
