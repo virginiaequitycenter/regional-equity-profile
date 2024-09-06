@@ -194,6 +194,21 @@ alb_life_exp_county_2024 <- life_exp_county %>%
 write_csv(alb_life_exp_county_2024, "data/alb_life_exp_county_2024.csv")
 
 ## .....................................
+# Tract-Level Life Expectancy, Charlottesville, TJHD 2018 ----
+tjhd_lifeexp <- read_csv("data/tjhd_life_exp_estimates_2018.csv")
+
+tjhd_lifeexp_cville <- tjhd_lifeexp %>% 
+  filter(county == 540) %>% 
+  mutate(GEOID = paste0(st,county,tract_num)) %>% 
+  rename(locality_num = county)
+
+# Join tract names
+tjhd_lifeexp_cville <- tjhd_lifeexp_cville %>% 
+  left_join(cville_tracts, by = join_by(GEOID == GEOID, tract_num == tract_num, locality_num == locality_num))
+
+# Save csv
+write_csv(tjhd_lifeexp_cville, "data/cville_tjhd_life_exp_tract_2012.csv")
+
 # Tract-Level Life Expectancy, 2015 ----
 # Source: https://www.cdc.gov/nchs/nvss/usaleep/usaleep.html (Source has not updated since 2010-2015 values)
 url <- "https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Datasets/NVSS/USALEEP/CSV/VA_A.CSV"

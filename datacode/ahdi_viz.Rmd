@@ -200,7 +200,7 @@ alb_ahdi_rank <-  ggplot(alb_rank_data, aes(x = 0, y = ahdi, label = names)) +
               nudge_y = case_when(alb_rank_data$ahdi %in% c(6.8,8.1) ~ -0.04,
                                   alb_rank_data$ahdi %in% c(6.9,8.2) ~ 0.05,
                              .default = 0.01),
-              size = 3.25, 
+              size = 3.5, 
               # angle=55, 
               lineheight = 0.8) +
    scale_color_carto_d(name = "American HD Index: ",
@@ -228,7 +228,7 @@ alb_ahdi_rank <-  ggplot(alb_rank_data, aes(x = 0, y = ahdi, label = names)) +
           legend.position="none")
   
   (ahdi_alb_map + patchwork::free(alb_ahdi_rank)) +
-  plot_layout(widths = c(2, 1)) +
+  plot_layout(widths = c(1.75, 1)) +
   plot_annotation(title = 'American HD Index by Census Tract',
                   subtitle = alb_name,
                   caption = "")
@@ -236,7 +236,7 @@ alb_ahdi_rank <-  ggplot(alb_rank_data, aes(x = 0, y = ahdi, label = names)) +
 ```
 
 
-```{r, echo=FALSE, fig.width=9, fig.height=7}
+```{r, echo=FALSE, fig.width=9, fig.height=7.5}
 # AHDI Charlottesville tracts, geospatial ----
 
 ahdi_tract_cville <- read_csv("../data/ahdi_tract_cville.csv") %>% 
@@ -365,13 +365,16 @@ alb_ahdi_na <- ggplot(alb_ahdi_gap %>% filter(isna == TRUE),
         panel.grid.minor = element_blank())
 
 
-(alb_ahdi_plot / alb_ahdi_na) + 
+(alb_ahdi_plot 
+  # / alb_ahdi_na
+  ) + 
   plot_layout(axes = "collect",
               guides = "collect",
-              heights = c(28,1)) +
+              # heights = c(28,1)
+              ) +
   plot_annotation(title = 'Dimensions of the American Human Development Index by Census Tract',
                   subtitle = alb_name,
-                  caption = "") &
+                  caption = "Note: Carr's Hill-McCormick Road (UVA) tract is not included due to missing Life Expectency value (Health Index) resulting in no AHDI value.") &
   theme(legend.position='top',
         legend.title = element_blank(),
         axis.text = element_text(size = 11),
@@ -386,8 +389,10 @@ alb_ahdi_na <- ggplot(alb_ahdi_gap %>% filter(isna == TRUE),
 cville_ahdi_gap <- ahdi_tract_cville %>% 
   select(tractnames, health_index, education_index, income_index, ahdi) %>% 
   group_by(tractnames, health_index, education_index, income_index, ahdi) %>% 
-  summarise(min = min(health_index, education_index, income_index, ahdi),
-            max = max(health_index, education_index, income_index, ahdi)) %>% 
+  summarise(min = case_when(income_index >= 0 ~ min(health_index, education_index, income_index, ahdi),
+                            income_index < 0 ~ min(health_index, education_index, ahdi)),
+            max = case_when(income_index >= 0 ~ max(health_index, education_index, income_index, ahdi),
+                            income_index < 0 ~ max(health_index, education_index, ahdi))) %>% 
   ungroup() %>% 
   mutate(isna = case_when(is.na(ahdi) ~ TRUE,
                           .default = FALSE),
@@ -408,7 +413,12 @@ cville_ahdi_plot <- ggplot(cville_ahdi_gap %>% filter(isna == FALSE),
   scale_color_manual(values = pal_safe) +
   theme_minimal()+
   theme(axis.title = element_blank(),
-        panel.grid.minor = element_blank())
+        panel.grid.minor = element_blank(),
+        legend.position='top',
+        legend.title = element_blank(),
+        axis.text = element_text(size = 11),
+        legend.margin = margin(l = -50),
+        legend.text = element_text(size = 11))
 
 cville_ahdi_na <- ggplot(cville_ahdi_gap %>% filter(isna == TRUE), 
                       aes(x = value, y = tractnames, color = name, group = tractnames)) +
@@ -423,13 +433,16 @@ cville_ahdi_na <- ggplot(cville_ahdi_gap %>% filter(isna == TRUE),
         panel.grid.minor = element_blank())
 
 
-(cville_ahdi_plot / cville_ahdi_na) + 
+(cville_ahdi_plot 
+  # / cville_ahdi_na
+  ) + 
   plot_layout(axes = "collect",
               guides = "collect",
-              heights = c(10,2)) +
+              # heights = c(10,2)
+              ) +
   plot_annotation(title = 'Dimensions of the American Human Development Index by Census Tract',
                   subtitle = cville_name,
-                  caption = "") &
+                  caption = "Note: Earnings Index for JPA-Fontaine and 10th & Page-Venable are not shown due to negative values") &
   theme(legend.position='top',
         legend.title = element_blank(),
         axis.text = element_text(size = 11),

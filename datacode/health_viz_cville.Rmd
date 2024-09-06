@@ -86,24 +86,30 @@ cville_life_exp_county %>%
 
 
 ```{r, echo=FALSE, fig.height=8}
-# Life Expectancy by tract: Charlottesville, 2022 ----
-cville_life_exp_tract <- read_csv("../data/cville_life_exp_tract_2015.csv") %>%
-  mutate(GEOID.y = as.character(GEOID.y),
-         lifeexp_round = round(lifeexpE, digits = 0))
+# Life Expectancy by tract: Charlottesville ----
+# TJHD Life Expectancy Estimates, 2012
+tjhd_lifeexp <- read_csv("../data/cville_tjhd_life_exp_tract_2012.csv")
+cville_life_exp_tract <- tjhd_lifeexp %>% 
+  mutate(GEOID = as.character(GEOID),
+         life_exp = round(life_exp, digits = 0))
 
+# USALEEP Life Expectancy, 2015 (Replaced with TJHD values)
+# cville_life_exp_tract <- read_csv("../data/cville_life_exp_tract_2015.csv") %>%
+#   mutate(GEOID.y = as.character(GEOID.y),
+#          lifeexp_round = round(lifeexpE, digits = 0))
 
 cville_life_exp_tract <- cville_life_exp_tract %>%
-  left_join(cville_geo, by = join_by(GEOID.y == GEOID), keep = TRUE) %>% 
+  left_join(cville_geo, by = join_by(GEOID == GEOID)) %>% 
   st_as_sf()
 
 # Geospatial visualization
 cville_map <- cville_life_exp_tract %>%
-  mutate(text =  case_when(is.na(lifeexpE) ~ "",
-                          !is.na(lifeexpE) ~ paste0(round(lifeexpE, 0)))
+  mutate(text =  case_when(is.na(life_exp) ~ "",
+                          !is.na(life_exp) ~ paste0(round(life_exp, 0)))
          ) %>%
   ggplot() +
   annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
-  geom_sf(aes(fill = lifeexpE), color = "white") +
+  geom_sf(aes(fill = life_exp), color = "white") +
   geom_sf_text(aes(label = text), size = 2.5, color = "black") +
   scale_fill_stepsn(colors = pal_health,
                     # labels = scales::label_currency(scale = 1),
@@ -134,22 +140,22 @@ cville_map <- cville_life_exp_tract %>%
 # Life Expectancy by Tract, Gap chart, 2022 ----
 
 cville_life <- cville_life_exp_tract %>% 
-  group_by(lifeexp_round) %>% 
+  group_by(life_exp) %>% 
   summarise(tractnames = paste(tractnames, collapse = "\n")) %>% 
   na.exclude() 
 
 names <- cville_life$tractnames
-lifeexp <- cville_life$lifeexp_round
+lifeexp <- cville_life$life_exp
 
-cville_lifeexp_gap <-  ggplot(cville_life, aes(x = 0, y = lifeexp_round, label = names)) +
+cville_lifeexp_gap <-  ggplot(cville_life, aes(x = 0, y = life_exp, label = names)) +
     geom_line(color = "grey", size = 1)+
-    geom_point(aes(color=as.factor(lifeexp_round)), size=5)+
-    geom_text(label = names, hjust = 0, nudge_x = 0.005, size = 4, lineheight = 0.8) +
+    geom_point(aes(color=as.factor(life_exp)), size=5)+
+    geom_text(label = names, hjust = 0, nudge_x = 0.006, size = 4, lineheight = 0.8) +
    scale_color_carto_d(name = "Life expectancy: ",
                            type = "diverging", palette = "Teal", direction = 1) +
     # scale_color_brewer(palette = "YlOrRd")+
     scale_x_continuous(limits = c(0,.1),
-                       expand = c(0.03, 0))+
+                       expand = c(0.03, 0.003))+
     scale_y_continuous(
       # limits = c(min(lifeexp), max(lifeexp)+10),
                        breaks = lifeexp,
@@ -178,7 +184,7 @@ cville_lifeexp_gap <-  ggplot(cville_life, aes(x = 0, y = lifeexp_round, label =
   plot_layout(widths = c(2, 1)) +
   plot_annotation(title = 'Life Expectancy by Census Tract',
                   subtitle = locality_name,
-                  caption = "Data Source: USALEEP, 2008-2015")
+                  caption = "Data Source: MAPP2Health, 2008-2012 Life Expectancy Estimates")
 
 ```
 

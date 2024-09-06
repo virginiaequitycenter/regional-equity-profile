@@ -30,10 +30,11 @@ cville_life_exp_county <- cville_life_exp_county %>%
   filter(group == "all") %>% 
   select(GEOID, lifeexp_est)
 
-cville_life_exp_tract <- read_csv("data/cville_life_exp_tract_2015.csv")
-cville_life_exp_tract <- cville_life_exp_tract %>% 
-  mutate(GEOID.y = as.character(GEOID.y)) %>% 
-  rename(GEOID = GEOID.y) %>% 
+# cville_life_exp_tract <- read_csv("data/cville_life_exp_tract_2015.csv")
+tjhd_lifeexp <- read_csv("data/cville_tjhd_life_exp_tract_2012.csv")
+cville_life_exp_tract <- tjhd_lifeexp %>% 
+  mutate(GEOID = as.character(GEOID)) %>% 
+  rename(lifeexpE = life_exp) %>% 
   select(GEOID, county, tractnames, lifeexpE)
 
 # School Enrollment (3-24yrs) by county and tract ----
