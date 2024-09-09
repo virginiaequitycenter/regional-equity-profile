@@ -206,20 +206,41 @@ write_csv(ahdi_tract_cville, "data/ahdi_tract_cville.csv")
 
 # Benchmark Data - State & Localities ----
 # 000 -- Virginia (state)
+# Charlottesville Benchmarks:
 # 510 -- Alexandria City
 # 013 -- Arlington County
-# 087 -- Henrico County
 # 680 -- Lynchburg City
 # 760 -- Richmond City
 # 770 -- Roanoke City
 # 830 -- Williamsburg City
-# From Prior Albemarle Report:
+# Albemarle Benchmarks:
 # 015 -- Augusta County
+# 029 -- Buckingham County
+# 041 -- Chesterfield County
 # 059 -- Fairfax County
+# 061 -- Fauquier County
+# 075 -- Goochland County
+# 085 -- Hanover County
+# 087 -- Henrico County
+# 095 -- James City County
+# 107 -- Loudoun County
+# 121 -- Montgomery County
+# 153 -- Prince William County
+# 161 -- Roanoke County
 # 165 -- Rockingham County
-# 179 -- Stafford County
+# 177 -- Spotsylvania County
+# 550 -- City of Chesapeake
+# 650 -- City of Hampton
+# 660 -- City of Harrisonburg
+# 680 -- Lynchburg City
+# 770 -- Roanoke City
+# 760 -- Richmond City
+# 810 -- City of Virginia Beach
 
-benchmark_fips <- c("000", "510", "013", "087", "680", "760", "770", "830", "015", "059", "165", "179")
+
+benchmark_fips <- c("000", "510", "013", "087", "680", "760", "770", "830", "015", "059", "165", "179",
+                    "029", "041", "061", "075", "085", "095", "107", "121", "153", "161", "177",
+                    "550", "650", "660", "810")
 
 # Year for ACS data (single year)
 year <- 2022
