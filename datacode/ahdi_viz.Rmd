@@ -55,6 +55,8 @@ cville_name <- "City of Charlottesville"
 
 ```
 
+## AHDI Benchmarks: Charlottesville
+
 ```{r, echo=FALSE, fig.width=9}
 # AHDI Benchmarks ----
 ahdi_benchmarks <- read_csv("../data/ahdi_benchmarks.csv")
@@ -155,6 +157,8 @@ ahdi_table_cville %>%
 
 
 ```
+
+## AHDI Benchmarks: Albemarle
 
 ```{r, echo=FALSE, fig.width=9}
 # AHDI Benchmarks ----
