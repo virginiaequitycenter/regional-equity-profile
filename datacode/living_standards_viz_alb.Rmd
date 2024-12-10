@@ -31,7 +31,7 @@ library(patchwork)
 
 # Education palette ----
 pal_inc <- carto_pal(7, "Emrld")
-# "#D3F2A3" "#97E196" "#6CC08B" "#4C9B82" "#217A79" "#105965" "#074050"
+"#D3F2A3" "#97E196" "#6CC08B" "#4C9B82" "#217A79" "#105965" "#074050"
 
 
 # Tract geometries ----

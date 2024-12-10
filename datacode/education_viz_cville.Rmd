@@ -32,6 +32,7 @@ library(patchwork)
 # Education palette ----
 # pal_edu <- colorRampPalette(brewer.pal(9, "PuRd"))(15)
 pal_edu <- carto_pal(7, "PinkYl")
+# "#FEF6B5" "#FFDD9A" "#FFC285" "#FFA679" "#FA8A76" "#F16D7A" "#E15383"
 
 # Tract geometries ----
 cville_geo <- tracts(state = "VA", county = "540")
@@ -150,28 +151,52 @@ cville_enroll_rank <- ggplot(cville_enroll_data, aes(x = 0, y = percent, label =
 
 ```{r, echo=FALSE}
 # Educational Attainment by Race (25 Years and Over) Charlottesville, 2022 ----
-cville_edu_attain_race <- read_csv("../data/cville_edu_attain_race_county_2022.csv")
+cville_edu_attain <- read_csv("../data/cville_edu_attain_county_2022.csv") %>% 
+  select(-percent) %>% 
+  mutate(label = case_when(label == "High school graduate or higher" ~ "high_school_up",
+                     label == "Bachelor's degree or higher" ~ "bachelors_up",
+                     label == "Graduate or professional degree" ~ "grad")) %>% 
+  pivot_wider(names_from = label, values_from = c(estimate, moe)) %>% 
+  mutate(less_than_hs = pop_25_over - estimate_high_school_up,
+         hs_only = estimate_high_school_up - estimate_bachelors_up) %>% 
+  rename(bachelors_up = estimate_bachelors_up, 
+         group_total = pop_25_over) %>% 
+  select(GEOID, locality, less_than_hs, hs_only, bachelors_up, group_total, year)
+# Return to long, add percents, prep for data viz
+cville_edu_attain <- cville_edu_attain %>% 
+  pivot_longer(less_than_hs:bachelors_up) %>% 
+  mutate(percent = round(100 * (value / group_total), digits = 2),
+         group = "All") %>% 
+  rename(edu_level = name,
+         estimate = value) %>% 
+  select(GEOID, locality, group, group_total, edu_level, estimate, percent, year)
 
-cville_edu_attain_race_plot <- cville_edu_attain_race %>% 
+cville_edu_attain_race <- read_csv("../data/cville_edu_attain_race_county_2022.csv") %>% 
+  select(-group_total_moe) %>% 
+  rename(group = race)
+
+cville_edu_attain_all <- rbind(cville_edu_attain, cville_edu_attain_race)
+
+cville_edu_attain_race_plot <- cville_edu_attain_all %>% 
   filter(group_total != 0) %>% 
-  filter(race != "White") %>% 
+  filter(group != "White") %>% 
   mutate(label = factor(edu_level, 
                         levels = c("less_than_hs", 
                                    "hs_only", 
                                    "bachelors_up"), 
                         labels = c("Less than a HS diploma", "High School diploma, no college", "Bachelor's degree or higher")),
-         race = factor(race,
-                       levels = c("Amer_Indian", "Asian", "Black", "Hispanic", "Multi", "NHPI", "Other", "White_non_hisp"),
-                       labels = c("American Indian", "Asian", "Black", "Hispanic", "Multiracial", "Native Hawaiian/Pacific Islander", "Other Racial Identities", "White")),
+         group = factor(group,
+                       levels = c("All", "Amer_Indian", "Asian", "Black", "Hispanic", "Multi", "NHPI", "Other", "White_non_hisp"),
+                       labels = c("All Over 25 years", "American Indian", "Asian", "Black", "Hispanic", "Multiracial", "Native Hawaiian/Pacific Islander", "Other Racial Identities", "White")),
          text = case_when(percent >= 1 ~ paste0(round(percent, 0), "%"),
                           percent < 1 ~ "")
   )
 
 # Stacked bar
 cville_edu_race_plot <- cville_edu_attain_race_plot %>% 
-  filter(!race %in% c("Other Racial Identities")) %>% 
+  filter(!group %in% c("Other Racial Identities")) %>% 
   filter(group_total >= 400) %>% 
-  ggplot(aes(x = race, y = percent, group = race, fill = label, 
+  ggplot(aes(x = group, y = percent, group = group, fill = label, 
              label = text)) +
   geom_bar(stat = "identity", color="white") + 
   geom_text(size = 3, position = position_stack(vjust = 0.5)) +

@@ -37,6 +37,27 @@ cville_life_exp_tract <- tjhd_lifeexp %>%
   rename(lifeexpE = life_exp) %>% 
   select(GEOID, county, tractnames, lifeexpE)
 
+# Life Expectancy Region ----
+# get populations
+cville_pop <- read_csv("data/cville_sex_age_2022.csv") %>%
+  group_by(GEOID) %>% 
+  summarise(total_pop = first(total_pop))
+
+alb_pop <- read_csv("data/alb_sex_age_2022.csv") %>%
+  group_by(GEOID) %>% 
+  summarise(total_pop = first(total_pop))
+
+# merge and join
+region_pop <- rbind(alb_pop, cville_pop)
+region_life_exp <- rbind(alb_life_exp_county, cville_life_exp_county) %>% 
+  left_join(region_pop)
+
+# find weighted average
+region_life_exp <- region_life_exp %>% 
+  summarise(lifeexp_est = round(weighted.mean(lifeexp_est, total_pop, na.rm = T), 2),
+            region_fips = paste(str_remove(GEOID, "51"), collapse = ";")) %>% 
+  select(region_fips, lifeexp_est)
+
 # School Enrollment (3-24yrs) by county and tract ----
 # Albemarle
 alb_enroll_county <- read_csv("data/alb_enroll_county_2022.csv")
@@ -61,6 +82,11 @@ cville_enroll_tract <- read_csv("data/cville_enroll_tract_2022.csv") %>%
 cville_enroll_tract <- cville_enroll_tract %>% 
   select(GEOID, county, tractnames, percent) %>% 
   rename(enrollment_per = percent)
+
+# Region 
+region_enroll <- read_csv("data/region_enroll_2022.csv")%>% 
+  rename(enrollment_per = percent) %>% 
+  select(region_fips, enrollment_per)
 
 # Degree Attainment 25yrs+ by county and tract ----
 # Albemarle
@@ -99,6 +125,14 @@ cville_edu_attain_tract <- cville_edu_attain_tract %>%
                            label == "Graduate or professional degree" ~ "grad_deg_per")) %>% 
   pivot_wider(names_from = label, values_from = percent)
 
+# Region
+region_edu_attain <- read_csv("data/region_edu_attain_2022.csv")%>% 
+  select(region_fips, percent, label) %>% 
+  mutate(label = case_when(label == "High school graduate or higher" ~ "hs_grad_per",
+                           label == "Bachelor's degree or higher" ~ "bac_deg_per",
+                           label == "Graduate or professional degree" ~ "grad_deg_per")) %>% 
+  pivot_wider(names_from = label, values_from = percent)
+
 # Median personal earnings by county and tract ----
 # Albemarle
 alb_med_earnings_county <- read_csv("data/alb_med_earnings_county_2022.csv") %>% 
@@ -123,6 +157,12 @@ cville_med_earnings_tract <- read_csv("data/cville_med_earnings_tract_2022.csv")
   filter(group == "All") %>% 
   rename(med_earnings = estimate) %>% 
   select(GEOID, county, tractnames, med_earnings)
+
+# Region
+region_med_earnings <- read_csv("data/region_med_earnings_2022.csv") %>% 
+  rename(med_earnings = med_earnings_est) %>% 
+  mutate(region_fips = "003;540") %>% 
+  select(region_fips, med_earnings)
 
 # Join tables for county and tract ----
 # County table
@@ -151,6 +191,17 @@ ahdi_tract_cville <- cville_life_exp_tract %>%
   left_join(cville_edu_attain_tract) %>% 
   left_join(cville_enroll_tract) %>% 
   left_join(cville_med_earnings_tract)
+
+# Region tables
+ahdi_region <- region_life_exp %>% 
+  left_join(region_edu_attain) %>% 
+  left_join(region_enroll) %>% 
+  left_join(region_med_earnings) %>% 
+  rename(GEOID = region_fips) %>% 
+  mutate(locality = "Charlottesville & Albemarle Combined") %>% 
+  relocate(locality, .after=GEOID)
+
+ahdi_region_counties <- rbind(ahdi_region, ahdi_county)
 
 # Create AHDI values ----
 
@@ -199,10 +250,21 @@ ahdi_tract_cville <- ahdi_tract_cville %>%
   relocate(ahdi, .after=tractnames) %>% 
   relocate(hs_grad_per:bac_deg_per, .after=lifeexpE)
 
+ahdi_region_counties <- ahdi_region_counties %>% 
+  mutate(health_index = ((lifeexp_est - 66) / (90 - 66)) * 10,
+         edu_attain_index = (((hs_grad_per/100 + bac_deg_per/100 + grad_deg_per/100) - 0.5)/(2 - 0.5)) * 10,
+         enroll_index = ((enrollment_per - 60)/(95 - 60)) * 10,
+         education_index = ((2/3)*edu_attain_index) + ((1/3)*enroll_index),
+         income_index = ((log10(med_earnings) - log10(19711)) / (log10(83394) - log10(19711))) * 10,
+         ahdi = (health_index + education_index + income_index)/3) %>% 
+  relocate(ahdi, .after=locality) %>% 
+  relocate(hs_grad_per:bac_deg_per, .after=lifeexp_est)
+
 # Write AHDI CSVs ----
 write_csv(ahdi_county, "data/ahdi_county.csv")
 write_csv(ahdi_tract_alb, "data/ahdi_tract_alb.csv")
 write_csv(ahdi_tract_cville, "data/ahdi_tract_cville.csv")
+write_csv(ahdi_region_counties, "data/ahdi_region_counties.csv")
 
 # Benchmark Data - State & Localities ----
 # 000 -- Virginia (state)

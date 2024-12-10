@@ -30,7 +30,7 @@ library(rcartocolor)
 library(patchwork)
 library(gt)
 
-# Education palette ----
+# Palette ----
 pal_health <- carto_pal(7, "Teal")
 # "#D1EEEA" "#A8DBD9" "#85C4C9" "#68ABB8" "#4F90A6" "#3B738F" "#2A5674"
 
@@ -372,6 +372,53 @@ alb_cdc_prevent %>%
 
 ```
 
+```{r, fig.width=9, fig.height=11}
+# Albemarle Opioid Data - by tract ----
+
+alb_opioid_tract <- read_csv("../data/ALB_OPIOID_OD_CENSUSTRACTS.csv") %>% 
+  rename(NAMELSAD = "Tract")
+
+alb_opioid_tract <- alb_opioid_tract %>%
+  left_join(alb_geo, by = "NAMELSAD") %>% 
+  st_as_sf() %>% 
+  na.omit()
+
+# Geospatial visualization
+alb_opioid_map <- alb_opioid_tract %>%
+  mutate(text = all) %>%
+  ggplot() +
+  annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
+  geom_sf(aes(fill = all), color = "white") +
+  geom_sf_text(aes(label = text), size = 4, color = "black") +
+  scale_fill_stepsn(colors = c("#D1EEEA", "#A8DBD9", "#85C4C9", "#68ABB8", "#4F90A6"),
+                    # pal_health,
+                    # labels = scales::label_percent(scale = 1),
+                    n.breaks = 6,
+                    guide = guide_colourbar(title = "Number of Opioid Overdoses",
+                                            title.position = "top",
+                                            direction = "horizontal",
+                                            title.hjust = 0.5,
+                                            # nbin = 6,
+                                            theme = theme(legend.key.height  = unit(0.5, "lines"),
+                                                          legend.key.width = unit(24, "lines"),
+                                                          text = element_text(size = 11)) 
+                                            )
+                    )+
+  labs(title = "Opioid Overdoses by Census Tract: 2019-2023",
+      subtitle = locality_name,
+      caption = "Data prepared by Albemarle County Fire Rescue") +
+  theme_map()+
+  theme(legend.position="top",
+        legend.position.inside=c(1, 1.06),
+        legend.justification="center",
+        plot.title = element_text(size = 14),
+        plot.subtitle = element_text(size = 14))
+
+alb_opioid_map
+
+
+```
+
 ```{r, echo=FALSE, fig.width=12, fig.height=2}
 # Food Insecurity: Albemarle, 2022 ----
 alb_food_insecure <- read_csv("../data/alb_food_insecure_2019_2022.csv")
@@ -447,6 +494,84 @@ personograph(child,
              colors=list(secure_value="grey", value="blue"),
              # plot.width=0.75,
              fig.title = "Child Food Insecurity Rate",
+             draw.legend = FALSE)
+
+
+
+```
+
+Overall Food Insecurity
+
+
+```{r, echo=FALSE, fig.width=12, fig.height=2}
+
+personograph(overall, 
+             icon.style=6,
+             n.icons=10,
+             dimensions=c(1,10),
+             colors=list(value="blue", secure_value="grey"),
+             # plot.width=0.75,
+             # fig.title = "Overall Food Insecurity",
+             draw.legend = FALSE)
+
+```
+
+Food Insecurity Rate Among Black Residents
+
+```{r, echo=FALSE, fig.width=12, fig.height=2}
+
+personograph(black,
+             icon.style=6,
+             n.icons=10,
+             dimensions=c(1,10),
+             colors=list(secure_value="grey", value="blue"),
+             # plot.width=0.75,
+             # fig.title = "Food Insecurity Rate Among Black Residents",
+             draw.legend = FALSE)
+
+```
+
+Food Insecurity Rate Among Hispanic Residents
+
+```{r, echo=FALSE, fig.width=12, fig.height=2}
+
+personograph(hispanic,
+             icon.style=6,
+             n.icons=10,
+             dimensions=c(1,10),
+             colors=list(secure_value="grey", value="blue"),
+             # plot.width=0.75,
+             # fig.title = "Food Insecurity Rate Among Hispanic Residents",
+             draw.legend = FALSE)
+
+```
+
+Food Insecurity Rate Among White Residents
+
+```{r, echo=FALSE, fig.width=12, fig.height=2}
+
+personograph(white, 
+             icon.style=6,
+             n.icons=10,
+             dimensions=c(1,10),
+             colors=list(secure_value="grey", value="blue"),
+             # plot.width=0.75,
+             # fig.title = "Food Insecurity Rate Among White Residents",
+             draw.legend = FALSE)
+
+```
+
+Child Food Insecurity Rate
+
+```{r, echo=FALSE, fig.width=12, fig.height=2}
+
+personograph(child, 
+             icon.style=6,
+             n.icons=10,
+             dimensions=c(1,10),
+             colors=list(secure_value="grey", value="blue"),
+             # plot.width=0.75,
+             # fig.title = "Child Food Insecurity Rate",
              draw.legend = FALSE)
 
 

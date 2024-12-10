@@ -29,6 +29,7 @@ library(ggthemes)
 library(rcartocolor)
 library(patchwork)
 library(gt)
+library(janitor)
 
 # Education palette ----
 pal_health <- carto_pal(7, "Teal")
@@ -370,6 +371,203 @@ cville_cdc_prevent %>%
 
 ```
 
+
+```{r, fig.width = 5, fig.height = 5, fig.retina = 2}
+# Charlottesville Opioid Data - by race and year ----
+# cville_opioid_race <- read_excel("../data/Charlottesville_Opioid_Data.xlsx", sheet = "By Race") %>% 
+#   # na.omit() %>% 
+#   pivot_longer(cols = 2:9, names_to = "year")
+# 
+# library(ggalt)
+# 
+# cville_opioid_race %>%
+#   filter(`Patient Race` %in% c("Black or African American", "Hispanic or Latino", "White")) %>%
+#   ggplot(aes(x = year, y = value, color = `Patient Race`, label = value, group = `Patient Race`)) +
+#   # geom_xspline(size = 1) +
+#   stat_xspline(size=1) +
+#   # geom_line(linewidth = 1) +
+#   geom_point() +
+#   geom_text(aes(y = case_when(value == 35 ~ value-3,
+#                               value == 19 ~ value -3,
+#                               .default = value +3)),
+#             show.legend = FALSE, color = "black",
+#                   # vjust = 0.5,
+#             # hjust = -0.1,
+#             size = 5) +
+#   scale_x_discrete(name = "",
+#                    expand = expansion(mult = c(0.02, 0.02))) +
+#   scale_y_continuous(limits = c(0,60),
+#                      breaks = seq(0, 60, by = 10),
+#                      name = "Number of Overdoes") +
+#     # scale_color_manual(values = c("#b2b8be", "#3B8EA5")) +
+#     # guides(color = guide_legend(reverse = TRUE)) +
+# labs(color = "",
+#        title = "Opioid Overdoses by Year: 12/1/16-7/10/24",
+#       subtitle = locality_name,
+#       caption = "Data prepared by the Charlottesville Fire Department including responses from the Charlottesville-Albemarle Rescue Squad") +
+#   theme_minimal() +
+#   theme(legend.title=element_blank(),
+#         legend.position = "top",
+#         axis.ticks = element_blank(),
+#         axis.text.y = element_text(size = 14),
+#         text = element_text(size = 14),
+#         axis.text.x = element_text(size=14),
+#         plot.title = element_text(size = 18),
+#         plot.caption = element_text(size = 11),
+#         # axis.text.x = element_text(angle = 45, hjust = 1),
+#         panel.grid.minor = element_blank(),
+#         plot.title.position= "plot",
+#         plot.caption.position = "plot")
+
+# Charlottesville Opioid Data - by race ----
+cville_opioid_race <- read_excel("../data/Charlottesville_Opioid_Data.xlsx", sheet = "By Race")%>%
+  filter(`Patient Race` %in% c("Black or African American", "White")) %>% 
+  pivot_longer(cols = 2:9, names_to = "year")
+
+cville_ethn_race <- read_csv("../data/cville_ethn_race_2012_2022.csv") %>%
+  filter(label %in% c("Not Hispanic or Latino: Black or African American alone", "Not Hispanic or Latino: White alone")) %>%
+  mutate(label = str_remove(label, "Not Hispanic or Latino: "),
+         label = str_remove(label, " alone"),
+         year = as.character(year)) %>% 
+  select(label, year, estimate, moe)
+
+cville_opioid_race <- cville_opioid_race %>% 
+  left_join(cville_ethn_race, by = join_by(year == year, `Patient Race` == label)) %>% 
+  mutate(estimate = case_when(`Patient Race` == "Black or African American" & year %in% c("2023", "2024") ~ 7862,
+                              `Patient Race` == "White" & year %in% c("2023", "2024") ~ 30208,
+                              .default = estimate)) %>% 
+  group_by(`Patient Race`) %>% 
+  summarise(value = sum(value),
+            estimate = mean(estimate)) %>% 
+  mutate(rate_per_1000 = (value/estimate) * 1000,
+         rate_rounded = round(rate_per_1000, 0))
+
+cville_opioid_race %>% 
+  ggplot(aes(x = `Patient Race`, y = rate_rounded, fill = `Patient Race`)) +
+  geom_bar(stat = "identity", width = 0.8) +
+  geom_text(aes(label = rate_rounded), 
+            vjust = -1,
+            hjust = 0.5,
+            size = 5,
+            color = "black") +
+  scale_y_continuous(limits = c(0,25)) +
+  scale_fill_manual(values = c("#3B8EA5","#b2b8be"))+
+  labs(
+    x = "",
+    y = "Rate per 1,000 people",
+    title = "Rate of Opioid Overdose by Race",
+    subtitle = locality_name, 
+    caption = source_acs
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.grid.major.x = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        axis.text.y = element_text(color = "black", size = 14),
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 10))
+
+```
+
+```{r, fig.width = 9, fig.height = 6, fig.retina = 2}
+# Charlottesville Opioid Data - by year ----
+cville_opioid_annual <- read_excel("../data/Charlottesville_Opioid_Data.xlsx", sheet = "By Year") %>% 
+  na.omit() %>% 
+  clean_names()
+
+library(ggalt)
+
+cville_opioid_annual %>%
+  ggplot(aes(x = year, y = opioid_overdoses, label = opioid_overdoses, group = group, color = group)) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(
+    aes(label = case_when(opioid_overdoses == 44 ~ "44*",
+                          .default = as.character(opioid_overdoses)),
+        hjust = case_when(opioid_overdoses == 44 ~ -0.1,
+                          .default = 0.5)),
+            show.legend = FALSE, color = "black",
+                  vjust = -1,
+            
+            size = 5) +
+  scale_x_discrete(name = "",
+                   expand = expansion(mult = c(0.02, 0.05))) +
+  scale_y_continuous(limits = c(0,120),
+                     breaks = seq(0, 120, by = 20),
+                     name = "Number of Overdoes") +
+  scale_color_manual(values = c("#3B8EA5"))+
+labs(color = "",
+       title = "Opioid Overdoses by Year: 12/1/16-7/10/24",
+      subtitle = locality_name,
+      caption = "*2024-to-date includes data up to 7/10/24\n
+     Data prepared by the Charlottesville Fire Department including responses from the Charlottesville-Albemarle Rescue Squad") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "none",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        # axis.text.x = element_text(angle = 45, hjust = 1),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+
+```
+
+```{r, fig.width = 7, fig.height=8}
+# Charlottesville Opioid Data - by tract ----
+
+cville_opioid_tract <- read_excel("../data/Charlottesville_Opioid_Data.xlsx", sheet = "By Tract", skip = 1) %>% 
+  mutate(GEOID = as.character(GEOID))
+
+cville_opioid_tract <- cville_opioid_tract %>%
+  left_join(cville_geo, by = "GEOID") %>% 
+  st_as_sf()
+
+# Geospatial visualization
+cville_opioid_map <- cville_opioid_tract %>%
+  mutate(text = `Overdose Count`) %>%
+  ggplot() +
+  annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
+  geom_sf(aes(fill = `Overdose Count`), color = "white") +
+  geom_sf_text(aes(label = text), size = 4, color = "black") +
+  scale_fill_stepsn(colors = pal_health,
+                    # labels = scales::label_percent(scale = 1),
+                    n.breaks = 6,
+                    guide = guide_colourbar(title = "Number of Opioid Overdoses",
+                                            title.position = "top",
+                                            direction = "horizontal",
+                                            title.hjust = 0.5,
+                                            # nbin = 6,
+                                            theme = theme(legend.key.height  = unit(0.5, "lines"),
+                                                          legend.key.width = unit(24, "lines"),
+                                                          text = element_text(size = 11)) 
+                                            )
+                    )+
+  labs(title = "Opioid Overdoses by Census Tract: 12/1/16-7/10/24",
+      subtitle = locality_name,
+      caption = "Data prepared by the Charlottesville Fire Department including responses from the Charlottesville-Albemarle Rescue Squad") +
+  theme_map()+
+  theme(legend.position="top",
+        legend.position.inside=c(1, 1.06),
+        legend.justification="center",
+        plot.title = element_text(size = 14),
+        plot.subtitle = element_text(size = 14))
+
+cville_opioid_map
+
+
+```
+
+
 ```{r, echo=FALSE, fig.width=12, fig.height=2}
 # Food Insecurity: Charlottesville, 2022 ----
 cville_food_insecure <- read_csv("../data/cville_food_insecure_2019_2022.csv")
@@ -440,4 +638,80 @@ personograph(child,
 
 
 ```
+Overall Food Insecurity
 
+
+```{r, echo=FALSE, fig.width=12, fig.height=2}
+
+personograph(overall, 
+             icon.style=6,
+             n.icons=10,
+             dimensions=c(1,10),
+             colors=list(value="blue", secure_value="grey"),
+             # plot.width=0.75,
+             # fig.title = "Overall Food Insecurity",
+             draw.legend = FALSE)
+
+```
+
+Food Insecurity Rate Among Black Residents
+
+```{r, echo=FALSE, fig.width=12, fig.height=2}
+
+personograph(black,
+             icon.style=6,
+             n.icons=10,
+             dimensions=c(1,10),
+             colors=list(secure_value="grey", value="blue"),
+             # plot.width=0.75,
+             # fig.title = "Food Insecurity Rate Among Black Residents",
+             draw.legend = FALSE)
+
+```
+
+Food Insecurity Rate Among Hispanic Residents
+
+```{r, echo=FALSE, fig.width=12, fig.height=2}
+
+personograph(hispanic,
+             icon.style=6,
+             n.icons=10,
+             dimensions=c(1,10),
+             colors=list(secure_value="grey", value="blue"),
+             # plot.width=0.75,
+             # fig.title = "Food Insecurity Rate Among Hispanic Residents",
+             draw.legend = FALSE)
+
+```
+
+Food Insecurity Rate Among White Residents
+
+```{r, echo=FALSE, fig.width=12, fig.height=2}
+
+personograph(white, 
+             icon.style=6,
+             n.icons=10,
+             dimensions=c(1,10),
+             colors=list(secure_value="grey", value="blue"),
+             # plot.width=0.75,
+             # fig.title = "Food Insecurity Rate Among White Residents",
+             draw.legend = FALSE)
+
+```
+
+Child Food Insecurity Rate
+
+```{r, echo=FALSE, fig.width=12, fig.height=2}
+
+personograph(child, 
+             icon.style=6,
+             n.icons=10,
+             dimensions=c(1,10),
+             colors=list(secure_value="grey", value="blue"),
+             # plot.width=0.75,
+             # fig.title = "Child Food Insecurity Rate",
+             draw.legend = FALSE)
+
+
+
+```

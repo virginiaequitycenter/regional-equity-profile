@@ -514,6 +514,7 @@ cville_homeowner_race %>%
         plot.caption.position = "plot")
 
 ```
+
 ```{r, echo=FALSE}
 # Zillow Observed Rent Index (ZORI), 2015-2024 ----
 zillow_rent <- read_csv("../data/zillow_rent_2015_2024.csv") %>% 

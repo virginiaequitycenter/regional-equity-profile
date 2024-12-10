@@ -573,20 +573,20 @@ write_csv(region_adv_enroll, "data/region_adv_enroll_2022_2023.csv")
 #         (3) Download Spreadsheet (save zip to tempdata)
 
 # Short Term Suspensions ----
-st_suspensions <- read_csv("data/tempdata/vdoe_data/Short Term Suspensions.csv", skip = 3) %>% 
+st_suspensions <- read_csv("data/tempdata/vdoe_data_23_24/Short Term Suspensions.csv", skip = 3) %>% 
   clean_names()
 
 # Short Term Suspensions: Charlottesville
 cville_st_suspensions <- st_suspensions %>% 
   filter(division == "Charlottesville City Public Schools")
 
-write_csv(cville_st_suspensions, "data/cville_st_suspensions_2022_2023.csv")
+write_csv(cville_st_suspensions, "data/cville_st_suspensions_2023_2024.csv")
 
 # Short Term Suspensions: Albemarle ----
 alb_st_suspensions <- st_suspensions %>% 
   filter(division == "Albemarle County Public Schools")
 
-write_csv(alb_st_suspensions, "data/alb_st_suspensions_2022_2023.csv")
+write_csv(alb_st_suspensions, "data/alb_st_suspensions_2023_2024.csv")
 
 # Short Term Suspensions: Charlottesville, Albemarle Combined Table ----
 region_st_suspensions <- st_suspensions %>% 
@@ -639,23 +639,25 @@ write_csv(region_st_suspensions, "data/region_st_suspensions_2022_2023.csv")
 #   clean_names()
 
 # Chronic Absenteeism ----
-absent <- read_csv("data/tempdata/vdoe_data/Chronic Absenteeism.csv", skip = 3) %>% 
+absent <- read_csv("data/tempdata/vdoe_data_23_24/Chronic Absenteeism.csv", skip = 3) %>% 
   clean_names()
 
 absent <- absent %>% 
   filter(!subgroup %in% c("Homeless", "English Learners")) %>% 
   mutate(count_below_10 = as.numeric(count_below_10),
-         count_above_10 = as.numeric(count_above_10))
+         count_above_10 = as.numeric(count_above_10),
+         percent_below_10 = as.numeric(percent_below_10),
+         percent_above_10 = as.numeric(percent_above_10))
 
 cville_absenteeism <- absent %>% 
   filter(division == "Charlottesville City Public Schools")
 
-write_csv(cville_absenteeism, paste0("data/cville_absenteeism_2022_2023.csv"))
+write_csv(cville_absenteeism, paste0("data/cville_absenteeism_2023_2024.csv"))
 
 alb_absenteeism <- absent %>% 
   filter(division == "Albemarle County Public Schools")
 
-write_csv(alb_absenteeism, paste0("data/alb_absenteeism_2022_2023.csv"))
+write_csv(alb_absenteeism, paste0("data/alb_absenteeism_2023_2024.csv"))
 
 # Combined Region
 region_absenteeism <- absent %>%
