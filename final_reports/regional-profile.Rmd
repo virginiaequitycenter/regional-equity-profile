@@ -56,6 +56,9 @@ school_district <- "CCS + ACPS Combined"
 source_acs <- "Data Source: U.S. Census Bureau, American Community Survey 5-year estimates, 2018-2022"
 source_vdoe <- "Data Source: Virginia Department of Education, 2023-2024" # for short term suspensions and absenteeism
 
+# County Health Ranking data
+chr_region <- read_csv("../supplemental_downloadsremoved/data/chr_regional_measures.csv")
+
 ```
 
 # Demographic Profile
@@ -119,7 +122,6 @@ region_1790_2020 %>%
 
 ```
 
-
 ```{r race-ethn-2012-2022, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="Population Composition by Race & Ethnicity, 2012-2022. According to US Census data, in 2022 76% of residents identified as White, 9% as Black or African American, 6% as Asian, 6% as Hispanic or Latino, and 3% as Multiracial. Less than 1% identified as American Indian/Alaskan Native, Native Hawaiian/Pacific Islander, or an Other Racial Identity."}
 # Ethnicity by Race, 2012-2022 ----
 # "#88CCEE" "#CC6677" "#DDCC77" "#117733" "#332288" "#AA4499" "#44AA99" "#999933" "#882255" "#661100" "#6699CC" "#888888"
@@ -167,257 +169,7 @@ region_ethn_race_2012_2022 %>%
 
 ```
 
-### Age & Sex
-
-```{r age-groups, fig.width = 10.5, fig.height=6, fig.retina = 2, fig.cap="Age of Residents: 2012 vs 2022. In 2022, 26% of county residents were under 20 years, 30% were between 20 and 44 years, 23% were 45-64 years, and 19% were 65 years and older."}
-# Age Groups: 2012 and 2022 ----
-region_age_2012_2022 <- read_csv("../data/region_age_2012_2022.csv")
-region_age_2012_2022 <- region_age_2012_2022 %>% 
-  mutate(label = factor(label,
-                        levels = c("Under 5 years", "5 to 9 years", "10 to 14 years", "15 to 19 years",
-                                   "20 to 24 years", "25 to 34 years", "35 to 44 years", "45 to 54 years",
-                                   "55 to 59 years", "60 to 64 years", "65 to 74 years", "75 to 84 years",
-                                   "85 years and over")),
-         percent = round(percent, 0))
-
-dummy_data = tibble(y = c(-25, 0, 0, 25),
-                    year = c(2012, 2012, 2022, 2022))
-
-dat <- region_age_2012_2022 %>% 
-    group_by(percent, year) %>%
-    # mutate(x = sequence(n())) %>%
-    mutate(y = ifelse(year == 2012, -percent, percent)) %>%
-    ungroup() 
-
-ggplot() +
-  geom_bar(data = dat, 
-           mapping = aes(y = y,
-                         x = label,
-                         fill = factor(year)),
-           stat = "identity",
-           width = 0.8) +
-  geom_blank(data = dummy_data,
-             mapping = aes(y = y)) +
-  geom_text(data = dat, 
-            mapping = aes(x = label, 
-                          y = case_when(year == 2012 ~  y-1.5,
-                                        year == 2022 ~  y+1.5),
-                          label = scales::percent(percent / 100, accuracy = 1)), 
-            size = 4.5
-            ) +
-  scale_x_discrete(name = "") +
-  scale_y_continuous(
-    # labels = scales::percent_format(scale = 1),
-                     expand = expansion(mult = c(0, 0)),
-                     name = "Percent of the Population") +
-    scale_fill_manual(values = c("#b2b8be", "#ff641e")) +  # Apply custom colors here
-  facet_share(~ year, 
-              dir = "h",
-              scales = "free",
-              reverse_num = TRUE) +
-  coord_flip() +
-  theme_light() +
-  labs(title = "Age of Residents: 2012 vs 2022", 
-       subtitle = locality_name, 
-       caption = source_acs) +
-  theme(legend.position = "none",
-        panel.grid.minor.x = element_blank(),
-        panel.border = element_blank(),
-        strip.text = element_text(size = rel(1.2), 
-                                  # face = "bold", 
-                                  color = "black"),
-        strip.background = element_rect(fill = "white", colour = "black", linewidth = 0),
-        # plot.title.position= "plot",
-        # plot.caption.position = "plot",
-        axis.text.y = element_text(hjust = 0.5, color = "black", size = 14),
-        text = element_text(size = 14),
-        axis.title.x = element_text(size=13),
-        plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12)
-        )
-
-```
-```{r age-by-sex, fig.width = 10.5, fig.height=4, fig.retina = 2, fig.cap="Sex by Age Group. In the US Census American Community Survey, 2022, 51% of residents identified as female and 49% identified as male."}
-# Age by Sex, 2022 ----
-region_sex_age_2022 <- read_csv("../data/region_sex_age_2022.csv")
-region_sex_age_2022 <- region_sex_age_2022 %>% 
-  mutate(age_group = case_when(
-    age_group %in% c("Under 5 years", "5 to 9 years") ~ "Under 10 years",
-    age_group %in% c("10 to 14 years", "15 to 19 years") ~ "10 to 19 years",
-    age_group %in% c("20 to 24 years", "25 to 34 years") ~ "20 to 34 years",
-    age_group %in% c("35 to 44 years", "45 to 54 years") ~ "35 to 54 years",
-    age_group %in% c("55 to 59 years", "60 to 64 years") ~ "55 to 64 years",
-    age_group %in% c("65 to 74 years", "75 to 84 years", "85 years and over") ~ "65 years and over")) %>% 
-  group_by(sex, age_group) %>% 
-  summarise(percent = sum(percent)) %>% 
-  mutate(age_group = factor(age_group, levels = c("Under 10 years", "10 to 19 years", "20 to 34 years",
-                                                      "35 to 54 years", "55 to 64 years", "65 years and over")),
-         percent_rnd = round(percent, 0))
-
-dummy_sex = tibble(y = c(-20.5, 0, 0, 20.5),
-                    sex = c("Female", "Female", "Male", "Male"))
-
-dat_sex <- region_sex_age_2022 %>% 
-    group_by(percent_rnd, sex) %>%
-    # mutate(x = sequence(n())) %>%
-    mutate(y = ifelse(sex == "Female", -percent_rnd, percent_rnd)) %>%
-    ungroup() 
-
-ggplot() +
-  geom_bar(data = dat_sex, 
-           mapping = aes(y = y,
-                         x = age_group,
-                         fill = sex),
-           stat = "identity",
-           width = 0.8) +
-  geom_blank(data = dummy_sex,
-             mapping = aes(y = y)) +
-  geom_text(data = dat_sex, 
-            mapping = aes(x = age_group, 
-                          y = case_when(sex == "Female" ~  y-1.5,
-                                        sex == "Male" ~  y+1.5),
-                          label = scales::percent(percent / 100, accuracy = 1)), 
-            size = 4.5
-            ) +
-  scale_x_discrete(name = "") +
-  scale_y_continuous(
-    # labels = scales::percent_format(scale = 1),
-                     expand = expansion(mult = c(0, 0)),
-                     name = "Percent of the Population") +
-  scale_fill_manual(values = c("#3B8EA5", "#b2b8be")) +  # Apply custom colors here
-  facet_share(~ sex, 
-              dir = "h",
-              scales = "free",
-              reverse_num = TRUE) +
-  coord_flip() +
-  theme_light() +
-  labs(title = "Sex by Age Group, 2022", 
-       subtitle = locality_name, 
-       caption = source_acs) +
-  theme(legend.position = "none",
-        panel.grid.minor.x = element_blank(),
-        panel.border = element_blank(),
-        strip.text = element_text(size = rel(1.2), 
-                                  # face = "bold", 
-                                  color = "black"),
-        strip.background = element_rect(fill = "white", colour = "black", linewidth = 0),
-        # plot.title.position= "plot",
-        # plot.caption.position = "plot",
-        axis.text.y = element_text(hjust = 0.5, color = "black", size = 14),
-        text = element_text(size = 14),
-        axis.title.x = element_text(size=13),
-        plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12)
-        )
-
-
-```
-
-
-### Nativity & Language
-
-```{r nativity, fig.width=6, fig.height=4, fig.cap="Nativity of Residents. In 2022, 10% of residents were born outside of the United States, including naturalized citizens. 90% of residents were born in the US, in US territories, or born abroad of American parents." }
-# Region, Resident Status & Foreign Born, 2022 ----
-region_nativity_2022 <- read_csv("../data/region_nativity_2022.csv")
-region_nativity_2022 <- region_nativity_2022 %>% 
-  mutate(status = case_when(
-    label == "U.S. citizen, born in the United States" ~ "US-born",
-    label == "U.S. citizen, born in Puerto Rico or U.S. Island Areas" ~ "US-born",
-    label == "U.S. citizen, born abroad of American parent(s)" ~ "US-born",
-    label == "U.S. citizen by naturalization" ~ "Foreign-born",
-    label == "Not a U.S. citizen" ~ "Foreign-born"
-  )) %>% 
-  group_by(region_fips, locality, status, total_pop, year) %>% 
-  summarise(estimate = sum(estimate))
-
-region_nativity_2022 %>% 
-  mutate(percent = round(estimate/total_pop *100, 0),
-         text = paste0(round(percent, 0), "%"),
-         status = factor(status, levels = c("US-born","Foreign-born"))) %>% 
-  arrange(status) %>% 
-  ggplot(aes(x = percent, y = locality, group = locality, fill = status, label = text)) +
-  geom_bar(stat = "identity", color = "white") +
-  geom_text(size = 5, position = position_stack(vjust = 0.5)) +
-  scale_x_continuous(labels = label_percent(scale = 1),
-                     name = "") +
-  scale_y_discrete(name = "") +
-  labs(title = "Nativity of Residents", 
-       subtitle = locality_name, 
-       caption = source_acs) +
-  scale_fill_manual(values = c("#b2b8be", "#8856A7")) +  
-  theme_minimal() +
-  theme(legend.title=element_blank(),
-        legend.position = "top",
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_blank(),
-        axis.text.y = element_blank(),
-        axis.text.x = element_text(size = 13),
-        axis.ticks = element_blank(),
-        plot.title.position= "plot",
-        plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12))
-```
-
-```{r nativity-place, fig.width = 10.5, fig.height=7, fig.retina = 2, fig.cap="Residents Born Outside the US by Place of Birth, 2022. Of foreign-born residents, 42% were born in Asia, 32% Latin America, including Mexico as part of Central America, 16% Europe, 2% Northern America, 7% Africa, and 1% Oceania."}
-pal_6 <- c("#BFD3E6", "#9EBCDA", "#8C96C6", "#8C6BB1", "#88419D", "#6E016B")
-
-# Region, Foreign-born by location, 2022 ----
-region_foreign_born <- read_csv("../data/region_birth_place_foreign_2022.csv")
-region_foreign_born <- region_foreign_born %>% 
-  mutate(region = case_when(str_detect(label, "Europe") ~ "Europe",
-                            str_detect(label, "Asia") ~ "Asia",
-                            str_detect(label, "Africa") ~ "Africa",
-                            str_detect(label, "Latin America") ~ "Latin America",
-                            .default = label),
-         percent_rnd = round(percent,0))
-
-region_foreign_born %>% 
-  mutate(percent = round(percent, 0),
-         label = factor(label,
-                        levels = c("Oceania",
-                                   "Southern Africa","Middle Africa","Northern Africa","Eastern Africa","Western Africa",   
-                                   "Northern America", 
-                                   "Southern Europe","Western Europe","Eastern Europe","Northern Europe",   
-                                   "Latin America, Caribbean","Latin America, South America","Latin America, Central America",  
-                                   "South Eastern Asia","Western Asia","South Central Asia", "Eastern Asia"  
-                        ))) %>%
-  filter(percent >= 1) %>%
-  ggplot(aes(x = percent, y = label, fill = region)) +  
-  geom_bar(stat = "identity") +
-  geom_text(aes(label = scales::percent(percent / 100, accuracy = 1)), 
-            # position = position_dodge2(width = 0.9, preserve = "single"), 
-            vjust = 0.5,
-            hjust = -0.2,
-            size = 5) +
-  scale_x_continuous(labels = scales::percent_format(scale = 1),
-                     limits = c(0,26),
-                     expand = expansion(mult = c(0, 0.02)),
-                     name = "") +
-  scale_y_discrete(name = "") +
-  scale_fill_manual(values = pal_6) +
-  labs(fill = "", 
-       title = "Residents Born Outside the US by Place of Birth", 
-       subtitle = locality_name, 
-       caption = source_acs) +
-  theme_minimal() +
-  theme(legend.position = "top",
-        legend.justification.top = "left",
-        # panel.grid.minor.x = element_blank(),
-        legend.title=element_blank(),
-        legend.text = element_text(size = 14),
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_blank(),
-        axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
-        axis.ticks = element_blank(),
-        plot.title.position= "plot",
-        plot.caption.position = "plot",
-        text = element_text(size = 14),
-        plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12))
-```
+### Language
 
 ```{r language-all, fig.width=8.5, fig.height=4, fig.cap="Limited & Non-Limited English Speaking Households, 2022. 87% of households speak only English, 11% of households are multilingual including English, and 2% are limited English speaking households."}
 # Household Language, Limited English Speaking Status ----
@@ -659,9 +411,6 @@ region_disability_cat %>%
 ```
 
 
-
-### LGBTQIA+ Communities
-
 # Human Development Framework
 
 ```{r ahdi-benchmarks, fig.width=9}
@@ -783,107 +532,403 @@ ahdi_table_region %>%
 
 ### Life Expectancy
 
-```{r life-exp-race, fig.width=8.5, fig.height=5.5, fig.cap="Life Expectancy by Race, 2024. Average life expectancies with confidence intervals for all county residents (82 yrs), Asian residents (86 yrs), Black residents (77 yrs), Hispanic residents (87 yrs), and white residents (82 yrs)."}
-# # Life Expectancy by Race: Albemarle, 2024 ----
-# region_life_exp <- read_csv("../data/region_life_exp_2024.csv")
-# 
-# region_life_exp %>% 
-#   mutate(group = factor(group, levels = c("white", "ltnx", "black", "asian", "all"),
-#                        labels = c("White", "Hispanic", "Black", "Asian", "All Residents")),
-#          text = paste0(round(lifeexp_est, 0), " years")) %>%
-#   # filter(! group %in% c("Hispanic", "Asian")) %>% 
-#   ggplot(aes(x = group, y = lifeexp_est, fill = group)) +  
-#   geom_segment(aes(x = group, yend = lower_bound, y = upper_bound), linewidth=10, color= c("#b2b8be",rep("#3B8EA5",4)), alpha = 0.8) +
-#   geom_segment(aes(y=lifeexp_est, yend = lifeexp_est+0.15), linewidth=12) +
-#   geom_text(aes(x = group, y = lifeexp_est, label = text),
-#             vjust = -2,
-#             # hjust = -0.2,
-#             size = 5,
-#             color = "black") +
-#   scale_x_discrete(name = "") +
-#   scale_y_continuous(
-#                      limits = c(65,95),
-#                      expand = expansion(mult = c(0, 0.01)),
-#                      name = "") +
-#   coord_flip() +
-#   guides(fill = guide_legend(reverse = TRUE)) +
-#   labs(fill = "",
-#        title = "Life Expectancy by Race", 
-#       subtitle = locality_name, 
-#       caption = "Note: The bars in this figure represent the confidence interval, or the range of values that most likely contain the\nestimated life expectancy for each group. Data Source: County Health Rankings, 2024") +
-#   theme_minimal() +
-#   theme(legend.position = "none",
-#         panel.grid.minor.x = element_blank(),
-#         legend.text = element_text(size = 12),
-#         panel.grid.minor.y = element_blank(),
-#         axis.text.x = element_text(size = 12),
-#         axis.text.y = element_text(color = "black", size = 14),
-#         axis.ticks = element_blank(),
-#         plot.title.position= "plot",
-#         plot.caption.position = "plot",
-#         text = element_text(size = 14),
-#         plot.title = element_text(size = 18),
-#         plot.caption = element_text(size = 12))
+```{r life-exp-time, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="Life Expectancy"}
+# Life Expectancy by Race: Albemarle, 2024 ----
+chr_locality <- read_csv("../supplemental_downloadsremoved/data/chr_locality_measures.csv")
+
+chr_locality %>% 
+  na.omit() %>% 
+  mutate(text = round(life_expectancy, 0)) %>% 
+  ggplot(aes(x = year, y = round(life_expectancy, 0), color = place, label = text)) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+  scale_x_continuous(breaks = seq(from = 2019, to = 2024, by = 1),
+                     name = "") +
+  scale_y_continuous(breaks = seq(from = 75, to = 85, by = 5),
+                     limits = c(75,85),
+                     # labels = scales::label_currency(scale = 1),
+                     name = "Life Expectancy (Years)") +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  labs(color = "",
+       title = "Life Expectancy", 
+       subtitle = "2019-2024",
+       caption = "Data Source: County Health Rankings, 2019-2024") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 
 ```
 
 
-### Food Security
+### Primary care and mental health care providers
+```{r providers-time, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="Primary care and mental health care providers over time"}
+chr_doctors <- chr_region %>% 
+  select(region, year, pc_docs, mh_docs, population) %>% 
+  pivot_longer(pc_docs:mh_docs)
+
+chr_doctors_rate <- chr_region %>% 
+  select(region, year, pc_docs_rate, mh_docs_rate) %>% 
+  pivot_longer(pc_docs_rate:mh_docs_rate)
+
+chr_doctors_rate %>% 
+  # filter(region == "Region") %>% 
+  ggplot(aes(x = year, y = round(value,0), color = name, label = round(value,0))) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+  scale_x_continuous(breaks = seq(from = 2016, to = 2024, by = 1),
+                     name = "") +
+  scale_y_continuous(limits = c(0,600),
+                     # labels = scales::label_currency(scale = 1),
+                     name = "Rate per 100,000 people") +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  facet_wrap(~region, scales = "free", ncol = 2) +
+  labs(color = "",
+       title = "Primary care and mental health care providers: 2016-2024", 
+       # subtitle = locality_name,
+       caption = "Data Source: County Health Rankings, 2016-2024") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(angle = 45, hjust = 1, size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+
+# chr_doctors_rate %>% 
+#   filter(region == "State") %>% 
+#   ggplot(aes(x = year, y = round(value,0), color = name, label = round(value,0))) +
+#   stat_xspline(size=1) +
+#   geom_point() +
+#   geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+#   scale_x_continuous(breaks = seq(from = 2016, to = 2024, by = 1),
+#                      name = "") +
+#   scale_y_continuous(limits = c(0,600),
+#                      # labels = scales::label_currency(scale = 1),
+#                      name = "Rate per 100,000 people") +
+#   # scale_color_manual(values = c("#3B8EA5")) +
+#   labs(color = "",
+#        title = "Primary care and mental health care providers: 2016-2024", 
+#        subtitle = "Virginia",
+#        caption = "Data Source: County Health Rankings, 2016-2024") +
+#   theme_minimal() +
+#   theme(legend.title=element_blank(),
+#         legend.position = "top",
+#         axis.ticks = element_blank(),
+#         axis.text.y = element_text(size = 14),
+#         text = element_text(size = 14),
+#         axis.text.x = element_text(size=14, color = "black"),
+#         plot.title = element_text(size = 18),
+#         plot.caption = element_text(size = 11),
+#         panel.grid.minor = element_blank(),
+#         plot.title.position= "plot",
+#         plot.caption.position = "plot")
+
+chr_doctors %>% 
+  filter(region == "Region") %>% 
+  ggplot(aes(x = year, y = value, color = name, label = value)) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+  scale_x_continuous(breaks = seq(from = 2016, to = 2024, by = 1),
+                     name = "") +
+  scale_y_continuous(limits = c(0,1000),
+                     # labels = scales::label_currency(scale = 1),
+                     name = "Number of Providers") +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  labs(color = "",
+       title = "Primary care and mental health care providers: 2016-2024", 
+       subtitle = locality_name,
+       caption = "Data Source: County Health Rankings, 2016-2024") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+
+chr_doctors %>% 
+  filter(region == "State") %>% 
+  ggplot(aes(x = year, y = value, color = name, label = prettyNum(value, big.mark=",", preserve.width="none"))) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+  scale_x_continuous(breaks = seq(from = 2016, to = 2024, by = 1),
+                     name = "") +
+  scale_y_continuous(limits = c(0,25000),
+                     # labels = scales::label_currency(scale = 1),
+                     name = "Number of Providers") +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  labs(color = "",
+       title = "Primary care and mental health care providers: 2016-2024", 
+       subtitle = "Virginia",
+       caption = "Data Source: County Health Rankings, 2016-2024") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 
 
-### Health Outcomes & Prevention
+```
+
 
 ### Health Insurance
 ```{r health-insure-race, fig.width = 8.5, fig.height=6, fig.retina = 2, fig.cap="Residents with No Health Insurance by Race. Overall, approximately 6% of residents do not have health insurance. This value is higher for Hispanic residents, at 30%."}
-# # Health Insurance by Race: Albemarle, 2022 ----
-# region_health_insured <- read_csv("../data/region_health_insured_race_2022.csv")
-#   
-# region_health_insured %>%
-#   filter(!group %in% c("White alone", "American Indian and Alaska Native alone", "Native Hawaiian and Other Pacific Islander alone", "Some other race alone")) %>% 
-#   mutate(group = factor(group, levels = c("White non Hispanic", "Two or more races", "Hispanic or Latino", "Black or African American alone", "Asian alone", "All"),
-#                        labels = c("White", "Multiracial", "Hispanic", "Black", "Asian", "All Residents")),
-#          text = paste0(round(percent_uninsured,0), "%")) %>%
-#   ggplot(aes(x = group, y = round(percent_uninsured,0), fill = group)) +
-#   coord_flip() +
-#   geom_bar(stat = "identity", width = 0.8) +
-#   geom_text(aes(label = text), 
-#             vjust = 0.5,
-#             hjust = -0.2,
-#             size = 5,
-#             color = "black") +
-#   scale_y_continuous(labels = scales::label_percent(scale = 1),
-#                      limits = c(0,40)) +
-#   scale_fill_manual(values = c(rep("#3B8EA5",5),"#b2b8be"))+
-#   labs(
-#     x = "",
-#     y = "Percent Uninsured",
-#     title = "Residents with No Health Insurance by Race",
-#     subtitle = locality_name, 
-#     caption = source_acs
-#   ) +
-#   theme_minimal() +
-#   theme(legend.position = "none",
-#         panel.grid.minor.x = element_blank(),
-#         legend.title=element_blank(),
-#         legend.text = element_text(size = 14),
-#         panel.grid.minor.y = element_blank(),
-#         panel.grid.major.y = element_blank(),
-#         axis.text.x = element_text(size = 13),
-#         axis.text.y = element_text(color = "black", size = 14),
-#         axis.ticks = element_blank(),
-#         plot.title.position= "plot",
-#         plot.caption.position = "plot",
-#         text = element_text(size = 14),
-#         plot.title = element_text(size = 18),
-#         plot.caption = element_text(size = 12))
+# Health Insurance by Race: Albemarle, 2022 ----
+region_health_insured <- read_csv("../data/region_health_insured_race_2022.csv")
+
+region_health_insured %>%
+  filter(!group %in% c("White alone", "American Indian and Alaska Native alone", "Native Hawaiian and Other Pacific Islander alone", "Some other race alone")) %>%
+  mutate(group = factor(group, levels = c("White non Hispanic", "Two or more races", "Hispanic or Latino", "Black or African American alone", "Asian alone", "All"),
+                       labels = c("White", "Multiracial", "Hispanic", "Black", "Asian", "All Residents")),
+         text = paste0(round(percent_uninsured,0), "%")) %>%
+  ggplot(aes(x = group, y = round(percent_uninsured,0), fill = group)) +
+  coord_flip() +
+  geom_bar(stat = "identity", width = 0.8) +
+  geom_text(aes(label = text),
+            vjust = 0.5,
+            hjust = -0.2,
+            size = 5,
+            color = "black") +
+  scale_y_continuous(labels = scales::label_percent(scale = 1),
+                     limits = c(0,40)) +
+  scale_fill_manual(values = c(rep("#3B8EA5",5),"#b2b8be"))+
+  labs(
+    x = "",
+    y = "Percent Uninsured",
+    title = "Residents with No Health Insurance by Race",
+    subtitle = locality_name,
+    caption = source_acs
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        panel.grid.minor.x = element_blank(),
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+```
+## Health Insurance over time
+```{r health-insurance-time, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
+region_health_insured_county_race_2017_2022 <- read_csv("../data/region_health_insured_county_race_2017_2022.csv")
+
+region_health_insured_county_race_2017_2022 %>% 
+  filter(!group %in% c("White alone", "American Indian and Alaska Native alone", "Native Hawaiian and Other Pacific Islander alone", "Some other race alone")) %>%
+  mutate(group = factor(group, levels = c("White non Hispanic", "Two or more races", "Hispanic or Latino", "Black or African American alone", "Asian alone", "All"),
+                       labels = c("White", "Multiracial", "Hispanic", "Black", "Asian", "All Residents")),
+         text = paste0(round(percent_uninsured,0), "%")) %>%
+  ggplot(aes(x = year, y = round(percent_uninsured,0), color = group, group = group, label = text)) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, 
+            # vjust=-1.15, 
+            color="black") +
+  scale_x_continuous(breaks = seq(from = 2017, to = 2024, by = 1),
+                     name = "") +
+  scale_y_continuous(labels = scales::label_percent(scale = 1),
+                     limits = c(0,40),
+                     name = "Percent Uninsured") +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  labs(color = "",
+       title = "Residents with No Health Insurance: 2017-2022", 
+       subtitle = locality_name,
+       caption = source_acs) +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+
+
 
 ```
 
+## Park Access
+```{r parks-time, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
+chr_parks <- chr_region %>% 
+  select(region, year, num_exer_access, exer_access_per)
+
+chr_parks %>% 
+  # filter(region == "Region") %>% 
+  na.omit() %>% 
+  ggplot(aes(x = year, y = round(exer_access_per,0), label = paste0(round(exer_access_per,0), "%"))) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+  scale_x_continuous(breaks = seq(from = 2020, to = 2024, by = 1),
+                     name = "") +
+  scale_y_continuous(limits = c(0,100),
+                     # labels = scales::label_currency(scale = 1),
+                     name = "Percent of exercise opportunities") +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  facet_wrap(~region, scales = "free", ncol = 2) +
+  labs(color = "",
+       title = "Access to exercise opportunities", 
+       # subtitle = locality_name,
+       caption = "Data Source: County Health Rankings, 2016-2024") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+
+chr_parks %>% 
+  filter(region == "Region") %>% 
+  na.omit() %>% 
+  ggplot(aes(x = year, y = round(num_exer_access,0), label = prettyNum(round(num_exer_access,0), big.mark=",", preserve.width="none"))) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+  scale_x_continuous(breaks = seq(from = 2020, to = 2024, by = 1),
+                     name = "") +
+  scale_y_continuous(limits = c(100000,150000),
+                     # labels = scales::label_currency(scale = 1),
+                     name = "Number of exercise opportunities") +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  labs(color = "",
+       title = "Access to exercise opportunities", 
+       subtitle = locality_name,
+       caption = "Data Source: County Health Rankings, 2016-2024") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+
+chr_parks %>% 
+  filter(region == "State") %>% 
+  na.omit() %>% 
+  ggplot(aes(x = year, y = round(num_exer_access,0), label = prettyNum(round(num_exer_access,0), big.mark=",", preserve.width="none"))) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+  scale_x_continuous(breaks = seq(from = 2020, to = 2024, by = 1),
+                     name = "") +
+  scale_y_continuous(limits = c(5000000,9000000),
+                     # labels = scales::label_currency(scale = 1),
+                     name = "Number of exercise opportunities") +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  labs(color = "",
+       title = "Access to exercise opportunities", 
+       subtitle = "Virginia",
+       caption = "Data Source: County Health Rankings, 2016-2024") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+
+
+
+```
 
 # Access to Knowledge
 
 ### Degree Attainment
+```{r edu-attain-time, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
+region_edu_attain_county_2018_2022 <- read_csv("../data/region_edu_attain_county_2018_2022.csv")
+
+region_edu_attain_county_2018_2022 %>% 
+  ggplot(aes(x = year, y = round(percent,0), color = label, group = label, label = paste0(round(percent,0), "%"))) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, 
+            vjust=-1,
+            color="black") +
+  scale_x_continuous(breaks = seq(from = 2018, to = 2022, by = 1),
+                     name = "") +
+  scale_y_continuous(labels = scales::label_percent(scale = 1),
+                     limits = c(0,100),
+                     name = "Percent of Population 25 yrs and older") +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  labs(color = "",
+       title = "Educational Attainment: 2018-2022", 
+       subtitle = locality_name,
+       caption = source_acs) +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+
+
+
+```
+
 ```{r degree-attain-race, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="Educational Attainment by Race/Ethnicity for the population 25 years and over, 2022. While 60% of residents overall have a bachelor's degree or higher, 26% of Black residents, 36% of Hispanic residents, and 64% of white residents have BA's or higher."}
 # Educational Attainment by Race (25 Years and Over) Region, 2022 ----
 region_edu_attain <- read_csv("../data/region_edu_attain_2022.csv") %>% 
@@ -962,6 +1007,8 @@ region_edu_attain_race_plot %>%
 
 ```
 
+
+
 ### School Enrollment
 ```{r}
 region_enroll <- read_csv("../data/region_enroll_2022.csv")
@@ -970,235 +1017,203 @@ percent_enrolled <- paste0(round(region_enroll$percent, 0), "%")
 
 `r paste0(region_enroll$label, ": ", percent_enrolled)`
 
-### AP & Dual Enrollment
-```{r ap-enroll, fig.width = 10, fig.height = 6, fig.retina = 2, fig.cap="AP & Dual Enrollment in ACPS, 2022. "}
-# Advanced Courses, AP & Dual Enrollment: Region ----
-region_adv_enroll <- read_csv("../data/region_adv_enroll_2022_2023.csv")  
+```{r edu-enroll-time, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
+region_enroll_county_2018_2022 <- read_csv("../data/region_enroll_county_2018_2022.csv") 
 
-# AP & Dual Enrollment
-region_adv_enroll %>% 
-  filter(! label %in% c("American Indian or Alaska Native", "Native Hawaiian or Pacific Islander")) %>% 
-  select(label, ap_percent, dual_percent) %>% 
-  pivot_longer(ap_percent:dual_percent, names_to = "type") %>% 
-  mutate(label = factor(label,
-                        levels = c("All Students", "Economically Disadvantaged",
-                                   "Asian", "Black, not of Hispanic origin", "Hispanic",
-                                   "Non-Hispanic, two or more races", "White, not of Hispanic origin"),
-                        labels = c("All Students", "Economically \nDisadvantaged",
-                                   "Asian", "Black", "Hispanic",
-                                   "Multiracial", "White")),
-         type = factor(type,
-                       levels = c("ap_percent", "dual_percent"),
-                       labels= c("Students taking 1 or more AP courses", "Students taking 1 or more Dual Enrollment courses")),
-         value = round(value, 0),
-         text = paste0(value, "%")) %>% 
-  ggplot(aes(x = label, y = value, fill = type)) +
-  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) + 
-  geom_text(aes(label = text), 
-              position = position_dodge2(width = 0.9, preserve = "single"), 
-              vjust = -1,
-              # hjust = -0.2,
-              size = 5) +
-  scale_x_discrete(name = "") +
-  scale_y_continuous(labels = label_percent(scale = 1),
-                     limits = c(0,100),
+region_enroll_county_2018_2022 %>% 
+  ggplot(aes(x = year, y = round(percent,0), color = label, group = label, label = paste0(round(percent,0), "%"))) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, 
+            vjust=-1,
+            color="black") +
+  scale_x_continuous(breaks = seq(from = 2018, to = 2022, by = 1),
                      name = "") +
-  scale_fill_manual(values = c("#3B8EA5", "#8C96C6")) +
-  labs(title = "AP & Dual Enrollment",
-       subtitle = school_district, 
-       caption = "Data Source: Virginia Department of Education, 2022-2023") +
-  theme_minimal() +
-  theme(legend.position = "top",
-        legend.location = "plot",
-        legend.title=element_blank(),
-        legend.text = element_text(size = 14),
-        panel.grid.minor = element_blank(),
-        panel.grid.major.x = element_blank(),
-        plot.title.position= "plot",
-        plot.caption.position = "plot",
-        axis.text.x = element_text(color = "black", size = 14),
-        axis.ticks = element_blank(),
-        text = element_text(size = 14),
-        plot.title = element_text(size = 16),
-        plot.caption = element_text(size = 12))
-```
-
-### Suspensions !2022-2023
-```{r suspensions, fig.width = 8.5, fig.height=6, fig.retina = 2, fig.cap="Short Term Suspension Incidents by Race/Ethnicity"}
-# Short Term Suspensions: Region ----
-region_suspensions <- read_csv("../data/region_st_suspensions_2022_2023.csv")  
-
-region_suspensions %>% 
-  filter(! subgroup %in% c("American Indian", "Native Hawaiian")) %>% 
-  select(subgroup, div_percent, percent_of_short_term_suspensions) %>% 
-  pivot_longer(div_percent:percent_of_short_term_suspensions, names_to = "type") %>% 
-  mutate(subgroup = factor(subgroup,
-                        levels = c("White", "Multiple Races", "Hispanic", "Black", "Asian")),
-         type = factor(type,
-                       levels = c("div_percent", "percent_of_short_term_suspensions"),
-                       labels= c("Percent of the student population", "Percent of short term suspensions")),
-         value = round(value, 0),
-         text = paste0(value, "%")) %>% 
-  ggplot(aes(x = subgroup, y = value, fill = type)) +  
-  geom_bar(stat = "identity", position = position_dodge2(width = 0.9, preserve = "single"), width = 0.8) +
-  geom_text(aes(label = text), 
-            position = position_dodge2(width = 0.9, preserve = "single"), 
-            vjust = 0.5,
-            hjust = -0.2,
-            size = 5) +
-  scale_x_discrete(name = "") +
-  scale_y_continuous(labels = scales::percent_format(scale = 1),
+  scale_y_continuous(labels = scales::label_percent(scale = 1),
                      limits = c(0,100),
-                     expand = expansion(mult = c(0, 0.03)),
-                     name = "") +
-  scale_fill_manual(values = c("#b2b8be", "#ff641e")) + 
-  coord_flip() +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  labs(fill = "", 
-       title = "Short Term Suspension Incidents by Race/Ethnicity",
-       subtitle = school_district, 
-       caption = source_vdoe) +
+                     name = "Percent of Population (3-24yrs)") +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  labs(color = "",
+       title = "School Enrollment: 2018-2022", 
+       subtitle = locality_name,
+       caption = source_acs) +
   theme_minimal() +
-  theme(legend.position = "top",
-        legend.justification.top = "left",
-        panel.grid.minor.x = element_blank(),
-        legend.title=element_blank(),
-        legend.text = element_text(size = 14),
-        panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_blank(),
-        axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+  theme(legend.title=element_blank(),
+        legend.position = "top",
         axis.ticks = element_blank(),
-        plot.title.position= "plot",
-        plot.caption.position = "plot",
+        axis.text.y = element_text(size = 14),
         text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12))
-
-```
-
-
-### Chronic Absenteeism !2022-2023
-```{r absenteesism, fig.width = 13, fig.height = 7, fig.retina = 2, fig.cap="Chronic Absenteeism in ACPS"}
-# Chronic Absenteeism: Region ----
-region_absent <- read_csv("../data/region_absenteeism_2022_2023.csv")  
-
-region_absent %>% 
-  filter(! subgroup %in% c("American Indian", "Native Hawaiian")) %>% 
-  mutate(subgroup = factor(subgroup,
-                        levels = c("All Students", "Economically Disadvantaged", "Students with Disabilities",
-                                   "Male", "Female",
-                                   "Asian", "Black", "Hispanic", "Multiple Races", "White"),
-                        labels = c("All Students", "Economically\nDisadvantaged", "Students with\nDisabilities",
-                                   "Male", "Female",
-                                   "Asian", "Black", "Hispanic", "Multiracial", "White")),
-         percent_above_10 = round(percent_above_10, 0),
-         text = paste0(percent_above_10, "%")) %>% 
-  ggplot(aes(x = subgroup, y = percent_above_10, fill = subgroup)) +
-  geom_bar(stat = "identity", width = 0.8) + 
-  geom_text(aes(label = text), 
-            vjust = -1,
-            size = 5,
-            color = "black") +
-  scale_x_discrete(name = "") +
-  scale_y_continuous(labels = label_percent(scale = 1),
-                     limits = c(0,60),
-                     name = "") +
-  scale_fill_manual(values = c("#b2b8be", rep("#3B8EA5",9)))+
-  labs(title = "Chronic Absenteeism",
-       subtitle = school_district, 
-       caption = source_vdoe) +
-  theme_minimal() +
-  theme(legend.position = "none",
-        legend.location = "plot",
-        legend.title=element_blank(),
-        legend.text = element_text(size = 14),
+        plot.caption = element_text(size = 11),
         panel.grid.minor = element_blank(),
-        panel.grid.major.x = element_blank(),
         plot.title.position= "plot",
-        plot.caption.position = "plot",
-        axis.text.x = element_text(color = "black", size = 13),
-        axis.ticks = element_blank(),
-        text = element_text(size = 14),
-        plot.title = element_text(size = 20),
-        plot.subtitle = element_text(size = 16),
-        plot.caption = element_text(size = 12))
+        plot.caption.position = "plot")
+
 
 
 ```
+
+# Child Care
+```{r child-care}
+child_care_loc <- read_csv("../supplemental_downloadsremoved/data/child_care_supply_locality.csv")
+child_care_region <- read_csv("../supplemental_downloadsremoved/data/child_care_supply_region.csv") %>% 
+  mutate(location = locality_name)
+
+child_care <- rbind(child_care_loc, child_care_region) %>% 
+  pivot_wider(values_from = centers:seats, names_from = location) %>% 
+  clean_names() %>% 
+  select(type,centers_albemarle,seats_albemarle,centers_charlottesville,seats_charlottesville,centers_charlottesville_albemarle_county,seats_charlottesville_albemarle_county)
+
+child_care %>%
+  gt(rowname_col = "type") %>%
+  # tab_row_group(label = "Local",
+  #               rows = c("Albemarle", "Charlottesville")) %>%
+  # tab_row_group(label = "State",
+  #               rows = c("Virginia")) %>%
+  # tab_row_group(label = "Benchmark Counties",
+  #               rows = 4:11) %>%
+  #   row_group_order(groups = c("Local", "State", "Benchmark Counties")) %>%
+  tab_spanner(
+    label = "Albemarle",
+    columns = centers_albemarle:seats_albemarle
+  ) %>%
+  tab_spanner(
+    label = "Charlottesville",
+    columns = centers_charlottesville:seats_charlottesville
+  ) %>%
+  tab_spanner(
+    label = "Combined",
+    columns = centers_charlottesville_albemarle_county:seats_charlottesville_albemarle_county
+  ) %>%
+  tab_style(
+    style = cell_text(align = "center", v_align = "middle"),
+    locations = list(cells_column_labels(), cells_body())
+  ) %>%
+  tab_style(
+    style = cell_borders(
+      sides = c("left"),
+      weight = px(2)),
+    locations = list(cells_body(
+      columns = c(centers_albemarle)
+      ),
+    cells_column_labels(
+      columns = centers_albemarle
+      ),
+    cells_column_spanners()
+    ) 
+  ) %>% 
+  tab_style(
+    style = cell_borders(
+      sides = c("right"),
+      weight = px(2)),
+    locations = list(cells_body(
+      columns = c(seats_albemarle, seats_charlottesville, seats_charlottesville_albemarle_county)
+      ),
+    cells_column_labels(
+      columns = c(seats_albemarle, seats_charlottesville, seats_charlottesville_albemarle_county)
+      ),
+    cells_column_spanners()
+    ) 
+  ) %>% 
+  cols_label(
+    centers_albemarle = "Centers",
+    seats_albemarle = "Seats",
+    centers_charlottesville = "Centers",
+    seats_charlottesville = "Seats",
+    centers_charlottesville_albemarle_county  = "Centers",
+    seats_charlottesville_albemarle_county = "Seats"
+  ) %>% 
+  tab_header(
+    title = md("**Child Care Supply**")
+  ) %>%
+  tab_source_note(
+    source_note = md("Data Sources: ")
+  )
+
+```
+
+```{r social, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
+chr_social <- chr_region %>% 
+  select(region, year, soc_assoc, soc_assoc_rate)
+
+chr_social %>% 
+  filter(region == "Region") %>% 
+  ggplot(aes(x = year, y = soc_assoc_rate, label = paste0(round(soc_assoc_rate,0)))) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+  scale_x_continuous(breaks = seq(from = 2016, to = 2024, by = 1),
+                     name = "") +
+  scale_y_continuous(limits = c(0,100),
+                     # labels = scales::label_currency(scale = 1),
+                     name = "Rate") +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  labs(color = "",
+       title = "Civic sector: # membership organizations per pop: 2016-2024", 
+       subtitle = locality_name,
+       caption = "Data Source: County Health Rankings, 2016-2024") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+```
+
 
 # Decent Standard of Living: Economic Security and Housing Profile
 
 ### Earnings and Income
-```{r earnings-race, fig.width = 8.5, fig.height=6, fig.cap="Median Personal Earnings by Sex and Race"}
-# # Median personal earnings, by sex and race: Albemarle, 2022 ----
-# region_med_earnings_race <- read_csv("../data/region_med_earnings_race_2022.csv") %>%
-#   mutate(estimate = round(estimate, -2))
-# 
-# 
-# region_med_earnings_race %>% 
-#   filter(race != "White") %>% 
-#   mutate(race = factor(race, levels = c("White, Not Hispanic or Latino", "Mutiracial", "Hispanic or Latino", "Black", "Asian"),
-#                        labels = c("White", "Mutiracial", "Hispanic", "Black", "Asian")),
-#          # sex = factor(sex, levels = c("Male", "Female", "All")),
-#          text = paste0("$", prettyNum(estimate, big.mark=",", preserve.width="none")),
-#          xstart = 0,
-#          textcolor = "black") %>%
-#   # ggplot(aes(x = race, y = estimate, fill = sex)) +
-#   ggplot() +
-#   geom_linerange(aes(y = race, xmin = 0, xmax = estimate, color = sex),
-#                  position = position_dodge(width = 0.8), 
-#                  linewidth = 1.5,
-#                  show.legend = FALSE)+
-#   geom_point(aes(x = estimate, y = race, color = sex), position = position_dodge(width = 0.8), size = 4.5) +
-#   scale_color_manual(values = c("#b2b8be", "#3B8EA5", "#005191")) +
-#   guides(color = guide_legend(reverse = TRUE)) +
-#   new_scale_color() +
-#   geom_text(aes(x = estimate, y = race, label = text, color = sex),
-#             position = position_dodge2(width = 0.8, preserve = "single"),
-#             vjust = 0.5,
-#             hjust = -0.2,
-#             size = 4,
-#             show.legend = FALSE) +
-#   scale_color_manual(values = c("black", "black", "black")) +
-#   scale_y_discrete(expand = expansion(mult = c(0, 0)),
-#                    name = "") +
-#   scale_x_continuous(labels = scales::label_currency(scale = 1, scale_cut = cut_short_scale()),
-#                      limits = c(0,70000),
-#                      expand = expansion(mult = c(0, 0)),
-#                      name = "") +
-#   geom_vline(xintercept = 49170, color = "black", linetype = "dashed",
-#                size = .2) +
-#   annotate("text", x = 49170, y = 3.5,
-#              label = "Overall Median Personal\n Earnings: $49,170",
-#              hjust = -0.05,
-#              color = "black",
-#              size = 4,
-#            lineheight = 0.9) +
-#   theme_minimal() +
-#   labs(color = "",
-#        title = "Median Personal Earnings by Sex and Race", 
-#       subtitle = locality_name, 
-#       caption = source_acs)+
-#   theme(legend.position = "top",
-#         # legend.justification.top = "left",
-#         panel.grid.minor.x = element_blank(),
-#         legend.title=element_blank(),
-#         legend.text = element_text(size = 14),
-#         panel.grid.minor.y = element_blank(),
-#         panel.grid.major.y = element_blank(),
-#         axis.text.x = element_text(size = 13),
-#         axis.text.y = element_text(color = "black", size = 14),
-#         axis.ticks = element_blank(),
-#         plot.title.position= "plot",
-#         plot.caption.position = "plot",
-#         text = element_text(size = 14),
-#         plot.title = element_text(size = 18),
-#         plot.caption = element_text(size = 12))
-# 
+```{r earnings-time, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
+region_med_earnings_2012_2022 <- read_csv("../data/region_med_earnings_2012_2022.csv") %>% 
+  pivot_longer(med_earnings_est:med_earn_adjusted_2022) %>% 
+  mutate(pos = case_when(name == "med_earn_adjusted_2022" ~ 1,
+                         name == "med_earnings_est" ~ -1
+                         ),
+         name = case_when(name == "med_earnings_est" ~ "Median Personal Earnings",
+                          name == "med_earn_adjusted_2022" ~ "Median Personal Earnings (Inflation-Adjusted, 2022 $)")
+         )
 
+region_med_earnings_2012_2022 %>%
+  ggplot(aes(x = year, y = round(value, -2), color = name, group = interaction(locality, name), label = paste0("$", prettyNum(round(value, -2), big.mark=",", preserve.width="none")), linetype = name)) +
+  stat_xspline(size=1) +
+  geom_point() +
+   geom_text(aes(y = (round(value, -2) + sign(pos) *3000)), size = 4.5, hjust=0.4, 
+            # vjust=-1, 
+            color="black", show.legend = FALSE) +
+  # geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+  scale_x_continuous(breaks = seq(from = 2012, to = 2022, by = 1),
+                     name = "") +
+  scale_y_continuous(limits = c(0,60000),
+                     labels = scales::label_currency(scale = 1),
+                     name = "Median Personal Earnings") +
+  scale_linetype_manual(values = c(1, 2)) +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  labs(color = "",
+       title = "Median Personal Earnings", 
+       subtitle = locality_name,
+       caption = source_acs,
+       color = "", linetype = "", fill = "") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 ```
-
 
 
 ```{r income-race, fig.width = 8.5, fig.height=6, fig.retina = 2, fig.cap="Median Household Income by Race/Ethnicity"}
@@ -1250,202 +1265,476 @@ region_med_hhinc %>%
 
 ```
 
-### Struggling Families: Asset Limited, Income Constrained, Employed (ALICE)
-
-
+<!-- ### Struggling Families: Asset Limited, Income Constrained, Employed (ALICE) -->
 
 ```{r alice-race, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Households by Race/Ethnicity"}
-# ALICE households by race/ethnicity: Region, 2022 ----
-region_ALICE_households_by_race <- read_csv("../data/region_ALICE_households_by_race_2022.csv")
+# # ALICE households by race/ethnicity: Region, 2022 ----
+# region_ALICE_households_by_race <- read_csv("../data/region_ALICE_households_by_race_2022.csv")
+# 
+# region_ALICE_households_by_race <- region_ALICE_households_by_race %>% 
+#   mutate(level = case_when(level == "above_alice_households" ~ "above",
+#                            level == "alice_households" ~ "alice",
+#                            level == "poverty_households" ~ "poverty",
+#                            .default = level))
+# 
+# region_ALICE_households_by_race <- region_ALICE_households_by_race[order(region_ALICE_households_by_race$level),]
+# 
+# region_ALICE_households_by_race %>% 
+#   arrange(desc(level)) %>% 
+#   mutate(group = factor(group,
+#                        levels = c("Asian", "Black", "Hispanic", "2+ Races", "White", "All"),
+#                        labels = c("Asian", "Black", "Hispanic", "Multiracial", "White", "All Households")),
+#          level = factor(level, levels = c("above", "alice", "poverty"),
+#                         labels = c("Above ALICE", "ALICE", "Poverty")),
+#   text = case_when(percent >= 1 ~ paste0(round(percent, 0), "%"),
+#                    percent < 1 ~ paste0(round(percent, 1), "%"))) %>%
+#   ggplot(aes(x = group, y = percent, group = group, fill = level, 
+#              label = text)) +
+#   geom_bar(stat = "identity", color = "white") + 
+#   scale_fill_manual(values = c("#b2b8be", "#3B8EA5", "#005191")) +
+#   # scale_fill_manual(values = c("#e9e9e9","#70bed6","#5d6895")) +
+#   geom_text(aes(color = level), size = 4.5, position = position_stack(vjust = 0.5), show.legend = FALSE) +
+#   scale_color_manual(values = c("black", "black", "white")) +
+#   scale_x_discrete(name = "") +
+#   scale_y_continuous(labels = label_percent(scale = 1),
+#                      name = "") +
+#   guides(fill = guide_legend(reverse = TRUE)) +
+#   labs(color = "", 
+#        title = "ALICE Households by Race/Ethnicity", 
+#       subtitle = locality_name, 
+#       caption = "Data Sources: ALICE Threshold, 2022; U.S. Census Bureau, American Community Survey, 2022") +
+#   theme_minimal() +
+#   theme(legend.position = "top",
+#         legend.location = "plot",
+#         legend.title=element_blank(),
+#         legend.text = element_text(size = 14),
+#         panel.grid.minor = element_blank(),
+#         panel.grid.major.x = element_blank(),
+#         plot.title.position= "plot",
+#         plot.caption.position = "plot",
+#         axis.text.x = element_text(color = "black", size = 14),
+#         axis.ticks = element_blank(),
+#         text = element_text(size = 14),
+#         plot.title = element_text(size = 16),
+#         plot.caption = element_text(size = 12))
 
-region_ALICE_households_by_race <- region_ALICE_households_by_race %>% 
-  mutate(level = case_when(level == "above_alice_households" ~ "above",
-                           level == "alice_households" ~ "alice",
-                           level == "poverty_households" ~ "poverty",
-                           .default = level))
+```
 
-region_ALICE_households_by_race <- region_ALICE_households_by_race[order(region_ALICE_households_by_race$level),]
+### Commuter inflow/outflow
+```{r commute-time, fig.width = 9.5, fig.height = 7, fig.retina = 2, fig.cap=""}
+region_commute <- read_csv("../supplemental_downloadsremoved/data/inflow_outflow_region.csv") %>% 
+  pivot_wider(names_from = worker_type, values_from = number) %>% 
+  mutate(total_ages = (younger + middle_age + older),
+         total_wages = (low_wage + mid_wage + hi_wage))
 
-region_ALICE_households_by_race %>% 
-  arrange(desc(level)) %>% 
-  mutate(group = factor(group,
-                       levels = c("Asian", "Black", "Hispanic", "2+ Races", "White", "All"),
-                       labels = c("Asian", "Black", "Hispanic", "Multiracial", "White", "All Households")),
-         level = factor(level, levels = c("above", "alice", "poverty"),
-                        labels = c("Above ALICE", "ALICE", "Poverty")),
-  text = case_when(percent >= 1 ~ paste0(round(percent, 0), "%"),
-                   percent < 1 ~ paste0(round(percent, 1), "%"))) %>%
-  ggplot(aes(x = group, y = percent, group = group, fill = level, 
-             label = text)) +
-  geom_bar(stat = "identity", color = "white") + 
-  scale_fill_manual(values = c("#b2b8be", "#3B8EA5", "#005191")) +
-  # scale_fill_manual(values = c("#e9e9e9","#70bed6","#5d6895")) +
-  geom_text(aes(color = level), size = 4.5, position = position_stack(vjust = 0.5), show.legend = FALSE) +
-  scale_color_manual(values = c("black", "black", "white")) +
-  scale_x_discrete(name = "") +
-  scale_y_continuous(labels = label_percent(scale = 1),
-                     name = "") +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  labs(color = "", 
-       title = "ALICE Households by Race/Ethnicity", 
-      subtitle = locality_name, 
-      caption = "Data Sources: ALICE Threshold, 2022; U.S. Census Bureau, American Community Survey, 2022") +
+total_workers <- region_commute %>% 
+  group_by(year) %>% 
+  summarise(total_workers = sum(total_ages))
+
+region_commute_dat <- region_commute %>% 
+  left_join(total_workers) %>% 
+  mutate(across(younger:total_ages, ~ round((.x/total_workers) *100, 2), .names = "{col}_percent"),
+         across(younger:hi_wage, ~ round((.x/total_ages) *100, 2), .names = "{col}_per_group"))
+
+region_commute_dat %>% 
+  ggplot(aes(x = total_ages_percent, y = as.character(year), group=as.character(year), fill = status)) +
+  geom_bar(stat = "identity") +
+  geom_label_repel(aes(label = case_when(
+           status == "live_here_work_here" ~ paste0(round(total_ages_percent, 0), "% live &\nwork here\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"),
+           status == "live_here_work_outside" ~ paste0(round(total_ages_percent, 0), "% live here &\nwork elsewhere\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"),
+           status == "live_outside_work_here" ~ paste0(round(total_ages_percent, 0), "% live elsewhere &\nwork here\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"))),
+                  size = 4.5, fontface = "bold", show.legend = FALSE,
+                  min.segment.length = Inf,
+                  position = position_stack(vjust = 0.25),
+           vjust = 0.5,
+           hjust = -0.025,
+                  box.padding = 0.01,
+                  # force_pull = 100,
+                  # direction = "x",
+                  color = "white") +
+  scale_x_continuous(limits = c(0, 100),
+                     labels = label_percent(scale = 1), 
+                     name = "Percent of Workers",
+                     sec.axis = dup_axis()) + 
+  scale_y_discrete(name = "") +
+  # scale_fill_manual(values = c(grey_dot, blue_dot)) +
+  labs(title = "Commuters",
+       # subtitle = locality_name,
+       caption = source_acs) +
   theme_minimal() +
-  theme(legend.position = "top",
-        legend.location = "plot",
-        legend.title=element_blank(),
-        legend.text = element_text(size = 14),
-        panel.grid.minor = element_blank(),
-        panel.grid.major.x = element_blank(),
-        plot.title.position= "plot",
-        plot.caption.position = "plot",
-        axis.text.x = element_text(color = "black", size = 14),
-        axis.ticks = element_blank(),
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        # legend.location = "plot",
+        legend.justification="center",
+        legend.text = element_text(size = 13),
+          panel.grid.major.y = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+        # axis.text.y = element_blank(),
         text = element_text(size = 14),
-        plot.title = element_text(size = 16),
+        axis.title.x = element_text(size=12),
+        plot.title = element_text(size = 18),
         plot.caption = element_text(size = 12))
+
+
+
+
+```
+
+```{r commute-types, fig.width = 9.5, fig.height = 7, fig.retina = 2, fig.cap=""}
+
+region_worker_type_num <- region_commute_dat %>% 
+  select(status, year, younger:hi_wage) %>%
+  pivot_longer(younger:hi_wage)
+
+region_worker_type_per <- region_commute_dat %>% 
+  select(status, year, younger_per_group:hi_wage_per_group) %>%
+  pivot_longer(younger_per_group:hi_wage_per_group) %>% 
+  mutate(name = str_remove(name, "_per_group")) %>% 
+  rename(percent = value)
+
+region_worker_type <- region_worker_type_num %>% 
+  left_join(region_worker_type_per) %>% 
+  mutate(type = case_when(name %in% c("younger", "middle_age", "older") ~ "age",
+                          name %in% c("low_wage", "mid_wage", "hi_wage") ~ "wage"))
+
+region_worker_type %>% 
+  filter(type == "age") %>% 
+  ggplot(aes(x = year, y = percent, group = year, fill = name)) +
+  geom_bar(stat = "identity") +
+  geom_label_repel(aes(label = round(percent, 0)),
+    # aes(label = case_when(
+    #        status == "live_here_work_here" ~ paste0(round(total_ages_percent, 0), "% live &\nwork here\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"),
+    #        status == "live_here_work_outside" ~ paste0(round(total_ages_percent, 0), "% live here &\nwork elsewhere\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"),
+    #        status == "live_outside_work_here" ~ paste0(round(total_ages_percent, 0), "% live elsewhere &\nwork here\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"))),
+                  size = 4.5, fontface = "bold", show.legend = FALSE,
+                  min.segment.length = Inf,
+                  position = position_stack(vjust = 0.25),
+           vjust = 0.5,
+           hjust = -0.025,
+                  box.padding = 0.01,
+                  # force_pull = 100,
+                  # direction = "x",
+                  color = "white"
+    ) +
+  # scale_x_continuous(limits = c(0, 100),
+  #                    labels = label_percent(scale = 1), 
+  #                    name = "Percent of Workers",
+  #                    sec.axis = dup_axis()) + 
+  # scale_y_discrete(name = "") +
+  # scale_fill_manual(values = c(grey_dot, blue_dot)) +
+facet_wrap(~status, scales = "free", ncol = 3) +
+  labs(title = "Commuters by Worker Type",
+       # subtitle = locality_name,
+       caption = source_acs) +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        # legend.location = "plot",
+        legend.justification="center",
+        legend.text = element_text(size = 13),
+          panel.grid.major.y = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+        # axis.text.y = element_blank(),
+        text = element_text(size = 14),
+        axis.title.x = element_text(size=12),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+region_worker_type %>% 
+  filter(type == "wage") %>% 
+  ggplot(aes(x = year, y = percent, group = year, fill = name)) +
+  geom_bar(stat = "identity") +
+  geom_label_repel(aes(label = round(percent, 0)
+    # label = case_when(
+    #        status == "live_here_work_here" ~ paste0(round(total_ages_percent, 0), "% live &\nwork here\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"),
+    #        status == "live_here_work_outside" ~ paste0(round(total_ages_percent, 0), "% live here &\nwork elsewhere\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"),
+    #        status == "live_outside_work_here" ~ paste0(round(total_ages_percent, 0), "% live elsewhere &\nwork here\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"))
+    ),
+                  size = 4.5, fontface = "bold", show.legend = FALSE,
+                  min.segment.length = Inf,
+                  position = position_stack(vjust = 0.25),
+           vjust = 0.5,
+           hjust = -0.025,
+                  box.padding = 0.01,
+                  # force_pull = 100,
+                  # direction = "x",
+                  color = "white") +
+  # scale_x_continuous(limits = c(0, 100),
+  #                    labels = label_percent(scale = 1), 
+  #                    name = "Percent of Workers",
+  #                    sec.axis = dup_axis()) + 
+  # scale_y_discrete(name = "") +
+  # scale_fill_manual(values = c(grey_dot, blue_dot)) +
+facet_wrap(~status, scales = "free", ncol = 3) +
+  labs(title = "Commuters by Worker Type",
+       # subtitle = locality_name,
+       caption = source_acs) +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        # legend.location = "plot",
+        legend.justification="center",
+        legend.text = element_text(size = 13),
+          panel.grid.major.y = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+        # axis.text.y = element_blank(),
+        text = element_text(size = 14),
+        axis.title.x = element_text(size=12),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+workers_by_type <- region_worker_type %>% 
+  group_by(year, name) %>% 
+  summarise(total_group = sum(value))
+
+workers_by_type <- workers_by_type %>% 
+  left_join(region_worker_type) %>% 
+  mutate(percent = round(value/total_group *100, 2))
+
+workers_by_type %>% 
+  filter(type == "wage") %>% 
+  ggplot(aes(x = year, y = percent, group = year, fill = status)) +
+  geom_bar(stat = "identity") +
+  geom_label_repel(aes(label = round(percent, 0)
+    ),
+                  size = 4.5, fontface = "bold", show.legend = FALSE,
+                  min.segment.length = Inf,
+                  position = position_stack(vjust = 0.25),
+           vjust = 0.5,
+           hjust = -0.025,
+                  box.padding = 0.01,
+                  # force_pull = 100,
+                  # direction = "x",
+                  color = "white") +
+  # scale_x_continuous(limits = c(0, 100),
+  #                    labels = label_percent(scale = 1), 
+  #                    name = "Percent of Workers",
+  #                    sec.axis = dup_axis()) + 
+  # scale_y_discrete(name = "") +
+  # scale_fill_manual(values = c(grey_dot, blue_dot)) +
+facet_wrap(~name, scales = "free", ncol = 3) +
+  labs(title = "Commuters by Worker Type",
+       # subtitle = locality_name,
+       caption = source_acs) +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        # legend.location = "plot",
+        legend.justification="center",
+        legend.text = element_text(size = 13),
+          panel.grid.major.y = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+        # axis.text.y = element_blank(),
+        text = element_text(size = 14),
+        axis.title.x = element_text(size=12),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+workers_by_type %>% 
+  filter(type == "age") %>% 
+  ggplot(aes(x = year, y = percent, group = year, fill = status)) +
+  geom_bar(stat = "identity") +
+  geom_label_repel(aes(label = round(percent, 0)
+    ),
+                  size = 4.5, fontface = "bold", show.legend = FALSE,
+                  min.segment.length = Inf,
+                  position = position_stack(vjust = 0.25),
+           vjust = 0.5,
+           hjust = -0.025,
+                  box.padding = 0.01,
+                  # force_pull = 100,
+                  # direction = "x",
+                  color = "white") +
+  # scale_x_continuous(limits = c(0, 100),
+  #                    labels = label_percent(scale = 1), 
+  #                    name = "Percent of Workers",
+  #                    sec.axis = dup_axis()) + 
+  # scale_y_discrete(name = "") +
+  # scale_fill_manual(values = c(grey_dot, blue_dot)) +
+facet_wrap(~name, scales = "free", ncol = 3) +
+  labs(title = "Commuters by Worker Type",
+       # subtitle = locality_name,
+       caption = source_acs) +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        # legend.location = "plot",
+        legend.justification="center",
+        legend.text = element_text(size = 13),
+          panel.grid.major.y = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+        # axis.text.y = element_blank(),
+        text = element_text(size = 14),
+        axis.title.x = element_text(size=12),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
 
 ```
 
 ### Housing: Renters and Owners
 
-```{r rent-burden, fig.height=10.5, fig.width=10.5, fig.cap="Rent Burdened Households by Census Tract"}
-# # Rent Burdened Households: Region, 2022 ----
-# 
-# region_rent_burden <- read_csv("../data/region_rent_burden_2022.csv")  
-# region_rent_burden_tract <- read_csv("../data/region_rent_burden_tract_2022.csv")  
-# 
-# region_rent_burden_tract <- region_rent_burden_tract %>% 
-#   mutate(label = paste0(level, "\n", rent_burden),
-#          text = case_when(percent >= 1 ~ paste0(round(percent, 0), "%"),
-#                    percent < 1 ~ ""),
-#          rentallabel = prettyNum(total_units, big.mark=",", preserve.width="none")
-#          # rentallabel = paste0("Total Units: ", as.character(region_rent_burden_tract$total_units))
-#          )
-# region_rent_burden_tract <- region_rent_burden_tract[order(region_rent_burden_tract$tractnames, decreasing=TRUE),]
-# rentallabel <- as.list(region_rent_burden_tract$rentallabel) %>% unique()
-# 
-# unburdened_plot <- region_rent_burden_tract %>% 
-#   filter(level %in% c("Not burdened")) %>% 
-#   ggplot(aes(y = tractnames, x = percent, fill = factor(label), label= text)) +  
-#   geom_bar(stat = "identity") +
-#   geom_text(position = position_stack(vjust = 0.5), 
-#             # vjust = 0.5,
-#             # hjust = 0.5,
-#             size = 4.5) +
-#   scale_y_discrete(position = "left",
-#                    limits=rev,
-#                    name = "") +
-#   scale_x_reverse(labels = scales::percent_format(scale = 1),
-#                      breaks = seq(from = 25, to = 100, by = 25),
-#                      limits = c(100,0),
-#                      expand = expansion(mult = c(0, 0)),
-#                      name = "") +
-#   scale_fill_manual(values = c("#b2b8be")) + 
-#   theme_minimal() +
-#   theme(legend.title=element_blank(),
-#         legend.justification="right",
-#         legend.position = c(0.6, 1.06),
-#         legend.direction = 'horizontal',
-#         panel.grid.minor.x = element_blank(),
-#         plot.margin = unit(c(0,0,0,0), "line"),
-#         axis.text.y = element_text(color = "black", size = 12),
-#         axis.text.x = element_text(size = 10),
-#         legend.text = element_text(size = 12))
-# 
-# total_burden <- region_rent_burden_tract %>% 
-#   filter(level %in% c("Burdened", "Severely Burdened")) %>% 
-#   group_by(tractnames) %>% 
-#   summarise(total_burden_per = paste0(round(sum(percent), 0), "%"),
-#             rentallabel = first(rentallabel),
-#             burden_label = paste0(total_burden_per, " | ", as.character(rentallabel)))
-# 
-# total_burden <- total_burden[order(total_burden$tractnames, decreasing=TRUE),]
-# burden_label <- as.list(total_burden$burden_label)
-# 
-# burdened_plot <- region_rent_burden_tract %>% 
-#   filter(level %in% c("Burdened", "Severely Burdened")) %>% 
-#   ggplot(aes(y = tractnames, x = percent, fill = factor(label), group = tractnames, label = text)) +  
-#   geom_bar(stat = "identity", color = "white") +
-#   scale_fill_manual(values = c("#3B8EA5","#005191")) + 
-#   geom_text(aes(color = label),position = position_stack(vjust = 0.5),
-#             # vjust = 0.5,
-#             # hjust = 0.1,
-#             size = 4.5,
-#             show.legend = FALSE) +
-#   scale_color_manual(values = c("black", "white")) +
-#   scale_y_discrete(position = "right",
-#                    labels = burden_label,
-#                    limits=rev,
-#                    name = "Total Percent Burdened | Total Rental Units by Census Tract") +
-#   scale_x_continuous(labels = scales::percent_format(scale = 1),
-#                      breaks = seq(from = 25, to = 100, by = 25),
-#                      limits = c(0,100),
-#                      expand = expansion(mult = c(0.005, 0)),
-#                      name = "") +
-#   theme_minimal() +
-#   theme(legend.title=element_blank(),
-#         legend.justification="right",
-#         legend.position = c(1.3, 1.06),
-#         legend.direction = 'horizontal',
-#         panel.grid.minor.x = element_blank(),
-#         plot.margin = unit(c(3,0,0,0), "line"),
-#         axis.text.y = element_text(color = "black", size = 12),
-#         axis.text.y.right = element_text(margin = margin(0,0,0,0)),
-#         axis.title.y.right = element_text(size = 12),
-#         axis.text.x = element_text(size = 10),
-#         legend.text = element_text(size = 12))
-# 
-# 
-# (unburdened_plot + burdened_plot) + 
-#   plot_annotation(title = 'Rent Burdened Households by Census Tract',
-#                   subtitle = locality_name,
-#                   caption = source_acs,
-#       theme = theme(plot.title = element_text(size = 18),
-#                     plot.subtitle = element_text(size = 14),
-#                     plot.caption = element_text(size = 12)))
+```{r tenure-stacked, fig.width=9.5, fig.height=5, fig.retina = 2}
+region_tenure <- read_csv("../data/region_tenure_2022.csv")
+# %>% 
+#   mutate(label_text = case_when(
+#     below_ess_finc == "No" ~ paste0(prettyNum(count, big.mark=",", preserve.width="none"), " (", round(percent, 0), "% of families above SSS)"),
+#     below_ess_finc == "Yes" ~ paste0(prettyNum(count, big.mark=",", preserve.width="none"), " (", round(percent, 0), "% of families below SSS)")),
+#          below_ess_finc = factor(below_ess_finc, levels = c("No", "Yes"),
+#                                  labels = c("Income Above\nSelf-Sufficiency Standard", "Income Below\nSelf-Sufficiency Standard")),
+#     own_rent = factor(own_rent, levels = c("Own", "Rent"), labels = c("Homeowners", "Renters")))
+
+region_tenure %>% 
+  ggplot(aes(x = percent, y = locality, group=locality, fill = label)) +
+  geom_bar(stat = "identity") +
+  geom_label_repel(aes(label = case_when(
+           label == "Owner occupied" ~ paste0(round(percent, 0), "% are Homeowners\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"),
+           label == "Renter occupied" ~ paste0(round(percent, 0), "% are Renters\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"))),
+                  size = 4.5, fontface = "bold", show.legend = FALSE,
+                  min.segment.length = Inf,
+                  position = position_stack(vjust = 0.35),
+           vjust = 0.5,
+           hjust = -0.025,
+                  box.padding = 0.01,
+                  # force_pull = 100,
+                  # direction = "x",
+                  color = "white") +
+  scale_x_continuous(limits = c(0, 100),
+                     labels = label_percent(scale = 1), 
+                     name = "Percent of Families",
+                     sec.axis = dup_axis()) + 
+  scale_y_discrete(name = "") +
+  # scale_fill_manual(values = c(grey_dot, blue_dot)) +
+  labs(title = paste0("Housing Status for Households in ", locality_name),
+       # subtitle = locality_name,
+       caption = source_acs) +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        # legend.location = "plot",
+        legend.justification="center",
+        legend.text = element_text(size = 13),
+          panel.grid.major.y = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+        axis.text.y = element_blank(),
+        text = element_text(size = 14),
+        axis.title.x = element_text(size=12),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
 ```
 
-```{r home-race, fig.width=8, fig.height=6, fig.cap="Home Ownership by Race: 2012 & 2022"}
-# Home Ownership by Race, Region 2012 & 2022 ----
-region_tenure_race <- read_csv("../data/region_tenure_race_2012_2022.csv")
+```{r rent-burden, fig.width=9.5, fig.height=5, fig.retina = 2, fig.cap="Rent Burdened Households"}
+# Rent Burdened Households: Region, 2022 ----
 
-region_homeowner_race <- region_tenure_race %>% 
-  filter(label == "Owner occupied") %>% 
-  filter(!group %in% c("White", "American Indian/Native Alaskan", "Native Hawaiian/Pacific Islander", "Other")) %>% 
-  select(group, percent, year) %>% 
-  pivot_wider(names_from = year, values_from = percent) %>% 
-  mutate(difference = `2022` - `2012`) %>% 
-  pivot_longer(`2022`:`2012`) %>% 
-  mutate(year = as.numeric(name))
+region_rent_burden <- read_csv("../data/region_rent_burden_2022.csv") %>% 
+  mutate(percent_recalc = (estimate / 23860) *100,
+         order = case_when(level == "Not burdened" ~ 1,
+                           level == "Burdened" ~ 2,
+                           level == "Severely Burdened" ~ 3)) %>% 
+  arrange(order)
 
-anno_list = as.list(region_homeowner_race$difference) %>% unique()
-
-region_homeowner_race %>% 
-  mutate(text = paste0(round(value, 0), "%"),
-         group = factor(group, levels = c("Asian", "Black", "Hispanic or Latino", "Multiracial", "White, Not Hispanic or Latino"),
-                        labels = c("Asian", "Black", "Hispanic", "Multiracial", "White"))) %>% 
-  ggplot(aes(x = year, y = value, label = text)) +
-  geom_line(linewidth = 1.5, color = "#3B8EA5") +
-  geom_point(size = 3, color = "#3B8EA5") +
-  geom_text(size = 4.5, nudge_y = 15, color = "#3B8EA5", fontface = "bold") +
-  # geom_text(data = annot_list, size = 4, nudge_y = -25, color = "#3B8EA5", fontface = "bold") +
-  # annotate("text", x = 2017, y = 25, label = c("1", "2", "3", "4", "5"), color = "#3B8EA5", fontface = "bold") +
-  scale_x_continuous(breaks = c(2012,2022),
-                     expand = expansion(mult = c(0.1, .1)),
-                     name = "") +
-  scale_y_continuous(labels = scales::label_percent(scale = 1),
-                     breaks = c(0,100),
-                     limits = c(0,100),
-                     name = "") + 
-  facet_wrap(~group, scales = "free") +
-  labs(color = "", 
-       title = "Home Ownership by Race: 2012 & 2022", 
-      subtitle = locality_name, 
-      caption = "Data Source: U.S. Census Bureau, American Community Survey, 2012, 2022") +  
+region_rent_burden %>% 
+  ggplot(aes(x = percent_recalc, y = locality, group=locality, fill = factor(level, levels = c("Not burdened", "Burdened", "Severely Burdened"), labels = c("Not Burdened\nLess than 30% household income", "Burdened\n30% to 49% household income", "Severely Burdened\nOver 50% household income")))) +
+  geom_bar(stat = "identity") +
+  # geom_text(aes(label = case_when(
+  #          shelter_burden == "Not Burdened" ~ paste0(round(percent, 0), "% are Not Burdened\n(", prettyNum(count, big.mark=",", preserve.width="none"), " families)"),
+  #          shelter_burden == "Burdened" ~ paste0(round(percent, 0), "% are Burdened\n(", prettyNum(count, big.mark=",", preserve.width="none"), " families)"),
+  #          shelter_burden == "Severely Burdened" ~ paste0(round(percent, 0), "% are Severely Burdened\n(", prettyNum(count, big.mark=",", preserve.width="none"), " families)"))),
+  #           position = position_stack(vjust = 0.5),
+  #           vjust = 0.5,
+  #           # hjust = -0.025,
+  #           size = 3) +
+  geom_label_repel(aes(label = case_when(
+           level == "Not burdened" ~ paste0(round(percent_recalc, 0), "% Not Burdened\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"),
+           level == "Burdened" ~ paste0(round(percent_recalc, 0), "% Burdened\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"),
+           level == "Severely Burdened" ~ paste0(round(percent_recalc, 0), "% Severely Burdened\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"))),
+                  size = 4, fontface = "bold", show.legend = FALSE,
+                  min.segment.length = Inf,
+                  position = position_stack(vjust = 0.25),
+           # vjust = 0.5,
+           hjust = -0.025,
+                  box.padding = 0.01,
+                  # force_pull = 100,
+                  # direction = "x",
+                  color = "white",
+                   seed = 123) +
+  scale_x_continuous(limits = c(0, 100),
+                     labels = label_percent(scale = 1), 
+                     name = "Percent of Households",
+                     sec.axis = dup_axis()
+                     # expand = expansion(mult = c(0, .35))
+                     ) + 
+  scale_y_discrete(name = "") +
+  scale_fill_manual(values = c("#B4C8A8", "#DE8A5A", "#CA562C")) +
+  labs(title = paste0("Rent Burden for Households in ", locality_name),
+       # subtitle = locality_name,
+       caption = source_acs) +
   theme_minimal() +
-  theme(panel.grid.minor = element_blank(),
-        panel.grid.major.x = element_blank(),
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        legend.location = "plot",
+        legend.justification="center",
+        legend.text = element_text(size = 13),
+          panel.grid.major.y = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.minor = element_blank(),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+        axis.text.y = element_blank(),
+        text = element_text(size = 14),
+        axis.title.x = element_text(size=12),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 12))
+
+```
+### Evictions
+```{r evictions, fig.width=8, fig.height=9}
+evictions <- read_csv("../data/va-evictors-catalog.csv") %>% 
+  group_by(county, filed_year) %>% 
+  summarise(cases_filed = sum(cases_filed),
+            plaintiff_judgments = sum(plaintiff_judgments)) %>% 
+  pivot_longer(cases_filed:plaintiff_judgments)
+
+evictions %>% 
+  ggplot(aes(x = filed_year, y = value, color = name, group = name, label = value)) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, 
+            vjust=-1,
+            color="black") +
+  scale_x_continuous(breaks = seq(from = 2018, to = 2024, by = 1),
+                     name = "") +
+  scale_y_continuous(limits = c(0,1450),
+                     name = "Count") +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  facet_wrap(~county, scales = "free", ncol = 1) +
+  labs(color = "",
+       title = "Cases Filed and Eviction Judgments within Local Court Jurisdictions", 
+       subtitle = "2018-2022",
+       caption = "") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        panel.grid.minor = element_blank(),
+        # panel.grid.major.x = element_blank(),
         strip.text = element_text(size = 16),
         text = element_text(size = 14),
         axis.text.x = element_text(size=13, color = "black"),
@@ -1454,5 +1743,178 @@ region_homeowner_race %>%
         plot.title.position= "plot",
         plot.caption.position = "plot")
 
+
+```
+
+
+```{r home-race, fig.width=8, fig.height=6, fig.cap="Home Ownership by Race: 2012 & 2022"}
+# Home Ownership by Race, Region 2012 & 2022 ----
+# region_tenure_race <- read_csv("../data/region_tenure_race_2012_2022.csv")
+# 
+# region_homeowner_race <- region_tenure_race %>% 
+#   filter(label == "Owner occupied") %>% 
+#   filter(!group %in% c("White", "American Indian/Native Alaskan", "Native Hawaiian/Pacific Islander", "Other")) %>% 
+#   select(group, percent, year) %>% 
+#   pivot_wider(names_from = year, values_from = percent) %>% 
+#   mutate(difference = `2022` - `2012`) %>% 
+#   pivot_longer(`2022`:`2012`) %>% 
+#   mutate(year = as.numeric(name))
+# 
+# anno_list = as.list(region_homeowner_race$difference) %>% unique()
+# 
+# region_homeowner_race %>% 
+#   mutate(text = paste0(round(value, 0), "%"),
+#          group = factor(group, levels = c("Asian", "Black", "Hispanic or Latino", "Multiracial", "White, Not Hispanic or Latino"),
+#                         labels = c("Asian", "Black", "Hispanic", "Multiracial", "White"))) %>% 
+#   ggplot(aes(x = year, y = value, label = text)) +
+#   geom_line(linewidth = 1.5, color = "#3B8EA5") +
+#   geom_point(size = 3, color = "#3B8EA5") +
+#   geom_text(size = 4.5, nudge_y = 15, color = "#3B8EA5", fontface = "bold") +
+#   # geom_text(data = annot_list, size = 4, nudge_y = -25, color = "#3B8EA5", fontface = "bold") +
+#   # annotate("text", x = 2017, y = 25, label = c("1", "2", "3", "4", "5"), color = "#3B8EA5", fontface = "bold") +
+#   scale_x_continuous(breaks = c(2012,2022),
+#                      expand = expansion(mult = c(0.1, .1)),
+#                      name = "") +
+#   scale_y_continuous(labels = scales::label_percent(scale = 1),
+#                      breaks = c(0,100),
+#                      limits = c(0,100),
+#                      name = "") + 
+#   facet_wrap(~group, scales = "free") +
+#   labs(color = "", 
+#        title = "Home Ownership by Race: 2012 & 2022", 
+#       subtitle = locality_name, 
+#       caption = "Data Source: U.S. Census Bureau, American Community Survey, 2012, 2022") +  
+#   theme_minimal() +
+#   theme(panel.grid.minor = element_blank(),
+#         panel.grid.major.x = element_blank(),
+#         strip.text = element_text(size = 16),
+#         text = element_text(size = 14),
+#         axis.text.x = element_text(size=13, color = "black"),
+#         plot.title = element_text(size = 18),
+#         plot.caption = element_text(size = 11),
+#         plot.title.position= "plot",
+#         plot.caption.position = "plot")
+
+```
+
+
+### People Experiencing Homelessness
+```{r pit_count, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
+pitcount_2007_2023 <- read_csv("../supplemental_downloadsremoved/data/pitcount_2007_2023.csv")
+pitcount_2007_2023 <- pitcount_2007_2023 %>% 
+  select(co_c_name, sheltered_total_homeless, unsheltered_homeless, overall_homeless, year) %>% 
+  pivot_longer(sheltered_total_homeless:overall_homeless)
+
+pitcount_2007_2023 %>% 
+  ggplot(aes(x = year, y = value, 
+             color = name, 
+             group = name, 
+             linetype = name,
+             label = value)) +
+  geom_vline(xintercept = 2012, linetype = 2, color = "#333333") +
+  annotate("text", x = 2012, y = 100, size = 3.5, hjust = 0, color = "#333333",
+           label =
+"Opening of The Crossings
+(permanent supportive housing)") +
+  geom_vline(xintercept = 2022, linetype = 2, color = "#333333") +
+  annotate("text", x = 2022, y = 275, size = 3.5, hjust = 0, color = "#333333",
+           label =
+"COVID-19 pandemic hightened
+impact of high housing costs
+and lack of affordable housing") +
+  # geom_line() +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, 
+            vjust=-1,
+            color="black") +
+  # geom_text_repel(aes(label = label),
+  #                 size = 3.5, fontface = "bold", nudge_x = .8, show.legend = FALSE, min.segment.length = Inf) +
+  scale_linetype_manual(values = c(2, 6, 1)
+                        # limits = c("Sheltered", "Unsheltered", "Total")
+                        ) +
+  # scale_color_manual(values = one_category_palette) +
+  scale_y_continuous(limits = c(0,300),
+                     breaks = seq(from = 0, to = 300, by = 50),
+                     label = comma,
+                     name = "Number of People") +
+  scale_x_continuous(breaks = seq(from = 2007, to = 2023, by = 1),
+                     name = "") +
+  labs(color = "",
+       title = "PIT Count", 
+       subtitle = locality_name,
+       caption = "",
+       color = "", linetype = "", fill = "") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+```
+
+### HUD Housing Inventory
+```{r hic_count, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
+hiccount_2007_2023 <- read_csv("../supplemental_downloadsremoved/data/hiccount_2007_2023.csv")
+hic23_detail <- read_csv("../supplemental_downloadsremoved/data/hic23_detail.csv")
+
+hiccount_2007_2023 %>% 
+  ggplot(aes(x = year, y = beds, 
+             color = bedtype, 
+             group = bedtype, 
+             # linetype = name,
+             label = beds)) +
+  geom_vline(xintercept = 2012, linetype = 2, color = "#333333") +
+  annotate("text", x = 2012, y = 100, size = 3.5, hjust = 0, color = "#333333",
+           label =
+"Opening of The Crossings
+(permanent supportive housing)") +
+  geom_vline(xintercept = 2022, linetype = 2, color = "#333333") +
+  annotate("text", x = 2022, y = 275, size = 3.5, hjust = 0, color = "#333333",
+           label =
+"COVID-19 pandemic hightened
+impact of high housing costs
+and lack of affordable housing") +
+  # geom_line() +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, 
+            vjust=-1,
+            color="black") +
+  # geom_text_repel(aes(label = label),
+  #                 size = 3.5, fontface = "bold", nudge_x = .8, show.legend = FALSE, min.segment.length = Inf) +
+  # scale_linetype_manual(values = c(2, 6, 1)
+                        # limits = c("Sheltered", "Unsheltered", "Total")
+                        # ) +
+  # scale_color_manual(values = one_category_palette) +
+  scale_y_continuous(limits = c(0,300),
+                     breaks = seq(from = 0, to = 300, by = 50),
+                     label = comma,
+                     name = "Number of Beds") +
+  scale_x_continuous(breaks = seq(from = 2007, to = 2023, by = 1),
+                     name = "") +
+  labs(color = "",
+       title = "HIC Count", 
+       subtitle = locality_name,
+       caption = "",
+       color = "", fill = "") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
 ```
 
