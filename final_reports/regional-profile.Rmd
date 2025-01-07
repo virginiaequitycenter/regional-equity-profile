@@ -1714,22 +1714,26 @@ evictions <- read_csv("../data/va-evictors-catalog.csv") %>%
   pivot_longer(cases_filed:plaintiff_judgments)
 
 evictions %>% 
-  ggplot(aes(x = filed_year, y = value, color = name, group = name, label = value)) +
+  mutate(year_chr = case_when(filed_year == 2024 ~ "2024*",
+                              .default = as.character(filed_year))) %>% 
+  ggplot(aes(x = year_chr, y = value, color = name, group = name, label = value)) +
   stat_xspline(size=1) +
   geom_point() +
   geom_text(size = 5, hjust=0.5, 
             vjust=-1,
             color="black") +
-  scale_x_continuous(breaks = seq(from = 2018, to = 2024, by = 1),
-                     name = "") +
+  scale_x_discrete(name = "",
+                   expand = expansion(mult = c(0.05, 0.05))) +
+  # scale_x_continuous(breaks = seq(from = 2018, to = 2024, by = 1),
+  #                    name = "") +
   scale_y_continuous(limits = c(0,1450),
                      name = "Count") +
   # scale_color_manual(values = c("#3B8EA5")) +
   facet_wrap(~county, scales = "free", ncol = 1) +
   labs(color = "",
        title = "Cases Filed and Eviction Judgments within Local Court Jurisdictions", 
-       subtitle = "2018-2022",
-       caption = "") +
+       subtitle = "2018-2024",
+       caption = "*2024-to-date includes data through September 2024") +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
