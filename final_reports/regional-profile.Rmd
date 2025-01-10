@@ -3,6 +3,8 @@ title: "Charlottesville & Albemarle Regional Inclusive Community Profile - DRAFT
 output:
   bookdown::html_document2:
     number_sections: true
+    toc: true
+    toc_float: true
 # output:
 #   bookdown::word_document2:
 #     reference_docx: "styles.docx"
@@ -15,6 +17,12 @@ output:
 #     toc: true
 #     toc_depth: 4
 ---
+```{css, echo=FALSE}
+p.caption {
+  font-size: 10pt;
+  font-style: italic;
+}
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, 
@@ -39,6 +47,7 @@ library(patchwork)
 library(gt)
 library(ggalt) # geom_xspline
 library(ggnewscale)
+library(ggpattern)
 
 # Tract geometries ----
 # region_geo <- tracts(state = "VA", county = "003")
@@ -49,6 +58,13 @@ pal_safe <- c("#332288", "#85C4C9", "#CC6677", "#117733")
 pal_health <- carto_pal(7, "Teal")
 pal_edu <- carto_pal(7, "PinkYl")
 pal_inc <- carto_pal(7, "Emrld")
+
+pal_five <- c("#DE8A5A", "#EDBB8A", "#F6EDBD","#B4C8A8", "#70A494")
+pal_six <- c("#CA562C", "#DE8A5A", "#EDBB8A", "#F6EDBD","#B4C8A8", "#70A494")
+orange_dot <- "#CA562C"
+green_dot <- "#B4C8A8"
+grey_dot <-  "#b2b8be"
+blue_dot <- "#3B8EA5"
 
 # Common Items ----
 locality_name <- "Charlottesville & Albemarle County"
@@ -528,7 +544,7 @@ ahdi_table_region %>%
 ```
 
 
-# Long and Health Life
+## Long and Health Life
 
 ### Life Expectancy
 
@@ -542,14 +558,13 @@ chr_locality %>%
   ggplot(aes(x = year, y = round(life_expectancy, 0), color = place, label = text)) +
   stat_xspline(size=1) +
   geom_point() +
-  geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+  geom_text(size = 5, hjust=0.5, vjust=-0.5, color="black") +
   scale_x_continuous(breaks = seq(from = 2019, to = 2024, by = 1),
                      name = "") +
-  scale_y_continuous(breaks = seq(from = 75, to = 85, by = 5),
-                     limits = c(75,85),
-                     # labels = scales::label_currency(scale = 1),
+  scale_y_continuous(breaks = seq(from = 74, to = 86, by = 4),
+                     limits = c(74,86),
                      name = "Life Expectancy (Years)") +
-  # scale_color_manual(values = c("#3B8EA5")) +
+  scale_color_manual(values = c("#589ACF", "#6E016B", "#FAC484")) +
   labs(color = "",
        title = "Life Expectancy", 
        subtitle = "2019-2024",
@@ -557,6 +572,7 @@ chr_locality %>%
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
+        legend.text = element_text(size = 14),
         axis.ticks = element_blank(),
         axis.text.y = element_text(size = 14),
         text = element_text(size = 14),
@@ -582,17 +598,17 @@ chr_doctors_rate <- chr_region %>%
   pivot_longer(pc_docs_rate:mh_docs_rate)
 
 chr_doctors_rate %>% 
-  # filter(region == "Region") %>% 
+  mutate(name = factor(name, levels = c("mh_docs_rate", "pc_docs_rate"), labels = c("Mental Health Doctors", "Primary Care Doctors"))) %>% 
   ggplot(aes(x = year, y = round(value,0), color = name, label = round(value,0))) +
   stat_xspline(size=1) +
   geom_point() +
-  geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+  geom_text(size = 5, hjust=0.5, vjust=-1, color="black") +
   scale_x_continuous(breaks = seq(from = 2016, to = 2024, by = 1),
                      name = "") +
   scale_y_continuous(limits = c(0,600),
                      # labels = scales::label_currency(scale = 1),
                      name = "Rate per 100,000 people") +
-  # scale_color_manual(values = c("#3B8EA5")) +
+  scale_color_manual(values = c("#589ACF", "#6E016B")) +
   facet_wrap(~region, scales = "free", ncol = 2) +
   labs(color = "",
        title = "Primary care and mental health care providers: 2016-2024", 
@@ -601,6 +617,8 @@ chr_doctors_rate %>%
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
+        legend.text = element_text(size = 14),
+        strip.text = element_text(size = 16),
         axis.ticks = element_blank(),
         axis.text.y = element_text(size = 14),
         text = element_text(size = 14),
@@ -651,7 +669,7 @@ chr_doctors %>%
   scale_y_continuous(limits = c(0,1000),
                      # labels = scales::label_currency(scale = 1),
                      name = "Number of Providers") +
-  # scale_color_manual(values = c("#3B8EA5")) +
+  scale_color_manual(values = c("#589ACF", "#6E016B")) +
   labs(color = "",
        title = "Primary care and mental health care providers: 2016-2024", 
        subtitle = locality_name,
@@ -680,7 +698,7 @@ chr_doctors %>%
   scale_y_continuous(limits = c(0,25000),
                      # labels = scales::label_currency(scale = 1),
                      name = "Number of Providers") +
-  # scale_color_manual(values = c("#3B8EA5")) +
+  scale_color_manual(values = c("#589ACF", "#6E016B")) +
   labs(color = "",
        title = "Primary care and mental health care providers: 2016-2024", 
        subtitle = "Virginia",
@@ -688,6 +706,7 @@ chr_doctors %>%
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
+        legend.text = element_text(size = 14),
         axis.ticks = element_blank(),
         axis.text.y = element_text(size = 14),
         text = element_text(size = 14),
@@ -747,36 +766,41 @@ region_health_insured %>%
         plot.caption = element_text(size = 12))
 
 ```
-## Health Insurance over time
-```{r health-insurance-time, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
+### Health Insurance over time
+```{r health-insurance-time, fig.width = 9.5, fig.height = 8, fig.retina = 2, fig.cap=""}
 region_health_insured_county_race_2017_2022 <- read_csv("../data/region_health_insured_county_race_2017_2022.csv")
 
 region_health_insured_county_race_2017_2022 %>% 
   filter(!group %in% c("White alone", "American Indian and Alaska Native alone", "Native Hawaiian and Other Pacific Islander alone", "Some other race alone")) %>%
-  mutate(group = factor(group, levels = c("White non Hispanic", "Two or more races", "Hispanic or Latino", "Black or African American alone", "Asian alone", "All"),
-                       labels = c("White", "Multiracial", "Hispanic", "Black", "Asian", "All Residents")),
+  # mutate(group = factor(group, levels = c("White non Hispanic", "Two or more races", "Hispanic or Latino", "Black or African American alone", "Asian alone", "All"),
+  #                      labels = c("White", "Multiracial", "Hispanic", "Black", "Asian", "All Residents")),
+  #        text = paste0(round(percent_uninsured,0), "%")) %>%
+   mutate(group = factor(group, levels = c("All", "Asian alone", "Black or African American alone",  "Hispanic or Latino", "Two or more races", "White non Hispanic"),
+                       labels = c("All Residents","Asian", "Black", "Hispanic", "Multiracial", "White")),
          text = paste0(round(percent_uninsured,0), "%")) %>%
   ggplot(aes(x = year, y = round(percent_uninsured,0), color = group, group = group, label = text)) +
   stat_xspline(size=1) +
   geom_point() +
-  geom_text(size = 5, hjust=0.5, 
-            # vjust=-1.15, 
+  geom_text(size = 4.5, hjust=0.5, 
+            vjust=-1.15,
             color="black") +
   scale_x_continuous(breaks = seq(from = 2017, to = 2024, by = 1),
                      name = "") +
   scale_y_continuous(labels = scales::label_percent(scale = 1),
                      limits = c(0,40),
                      name = "Percent Uninsured") +
-  # scale_color_manual(values = c("#3B8EA5")) +
+  scale_color_manual(values = c("#b2b8be", "#009ddc", "#ff641e", "#b4cd23", "#ee2b75", "#fbb12d")) +
+  facet_wrap(~group, scales = "free", ncol = 2) +
   labs(color = "",
-       title = "Residents with No Health Insurance: 2017-2022", 
+       title = "Residents with No Health Insurance by Race: 2017-2022", 
        subtitle = locality_name,
        caption = source_acs) +
   theme_minimal() +
   theme(legend.title=element_blank(),
-        legend.position = "top",
+        legend.position = "none",
+        strip.text = element_text(size = 16),
         axis.ticks = element_blank(),
-        axis.text.y = element_text(size = 14),
+        axis.text.y = element_text(size = 12),
         text = element_text(size = 14),
         axis.text.x = element_text(size=14, color = "black"),
         plot.title = element_text(size = 18),
@@ -789,7 +813,7 @@ region_health_insured_county_race_2017_2022 %>%
 
 ```
 
-## Park Access
+### Park/Exercise Access
 ```{r parks-time, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
 chr_parks <- chr_region %>% 
   select(region, year, num_exer_access, exer_access_per)
@@ -797,24 +821,25 @@ chr_parks <- chr_region %>%
 chr_parks %>% 
   # filter(region == "Region") %>% 
   na.omit() %>% 
-  ggplot(aes(x = year, y = round(exer_access_per,0), label = paste0(round(exer_access_per,0), "%"))) +
+  ggplot(aes(x = year, y = round(exer_access_per,0), color = region, label = paste0(round(exer_access_per,0), "%"))) +
   stat_xspline(size=1) +
   geom_point() +
   geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
   scale_x_continuous(breaks = seq(from = 2020, to = 2024, by = 1),
                      name = "") +
   scale_y_continuous(limits = c(0,100),
-                     # labels = scales::label_currency(scale = 1),
-                     name = "Percent of exercise opportunities") +
-  # scale_color_manual(values = c("#3B8EA5")) +
+                     labels = scales::label_percent(scale = 1),
+                     name = "Percent of Population with Access") +
+  scale_color_manual(values = c("#3B8EA5", "#3B8EA5")) +
   facet_wrap(~region, scales = "free", ncol = 2) +
   labs(color = "",
-       title = "Access to exercise opportunities", 
+       title = "Access to Parks & Exercise Opportunities", 
        # subtitle = locality_name,
        caption = "Data Source: County Health Rankings, 2016-2024") +
   theme_minimal() +
   theme(legend.title=element_blank(),
-        legend.position = "top",
+        legend.position = "none",
+        strip.text = element_text(size = 16),
         axis.ticks = element_blank(),
         axis.text.y = element_text(size = 14),
         text = element_text(size = 14),
@@ -837,9 +862,9 @@ chr_parks %>%
   scale_y_continuous(limits = c(100000,150000),
                      # labels = scales::label_currency(scale = 1),
                      name = "Number of exercise opportunities") +
-  # scale_color_manual(values = c("#3B8EA5")) +
+  scale_color_manual(values = c("#3B8EA5")) +
   labs(color = "",
-       title = "Access to exercise opportunities", 
+       title = "Access to Parks & Exercise Opportunities", 
        subtitle = locality_name,
        caption = "Data Source: County Health Rankings, 2016-2024") +
   theme_minimal() +
@@ -867,7 +892,7 @@ chr_parks %>%
   scale_y_continuous(limits = c(5000000,9000000),
                      # labels = scales::label_currency(scale = 1),
                      name = "Number of exercise opportunities") +
-  # scale_color_manual(values = c("#3B8EA5")) +
+  scale_color_manual(values = c("#3B8EA5")) +
   labs(color = "",
        title = "Access to exercise opportunities", 
        subtitle = "Virginia",
@@ -896,6 +921,7 @@ chr_parks %>%
 region_edu_attain_county_2018_2022 <- read_csv("../data/region_edu_attain_county_2018_2022.csv")
 
 region_edu_attain_county_2018_2022 %>% 
+  mutate(label = factor(label, levels = c("High school graduate or higher", "Bachelor's degree or higher", "Graduate or professional degree"), labels = c("At Least High School Diploma", "At Least Bachelor’s Degree", "Graduate Degree"))) %>% 
   ggplot(aes(x = year, y = round(percent,0), color = label, group = label, label = paste0(round(percent,0), "%"))) +
   stat_xspline(size=1) +
   geom_point() +
@@ -907,7 +933,7 @@ region_edu_attain_county_2018_2022 %>%
   scale_y_continuous(labels = scales::label_percent(scale = 1),
                      limits = c(0,100),
                      name = "Percent of Population 25 yrs and older") +
-  # scale_color_manual(values = c("#3B8EA5")) +
+  scale_color_manual(values = c("#193CBC", "#FAC484", "#589ACF")) +
   labs(color = "",
        title = "Educational Attainment: 2018-2022", 
        subtitle = locality_name,
@@ -915,6 +941,8 @@ region_edu_attain_county_2018_2022 %>%
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
+        legend.location = "plot",
+        legend.text = element_text(size = 13),
         axis.ticks = element_blank(),
         axis.text.y = element_text(size = 14),
         text = element_text(size = 14),
@@ -1032,7 +1060,7 @@ region_enroll_county_2018_2022 %>%
   scale_y_continuous(labels = scales::label_percent(scale = 1),
                      limits = c(0,100),
                      name = "Percent of Population (3-24yrs)") +
-  # scale_color_manual(values = c("#3B8EA5")) +
+  scale_color_manual(values = c("#3B8EA5")) +
   labs(color = "",
        title = "School Enrollment: 2018-2022", 
        subtitle = locality_name,
@@ -1040,6 +1068,7 @@ region_enroll_county_2018_2022 %>%
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
+        legend.text = element_text(size = 13),
         axis.ticks = element_blank(),
         axis.text.y = element_text(size = 14),
         text = element_text(size = 14),
@@ -1054,7 +1083,7 @@ region_enroll_county_2018_2022 %>%
 
 ```
 
-# Child Care
+### Child Care
 ```{r child-care}
 child_care_loc <- read_csv("../supplemental_downloadsremoved/data/child_care_supply_locality.csv")
 child_care_region <- read_csv("../supplemental_downloadsremoved/data/child_care_supply_region.csv") %>% 
@@ -1133,6 +1162,8 @@ child_care %>%
 
 ```
 
+### Civic Organizations
+
 ```{r social, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
 chr_social <- chr_region %>% 
   select(region, year, soc_assoc, soc_assoc_rate)
@@ -1151,6 +1182,35 @@ chr_social %>%
   # scale_color_manual(values = c("#3B8EA5")) +
   labs(color = "",
        title = "Civic sector: # membership organizations per pop: 2016-2024", 
+       subtitle = locality_name,
+       caption = "Data Source: County Health Rankings, 2016-2024") +
+  theme_minimal() +
+  theme(legend.title=element_blank(),
+        legend.position = "top",
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(size = 14),
+        text = element_text(size = 14),
+        axis.text.x = element_text(size=14, color = "black"),
+        plot.title = element_text(size = 18),
+        plot.caption = element_text(size = 11),
+        panel.grid.minor = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot")
+
+chr_social %>% 
+  filter(region == "Region") %>% 
+  ggplot(aes(x = year, y = soc_assoc, label = prettyNum(soc_assoc, big.mark=",", preserve.width="none"))) +
+  stat_xspline(size=1) +
+  geom_point() +
+  geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+  scale_x_continuous(breaks = seq(from = 2016, to = 2024, by = 1),
+                     name = "") +
+  scale_y_continuous(limits = c(0,500),
+                     # labels = scales::label_currency(scale = 1),
+                     name = "Number of Organizations") +
+  # scale_color_manual(values = c("#3B8EA5")) +
+  labs(color = "",
+       title = "Civic sector: # membership organizations: 2016-2024", 
        subtitle = locality_name,
        caption = "Data Source: County Health Rankings, 2016-2024") +
   theme_minimal() +
@@ -1184,7 +1244,7 @@ region_med_earnings_2012_2022 <- read_csv("../data/region_med_earnings_2012_2022
 region_med_earnings_2012_2022 %>%
   ggplot(aes(x = year, y = round(value, -2), color = name, group = interaction(locality, name), label = paste0("$", prettyNum(round(value, -2), big.mark=",", preserve.width="none")), linetype = name)) +
   stat_xspline(size=1) +
-  geom_point() +
+  geom_point(show.legend = FALSE) +
    geom_text(aes(y = (round(value, -2) + sign(pos) *3000)), size = 4.5, hjust=0.4, 
             # vjust=-1, 
             color="black", show.legend = FALSE) +
@@ -1195,7 +1255,7 @@ region_med_earnings_2012_2022 %>%
                      labels = scales::label_currency(scale = 1),
                      name = "Median Personal Earnings") +
   scale_linetype_manual(values = c(1, 2)) +
-  # scale_color_manual(values = c("#3B8EA5")) +
+  scale_color_manual(values = c("#3B8EA5", "#3B8EA5")) +
   labs(color = "",
        title = "Median Personal Earnings", 
        subtitle = locality_name,
@@ -1204,6 +1264,8 @@ region_med_earnings_2012_2022 %>%
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
+        legend.text = element_text(size = 12),
+        legend.key.width = unit(2.5,"line"),
         axis.ticks = element_blank(),
         axis.text.y = element_text(size = 14),
         text = element_text(size = 14),
@@ -1334,30 +1396,46 @@ total_workers <- region_commute %>%
 region_commute_dat <- region_commute %>% 
   left_join(total_workers) %>% 
   mutate(across(younger:total_ages, ~ round((.x/total_workers) *100, 2), .names = "{col}_percent"),
-         across(younger:hi_wage, ~ round((.x/total_ages) *100, 2), .names = "{col}_per_group"))
+         across(younger:hi_wage, ~ round((.x/total_ages) *100, 2), .names = "{col}_per_group"),
+         order = case_when(status == "live_here_work_outside" ~ 1,
+                           status == "live_here_work_here" ~ 2,
+                           status == "live_outside_work_here" ~ 3)) %>% 
+  arrange(order)
 
 region_commute_dat %>% 
-  ggplot(aes(x = total_ages_percent, y = as.character(year), group=as.character(year), fill = status)) +
-  geom_bar(stat = "identity") +
-  geom_label_repel(aes(label = case_when(
-           status == "live_here_work_here" ~ paste0(round(total_ages_percent, 0), "% live &\nwork here\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"),
-           status == "live_here_work_outside" ~ paste0(round(total_ages_percent, 0), "% live here &\nwork elsewhere\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"),
-           status == "live_outside_work_here" ~ paste0(round(total_ages_percent, 0), "% live elsewhere &\nwork here\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"))),
-                  size = 4.5, fontface = "bold", show.legend = FALSE,
-                  min.segment.length = Inf,
-                  position = position_stack(vjust = 0.25),
-           vjust = 0.5,
-           hjust = -0.025,
-                  box.padding = 0.01,
-                  # force_pull = 100,
-                  # direction = "x",
-                  color = "white") +
+  ggplot(aes(x = total_ages_percent, y = as.character(year), group=as.character(year), 
+             fill = factor(status, levels = c("live_here_work_outside", "live_here_work_here", "live_outside_work_here"), labels = c("Live here &\nwork outside the area", "Live &\nwork here", "Live outside the area &\nwork here"))
+             )) +
+  geom_bar(stat = "identity", color = "white") +
+  # geom_label_repel(aes(label = case_when(
+  #          status == "live_here_work_here" ~ paste0(round(total_ages_percent, 0), "% Live &\nwork here\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"),
+  #          status == "live_here_work_outside" ~ paste0(round(total_ages_percent, 0), "% Live here &\nwork elsewhere\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"),
+  #          status == "live_outside_work_here" ~ paste0(round(total_ages_percent, 0), "% Live elsewhere &\nwork here\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"))),
+  #                 size = 4.5, fontface = "bold", show.legend = FALSE,
+  #                 min.segment.length = Inf,
+  #                 position = position_stack(vjust = 0.15),
+  #          # vjust = 0.5,
+  #          hjust = -0.025,
+  #                 box.padding = 0.01,
+  #                 # force_pull = 100,
+  #                 # direction = "x",
+  #                 color = "white") +
+   geom_text(aes(label = case_when(
+           status == "live_here_work_here" ~ paste0(round(total_ages_percent, 0), "% Live &\nwork here\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"),
+           status == "live_here_work_outside" ~ paste0(round(total_ages_percent, 0), "% Live here &\nwork outside\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"),
+           status == "live_outside_work_here" ~ paste0(round(total_ages_percent, 0), "% Live outside &\nwork here\n(", prettyNum(total_ages, big.mark=",", preserve.width="none"), " workers)"))),
+                  size = 4.5, 
+           # fontface = "bold",
+                  position = position_stack(vjust = 0.5),
+           # vjust = 0.5,
+           # hjust = -0.025,
+           show.legend = FALSE) +
   scale_x_continuous(limits = c(0, 100),
                      labels = label_percent(scale = 1), 
                      name = "Percent of Workers",
                      sec.axis = dup_axis()) + 
   scale_y_discrete(name = "") +
-  # scale_fill_manual(values = c(grey_dot, blue_dot)) +
+  scale_fill_manual(values = c("#D8D8D8", "#B4C8A8", "#589ACF")) +
   labs(title = "Commuters",
        # subtitle = locality_name,
        caption = source_acs) +
@@ -1372,7 +1450,7 @@ region_commute_dat %>%
           panel.grid.minor = element_blank(),
           plot.title.position= "plot",
           plot.caption.position = "plot",
-        # axis.text.y = element_blank(),
+        axis.text.y = element_text(size = 14),
         text = element_text(size = 14),
         axis.title.x = element_text(size=12),
         plot.title = element_text(size = 18),
@@ -1590,36 +1668,39 @@ facet_wrap(~name, scales = "free", ncol = 3) +
 ### Housing: Renters and Owners
 
 ```{r tenure-stacked, fig.width=9.5, fig.height=5, fig.retina = 2}
-region_tenure <- read_csv("../data/region_tenure_2022.csv")
-# %>% 
-#   mutate(label_text = case_when(
-#     below_ess_finc == "No" ~ paste0(prettyNum(count, big.mark=",", preserve.width="none"), " (", round(percent, 0), "% of families above SSS)"),
-#     below_ess_finc == "Yes" ~ paste0(prettyNum(count, big.mark=",", preserve.width="none"), " (", round(percent, 0), "% of families below SSS)")),
-#          below_ess_finc = factor(below_ess_finc, levels = c("No", "Yes"),
-#                                  labels = c("Income Above\nSelf-Sufficiency Standard", "Income Below\nSelf-Sufficiency Standard")),
-#     own_rent = factor(own_rent, levels = c("Own", "Rent"), labels = c("Homeowners", "Renters")))
+region_tenure <- read_csv("../data/region_tenure_2022.csv") %>%
+  mutate(name = factor(label, levels = c("Owner occupied", "Renter occupied"), labels = c("Homeowners", "Renters")))
 
 region_tenure %>% 
-  ggplot(aes(x = percent, y = locality, group=locality, fill = label)) +
-  geom_bar(stat = "identity") +
-  geom_label_repel(aes(label = case_when(
+  ggplot(aes(x = percent, y = locality, group=locality, fill = name)) +
+  geom_bar(stat = "identity", color = "white") +
+  # geom_label_repel(aes(label = case_when(
+  #          label == "Owner occupied" ~ paste0(round(percent, 0), "% are Homeowners\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"),
+  #          label == "Renter occupied" ~ paste0(round(percent, 0), "% are Renters\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"))),
+  #                 size = 4.5, fontface = "bold", show.legend = FALSE,
+  #                 min.segment.length = Inf,
+  #                 position = position_stack(vjust = 0.35),
+  #          vjust = 0.5,
+  #          hjust = -0.025,
+  #                 box.padding = 0.01,
+  #                 # force_pull = 100,
+  #                 # direction = "x",
+  #                 color = "white") +
+     geom_text(aes(label = case_when(
            label == "Owner occupied" ~ paste0(round(percent, 0), "% are Homeowners\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"),
            label == "Renter occupied" ~ paste0(round(percent, 0), "% are Renters\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"))),
-                  size = 4.5, fontface = "bold", show.legend = FALSE,
-                  min.segment.length = Inf,
-                  position = position_stack(vjust = 0.35),
-           vjust = 0.5,
-           hjust = -0.025,
-                  box.padding = 0.01,
-                  # force_pull = 100,
-                  # direction = "x",
-                  color = "white") +
+                  size = 4.5, 
+           # fontface = "bold",
+                  position = position_stack(vjust = 0.5),
+           # vjust = 0.5,
+           # hjust = -0.025,
+           show.legend = FALSE) +
   scale_x_continuous(limits = c(0, 100),
                      labels = label_percent(scale = 1), 
-                     name = "Percent of Families",
+                     name = "Percent of Households",
                      sec.axis = dup_axis()) + 
   scale_y_discrete(name = "") +
-  # scale_fill_manual(values = c(grey_dot, blue_dot)) +
+  scale_fill_manual(values = c("#B4C8A8", "#589ACF")) +
   labs(title = paste0("Housing Status for Households in ", locality_name),
        # subtitle = locality_name,
        caption = source_acs) +
@@ -1653,7 +1734,7 @@ region_rent_burden <- read_csv("../data/region_rent_burden_2022.csv") %>%
 
 region_rent_burden %>% 
   ggplot(aes(x = percent_recalc, y = locality, group=locality, fill = factor(level, levels = c("Not burdened", "Burdened", "Severely Burdened"), labels = c("Not Burdened\nLess than 30% household income", "Burdened\n30% to 49% household income", "Severely Burdened\nOver 50% household income")))) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", color = "white") +
   # geom_text(aes(label = case_when(
   #          shelter_burden == "Not Burdened" ~ paste0(round(percent, 0), "% are Not Burdened\n(", prettyNum(count, big.mark=",", preserve.width="none"), " families)"),
   #          shelter_burden == "Burdened" ~ paste0(round(percent, 0), "% are Burdened\n(", prettyNum(count, big.mark=",", preserve.width="none"), " families)"),
@@ -1662,20 +1743,30 @@ region_rent_burden %>%
   #           vjust = 0.5,
   #           # hjust = -0.025,
   #           size = 3) +
-  geom_label_repel(aes(label = case_when(
+  # geom_label_repel(aes(label = case_when(
+  #          level == "Not burdened" ~ paste0(round(percent_recalc, 0), "% Not Burdened\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"),
+  #          level == "Burdened" ~ paste0(round(percent_recalc, 0), "% Burdened\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"),
+  #          level == "Severely Burdened" ~ paste0(round(percent_recalc, 0), "% Severely Burdened\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"))),
+  #                 size = 4, fontface = "bold", show.legend = FALSE,
+  #                 min.segment.length = Inf,
+  #                 position = position_stack(vjust = 0.25),
+  #          # vjust = 0.5,
+  #          hjust = -0.025,
+  #                 box.padding = 0.01,
+  #                 # force_pull = 100,
+  #                 # direction = "x",
+  #                 color = "white",
+  #                  seed = 123) +
+  geom_text(aes(label = case_when(
            level == "Not burdened" ~ paste0(round(percent_recalc, 0), "% Not Burdened\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"),
            level == "Burdened" ~ paste0(round(percent_recalc, 0), "% Burdened\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"),
            level == "Severely Burdened" ~ paste0(round(percent_recalc, 0), "% Severely Burdened\n(", prettyNum(estimate, big.mark=",", preserve.width="none"), " households)"))),
-                  size = 4, fontface = "bold", show.legend = FALSE,
-                  min.segment.length = Inf,
-                  position = position_stack(vjust = 0.25),
+                  size = 4.5, 
+           # fontface = "bold",
+                  position = position_stack(vjust = 0.5),
            # vjust = 0.5,
-           hjust = -0.025,
-                  box.padding = 0.01,
-                  # force_pull = 100,
-                  # direction = "x",
-                  color = "white",
-                   seed = 123) +
+           # hjust = -0.025,
+           show.legend = FALSE) +
   scale_x_continuous(limits = c(0, 100),
                      labels = label_percent(scale = 1), 
                      name = "Percent of Households",
@@ -1706,7 +1797,7 @@ region_rent_burden %>%
 
 ```
 ### Evictions
-```{r evictions, fig.width=8, fig.height=9}
+```{r evictions, fig.width=8, fig.height=9, fig.retina = 2, fig.cap=""}
 evictions <- read_csv("../data/va-evictors-catalog.csv") %>% 
   group_by(county, filed_year) %>% 
   summarise(cases_filed = sum(cases_filed),
@@ -1714,29 +1805,54 @@ evictions <- read_csv("../data/va-evictors-catalog.csv") %>%
   pivot_longer(cases_filed:plaintiff_judgments)
 
 evictions %>% 
-  mutate(year_chr = case_when(filed_year == 2024 ~ "2024*",
-                              .default = as.character(filed_year))) %>% 
-  ggplot(aes(x = year_chr, y = value, color = name, group = name, label = value)) +
+  mutate(pos = case_when(name == "cases_filed" ~ 1,
+                         name == "plaintiff_judgments" ~ -1
+                         ),
+         year_chr = case_when(filed_year == 2024 ~ "2024*",
+                              .default = as.character(filed_year)),
+         name = factor(name, levels = c("cases_filed", "plaintiff_judgments"), labels = c("Cases Filed", "Eviction Judgments"))) %>% 
+  ggplot(aes(x = year_chr, y = value, color = name, group = name, label = prettyNum(value, big.mark=",", preserve.width="none"))) +
+  geom_rect_pattern(
+    aes(xmin = "2020", xmax = "2022", ymin = 0, ymax = 1499, pattern_fill = "State-wide and Federal\nEviction Moritoriums"),
+    pattern = 'circle',
+    fill    = NA,
+    colour  = NA,
+    pattern_spacing = 0.025, 
+    pattern_density = 0.06,
+    # pattern_fill    = 'lightblue', 
+    pattern_colour  = 'lightgray'
+    # pattern_angle   = 45
+  ) +
   stat_xspline(size=1) +
   geom_point() +
-  geom_text(size = 5, hjust=0.5, 
-            vjust=-1,
-            color="black") +
+  geom_text(aes(y = (value + sign(pos)*100)),
+            size = 4.5, hjust=0.5, 
+            # vjust=-1,
+            color="black", show.legend = FALSE) +
   scale_x_discrete(name = "",
                    expand = expansion(mult = c(0.05, 0.05))) +
   # scale_x_continuous(breaks = seq(from = 2018, to = 2024, by = 1),
   #                    name = "") +
-  scale_y_continuous(limits = c(0,1450),
-                     name = "Count") +
-  # scale_color_manual(values = c("#3B8EA5")) +
+  scale_y_continuous(limits = c(-75,1500),
+                     name = "",
+                     # expand = expansion(mult = c(0.05, 0.05))
+                     ) +
+  scale_color_manual(values = c("#B4C8A8", "#3B8EA5")) +
   facet_wrap(~county, scales = "free", ncol = 1) +
   labs(color = "",
        title = "Cases Filed and Eviction Judgments within Local Court Jurisdictions", 
        subtitle = "2018-2024",
-       caption = "*2024-to-date includes data through September 2024") +
+       caption =  paste("*2024-to-date includes data through September 2024.", 
+                        # "State-wide and Federal Eviction Moritoriums were in place during the COVID-19 pandemic:",
+                 "State-Wide Eviction Moratoriums: Mar 16, 2020 - Jun 28, 2020; Aug 10, 2020 - Sep 7, 2020;", 
+                 "Jan 1, 2021 - Jun 30, 2021; Aug 10, 2021 - Jun 30, 2022",
+                 "Federal Eviction Moratorium (CDC Order): Sep 4, 2020 - Aug 26, 2021",
+                 sep = "\n")
+       ) +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
+        legend.text = element_text(size = 13),
         panel.grid.minor = element_blank(),
         # panel.grid.major.x = element_blank(),
         strip.text = element_text(size = 16),
@@ -1803,59 +1919,67 @@ evictions %>%
 
 
 ### People Experiencing Homelessness
-```{r pit_count, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
-pitcount_2007_2023 <- read_csv("../supplemental_downloadsremoved/data/pitcount_2007_2023.csv")
-pitcount_2007_2023 <- pitcount_2007_2023 %>% 
+```{r pit_count, fig.width = 9.5, fig.height = 6.5, fig.retina = 2, fig.cap=""}
+pitcount_2007_2024 <- read_csv("../supplemental_downloadsremoved/data/pitcount_2007_2024.csv")
+pitcount_2007_2024 <- pitcount_2007_2024 %>% 
   select(co_c_name, sheltered_total_homeless, unsheltered_homeless, overall_homeless, year) %>% 
   pivot_longer(sheltered_total_homeless:overall_homeless)
 
-pitcount_2007_2023 %>% 
+pitcount_2007_2024 %>% 
+  mutate(pos = case_when(name == "sheltered_total_homeless" ~ -1,
+                         .default = 1
+                         ),
+         name = factor(name, levels = c("overall_homeless", "sheltered_total_homeless", "unsheltered_homeless"), labels = c("Total", "Sheltered", "Unsheltered"))) %>%
   ggplot(aes(x = year, y = value, 
              color = name, 
-             group = name, 
+             group = interaction(co_c_name, name),  
              linetype = name,
              label = value)) +
-  geom_vline(xintercept = 2012, linetype = 2, color = "#333333") +
-  annotate("text", x = 2012, y = 100, size = 3.5, hjust = 0, color = "#333333",
+  geom_vline(xintercept = 2012, linetype = 2, color = "#616a6b") +
+  annotate("text", x = 2012.1, y = 100, size = 3.5, hjust = 0, color = "#333333",
            label =
 "Opening of The Crossings
 (permanent supportive housing)") +
-  geom_vline(xintercept = 2022, linetype = 2, color = "#333333") +
-  annotate("text", x = 2022, y = 275, size = 3.5, hjust = 0, color = "#333333",
+  geom_vline(xintercept = 2022, linetype = 2, color = "#616a6b") +
+  annotate("text", x = 2017.5, y = 275, size = 3.5, hjust = 0, color = "#333333",
            label =
 "COVID-19 pandemic hightened
 impact of high housing costs
 and lack of affordable housing") +
   # geom_line() +
   stat_xspline(size=1) +
-  geom_point() +
-  geom_text(size = 5, hjust=0.5, 
-            vjust=-1,
-            color="black") +
+  geom_point(show.legend = FALSE) +
+  geom_text(aes(y = (value + sign(pos)*18)),
+            size = 4.5, hjust=0.5, 
+            # vjust=-1,
+            color="black",
+            show.legend = FALSE) +
   # geom_text_repel(aes(label = label),
   #                 size = 3.5, fontface = "bold", nudge_x = .8, show.legend = FALSE, min.segment.length = Inf) +
-  scale_linetype_manual(values = c(2, 6, 1)
-                        # limits = c("Sheltered", "Unsheltered", "Total")
+  scale_linetype_manual(values = c(1, 2, 6),
+                        limits = c("Total", "Sheltered", "Unsheltered")
                         ) +
-  # scale_color_manual(values = one_category_palette) +
+  scale_color_manual(values = c("#6E016B", "#6E016B", "#6E016B")) +
   scale_y_continuous(limits = c(0,300),
                      breaks = seq(from = 0, to = 300, by = 50),
                      label = comma,
                      name = "Number of People") +
-  scale_x_continuous(breaks = seq(from = 2007, to = 2023, by = 1),
+  scale_x_continuous(breaks = seq(from = 2007, to = 2024, by = 1),
                      name = "") +
   labs(color = "",
        title = "PIT Count", 
        subtitle = locality_name,
        caption = "",
-       color = "", linetype = "", fill = "") +
+       linetype = "", fill = "") +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
+        legend.text = element_text(size = 12),
+        legend.key.width = unit(2.5,"line"),
         axis.ticks = element_blank(),
         axis.text.y = element_text(size = 14),
         text = element_text(size = 14),
-        axis.text.x = element_text(size=14, color = "black"),
+        axis.text.x = element_text(angle = 45, hjust = 1, size=14, color = "black"),
         plot.title = element_text(size = 18),
         plot.caption = element_text(size = 11),
         panel.grid.minor = element_blank(),
@@ -1864,23 +1988,28 @@ and lack of affordable housing") +
 ```
 
 ### HUD Housing Inventory
-```{r hic_count, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap=""}
-hiccount_2007_2023 <- read_csv("../supplemental_downloadsremoved/data/hiccount_2007_2023.csv")
+```{r hic_count, fig.width = 9.5, fig.height = 6.5, fig.retina = 2, fig.cap=""}
+hiccount_2007_2024 <- read_csv("../supplemental_downloadsremoved/data/hiccount_2007_2024.csv")
 hic23_detail <- read_csv("../supplemental_downloadsremoved/data/hic23_detail.csv")
 
-hiccount_2007_2023 %>% 
+hiccount_2007_2024 %>% 
+  filter(bedtype %in% c("total_seasonal_beds", "total_yearround_beds")) %>% 
+  mutate(pos = case_when(bedtype == "total_seasonal_beds" ~ -1,
+                         .default = 1
+                         ),
+         bedtype = factor(bedtype, levels = c("total_yearround_beds", "total_seasonal_beds"), labels = c("Total Year-Round Beds", "Total Seasonal Beds"))) %>%
   ggplot(aes(x = year, y = beds, 
              color = bedtype, 
              group = bedtype, 
              # linetype = name,
              label = beds)) +
   geom_vline(xintercept = 2012, linetype = 2, color = "#333333") +
-  annotate("text", x = 2012, y = 100, size = 3.5, hjust = 0, color = "#333333",
+  annotate("text", x = 2012.1, y = 25, size = 3.5, hjust = 0, color = "#333333",
            label =
 "Opening of The Crossings
 (permanent supportive housing)") +
   geom_vline(xintercept = 2022, linetype = 2, color = "#333333") +
-  annotate("text", x = 2022, y = 275, size = 3.5, hjust = 0, color = "#333333",
+  annotate("text", x = 2017.6, y = 275, size = 3.5, hjust = 0, color = "#333333",
            label =
 "COVID-19 pandemic hightened
 impact of high housing costs
@@ -1888,7 +2017,7 @@ and lack of affordable housing") +
   # geom_line() +
   stat_xspline(size=1) +
   geom_point() +
-  geom_text(size = 5, hjust=0.5, 
+  geom_text(size = 4.5, hjust=0.5, 
             vjust=-1,
             color="black") +
   # geom_text_repel(aes(label = label),
@@ -1896,12 +2025,13 @@ and lack of affordable housing") +
   # scale_linetype_manual(values = c(2, 6, 1)
                         # limits = c("Sheltered", "Unsheltered", "Total")
                         # ) +
+  scale_color_manual(values = c("#3B8EA5", "#B4C8A8")) +
   # scale_color_manual(values = one_category_palette) +
   scale_y_continuous(limits = c(0,300),
                      breaks = seq(from = 0, to = 300, by = 50),
                      label = comma,
                      name = "Number of Beds") +
-  scale_x_continuous(breaks = seq(from = 2007, to = 2023, by = 1),
+  scale_x_continuous(breaks = seq(from = 2007, to = 2024, by = 1),
                      name = "") +
   labs(color = "",
        title = "HIC Count", 
@@ -1911,10 +2041,11 @@ and lack of affordable housing") +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
+        legend.text = element_text(size = 13),
         axis.ticks = element_blank(),
         axis.text.y = element_text(size = 14),
         text = element_text(size = 14),
-        axis.text.x = element_text(size=14, color = "black"),
+        axis.text.x = element_text(angle = 45, hjust = 1, size=14, color = "black"),
         plot.title = element_text(size = 18),
         plot.caption = element_text(size = 11),
         panel.grid.minor = element_blank(),
