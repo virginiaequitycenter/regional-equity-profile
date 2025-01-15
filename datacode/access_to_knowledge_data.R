@@ -169,6 +169,59 @@ region_edu_attain <- edu_attain_county %>%
 
 write_csv(region_edu_attain, paste0("data/region_edu_attain", "_", year, ".csv"))
 
+# Educational Attainment 2012-2022: County & Region ----
+# Get ACS data
+AHDI_vars_S1501 <- c("High school graduate or higher" = "S1501_C01_014",
+                     "Bachelor's degree or higher" = "S1501_C01_015",
+                     "Graduate or professional degree" = "S1501_C01_013")
+
+vars_S1501_2018_2022 <- map_df(2022:2018,
+                                   ~ get_acs(
+                                     year = .x,
+                                     geography = "county",
+                                     state = "VA",
+                                     county = county_codes,
+                                     var = AHDI_vars_S1501,
+                                     summary_var = "S1501_C01_006",
+                                     survey = "acs5", 
+                                     cache = TRUE) %>%
+                                     mutate(year = .x)
+)
+
+# Wrangle tables:
+edu_attain_county_2018_2022 <- vars_S1501_2018_2022 %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         label = variable) %>% 
+  rename(c("pop_25_over" = "summary_est",
+           "locality" = "NAME")) %>% 
+  select(GEOID, locality, estimate, moe, pop_25_over, percent, label, year)
+
+# Educational Attainment 2012-2022: Charlottesville, county  ----
+cville_edu_attain_county_2018_2022 <- edu_attain_county_2018_2022 %>% 
+  filter(locality == "Charlottesville city, Virginia")
+
+write_csv(cville_edu_attain_county_2018_2022, paste0("data/cville_edu_attain_county_2018_2022.csv"))
+
+# Educational Attainment 2012-2022: Albemarle, county & tract ----
+alb_edu_attain_county_2018_2022 <- edu_attain_county_2018_2022 %>% 
+  filter(locality == "Albemarle County, Virginia")
+
+write_csv(alb_edu_attain_county_2018_2022, paste0("data/alb_edu_attain_county_2018_2022.csv"))
+
+# Educational Attainment 2012-2022: Charlottesville, Albemarle Combined Table ----
+region_edu_attain_county_2018_2022 <- edu_attain_county_2018_2022 %>% 
+  group_by(label, year) %>% 
+  summarize(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            pop_25_over = sum(pop_25_over),
+            .groups = 'drop') %>% 
+  mutate(percent = round(100 * (estimate / pop_25_over), digits = 2),
+         locality = region_name,
+         region_fips = paste(county_codes, collapse = ";")) %>% 
+  select(region_fips, locality, estimate, moe, pop_25_over, percent, label, year)
+
+write_csv(region_edu_attain_county_2018_2022, paste0("data/region_edu_attain_county_2018_2022.csv"))
+
 ## ...........................................................
 # School Enrollment, Ages 3-24 (AHDI MEASURE): S1401 ----
 
@@ -277,6 +330,66 @@ region_enroll <- enroll_county %>%
   select(region_fips, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
 
 write_csv(region_enroll, paste0("data/region_enroll", "_", year, ".csv"))
+
+# School Enrollment 2018-2022: County & Region ----
+# Get ACS data
+AHDI_vars_S1401 <- c("3 to 4 year olds enrolled in school" = "S1401_C01_014", 
+                     "5 to 9 year olds enrolled in school" = "S1401_C01_016",  
+                     "10 to 14 year olds enrolled in school" = "S1401_C01_018", 
+                     "15 to 17 year olds enrolled in school" = "S1401_C01_020", 
+                     "18 and 19 year olds enrolled in school" = "S1401_C01_022", 
+                     "20 to 24 year olds enrolled in school" = "S1401_C01_024",
+                     "Population 3 to 4 years" = "S1401_C01_013", 
+                     "Population 5 to 9 years" = "S1401_C01_015",  
+                     "Population 10 to 14 years" = "S1401_C01_017", 
+                     "Population 15 to 17 years" = "S1401_C01_019", 
+                     "Population 18 and 19 years" = "S1401_C01_021", 
+                     "Population 20 to 24 years" = "S1401_C01_023")
+
+acs_S1401_county_2018_2022 <- map_df(2022:2018,
+                               ~ get_acs(
+                                 year = .x,
+                                 geography = "county",
+                                 state = "VA",
+                                 county = county_codes,
+                                 var = AHDI_vars_S1401,
+                                 survey = "acs5", 
+                                 cache = TRUE) %>%
+                                 mutate(year = .x))
+
+
+
+# Wrangle data
+enroll_county_2018_2022 <- acs_S1401_county_2018_2022 %>% 
+  mutate(cat = case_when(str_detect(variable, "enrolled in school") ~ "enrolled",
+                         str_detect(variable, "Population") ~ "pop")) %>% 
+  group_by(GEOID, NAME, year, cat) %>% 
+  summarise(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            .groups = 'drop') %>% 
+  pivot_wider(names_from = cat, values_from = c(estimate, moe)) %>% 
+  mutate(percent = round(100 * (estimate_enrolled / estimate_pop), digits = 2),
+         label = "3 to 24 year olds enrolled in school") %>% 
+  rename(locality = NAME,
+         estimate = estimate_enrolled,
+         moe = moe_enrolled,
+         pop_3_to_24yr = estimate_pop) %>% 
+  select(GEOID, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
+
+
+# School Enrollment 2018-2022: Charlottesville, Albemarle Combined Table ----
+region_enroll_county_2018_2022 <- enroll_county_2018_2022 %>% 
+  group_by(label, year) %>% 
+  summarize(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            pop_3_to_24yr = sum(pop_3_to_24yr),
+            .groups = 'drop') %>% 
+  mutate(percent = round(100 * (estimate / pop_3_to_24yr), digits = 2),
+         locality = region_name,
+         region_fips = paste(county_codes, collapse = ";")) %>% 
+  select(region_fips, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
+
+write_csv(region_enroll_county_2018_2022, paste0("data/region_enroll_county_2018_2022.csv"))
 
 ## .....................................................
 # Educational Attainment by Race/Ethnicity: S1501 ----

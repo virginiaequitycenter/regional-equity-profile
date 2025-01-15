@@ -42,7 +42,7 @@ library(janitor)
 # Creating basic objects ----
 
 # Year for ACS data (single year)
-year <- 2022
+year <- 2017
 
 # County FIPS codes 
 county_codes <- c("003", "540") # Albemarle, Charlottesville FIPS Code
@@ -130,7 +130,9 @@ all_acs_meta <- function(){
 }
 
 # Creates a table of all the metadata called "meta_table"
-meta_table <- all_acs_meta()
+meta_table_2017 <- all_acs_meta()
+
+
 
 # Opens the newly made table
 # View(meta_table)
@@ -399,6 +401,138 @@ alb_health_insured_county_race <- health_insured_county_race %>%
   filter(locality == "Albemarle County, Virginia")
 
 write_csv(alb_health_insured_county_race, paste0("data/alb_health_insured_county_race", "_", year, ".csv"))
+
+# Health Insurance Coverage, by Race/Ethnicity: Charlottesville, Albemarle Combined Table ----
+region_health_insured_race <- health_insured_county_race %>% 
+  group_by(group, year) %>% 
+  summarize(estimate_insured = sum(estimate_insured),
+            moe_insured = moe_sum(moe = moe_insured, estimate = estimate_insured),
+            estimate_uninsured = sum(estimate_uninsured),
+            moe_uninsured = moe_sum(moe = moe_uninsured, estimate = estimate_uninsured),
+            total_est = sum(total_est),
+            .groups = 'drop') %>% 
+  mutate(percent_insured = round(100 * (estimate_insured / total_est), digits = 2),
+         percent_uninsured = round(100 * (estimate_uninsured / total_est), digits = 2),
+         locality = region_name,
+         region_fips = paste(county_codes, collapse = ";")) %>% 
+  select(region_fips, locality, group, estimate_insured, moe_insured, estimate_uninsured, moe_uninsured, total_est, percent_insured, percent_uninsured, year)
+
+write_csv(region_health_insured_race, paste0("data/region_health_insured_race", "_", year, ".csv"))
+
+# Health Insurance Coverage 2012-2022, County by Race/Ethnicity: Table S2701, 2012-2022 ----
+
+# 2012-2014
+#  2015-2016
+#  2017-2022
+
+# Get ACS Data
+# Vars for insured/uninsured
+acs_vars_S2701 <- c("insured; All" = "S2701_C02_001",
+                    "insured; White alone" = "S2701_C02_016",
+                    "insured; Black or African American alone" = "S2701_C02_017",
+                    "insured; American Indian and Alaska Native alone" = "S2701_C02_018",
+                    "insured; Asian alone" = "S2701_C02_019",
+                    "insured; Native Hawaiian and Other Pacific Islander alone" = "S2701_C02_020",
+                    "insured; Some other race alone" = "S2701_C02_021",
+                    "insured; Two or more races" = "S2701_C02_022",
+                    "insured; Hispanic or Latino" = "S2701_C02_023",
+                    "insured; White non Hispanic" = "S2701_C02_024",
+                    "uninsured; All" = "S2701_C04_001",
+                    "uninsured; White alone" = "S2701_C04_016",
+                    "uninsured; Black or African American alone" = "S2701_C04_017",
+                    "uninsured; American Indian and Alaska Native alone" = "S2701_C04_018",
+                    "uninsured; Asian alone" = "S2701_C04_019",
+                    "uninsured; Native Hawaiian and Other Pacific Islander alone" = "S2701_C04_020",
+                    "uninsured; Some other race alone" = "S2701_C04_021",
+                    "uninsured; Two or more races" = "S2701_C04_022",
+                    "uninsured; Hispanic or Latino" = "S2701_C04_023",
+                    "uninsured; White non Hispanic" = "S2701_C04_024")
+
+# Vars for total population counts
+acs_vars_S2701_C01 <- c("All" = "S2701_C01_001",
+                        "White alone" = "S2701_C01_016",
+                        "Black or African American alone" = "S2701_C01_017",
+                        "American Indian and Alaska Native alone" = "S2701_C01_018",
+                        "Asian alone" = "S2701_C01_019",
+                        "Native Hawaiian and Other Pacific Islander alone" = "S2701_C01_020",
+                        "Some other race alone" = "S2701_C01_021",
+                        "Two or more races" = "S2701_C01_022",
+                        "Hispanic or Latino" = "S2701_C01_023",
+                        "White non Hispanic" = "S2701_C01_024")
+
+vars_S2701_county_2017_2022 <- map_df(2022:2017,
+                             ~ get_acs(
+                               year = .x,
+                               geography = "county",
+                               state = "VA",
+                               county = county_codes,
+                               var = acs_vars_S2701,
+                               survey = "acs5", 
+                               cache = TRUE) %>%
+                               mutate(year = .x)
+)
+
+# Group totals
+
+vars_S2701_C01_2017_2022 <- map_df(2022:2017,
+                                      ~ get_acs(
+                                        year = .x,
+                                        geography = "county",
+                                        state = "VA",
+                                        county = county_codes,
+                                        var = acs_vars_S2701_C01,
+                                        survey = "acs5", 
+                                        cache = TRUE) %>%
+                                        mutate(year = .x)
+) %>% 
+  rename(group = variable,
+         total_est = estimate,
+         total_moe = moe)
+
+# Prep table
+health_insured_county_race_2017_2022 <- vars_S2701_county_2017_2022 %>% 
+  separate(variable, into=c("variable","group"), sep="; ", remove=FALSE) %>% 
+  pivot_wider(names_from = variable, values_from = c(estimate, moe))
+
+# Join tables
+health_insured_county_race_2017_2022 <- health_insured_county_race_2017_2022 %>% 
+  left_join(vars_S2701_C01_2017_2022)
+
+# Create percents
+health_insured_county_race_2017_2022 <- health_insured_county_race_2017_2022 %>% 
+  mutate(percent_insured = round(100 * (estimate_insured / total_est), digits = 2),
+         percent_uninsured = round(100 * (estimate_uninsured / total_est), digits = 2),
+         year = year) %>% 
+  rename(locality = NAME)
+
+# Health Insurance Coverage, County by Race/Ethnicity: Charlottesville ----
+cville_health_insured_county_race_2017_2022 <- health_insured_county_race_2017_2022 %>% 
+  filter(locality == "Charlottesville city, Virginia")
+
+write_csv(cville_health_insured_county_race_2017_2022, paste0("data/cville_health_insured_county_race_2017_2022.csv"))
+
+# Health Insurance Coverage, County by Race/Ethnicity: Albemarle ----
+alb_health_insured_county_race_2017_2022 <- health_insured_county_race_2017_2022 %>% 
+  filter(locality == "Albemarle County, Virginia")
+
+write_csv(alb_health_insured_county_race_2017_2022, paste0("data/alb_health_insured_county_race_2017_2022.csv"))
+
+# Health Insurance Coverage, by Race/Ethnicity: Charlottesville, Albemarle Combined Table ----
+region_health_insured_county_race_2017_2022 <- health_insured_county_race_2017_2022 %>% 
+  group_by(group, year) %>% 
+  summarize(estimate_insured = sum(estimate_insured),
+            moe_insured = moe_sum(moe = moe_insured, estimate = estimate_insured),
+            estimate_uninsured = sum(estimate_uninsured),
+            moe_uninsured = moe_sum(moe = moe_uninsured, estimate = estimate_uninsured),
+            total_est = sum(total_est),
+            .groups = 'drop') %>% 
+  mutate(percent_insured = round(100 * (estimate_insured / total_est), digits = 2),
+         percent_uninsured = round(100 * (estimate_uninsured / total_est), digits = 2),
+         locality = region_name,
+         region_fips = paste(county_codes, collapse = ";")) %>% 
+  select(region_fips, locality, group, estimate_insured, moe_insured, estimate_uninsured, moe_uninsured, total_est, percent_insured, percent_uninsured, year)
+
+write_csv(region_health_insured_county_race_2017_2022, paste0("data/region_health_insured_county_race_2017_2022.csv"))
 
 ## .......................................
 # CDC Places Health Measures by Tract ----

@@ -1170,20 +1170,21 @@ chr_social <- chr_region %>%
 
 chr_social %>% 
   filter(region == "Region") %>% 
+  filter(year >= 2017) %>% 
   ggplot(aes(x = year, y = soc_assoc_rate, label = paste0(round(soc_assoc_rate,0)))) +
   stat_xspline(size=1) +
   geom_point() +
   geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
-  scale_x_continuous(breaks = seq(from = 2016, to = 2024, by = 1),
+  scale_x_continuous(breaks = seq(from = 2017, to = 2024, by = 1),
                      name = "") +
   scale_y_continuous(limits = c(0,100),
                      # labels = scales::label_currency(scale = 1),
                      name = "Rate") +
-  # scale_color_manual(values = c("#3B8EA5")) +
+  scale_color_manual(values = c("#6E016B")) +
   labs(color = "",
-       title = "Civic sector: # membership organizations per pop: 2016-2024", 
+       title = "Civic sector: # membership organizations per pop: 2017-2024", 
        subtitle = locality_name,
-       caption = "Data Source: County Health Rankings, 2016-2024") +
+       caption = "Data Source: County Health Rankings, 2017-2024") +
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
@@ -1199,7 +1200,8 @@ chr_social %>%
 
 chr_social %>% 
   filter(region == "Region") %>% 
-  ggplot(aes(x = year, y = soc_assoc, label = prettyNum(soc_assoc, big.mark=",", preserve.width="none"))) +
+  filter(year >= 2017) %>%
+  ggplot(aes(x = year, y = soc_assoc, label = prettyNum(soc_assoc, big.mark=",", preserve.width="none"), color = region)) +
   stat_xspline(size=1) +
   geom_point() +
   geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
@@ -1208,14 +1210,14 @@ chr_social %>%
   scale_y_continuous(limits = c(0,500),
                      # labels = scales::label_currency(scale = 1),
                      name = "Number of Organizations") +
-  # scale_color_manual(values = c("#3B8EA5")) +
+  scale_color_manual(values = c("#6E016B")) +
   labs(color = "",
-       title = "Civic sector: # membership organizations: 2016-2024", 
+       title = "Civic sector: # membership organizations: 2017-2024", 
        subtitle = locality_name,
-       caption = "Data Source: County Health Rankings, 2016-2024") +
+       caption = "Data Source: County Health Rankings, 2017-2024") +
   theme_minimal() +
   theme(legend.title=element_blank(),
-        legend.position = "top",
+        legend.position = "none",
         axis.ticks = element_blank(),
         axis.text.y = element_text(size = 14),
         text = element_text(size = 14),

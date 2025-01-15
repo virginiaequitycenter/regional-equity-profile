@@ -539,3 +539,100 @@ ahdi_all <- rbind(ahdi_county, ahdi_benchmarks)
 
 write_csv(ahdi_all, "data/ahdi_benchmarks.csv")
 
+# Comparing 2019 and 2022 AHDI ----
+ahdi_tract_alb_2019 <- read_csv("data/data_2019/tract_ahdi.csv")%>% 
+  mutate(GEOID_TRACT_10 = as.character(GEOID),
+         ahdi_2019 = round(ahdi, digits = 1)) %>% 
+  rename(lifeexp_est_2019 = life_exp,
+         hs_grad_per_2019 = hs_grad,
+         bac_deg_per_2019 = bac_deg,
+         grad_deg_per_2019 = grad_deg,
+         enrollment_per_2019 = school_enroll,
+         med_earnings_2019 = pers_earn,
+         health_index_2019 = ahdi_health, 
+         edu_attain_index_2019 = ahdi_ed_attainment, 
+         enroll_index_2019 = ahdi_ed_enroll, 
+         education_index_2019 = ahdi_ed,
+         income_index_2019 = ahdi_income) %>%
+  select(GEOID_TRACT_10, ahdi_2019, lifeexp_est_2019, hs_grad_per_2019, bac_deg_per_2019, grad_deg_per_2019, enrollment_per_2019, med_earnings_2019)
+
+# Read in tract names
+tract_names_2019 <- read_csv("data/data_2019/tract_names.csv") %>% 
+  select(1:8) %>% 
+  na.omit() %>% 
+  mutate(GEOID_TRACT_10 = as.character(geoid)) %>%
+  mutate(locality_num = str_sub(GEOID_TRACT_10,3,5),
+         tract_num = str_sub(GEOID_TRACT_10, 6, 11),
+         county = "Albemarle") %>% 
+  select(GEOID_TRACT_10, keypoints, fullname) %>% 
+  rename(tractnames_2019 = keypoints)
+
+# 2022 tract names
+tract_names <- read_csv("data/regional_tractnames.csv")
+
+county_codes <- c("003", "540") # Albemarle, Charlottesville FIPS Code
+
+tract_names <- tract_names %>%
+  mutate(GEOID = as.character(GEOID)) %>%
+  rename("county" = "locality",
+         "tract_num" = "tract") %>%
+  filter(locality_num %in% county_codes)
+
+alb_tracts_2020 <- tract_names %>%
+  filter(county == "Albemarle") %>% 
+  mutate(tract_num_1 = str_sub(tract_num, 2, 4),
+         tract_num_2 = case_when(str_sub(tract_num, 5, 6) == "00" ~ "",
+                                 .default = paste0(".", str_sub(tract_num, 5, 6))),
+         fullname_2020 = paste0("Census Tract ", tract_num_1, tract_num_2))
+
+# 2020 Census Tract to 2010 Census Tract Relationship File
+tract_crosswalk <- read_delim("data/tempdata/tab20_tract20_tract10_natl.txt", delim = "|")
+
+alb_tracts_crosswalk <- alb_tracts_2020 %>%
+  left_join(tract_crosswalk, by = join_by(GEOID == GEOID_TRACT_20)) %>%
+  filter(substr(GEOID_TRACT_10, 1, 5) == "51003") %>%
+  select(county, locality_num, tract_num, tractnames, fullname_2020, GEOID,  GEOID_TRACT_10, NAMELSAD_TRACT_20, NAMELSAD_TRACT_10) %>%
+  mutate(tract_check = case_when(NAMELSAD_TRACT_20 == NAMELSAD_TRACT_10 ~ TRUE,
+                                 GEOID == "51003011302" & GEOID_TRACT_10 == "51003011301" ~ FALSE,
+                                 substr(NAMELSAD_TRACT_20, 1, 16) == substr(NAMELSAD_TRACT_10, 1, 16) ~ TRUE,
+                                 .default = FALSE)) %>%
+  filter(tract_check == TRUE) %>%
+  select(county, GEOID, locality_num, tract_num, tractnames, fullname_2020, GEOID_TRACT_10)
+
+alb_tracts_crosswalk <- alb_tracts_crosswalk %>%
+  left_join(tract_names_2019) %>%
+  rename(GEOID_TRACT_20 = GEOID,
+         tractnames_2020 = tractnames,
+         fullname_2019 = fullname) %>% 
+  select(GEOID_TRACT_20, tractnames_2020, fullname_2020, GEOID_TRACT_10, tractnames_2019, fullname_2019)
+
+# tract_names_2019 <- tract_names_2019 %>% 
+#   mutate(tractnames_2019_text = case_when(tractnames_2019 == "Hollymead" ~ "Hollymead (Berkmar Drive, Polo Grounds Road, Hollymead)",
+#                                           tractnames_2019 == "Pantops" ~ "Pantops (Darden-Key West, Pantops)",
+#                                           tractnames_2019 == "Branchland to Carrsbrook" ~ "Branchland to Carrsbrook (Branchland, Woodbrook-Carrsbrook)",
+#                                           tractnames_2019 == "Commonwealth-Hydraulic" ~ "Commonwealth-Hydraulic (Hydraulic, Commonwealth-Townwood-Berkmar)",
+#                                           tractnames_2019 == "Albemarle High School" ~ "Albemarle High School (Barracks-Hessian Hills, Albemarle High School)",
+#                                           tractnames_2019 == "UVA campus - Darden School, JPJ Arena" ~ "UVA campus - Darden School, JPJ Arena (Old Ivy-Darden School (UVA))",
+#                                           tractnames_2019 == "UVA campus - Hereford College, University Heights" ~ "UVA campus - Hereford College, University Heights (Carr's Hill-McCormick Road (UVA))",
+#                                           tractnames_2019 == "UVA campus - Rotunda, Carr's Hill" ~ "UVA campus - Rotunda, Carr's Hill (Carr's Hill-McCormick Road (UVA))",
+#                                           tractnames_2019 == "Crozet" ~ "Crozet (Crozet-Beaver Creek, Western Ridge-Westhall, Old Trail)",
+#                                           tractnames_2019 == "Pen Park-Dunlora" ~ "Pen Park-Dunlora (Dunlora-Stone Henge)",
+#                                           tractnames_2019 == "Oak Hill, Old Lynchburg Rd" ~ "Oak Hill, Old Lynchburg Rd (Oak Hill, Southwood)",
+#                                           tractnames_2019 == "Avon Street Extended" ~ "Avon Street Extended (Avon Street Ext.-Mill Creek)",
+#                                           tractnames_2019 == "Southern Albemarle" ~ "Southern Albemarle (Southern Albemarle-Scottsville)",
+#                                           .default = tractnames_2019))
+
+ahdi_tract_alb_2022 <- read_csv("data/ahdi_tract_alb.csv") %>% 
+  mutate(GEOID = as.character(GEOID),
+         ahdi = round(ahdi, digits = 1)) %>% 
+  rename(GEOID_TRACT_20 = GEOID) %>% 
+  select(GEOID_TRACT_20, tractnames, ahdi, lifeexpE, hs_grad_per, bac_deg_per, grad_deg_per, enrollment_per, med_earnings)
+
+ahdi_tract_combined <- ahdi_tract_alb_2019 %>%
+  left_join(alb_tracts_crosswalk) %>% 
+  left_join(ahdi_tract_alb_2022)
+
+write_csv(ahdi_tract_combined, "data/ahdi_tract_combined.csv")
+# ahdi_tract_alb_2019 <- ahdi_tract_alb_2019 %>% 
+#   left_join(tract_names_2019, join_by(GEOID == GEOID_TRACT_10))
+

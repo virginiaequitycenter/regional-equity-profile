@@ -248,6 +248,154 @@ region_med_earnings <- data.frame(
 # Generating CSV:
 write_csv(region_med_earnings, paste0("data/region_med_earnings", "_", year, ".csv"))
 
+# Median Personal Earnings 2012-2022: Combined Region, B20001 ----
+# ACS Table B20001 Sex by Earning
+# Get ACS data
+acs_B20001_county_2012_2022 <- map_df(2022:2012,
+                                   ~ get_acs(
+                                     year = .x,
+                                     geography = "county",
+                                     state = "VA",
+                                     county = county_codes,
+                                     table = "B20001", 
+                                     summary_var = "B20001_001",
+                                     survey = "acs5", 
+                                     cache = TRUE) %>%
+                                     mutate(year = .x))
+
+# prep data
+earning_ranges <- tibble::tibble(
+  earning_bin = c("1-2,499", "2,500-4,999", "5,000-7,499", "7,500-9,999", 
+                  "10,000-12,499", "12,500-14,999", "15,000-17,499", "17,500-19,999", 
+                  "20,000-22,499", "22,500-24,999", "25,000-29,999", "30,000-34,999", 
+                  "35,000-39,999", "40,000-44,999", "45,000-49,999", "50,000-54,999", 
+                  "55,000-64,999", "65,000-74,999", "75,000-99,999", "100,000-300,000"),
+  male_var = c("B20001_003", "B20001_004", "B20001_005", "B20001_006", "B20001_007", 
+               "B20001_008", "B20001_009", "B20001_010", "B20001_011", "B20001_012", 
+               "B20001_013", "B20001_014", "B20001_015", "B20001_016", "B20001_017", 
+               "B20001_018", "B20001_019", "B20001_020", "B20001_021", "B20001_022"),
+  female_var = c("B20001_024", "B20001_025", "B20001_026","B20001_027", "B20001_028", 
+                 "B20001_029", "B20001_030", "B20001_031", "B20001_032", "B20001_033", 
+                 "B20001_034", "B20001_035", "B20001_036", "B20001_037", "B20001_038", 
+                 "B20001_039", "B20001_040", "B20001_041", "B20001_042", "B20001_043")
+)
+
+earnings_sex_df <- earning_ranges %>%
+  pmap_dfr(function(earning_bin, male_var, female_var) {
+    acs_B20001_county_2012_2022 %>%
+      filter(variable %in% c(male_var, female_var))  %>%
+      group_by(variable, GEOID, NAME, year) %>%
+      mutate(earning_bin = as.factor(earning_bin),
+             sex = case_when(variable %in% c(male_var) ~ "Male",
+                             variable %in% c(female_var) ~ "Female")) %>%
+      select(GEOID, NAME, variable, estimate, moe, summary_est, sex, earning_bin, year)
+  })
+
+# Collapse sex
+earnings_df <- earnings_sex_df %>%
+  group_by(GEOID, NAME, year, earning_bin) %>%
+  summarize(
+    estimate = sum(estimate),
+    moe = moe_sum(moe = moe, estimate = estimate),
+    summary_est = first(summary_est),
+    .groups = 'drop') %>% 
+  separate(earning_bin, into = c("bin_start", "bin_end"), 
+           sep = "-", remove = FALSE)
+
+# Add bin start and end
+earnings_df <- earnings_df  %>% 
+  mutate(across(starts_with("bin"), ~as.numeric(str_remove(.x, ","))))
+
+# Derive steps to aggregate and estimate
+# choose localities for combined region
+choose <- c("51003", "51540")
+
+# make a function
+agg_earning_median <- function(df, loc){
+  agg_earning_range <- df %>% 
+    filter(GEOID %in% loc) %>% 
+    group_by(year, earning_bin, bin_start, bin_end) %>% 
+    summarize(estimate = sum(estimate),
+              total = sum(summary_est)) %>% 
+    ungroup() %>% 
+    mutate(cum_sum = cumsum(estimate),
+           cum_per = cum_sum/total)
+  
+  med_earnings_years <- agg_earning_range %>% 
+    group_by(year) %>% 
+    summarise(midpoint = agg_earning_range$total[1]/2,
+             index_bin = which(agg_earning_range$cum_sum > midpoint)[1],
+             range_reach = midpoint-agg_earning_range$cum_sum[index_bin-1],
+             range_prop = range_reach / agg_earning_range$estimate[index_bin],
+             income_add = range_prop * (agg_earning_range$bin_end[index_bin] + 1 - agg_earning_range$bin_start[index_bin]),
+             median_earn = agg_earning_range$bin_end[index_bin-1] + income_add
+             )
+
+  # return(median_earn)
+  return(med_earnings_years)
+}
+
+agg_earning_median <- function(df, pick_year, loc){
+  # df_earnings <- data.frame(year=integer(),
+  #                           median_earnings = num())
+  # 
+  agg_earning_range <- df %>% 
+    filter(year == pick_year) %>% 
+    filter(GEOID %in% loc) %>% 
+    group_by(earning_bin, bin_start, bin_end) %>% 
+    summarize(estimate = sum(estimate),
+              total = sum(summary_est)) %>% 
+    ungroup() %>% 
+    mutate(cum_sum = cumsum(estimate),
+           cum_per = cum_sum/total)
+  
+  midpoint <- agg_earning_range$total[1]/2
+  index_bin <- which(agg_earning_range$cum_sum > midpoint)[1]
+  range_reach <- midpoint-agg_earning_range$cum_sum[index_bin-1]
+  range_prop <- range_reach / agg_earning_range$estimate[index_bin]
+  income_add <- range_prop * (agg_earning_range$bin_end[index_bin] + 1 - agg_earning_range$bin_start[index_bin])
+  median_earn <- agg_earning_range$bin_end[index_bin-1] + income_add
+  
+  # df_add <- data.frame(year = pick_year, median_earnings = median_earn)
+  # df_earnings <- rbind(df_earnings, df_add)
+  return(median_earn)
+}
+
+# apply function 
+med_earn_combined_2012 <- agg_earning_median(earnings_df, 2012, choose)
+med_earn_combined_2013 <- agg_earning_median(earnings_df, 2013, choose)
+med_earn_combined_2014 <- agg_earning_median(earnings_df, 2014, choose)
+med_earn_combined_2015 <- agg_earning_median(earnings_df, 2015, choose)
+med_earn_combined_2016 <- agg_earning_median(earnings_df, 2016, choose)
+med_earn_combined_2017 <- agg_earning_median(earnings_df, 2017, choose)
+med_earn_combined_2018 <- agg_earning_median(earnings_df, 2018, choose)
+med_earn_combined_2019 <- agg_earning_median(earnings_df, 2019, choose)
+med_earn_combined_2020 <- agg_earning_median(earnings_df, 2020, choose)
+med_earn_combined_2021 <- agg_earning_median(earnings_df, 2021, choose)
+med_earn_combined_2022 <- agg_earning_median(earnings_df, 2022, choose)
+
+
+# med_earn_combined_2012_2022 <- map_df(2022:2012,
+#                                       ~ agg_earning_median(earnings_df, .x, choose) %>%
+#                                         mutate(year = .x))
+
+# Used t oadjust for inflation (2022 dollars): https://www.bls.gov/data/inflation_calculator.htm
+# Create data frame
+region_med_earnings_2012_2022 <- data.frame(
+  region_fips = rep(paste(choose, collapse = ","),11),
+  locality = rep(region_name,11),
+  med_earnings_est = c(med_earn_combined_2012,med_earn_combined_2013,med_earn_combined_2014,med_earn_combined_2015,
+                       med_earn_combined_2016, med_earn_combined_2017, med_earn_combined_2018, med_earn_combined_2019,
+                       med_earn_combined_2020, med_earn_combined_2021, med_earn_combined_2022),
+  med_earn_adjusted_2022 = c(37533.84, 39000.04, 39525.19, 39717.82, 39313.04, 39769.43, 40049.72,
+                             41782.95, 42626.59, 44681.05, 45837.85
+),
+  year = c(2012:2022)
+)
+
+# Generating CSV:
+write_csv(region_med_earnings_2012_2022, paste0("data/region_med_earnings_2012_2022.csv"))
+
 ## ....................................................
 # Median Personal Earnings by Sex and Race: B20017 ----
 # Median Personal Earnings by Sex and Race (populations statistically significant): County
