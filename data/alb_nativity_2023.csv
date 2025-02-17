@@ -1,0 +1,6 @@
+GEOID,locality,estimate,moe,total_pop,percent,year,label
+51003,"Albemarle County, Virginia",100009,883,113683,87.97,2023,"U.S. citizen, born in the United States"
+51003,"Albemarle County, Virginia",370,269,113683,0.33,2023,"U.S. citizen, born in Puerto Rico or U.S. Island Areas"
+51003,"Albemarle County, Virginia",1615,342,113683,1.42,2023,"U.S. citizen, born abroad of American parent(s)"
+51003,"Albemarle County, Virginia",5161,583,113683,4.54,2023,U.S. citizen by naturalization
+51003,"Albemarle County, Virginia",6528,799,113683,5.74,2023,Not a U.S. citizen

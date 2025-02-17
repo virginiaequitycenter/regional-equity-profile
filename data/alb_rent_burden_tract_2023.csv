@@ -1,0 +1,88 @@
+GEOID,locality,tract,estimate,moe,total_units,percent,level,rent_burden,year,county,locality_num,tract_num,tractnames
+51003010100,Albemarle County,Census Tract 101,42,69.476614770727,268,15.67,Burdened,30% to 49% household income,2023,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,156,76.52450587883597,268,58.21,Not burdened,Less than 30% household income,2023,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,32,33,268,11.94,Severely Burdened,Over 50% household income,2023,Albemarle,003,010100,Free Union
+51003010201,Albemarle County,Census Tract 102.01,6,28.6705423736629,227,2.64,Burdened,30% to 49% household income,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,163,87.43569065318808,227,71.81,Not burdened,Less than 30% household income,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,41,39,227,18.06,Severely Burdened,Over 50% household income,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010202,Albemarle County,Census Tract 102.02,23,29.223278392404914,154,14.94,Burdened,30% to 49% household income,2023,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,49,43.89760813529594,154,31.82,Not burdened,Less than 30% household income,2023,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,33,36,154,21.43,Severely Burdened,Over 50% household income,2023,Albemarle,003,010202,Earlysville
+51003010301,Albemarle County,Census Tract 103.01,15,31.843366656181317,122,12.3,Burdened,30% to 49% household income,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,51,48.61069841094653,122,41.8,Not burdened,Less than 30% household income,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,42,33,122,34.43,Severely Burdened,Over 50% household income,2023,Albemarle,003,010301,Berkmar Drive
+51003010302,Albemarle County,Census Tract 103.02,31,36.0416425818802,128,24.22,Burdened,30% to 49% household income,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,80,56.55970296951709,128,62.5,Not burdened,Less than 30% household income,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,17,28,128,13.28,Severely Burdened,Over 50% household income,2023,Albemarle,003,010302,Polo Grounds Road
+51003010303,Albemarle County,Census Tract 103.03,139,93.56281312572854,311,44.69,Burdened,30% to 49% household income,2023,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,96,64.43601477434805,311,30.87,Not burdened,Less than 30% household income,2023,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,76,59,311,24.44,Severely Burdened,Over 50% household income,2023,Albemarle,003,010303,Hollymead
+51003010401,Albemarle County,Census Tract 104.01,39,34.322004603461025,623,6.26,Burdened,30% to 49% household income,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,357,136.21673905948563,623,57.3,Not burdened,Less than 30% household income,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,81,60,623,13,Severely Burdened,Over 50% household income,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010402,Albemarle County,Census Tract 104.02,42,38.48376280978771,173,24.28,Burdened,30% to 49% household income,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,54,37.603191353926334,173,31.21,Not burdened,Less than 30% household income,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,19,30,173,10.98,Severely Burdened,Over 50% household income,2023,Albemarle,003,010402,Village of Rivanna
+51003010501,Albemarle County,Census Tract 105.01,0,13,144,0,Burdened,30% to 49% household income,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,95,81.46778504415104,144,65.97,Not burdened,Less than 30% household income,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,26,30,144,18.06,Severely Burdened,Over 50% household income,2023,Albemarle,003,010501,Darden-Key West
+51003010502,Albemarle County,Census Tract 105.02,313,125.80540528928,1097,28.53,Burdened,30% to 49% household income,2023,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,451,149.9266487319716,1097,41.11,Not burdened,Less than 30% household income,2023,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,299,135,1097,27.26,Severely Burdened,Over 50% household income,2023,Albemarle,003,010502,Pantops
+51003010602,Albemarle County,Census Tract 106.02,156,89.27485648266257,698,22.35,Burdened,30% to 49% household income,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,413,176.69748158929713,698,59.17,Not burdened,Less than 30% household income,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,129,77,698,18.48,Severely Burdened,Over 50% household income,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010603,Albemarle County,Census Tract 106.03,364,222.01801728688596,841,43.28,Burdened,30% to 49% household income,2023,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,311,164.3745722427894,841,36.98,Not burdened,Less than 30% household income,2023,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,123,57,841,14.63,Severely Burdened,Over 50% household income,2023,Albemarle,003,010603,Branchland
+51003010604,Albemarle County,Census Tract 106.04,123,87.02873088813831,613,20.07,Burdened,30% to 49% household income,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,321,137.63720427268203,613,52.37,Not burdened,Less than 30% household income,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,146,94,613,23.82,Severely Burdened,Over 50% household income,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010701,Albemarle County,Census Tract 107.01,289,137.71347065556077,1203,24.02,Burdened,30% to 49% household income,2023,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,606,244.9081460466352,1203,50.37,Not burdened,Less than 30% household income,2023,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,308,215,1203,25.6,Severely Burdened,Over 50% household income,2023,Albemarle,003,010701,Hydraulic
+51003010702,Albemarle County,Census Tract 107.02,63,56.96490147450446,626,10.06,Burdened,30% to 49% household income,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,367,153.99675321252718,626,58.63,Not burdened,Less than 30% household income,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,196,127,626,31.31,Severely Burdened,Over 50% household income,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010801,Albemarle County,Census Tract 108.01,501,195.67830743339948,1306,38.36,Burdened,30% to 49% household income,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,415,164.41107018689465,1306,31.78,Not burdened,Less than 30% household income,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,376,124,1306,28.79,Severely Burdened,Over 50% household income,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010802,Albemarle County,Census Tract 108.02,263,108.16653826391968,643,40.9,Burdened,30% to 49% household income,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,194,132.713978163568,643,30.17,Not burdened,Less than 30% household income,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,162,119,643,25.19,Severely Burdened,Over 50% household income,2023,Albemarle,003,010802,Albemarle High School
+51003010901,Albemarle County,Census Tract 109.01,107,48.590122453025366,553,19.35,Burdened,30% to 49% household income,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,148,51.84592558726288,553,26.76,Not burdened,Less than 30% household income,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,262,62,553,47.38,Severely Burdened,Over 50% household income,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010904,Albemarle County,Census Tract 109.04,103,71.78439941937245,518,19.88,Burdened,30% to 49% household income,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,268,94.32391001225511,518,51.74,Not burdened,Less than 30% household income,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,136,86,518,26.25,Severely Burdened,Over 50% household income,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003011000,Albemarle County,Census Tract 110,36,44.83302354291979,276,13.04,Burdened,30% to 49% household income,2023,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,182,136.8429757057336,276,65.94,Not burdened,Less than 30% household income,2023,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,25,30,276,9.06,Severely Burdened,Over 50% household income,2023,Albemarle,003,011000,Ivy
+51003011101,Albemarle County,Census Tract 111.01,8,21.95449840010015,474,1.69,Burdened,30% to 49% household income,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,205,144.3606594609487,474,43.25,Not burdened,Less than 30% household income,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,152,142,474,32.07,Severely Burdened,Over 50% household income,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011102,Albemarle County,Census Tract 111.02,11,26.43860813280457,188,5.85,Burdened,30% to 49% household income,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,173,179.5466513193716,188,92.02,Not burdened,Less than 30% household income,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,0,13,188,0,Severely Burdened,Over 50% household income,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011103,Albemarle County,Census Tract 111.03,83,62.68173577685928,404,20.54,Burdened,30% to 49% household income,2023,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,203,99.13626985114983,404,50.25,Not burdened,Less than 30% household income,2023,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,106,92,404,26.24,Severely Burdened,Over 50% household income,2023,Albemarle,003,011103,Old Trail
+51003011201,Albemarle County,Census Tract 112.01,138,86.7928568489366,471,29.3,Burdened,30% to 49% household income,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,149,91.54233993076646,471,31.63,Not burdened,Less than 30% household income,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,72,63,471,15.29,Severely Burdened,Over 50% household income,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011202,Albemarle County,Census Tract 112.02,15,30.23243291566195,150,10,Burdened,30% to 49% household income,2023,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,122,54.616847217685496,150,81.33,Not burdened,Less than 30% household income,2023,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,6,10,150,4,Severely Burdened,Over 50% household income,2023,Albemarle,003,011202,North Garden
+51003011301,Albemarle County,Census Tract 113.01,50,47.843494855622744,351,14.25,Burdened,30% to 49% household income,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,218,115.13036089581236,351,62.11,Not burdened,Less than 30% household income,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,0,13,351,0,Severely Burdened,Over 50% household income,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011302,Albemarle County,Census Tract 113.02,180,120.13742131409347,1622,11.1,Burdened,30% to 49% household income,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,1044,309.2975913258944,1622,64.36,Not burdened,Less than 30% household income,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,377,162,1622,23.24,Severely Burdened,Over 50% household income,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011303,Albemarle County,Census Tract 113.03,188,99.18165152889924,781,24.07,Burdened,30% to 49% household income,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,403,127.46372032857036,781,51.6,Not burdened,Less than 30% household income,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,167,80,781,21.38,Severely Burdened,Over 50% household income,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011400,Albemarle County,Census Tract 114,37,26.019223662515376,379,9.76,Burdened,30% to 49% household income,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,199,83.70185183136631,379,52.51,Not burdened,Less than 30% household income,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,91,69,379,24.01,Severely Burdened,Over 50% household income,2023,Albemarle,003,011400,Southern Albemarle-Scottsville

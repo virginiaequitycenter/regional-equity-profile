@@ -1,0 +1,26 @@
+GEOID,locality,estimate,moe,total_households,percent,year,label
+51003,"Albemarle County, Virginia",38535,642,45064,85.51,2023,English only
+51003,"Albemarle County, Virginia",688,223,45064,1.53,2023,Spanish: Limited English speaking household
+51003,"Albemarle County, Virginia",1998,405,45064,4.43,2023,Spanish: Not a limited English speaking household
+51003,"Albemarle County, Virginia",0,31,45064,0,2023,"French, Haitian, or Cajun: Limited English speaking household"
+51003,"Albemarle County, Virginia",488,157,45064,1.08,2023,"French, Haitian, or Cajun: Not a limited English speaking household"
+51003,"Albemarle County, Virginia",0,31,45064,0,2023,German or other West Germanic languages: Limited English speaking household
+51003,"Albemarle County, Virginia",424,147,45064,0.94,2023,German or other West Germanic languages: Not a limited English speaking household
+51003,"Albemarle County, Virginia",4,7,45064,0.01,2023,"Russian, Polish, or other Slavic languages: Limited English speaking household"
+51003,"Albemarle County, Virginia",122,56,45064,0.27,2023,"Russian, Polish, or other Slavic languages: Not a limited English speaking household"
+51003,"Albemarle County, Virginia",116,109,45064,0.26,2023,Other Indo-European languages: Limited English speaking household
+51003,"Albemarle County, Virginia",904,272,45064,2.01,2023,Other Indo-European languages: Not a limited English speaking household
+51003,"Albemarle County, Virginia",49,58,45064,0.11,2023,Korean: Limited English speaking household
+51003,"Albemarle County, Virginia",141,86,45064,0.31,2023,Korean: Not a limited English speaking household
+51003,"Albemarle County, Virginia",140,81,45064,0.31,2023,"Chinese (incl. Mandarin, Cantonese): Limited English speaking household"
+51003,"Albemarle County, Virginia",216,101,45064,0.48,2023,"Chinese (incl. Mandarin, Cantonese): Not a limited English speaking household"
+51003,"Albemarle County, Virginia",0,31,45064,0,2023,Vietnamese: Limited English speaking household
+51003,"Albemarle County, Virginia",108,77,45064,0.24,2023,Vietnamese: Not a limited English speaking household
+51003,"Albemarle County, Virginia",0,31,45064,0,2023,Tagalog (incl. Filipino): Limited English speaking household
+51003,"Albemarle County, Virginia",111,72,45064,0.25,2023,Tagalog (incl. Filipino): Not a limited English speaking household
+51003,"Albemarle County, Virginia",32,33,45064,0.07,2023,Other Asian and Pacific Island languages: Limited English speaking household
+51003,"Albemarle County, Virginia",539,202,45064,1.2,2023,Other Asian and Pacific Island languages: Not a limited English speaking household
+51003,"Albemarle County, Virginia",21,23,45064,0.05,2023,Arabic: Limited English speaking household
+51003,"Albemarle County, Virginia",118,95,45064,0.26,2023,Arabic: Not a limited English speaking household
+51003,"Albemarle County, Virginia",30,33,45064,0.07,2023,Other and unspecified languages: Limited English speaking household
+51003,"Albemarle County, Virginia",280,173,45064,0.62,2023,Other and unspecified languages: Not a limited English speaking household

@@ -1,0 +1,6 @@
+region_fips,locality,estimate,moe,total_pop,percent,year,label
+003;540,Charlottesville-Albemarle Region,9226,957.1468016976288,159546,5.78,2023,Not a U.S. citizen
+003;540,Charlottesville-Albemarle Region,7184,667.9558368634861,159546,4.5,2023,U.S. citizen by naturalization
+003;540,Charlottesville-Albemarle Region,2381,407.191601092164,159546,1.49,2023,"U.S. citizen, born abroad of American parent(s)"
+003;540,Charlottesville-Albemarle Region,438,279.8035024798653,159546,0.27,2023,"U.S. citizen, born in Puerto Rico or U.S. Island Areas"
+003;540,Charlottesville-Albemarle Region,140317,1041.3419227131883,159546,87.95,2023,"U.S. citizen, born in the United States"

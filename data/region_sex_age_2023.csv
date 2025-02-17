@@ -1,0 +1,27 @@
+region_fips,locality,estimate,moe,total_pop,percent,sex,age_group,year
+003;540,Charlottesville-Albemarle Region,4182,362.2154055254967,159546,2.62,Female,10 to 14 years,2023
+003;540,Charlottesville-Albemarle Region,6672,336.967357469533,159546,4.18,Female,15 to 19 years,2023
+003;540,Charlottesville-Albemarle Region,7443,573.40910352034,159546,4.67,Female,20 to 24 years,2023
+003;540,Charlottesville-Albemarle Region,11420,118.97058459972364,159546,7.16,Female,25 to 34 years,2023
+003;540,Charlottesville-Albemarle Region,10277,580.3076770128067,159546,6.44,Female,35 to 44 years,2023
+003;540,Charlottesville-Albemarle Region,8721,193.49935400408964,159546,5.47,Female,45 to 54 years,2023
+003;540,Charlottesville-Albemarle Region,4004,356.8557131390781,159546,2.51,Female,5 to 9 years,2023
+003;540,Charlottesville-Albemarle Region,5245,399.3619911809335,159546,3.29,Female,55 to 59 years,2023
+003;540,Charlottesville-Albemarle Region,4734,480.4872526925142,159546,2.97,Female,60 to 64 years,2023
+003;540,Charlottesville-Albemarle Region,9101,515.7955021129983,159546,5.7,Female,65 to 74 years,2023
+003;540,Charlottesville-Albemarle Region,4701,442.9006660640735,159546,2.95,Female,75 to 84 years,2023
+003;540,Charlottesville-Albemarle Region,2278,279.8303057211638,159546,1.43,Female,85 years and over,2023
+003;540,Charlottesville-Albemarle Region,3929,203.03940504246953,159546,2.46,Female,Under 5 years,2023
+003;540,Charlottesville-Albemarle Region,4375,399.8512223315067,159546,2.74,Male,10 to 14 years,2023
+003;540,Charlottesville-Albemarle Region,6400,333.22965054148466,159546,4.01,Male,15 to 19 years,2023
+003;540,Charlottesville-Albemarle Region,7072,566.1298437637782,159546,4.43,Male,20 to 24 years,2023
+003;540,Charlottesville-Albemarle Region,10611,225.77200889392822,159546,6.65,Male,25 to 34 years,2023
+003;540,Charlottesville-Albemarle Region,9829,678.5285550365585,159546,6.16,Male,35 to 44 years,2023
+003;540,Charlottesville-Albemarle Region,8641,275.10179933980805,159546,5.42,Male,45 to 54 years,2023
+003;540,Charlottesville-Albemarle Region,4184,377.37117006999887,159546,2.62,Male,5 to 9 years,2023
+003;540,Charlottesville-Albemarle Region,4248,391.8022460374621,159546,2.66,Male,55 to 59 years,2023
+003;540,Charlottesville-Albemarle Region,4664,474.0021096999464,159546,2.92,Male,60 to 64 years,2023
+003;540,Charlottesville-Albemarle Region,7741,564.839800297394,159546,4.85,Male,65 to 74 years,2023
+003;540,Charlottesville-Albemarle Region,3509,328.7704366271396,159546,2.2,Male,75 to 84 years,2023
+003;540,Charlottesville-Albemarle Region,1288,241.59884105682295,159546,0.81,Male,85 years and over,2023
+003;540,Charlottesville-Albemarle Region,4277,244.07580789582568,159546,2.68,Male,Under 5 years,2023

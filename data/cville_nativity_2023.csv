@@ -1,0 +1,6 @@
+GEOID,locality,estimate,moe,total_pop,percent,year,label
+51540,"Charlottesville city, Virginia",40308,552,45863,87.89,2023,"U.S. citizen, born in the United States"
+51540,"Charlottesville city, Virginia",68,77,45863,0.15,2023,"U.S. citizen, born in Puerto Rico or U.S. Island Areas"
+51540,"Charlottesville city, Virginia",766,221,45863,1.67,2023,"U.S. citizen, born abroad of American parent(s)"
+51540,"Charlottesville city, Virginia",2023,326,45863,4.41,2023,U.S. citizen by naturalization
+51540,"Charlottesville city, Virginia",2698,527,45863,5.88,2023,Not a U.S. citizen

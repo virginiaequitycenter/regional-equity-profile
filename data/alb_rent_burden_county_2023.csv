@@ -1,0 +1,4 @@
+GEOID,locality,estimate,moe,total_units,percent,level,rent_burden,year
+51003,"Albemarle County, Virginia",3365,472.87313309174164,15344,21.93,Burdened,30% to 49% household income,2023
+51003,"Albemarle County, Virginia",7493,679.874988508917,15344,48.83,Not burdened,Less than 30% household income,2023
+51003,"Albemarle County, Virginia",3500,457,15344,22.81,Severely Burdened,Over 50% household income,2023

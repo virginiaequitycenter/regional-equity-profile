@@ -1,0 +1,34 @@
+GEOID,locality,estimate,moe,pop_25_over,percent,label,year
+51003,"Albemarle County, Virginia",23126,918,76936,30.06,Graduate or professional degree,2022
+51003,"Albemarle County, Virginia",72186,538,76936,93.83,High school graduate or higher,2022
+51003,"Albemarle County, Virginia",46262,1172,76936,60.13,Bachelor's degree or higher,2022
+51003,"Albemarle County, Virginia",21774,921,75879,28.7,Graduate or professional degree,2021
+51003,"Albemarle County, Virginia",70810,700,75879,93.32,High school graduate or higher,2021
+51003,"Albemarle County, Virginia",44704,996,75879,58.91,Bachelor's degree or higher,2021
+51003,"Albemarle County, Virginia",20865,956,73818,28.27,Graduate or professional degree,2020
+51003,"Albemarle County, Virginia",68406,635,73818,92.67,High school graduate or higher,2020
+51003,"Albemarle County, Virginia",43360,998,73818,58.74,Bachelor's degree or higher,2020
+51003,"Albemarle County, Virginia",19454,758,72937,26.67,Graduate or professional degree,2019
+51003,"Albemarle County, Virginia",67148,754,72937,92.06,High school graduate or higher,2019
+51003,"Albemarle County, Virginia",40215,1023,72937,55.14,Bachelor's degree or higher,2019
+51003,"Albemarle County, Virginia",18760,811,71888,26.1,Graduate or professional degree,2018
+51003,"Albemarle County, Virginia",65688,685,71888,91.38,High school graduate or higher,2018
+51003,"Albemarle County, Virginia",38487,1149,71888,53.54,Bachelor's degree or higher,2018
+51003,"Albemarle County, Virginia",18100,814,70813,25.56,Graduate or professional degree,2017
+51003,"Albemarle County, Virginia",NA,NA,70813,NA,High school graduate or higher,2017
+51003,"Albemarle County, Virginia",NA,NA,70813,NA,Bachelor's degree or higher,2017
+51003,"Albemarle County, Virginia",18232,891,70026,26.04,Graduate or professional degree,2016
+51003,"Albemarle County, Virginia",NA,NA,70026,NA,High school graduate or higher,2016
+51003,"Albemarle County, Virginia",NA,NA,70026,NA,Bachelor's degree or higher,2016
+51003,"Albemarle County, Virginia",18115,816,69085,26.22,Graduate or professional degree,2015
+51003,"Albemarle County, Virginia",NA,NA,69085,NA,High school graduate or higher,2015
+51003,"Albemarle County, Virginia",NA,NA,69085,NA,Bachelor's degree or higher,2015
+51003,"Albemarle County, Virginia",26.2,1.1,67953,0.04,Graduate or professional degree,2014
+51003,"Albemarle County, Virginia",91.4,0.7,67953,0.13,High school graduate or higher,2014
+51003,"Albemarle County, Virginia",52.1,1.4,67953,0.08,Bachelor's degree or higher,2014
+51003,"Albemarle County, Virginia",26.3,1.2,66879,0.04,Graduate or professional degree,2013
+51003,"Albemarle County, Virginia",91.4,0.9,66879,0.14,High school graduate or higher,2013
+51003,"Albemarle County, Virginia",52.2,1.4,66879,0.08,Bachelor's degree or higher,2013
+51003,"Albemarle County, Virginia",25.8,1.4,65425,0.04,Graduate or professional degree,2012
+51003,"Albemarle County, Virginia",90.7,1.1,65425,0.14,High school graduate or higher,2012
+51003,"Albemarle County, Virginia",52.2,1.6,65425,0.08,Bachelor's degree or higher,2012

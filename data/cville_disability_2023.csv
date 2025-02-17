@@ -1,0 +1,17 @@
+GEOID,locality,estimate,moe,total_pop,percent,sex,age_group,disability_status,year
+51540,"Charlottesville city, Virginia",3515,215.0348808914498,45545,7.72,Female,17 and under,No disability,2023
+51540,"Charlottesville city, Virginia",90,71.69379331573968,45545,0.2,Female,17 and under,With a disability,2023
+51540,"Charlottesville city, Virginia",8543,154,45545,18.76,Female,18 to 34 years,No disability,2023
+51540,"Charlottesville city, Virginia",307,116,45545,0.67,Female,18 to 34 years,With a disability,2023
+51540,"Charlottesville city, Virginia",7024,233,45545,15.42,Female,35 to 64 years,No disability,2023
+51540,"Charlottesville city, Virginia",800,189,45545,1.76,Female,35 to 64 years,With a disability,2023
+51540,"Charlottesville city, Virginia",2372,218.55205329623422,45545,5.21,Female,65 and over,No disability,2023
+51540,"Charlottesville city, Virginia",911,200.24984394500785,45545,2,Female,65 and over,With a disability,2023
+51540,"Charlottesville city, Virginia",3737,314.45985435346114,45545,8.21,Male,17 and under,No disability,2023
+51540,"Charlottesville city, Virginia",55,52.15361924162119,45545,0.12,Male,17 and under,With a disability,2023
+51540,"Charlottesville city, Virginia",7947,173,45545,17.45,Male,18 to 34 years,No disability,2023
+51540,"Charlottesville city, Virginia",380,143,45545,0.83,Male,18 to 34 years,With a disability,2023
+51540,"Charlottesville city, Virginia",6436,233,45545,14.13,Male,35 to 64 years,No disability,2023
+51540,"Charlottesville city, Virginia",890,215,45545,1.95,Male,35 to 64 years,With a disability,2023
+51540,"Charlottesville city, Virginia",1797,182.3211452355431,45545,3.95,Male,65 and over,No disability,2023
+51540,"Charlottesville city, Virginia",741,169.9941175452845,45545,1.63,Male,65 and over,With a disability,2023

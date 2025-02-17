@@ -1,0 +1,11 @@
+GEOID,locality,label,group,estimate,moe,year
+51540,"Charlottesville city, Virginia",Median Household Income,All Households,69829,7075,2023
+51540,"Charlottesville city, Virginia",Median Household Income,White,86259,8340,2023
+51540,"Charlottesville city, Virginia",Median Household Income,Black,36541,10070,2023
+51540,"Charlottesville city, Virginia",Median Household Income,American Indian and Alaska Native,NA,NA,2023
+51540,"Charlottesville city, Virginia",Median Household Income,Asian,34261,21163,2023
+51540,"Charlottesville city, Virginia",Median Household Income,NHPI,NA,NA,2023
+51540,"Charlottesville city, Virginia",Median Household Income,Other,NA,NA,2023
+51540,"Charlottesville city, Virginia",Median Household Income,Multiracial,83333,58041,2023
+51540,"Charlottesville city, Virginia",Median Household Income,"White, Not Hispanic or Latino",87664,7177,2023
+51540,"Charlottesville city, Virginia",Median Household Income,Hispanic or Latino,63906,40595,2023

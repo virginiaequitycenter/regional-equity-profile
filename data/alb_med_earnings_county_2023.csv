@@ -1,0 +1,4 @@
+GEOID,locality,label,group,estimate,moe,year
+51003,"Albemarle County, Virginia",Median Earnings,All,51922,1936,2023
+51003,"Albemarle County, Virginia",Median Earnings,Male,59392,1809,2023
+51003,"Albemarle County, Virginia",Median Earnings,Female,44501,2202,2023

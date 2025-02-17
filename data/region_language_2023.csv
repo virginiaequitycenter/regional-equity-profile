@@ -1,0 +1,26 @@
+region_fips,locality,estimate,moe,total_households,percent,year,label
+003;540,Charlottesville-Albemarle Region,70,58.69412236331676,64763,0.11,2023,Arabic: Limited English speaking household
+003;540,Charlottesville-Albemarle Region,301,165.07574019219177,64763,0.46,2023,Arabic: Not a limited English speaking household
+003;540,Charlottesville-Albemarle Region,149,81.74350127074322,64763,0.23,2023,"Chinese (incl. Mandarin, Cantonese): Limited English speaking household"
+003;540,Charlottesville-Albemarle Region,595,150.81445554057476,64763,0.92,2023,"Chinese (incl. Mandarin, Cantonese): Not a limited English speaking household"
+003;540,Charlottesville-Albemarle Region,55094,753.2595834106593,64763,85.07,2023,English only
+003;540,Charlottesville-Albemarle Region,51,67.53517601961218,64763,0.08,2023,"French, Haitian, or Cajun: Limited English speaking household"
+003;540,Charlottesville-Albemarle Region,755,200.06249023742558,64763,1.17,2023,"French, Haitian, or Cajun: Not a limited English speaking household"
+003;540,Charlottesville-Albemarle Region,0,41.773197148410844,64763,0,2023,German or other West Germanic languages: Limited English speaking household
+003;540,Charlottesville-Albemarle Region,591,175.025712396779,64763,0.91,2023,German or other West Germanic languages: Not a limited English speaking household
+003;540,Charlottesville-Albemarle Region,82,67.23094525588644,64763,0.13,2023,Korean: Limited English speaking household
+003;540,Charlottesville-Albemarle Region,201,92.11405973031478,64763,0.31,2023,Korean: Not a limited English speaking household
+003;540,Charlottesville-Albemarle Region,49,38.58756276314948,64763,0.08,2023,Other Asian and Pacific Island languages: Limited English speaking household
+003;540,Charlottesville-Albemarle Region,744,216.17816726024856,64763,1.15,2023,Other Asian and Pacific Island languages: Not a limited English speaking household
+003;540,Charlottesville-Albemarle Region,192,119.9208072020865,64763,0.3,2023,Other Indo-European languages: Limited English speaking household
+003;540,Charlottesville-Albemarle Region,1330,301.4697331408246,64763,2.05,2023,Other Indo-European languages: Not a limited English speaking household
+003;540,Charlottesville-Albemarle Region,53,42.638011210655684,64763,0.08,2023,Other and unspecified languages: Limited English speaking household
+003;540,Charlottesville-Albemarle Region,469,196.88829320200833,64763,0.72,2023,Other and unspecified languages: Not a limited English speaking household
+003;540,Charlottesville-Albemarle Region,4,28.861739379323623,64763,0.01,2023,"Russian, Polish, or other Slavic languages: Limited English speaking household"
+003;540,Charlottesville-Albemarle Region,271,85.0411665018772,64763,0.42,2023,"Russian, Polish, or other Slavic languages: Not a limited English speaking household"
+003;540,Charlottesville-Albemarle Region,825,273.30020124398004,64763,1.27,2023,Spanish: Limited English speaking household
+003;540,Charlottesville-Albemarle Region,2663,429.17245950783,64763,4.11,2023,Spanish: Not a limited English speaking household
+003;540,Charlottesville-Albemarle Region,0,41.773197148410844,64763,0,2023,Tagalog (incl. Filipino): Limited English speaking household
+003;540,Charlottesville-Albemarle Region,115,72.3394774656273,64763,0.18,2023,Tagalog (incl. Filipino): Not a limited English speaking household
+003;540,Charlottesville-Albemarle Region,0,41.773197148410844,64763,0,2023,Vietnamese: Limited English speaking household
+003;540,Charlottesville-Albemarle Region,159,87.70974860299168,64763,0.25,2023,Vietnamese: Not a limited English speaking household

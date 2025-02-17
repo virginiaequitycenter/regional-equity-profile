@@ -1,0 +1,325 @@
+GEOID,tract,locality,race,group_total,group_total_moe,edu_level,estimate,percent,year,county,locality_num,tract_num,tractnames
+51540000201,Census Tract 2.01,Charlottesville city,White,1156,320,less_than_hs,86,7.44,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,White,1156,320,hs_only,286,24.74,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,White,1156,320,bachelors_up,784,67.82,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,White_non_hisp,1023,241,less_than_hs,35,3.42,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,White_non_hisp,1023,241,hs_only,204,19.94,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,White_non_hisp,1023,241,bachelors_up,784,76.64,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Black,235,107,less_than_hs,54,22.98,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Black,235,107,hs_only,158,67.23,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Black,235,107,bachelors_up,23,9.79,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Amer_Indian,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Amer_Indian,0,13,hs_only,0,NA,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Amer_Indian,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Asian,70,56,less_than_hs,0,0,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Asian,70,56,hs_only,35,50,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Asian,70,56,bachelors_up,35,50,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,NHPI,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,NHPI,0,13,hs_only,0,NA,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,NHPI,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Other,75,100,less_than_hs,0,0,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Other,75,100,hs_only,0,0,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Other,75,100,bachelors_up,75,100,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Multi,116,125,less_than_hs,0,0,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Multi,116,125,hs_only,73,62.93,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Multi,116,125,bachelors_up,43,37.07,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Hispanic,185,230,less_than_hs,51,27.57,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Hispanic,185,230,hs_only,129,69.73,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Census Tract 2.01,Charlottesville city,Hispanic,185,230,bachelors_up,5,2.7,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000202,Census Tract 2.02,Charlottesville city,White,669,263,less_than_hs,65,9.72,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,White,669,263,hs_only,111,16.59,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,White,669,263,bachelors_up,493,73.69,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,White_non_hisp,669,263,less_than_hs,65,9.72,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,White_non_hisp,669,263,hs_only,111,16.59,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,White_non_hisp,669,263,bachelors_up,493,73.69,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Black,700,230,less_than_hs,90,12.86,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Black,700,230,hs_only,469,67,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Black,700,230,bachelors_up,141,20.14,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Amer_Indian,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Amer_Indian,0,13,hs_only,0,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Amer_Indian,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Asian,105,74,less_than_hs,0,0,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Asian,105,74,hs_only,0,0,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Asian,105,74,bachelors_up,105,100,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,NHPI,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,NHPI,0,13,hs_only,0,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,NHPI,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Other,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Other,0,13,hs_only,0,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Other,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Multi,6,9,less_than_hs,0,0,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Multi,6,9,hs_only,0,0,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Multi,6,9,bachelors_up,6,100,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Hispanic,6,9,less_than_hs,0,0,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Hispanic,6,9,hs_only,0,0,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Census Tract 2.02,Charlottesville city,Hispanic,6,9,bachelors_up,6,100,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000302,Census Tract 3.02,Charlottesville city,White,2111,351,less_than_hs,90,4.26,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,White,2111,351,hs_only,737,34.91,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,White,2111,351,bachelors_up,1284,60.82,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,White_non_hisp,1803,263,less_than_hs,18,1,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,White_non_hisp,1803,263,hs_only,586,32.5,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,White_non_hisp,1803,263,bachelors_up,1199,66.5,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Black,214,119,less_than_hs,31,14.49,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Black,214,119,hs_only,122,57.01,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Black,214,119,bachelors_up,61,28.5,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Amer_Indian,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Amer_Indian,0,13,hs_only,0,NA,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Amer_Indian,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Asian,69,53,less_than_hs,0,0,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Asian,69,53,hs_only,0,0,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Asian,69,53,bachelors_up,69,100,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,NHPI,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,NHPI,0,13,hs_only,0,NA,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,NHPI,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Other,20,34,less_than_hs,0,0,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Other,20,34,hs_only,0,0,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Other,20,34,bachelors_up,20,100,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Multi,168,138,less_than_hs,6,3.57,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Multi,168,138,hs_only,142,84.52,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Multi,168,138,bachelors_up,20,11.9,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Hispanic,325,236,less_than_hs,72,22.15,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Hispanic,325,236,hs_only,151,46.46,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Census Tract 3.02,Charlottesville city,Hispanic,325,236,bachelors_up,102,31.38,2023,Charlottesville,540,000302,Woolen Mills
+51540000401,Census Tract 4.01,Charlottesville city,White,1259,208,less_than_hs,71,5.64,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,White,1259,208,hs_only,412,32.72,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,White,1259,208,bachelors_up,776,61.64,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,White_non_hisp,1227,210,less_than_hs,71,5.79,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,White_non_hisp,1227,210,hs_only,380,30.97,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,White_non_hisp,1227,210,bachelors_up,776,63.24,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Black,812,263,less_than_hs,175,21.55,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Black,812,263,hs_only,511,62.93,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Black,812,263,bachelors_up,126,15.52,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Amer_Indian,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Amer_Indian,0,13,hs_only,0,NA,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Amer_Indian,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Asian,246,132,less_than_hs,30,12.2,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Asian,246,132,hs_only,116,47.15,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Asian,246,132,bachelors_up,100,40.65,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,NHPI,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,NHPI,0,13,hs_only,0,NA,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,NHPI,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Other,16,24,less_than_hs,0,0,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Other,16,24,hs_only,0,0,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Other,16,24,bachelors_up,16,100,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Multi,214,136,less_than_hs,0,0,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Multi,214,136,hs_only,135,63.08,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Multi,214,136,bachelors_up,79,36.92,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Hispanic,79,87,less_than_hs,0,0,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Hispanic,79,87,hs_only,56,70.89,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Census Tract 4.01,Charlottesville city,Hispanic,79,87,bachelors_up,23,29.11,2023,Charlottesville,540,000401,Ridge St.
+51540000402,Census Tract 4.02,Charlottesville city,White,2720,370,less_than_hs,213,7.83,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,White,2720,370,hs_only,693,25.48,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,White,2720,370,bachelors_up,1814,66.69,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,White_non_hisp,2625,348,less_than_hs,213,8.11,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,White_non_hisp,2625,348,hs_only,693,26.4,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,White_non_hisp,2625,348,bachelors_up,1719,65.49,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Black,570,154,less_than_hs,221,38.77,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Black,570,154,hs_only,285,50,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Black,570,154,bachelors_up,64,11.23,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Amer_Indian,11,19,less_than_hs,11,100,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Amer_Indian,11,19,hs_only,0,0,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Amer_Indian,11,19,bachelors_up,0,0,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Asian,75,76,less_than_hs,0,0,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Asian,75,76,hs_only,46,61.33,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Asian,75,76,bachelors_up,29,38.67,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,NHPI,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,NHPI,0,13,hs_only,0,NA,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,NHPI,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Other,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Other,0,13,hs_only,0,NA,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Other,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Multi,82,55,less_than_hs,0,0,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Multi,82,55,hs_only,26,31.71,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Multi,82,55,bachelors_up,56,68.29,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Hispanic,119,134,less_than_hs,0,0,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Hispanic,119,134,hs_only,0,0,2023,Charlottesville,540,000402,Belmont
+51540000402,Census Tract 4.02,Charlottesville city,Hispanic,119,134,bachelors_up,119,100,2023,Charlottesville,540,000402,Belmont
+51540000501,Census Tract 5.01,Charlottesville city,White,1308,279,less_than_hs,29,2.22,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,White,1308,279,hs_only,461,35.24,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,White,1308,279,bachelors_up,818,62.54,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,White_non_hisp,1300,280,less_than_hs,29,2.23,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,White_non_hisp,1300,280,hs_only,461,35.46,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,White_non_hisp,1300,280,bachelors_up,810,62.31,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Black,1351,350,less_than_hs,205,15.17,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Black,1351,350,hs_only,1010,74.76,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Black,1351,350,bachelors_up,136,10.07,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Amer_Indian,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Amer_Indian,0,13,hs_only,0,NA,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Amer_Indian,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Asian,78,40,less_than_hs,20,25.64,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Asian,78,40,hs_only,12,15.38,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Asian,78,40,bachelors_up,46,58.97,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,NHPI,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,NHPI,0,13,hs_only,0,NA,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,NHPI,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Other,6,9,less_than_hs,0,0,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Other,6,9,hs_only,0,0,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Other,6,9,bachelors_up,6,100,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Multi,177,134,less_than_hs,33,18.64,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Multi,177,134,hs_only,105,59.32,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Multi,177,134,bachelors_up,39,22.03,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Hispanic,25,33,less_than_hs,0,0,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Hispanic,25,33,hs_only,17,68,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Census Tract 5.01,Charlottesville city,Hispanic,25,33,bachelors_up,8,32,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000502,Census Tract 5.02,Charlottesville city,White,2920,334,less_than_hs,10,0.34,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,White,2920,334,hs_only,625,21.4,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,White,2920,334,bachelors_up,2285,78.25,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,White_non_hisp,2859,333,less_than_hs,10,0.35,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,White_non_hisp,2859,333,hs_only,625,21.86,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,White_non_hisp,2859,333,bachelors_up,2224,77.79,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Black,156,130,less_than_hs,0,0,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Black,156,130,hs_only,87,55.77,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Black,156,130,bachelors_up,69,44.23,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Amer_Indian,22,33,less_than_hs,0,0,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Amer_Indian,22,33,hs_only,0,0,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Amer_Indian,22,33,bachelors_up,22,100,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Asian,138,107,less_than_hs,64,46.38,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Asian,138,107,hs_only,0,0,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Asian,138,107,bachelors_up,74,53.62,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,NHPI,0,19,less_than_hs,0,NA,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,NHPI,0,19,hs_only,0,NA,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,NHPI,0,19,bachelors_up,0,NA,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Other,149,112,less_than_hs,0,0,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Other,149,112,hs_only,52,34.9,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Other,149,112,bachelors_up,97,65.1,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Multi,323,148,less_than_hs,0,0,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Multi,323,148,hs_only,79,24.46,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Multi,323,148,bachelors_up,244,75.54,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Hispanic,409,178,less_than_hs,0,0,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Hispanic,409,178,hs_only,87,21.27,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Census Tract 5.02,Charlottesville city,Hispanic,409,178,bachelors_up,322,78.73,2023,Charlottesville,540,000502,Fry's Springs
+51540000600,Census Tract 6,Charlottesville city,White,526,139,less_than_hs,31,5.89,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,White,526,139,hs_only,130,24.71,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,White,526,139,bachelors_up,365,69.39,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,White_non_hisp,514,139,less_than_hs,29,5.64,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,White_non_hisp,514,139,hs_only,130,25.29,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,White_non_hisp,514,139,bachelors_up,355,69.07,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Black,22,24,less_than_hs,3,13.64,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Black,22,24,hs_only,14,63.64,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Black,22,24,bachelors_up,5,22.73,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Amer_Indian,10,16,less_than_hs,0,0,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Amer_Indian,10,16,hs_only,10,100,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Amer_Indian,10,16,bachelors_up,0,0,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Asian,117,65,less_than_hs,0,0,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Asian,117,65,hs_only,0,0,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Asian,117,65,bachelors_up,117,100,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,NHPI,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,NHPI,0,13,hs_only,0,NA,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,NHPI,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Other,31,45,less_than_hs,0,0,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Other,31,45,hs_only,2,6.45,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Other,31,45,bachelors_up,29,93.55,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Multi,48,37,less_than_hs,0,0,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Multi,48,37,hs_only,15,31.25,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Multi,48,37,bachelors_up,33,68.75,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Hispanic,43,47,less_than_hs,2,4.65,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Hispanic,43,47,hs_only,2,4.65,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Census Tract 6,Charlottesville city,Hispanic,43,47,bachelors_up,39,90.7,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000700,Census Tract 7,Charlottesville city,White,2108,305,less_than_hs,57,2.7,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,White,2108,305,hs_only,381,18.07,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,White,2108,305,bachelors_up,1670,79.22,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,White_non_hisp,2057,299,less_than_hs,57,2.77,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,White_non_hisp,2057,299,hs_only,381,18.52,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,White_non_hisp,2057,299,bachelors_up,1619,78.71,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Black,52,50,less_than_hs,14,26.92,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Black,52,50,hs_only,35,67.31,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Black,52,50,bachelors_up,3,5.77,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Amer_Indian,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Amer_Indian,0,13,hs_only,0,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Amer_Indian,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Asian,132,77,less_than_hs,0,0,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Asian,132,77,hs_only,10,7.58,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Asian,132,77,bachelors_up,122,92.42,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,NHPI,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,NHPI,0,13,hs_only,0,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,NHPI,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Other,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Other,0,13,hs_only,0,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Other,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Multi,135,72,less_than_hs,0,0,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Multi,135,72,hs_only,50,37.04,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Multi,135,72,bachelors_up,85,62.96,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Hispanic,77,48,less_than_hs,0,0,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Hispanic,77,48,hs_only,26,33.77,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Census Tract 7,Charlottesville city,Hispanic,77,48,bachelors_up,51,66.23,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000800,Census Tract 8,Charlottesville city,White,2243,237,less_than_hs,145,6.46,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,White,2243,237,hs_only,662,29.51,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,White,2243,237,bachelors_up,1436,64.02,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,White_non_hisp,2209,237,less_than_hs,145,6.56,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,White_non_hisp,2209,237,hs_only,645,29.2,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,White_non_hisp,2209,237,bachelors_up,1419,64.24,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Black,384,154,less_than_hs,101,26.3,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Black,384,154,hs_only,110,28.65,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Black,384,154,bachelors_up,173,45.05,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Amer_Indian,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Amer_Indian,0,13,hs_only,0,NA,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Amer_Indian,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Asian,60,38,less_than_hs,20,33.33,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Asian,60,38,hs_only,3,5,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Asian,60,38,bachelors_up,37,61.67,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,NHPI,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,NHPI,0,13,hs_only,0,NA,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,NHPI,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Other,51,76,less_than_hs,0,0,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Other,51,76,hs_only,51,100,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Other,51,76,bachelors_up,0,0,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Multi,74,59,less_than_hs,0,0,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Multi,74,59,hs_only,8,10.81,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Multi,74,59,bachelors_up,66,89.19,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Hispanic,85,80,less_than_hs,0,0,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Hispanic,85,80,hs_only,68,80,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Census Tract 8,Charlottesville city,Hispanic,85,80,bachelors_up,17,20,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000900,Census Tract 9,Charlottesville city,White,1283,210,less_than_hs,46,3.59,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,White,1283,210,hs_only,307,23.93,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,White,1283,210,bachelors_up,930,72.49,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,White_non_hisp,1253,206,less_than_hs,43,3.43,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,White_non_hisp,1253,206,hs_only,307,24.5,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,White_non_hisp,1253,206,bachelors_up,903,72.07,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Black,211,109,less_than_hs,0,0,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Black,211,109,hs_only,104,49.29,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Black,211,109,bachelors_up,107,50.71,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Amer_Indian,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Amer_Indian,0,13,hs_only,0,NA,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Amer_Indian,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Asian,191,137,less_than_hs,134,70.16,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Asian,191,137,hs_only,11,5.76,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Asian,191,137,bachelors_up,46,24.08,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,NHPI,0,13,less_than_hs,0,NA,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,NHPI,0,13,hs_only,0,NA,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,NHPI,0,13,bachelors_up,0,NA,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Other,24,36,less_than_hs,0,0,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Other,24,36,hs_only,0,0,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Other,24,36,bachelors_up,24,100,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Multi,85,54,less_than_hs,0,0,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Multi,85,54,hs_only,78,91.76,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Multi,85,54,bachelors_up,7,8.24,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Hispanic,85,56,less_than_hs,3,3.53,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Hispanic,85,56,hs_only,31,36.47,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Census Tract 9,Charlottesville city,Hispanic,85,56,bachelors_up,51,60,2023,Charlottesville,540,000900,Locust Grove
+51540001000,Census Tract 10,Charlottesville city,White,2578,488,less_than_hs,62,2.4,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,White,2578,488,hs_only,442,17.15,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,White,2578,488,bachelors_up,2074,80.45,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,White_non_hisp,2532,468,less_than_hs,62,2.45,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,White_non_hisp,2532,468,hs_only,442,17.46,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,White_non_hisp,2532,468,bachelors_up,2028,80.09,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Black,243,120,less_than_hs,22,9.05,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Black,243,120,hs_only,113,46.5,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Black,243,120,bachelors_up,108,44.44,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Amer_Indian,0,13,less_than_hs,0,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Amer_Indian,0,13,hs_only,0,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Amer_Indian,0,13,bachelors_up,0,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Asian,52,41,less_than_hs,0,0,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Asian,52,41,hs_only,0,0,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Asian,52,41,bachelors_up,52,100,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,NHPI,0,13,less_than_hs,0,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,NHPI,0,13,hs_only,0,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,NHPI,0,13,bachelors_up,0,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Other,0,13,less_than_hs,0,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Other,0,13,hs_only,0,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Other,0,13,bachelors_up,0,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Multi,51,45,less_than_hs,0,0,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Multi,51,45,hs_only,0,0,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Multi,51,45,bachelors_up,51,100,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Hispanic,46,63,less_than_hs,0,0,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Hispanic,46,63,hs_only,0,0,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Census Tract 10,Charlottesville city,Hispanic,46,63,bachelors_up,46,100,2023,Charlottesville,540,001000,Downtown Area

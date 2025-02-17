@@ -1,0 +1,59 @@
+GEOID,locality,tract,label,estimate,moe,total_households,percent,year,county,locality_num,tract_num,tractnames
+51003010100,Albemarle County,Census Tract 101,Owner occupied,1575,189,1843,85.46,2023,Albemarle,003,010100,Free Union
+51003010100,Albemarle County,Census Tract 101,Renter occupied,268,108,1843,14.54,2023,Albemarle,003,010100,Free Union
+51003010201,Albemarle County,Census Tract 102.01,Owner occupied,1895,179,2122,89.3,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Albemarle County,Census Tract 102.01,Renter occupied,227,101,2122,10.7,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010202,Albemarle County,Census Tract 102.02,Owner occupied,1092,148,1246,87.64,2023,Albemarle,003,010202,Earlysville
+51003010202,Albemarle County,Census Tract 102.02,Renter occupied,154,74,1246,12.36,2023,Albemarle,003,010202,Earlysville
+51003010301,Albemarle County,Census Tract 103.01,Owner occupied,652,130,774,84.24,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Albemarle County,Census Tract 103.01,Renter occupied,122,61,774,15.76,2023,Albemarle,003,010301,Berkmar Drive
+51003010302,Albemarle County,Census Tract 103.02,Owner occupied,338,88,466,72.53,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Albemarle County,Census Tract 103.02,Renter occupied,128,61,466,27.47,2023,Albemarle,003,010302,Polo Grounds Road
+51003010303,Albemarle County,Census Tract 103.03,Owner occupied,1848,197,2159,85.6,2023,Albemarle,003,010303,Hollymead
+51003010303,Albemarle County,Census Tract 103.03,Renter occupied,311,102,2159,14.4,2023,Albemarle,003,010303,Hollymead
+51003010401,Albemarle County,Census Tract 104.01,Owner occupied,1374,276,1997,68.8,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Albemarle County,Census Tract 104.01,Renter occupied,623,168,1997,31.2,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010402,Albemarle County,Census Tract 104.02,Owner occupied,1268,124,1441,87.99,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Albemarle County,Census Tract 104.02,Renter occupied,173,105,1441,12.01,2023,Albemarle,003,010402,Village of Rivanna
+51003010501,Albemarle County,Census Tract 105.01,Owner occupied,1038,196,1182,87.82,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Albemarle County,Census Tract 105.01,Renter occupied,144,83,1182,12.18,2023,Albemarle,003,010501,Darden-Key West
+51003010502,Albemarle County,Census Tract 105.02,Owner occupied,482,129,1579,30.53,2023,Albemarle,003,010502,Pantops
+51003010502,Albemarle County,Census Tract 105.02,Renter occupied,1097,206,1579,69.47,2023,Albemarle,003,010502,Pantops
+51003010602,Albemarle County,Census Tract 106.02,Owner occupied,1629,183,2327,70,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Albemarle County,Census Tract 106.02,Renter occupied,698,191,2327,30,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010603,Albemarle County,Census Tract 106.03,Owner occupied,536,193,1377,38.93,2023,Albemarle,003,010603,Branchland
+51003010603,Albemarle County,Census Tract 106.03,Renter occupied,841,264,1377,61.07,2023,Albemarle,003,010603,Branchland
+51003010604,Albemarle County,Census Tract 106.04,Owner occupied,1060,174,1673,63.36,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Albemarle County,Census Tract 106.04,Renter occupied,613,152,1673,36.64,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010701,Albemarle County,Census Tract 107.01,Owner occupied,306,124,1509,20.28,2023,Albemarle,003,010701,Hydraulic
+51003010701,Albemarle County,Census Tract 107.01,Renter occupied,1203,310,1509,79.72,2023,Albemarle,003,010701,Hydraulic
+51003010702,Albemarle County,Census Tract 107.02,Owner occupied,841,154,1467,57.33,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Albemarle County,Census Tract 107.02,Renter occupied,626,179,1467,42.67,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010801,Albemarle County,Census Tract 108.01,Owner occupied,530,194,1836,28.87,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Albemarle County,Census Tract 108.01,Renter occupied,1306,165,1836,71.13,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010802,Albemarle County,Census Tract 108.02,Owner occupied,387,118,1030,37.57,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Albemarle County,Census Tract 108.02,Renter occupied,643,170,1030,62.43,2023,Albemarle,003,010802,Albemarle High School
+51003010901,Albemarle County,Census Tract 109.01,Owner occupied,148,72,701,21.11,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Albemarle County,Census Tract 109.01,Renter occupied,553,87,701,78.89,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Owner occupied,52,45,570,9.12,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Albemarle County,Census Tract 109.04,Renter occupied,518,142,570,90.88,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003011000,Albemarle County,Census Tract 110,Owner occupied,2319,343,2595,89.36,2023,Albemarle,003,011000,Ivy
+51003011000,Albemarle County,Census Tract 110,Renter occupied,276,142,2595,10.64,2023,Albemarle,003,011000,Ivy
+51003011101,Albemarle County,Census Tract 111.01,Owner occupied,616,209,1090,56.51,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Albemarle County,Census Tract 111.01,Renter occupied,474,186,1090,43.49,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011102,Albemarle County,Census Tract 111.02,Owner occupied,1031,97,1219,84.58,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Albemarle County,Census Tract 111.02,Renter occupied,188,178,1219,15.42,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011103,Albemarle County,Census Tract 111.03,Owner occupied,1242,169,1646,75.46,2023,Albemarle,003,011103,Old Trail
+51003011103,Albemarle County,Census Tract 111.03,Renter occupied,404,120,1646,24.54,2023,Albemarle,003,011103,Old Trail
+51003011201,Albemarle County,Census Tract 112.01,Owner occupied,1376,198,1847,74.5,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Albemarle County,Census Tract 112.01,Renter occupied,471,149,1847,25.5,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011202,Albemarle County,Census Tract 112.02,Owner occupied,1331,155,1481,89.87,2023,Albemarle,003,011202,North Garden
+51003011202,Albemarle County,Census Tract 112.02,Renter occupied,150,57,1481,10.13,2023,Albemarle,003,011202,North Garden
+51003011301,Albemarle County,Census Tract 113.01,Owner occupied,1717,202,2068,83.03,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Albemarle County,Census Tract 113.01,Renter occupied,351,122,2068,16.97,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011302,Albemarle County,Census Tract 113.02,Owner occupied,558,176,2180,25.6,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Albemarle County,Census Tract 113.02,Renter occupied,1622,256,2180,74.4,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011303,Albemarle County,Census Tract 113.03,Owner occupied,1006,167,1787,56.3,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Albemarle County,Census Tract 113.03,Renter occupied,781,149,1787,43.7,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011400,Albemarle County,Census Tract 114,Owner occupied,1473,203,1852,79.54,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Albemarle County,Census Tract 114,Renter occupied,379,105,1852,20.46,2023,Albemarle,003,011400,Southern Albemarle-Scottsville

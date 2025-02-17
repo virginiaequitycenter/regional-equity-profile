@@ -1,0 +1,97 @@
+GEOID,locality,estimate,moe,total_pop,percent,year,label
+51540,"Charlottesville city, Virginia",29533,228,45863,64.39,2023,Not Hispanic or Latino: White alone
+51540,"Charlottesville city, Virginia",7716,308,45863,16.82,2023,Not Hispanic or Latino: Black or African American alone
+51540,"Charlottesville city, Virginia",34,27,45863,0.07,2023,Not Hispanic or Latino: American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3209,211,45863,7,2023,Not Hispanic or Latino: Asian alone
+51540,"Charlottesville city, Virginia",0,28,45863,0,2023,Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",275,167,45863,0.6,2023,Not Hispanic or Latino: Some other race alone
+51540,"Charlottesville city, Virginia",1993,445,45863,4.35,2023,Not Hispanic or Latino: Two or more races
+51540,"Charlottesville city, Virginia",3103,NA,45863,6.77,2023,Hispanic or Latino
+51540,"Charlottesville city, Virginia",30208,226,46289,65.26,2022,Not Hispanic or Latino: White alone
+51540,"Charlottesville city, Virginia",7862,331,46289,16.98,2022,Not Hispanic or Latino: Black or African American alone
+51540,"Charlottesville city, Virginia",70,42,46289,0.15,2022,Not Hispanic or Latino: American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3237,201,46289,6.99,2022,Not Hispanic or Latino: Asian alone
+51540,"Charlottesville city, Virginia",0,28,46289,0,2022,Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",293,206,46289,0.63,2022,Not Hispanic or Latino: Some other race alone
+51540,"Charlottesville city, Virginia",1914,410,46289,4.13,2022,Not Hispanic or Latino: Two or more races
+51540,"Charlottesville city, Virginia",2705,NA,46289,5.84,2022,Hispanic or Latino
+51540,"Charlottesville city, Virginia",30485,194,46597,65.42,2021,Not Hispanic or Latino: White alone
+51540,"Charlottesville city, Virginia",8348,300,46597,17.92,2021,Not Hispanic or Latino: Black or African American alone
+51540,"Charlottesville city, Virginia",76,47,46597,0.16,2021,Not Hispanic or Latino: American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3257,229,46597,6.99,2021,Not Hispanic or Latino: Asian alone
+51540,"Charlottesville city, Virginia",5,9,46597,0.01,2021,Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",251,167,46597,0.54,2021,Not Hispanic or Latino: Some other race alone
+51540,"Charlottesville city, Virginia",1525,438,46597,3.27,2021,Not Hispanic or Latino: Two or more races
+51540,"Charlottesville city, Virginia",2650,NA,46597,5.69,2021,Hispanic or Latino
+51540,"Charlottesville city, Virginia",30973,134,47217,65.6,2020,Not Hispanic or Latino: White alone
+51540,"Charlottesville city, Virginia",8716,224,47217,18.46,2020,Not Hispanic or Latino: Black or African American alone
+51540,"Charlottesville city, Virginia",122,47,47217,0.26,2020,Not Hispanic or Latino: American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3313,214,47217,7.02,2020,Not Hispanic or Latino: Asian alone
+51540,"Charlottesville city, Virginia",5,8,47217,0.01,2020,Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",157,138,47217,0.33,2020,Not Hispanic or Latino: Some other race alone
+51540,"Charlottesville city, Virginia",1308,308,47217,2.77,2020,Not Hispanic or Latino: Two or more races
+51540,"Charlottesville city, Virginia",2623,NA,47217,5.56,2020,Hispanic or Latino
+51540,"Charlottesville city, Virginia",30961,55,47096,65.74,2019,Not Hispanic or Latino: White alone
+51540,"Charlottesville city, Virginia",8793,250,47096,18.67,2019,Not Hispanic or Latino: Black or African American alone
+51540,"Charlottesville city, Virginia",102,55,47096,0.22,2019,Not Hispanic or Latino: American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3327,184,47096,7.06,2019,Not Hispanic or Latino: Asian alone
+51540,"Charlottesville city, Virginia",31,42,47096,0.07,2019,Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",58,52,47096,0.12,2019,Not Hispanic or Latino: Some other race alone
+51540,"Charlottesville city, Virginia",1235,352,47096,2.62,2019,Not Hispanic or Latino: Two or more races
+51540,"Charlottesville city, Virginia",2589,NA,47096,5.5,2019,Hispanic or Latino
+51540,"Charlottesville city, Virginia",30923,30,47042,65.73,2018,Not Hispanic or Latino: White alone
+51540,"Charlottesville city, Virginia",8773,202,47042,18.65,2018,Not Hispanic or Latino: Black or African American alone
+51540,"Charlottesville city, Virginia",129,64,47042,0.27,2018,Not Hispanic or Latino: American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3356,238,47042,7.13,2018,Not Hispanic or Latino: Asian alone
+51540,"Charlottesville city, Virginia",23,28,47042,0.05,2018,Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",44,44,47042,0.09,2018,Not Hispanic or Latino: Some other race alone
+51540,"Charlottesville city, Virginia",1263,324,47042,2.68,2018,Not Hispanic or Latino: Two or more races
+51540,"Charlottesville city, Virginia",2531,NA,47042,5.38,2018,Hispanic or Latino
+51540,"Charlottesville city, Virginia",30526,24,46487,65.67,2017,Not Hispanic or Latino: White alone
+51540,"Charlottesville city, Virginia",8704,251,46487,18.72,2017,Not Hispanic or Latino: Black or African American alone
+51540,"Charlottesville city, Virginia",126,48,46487,0.27,2017,Not Hispanic or Latino: American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3348,199,46487,7.2,2017,Not Hispanic or Latino: Asian alone
+51540,"Charlottesville city, Virginia",17,20,46487,0.04,2017,Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",38,38,46487,0.08,2017,Not Hispanic or Latino: Some other race alone
+51540,"Charlottesville city, Virginia",1297,326,46487,2.79,2017,Not Hispanic or Latino: Two or more races
+51540,"Charlottesville city, Virginia",2431,NA,46487,5.23,2017,Hispanic or Latino
+51540,"Charlottesville city, Virginia",30038,28,45538,65.96,2016,Not Hispanic or Latino: White alone
+51540,"Charlottesville city, Virginia",8488,225,45538,18.64,2016,Not Hispanic or Latino: Black or African American alone
+51540,"Charlottesville city, Virginia",141,43,45538,0.31,2016,Not Hispanic or Latino: American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3145,180,45538,6.91,2016,Not Hispanic or Latino: Asian alone
+51540,"Charlottesville city, Virginia",66,82,45538,0.14,2016,Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",20,21,45538,0.04,2016,Not Hispanic or Latino: Some other race alone
+51540,"Charlottesville city, Virginia",1345,278,45538,2.95,2016,Not Hispanic or Latino: Two or more races
+51540,"Charlottesville city, Virginia",2295,NA,45538,5.04,2016,Hispanic or Latino
+51540,"Charlottesville city, Virginia",29944,12,45084,66.42,2015,Not Hispanic or Latino: White alone
+51540,"Charlottesville city, Virginia",8664,236,45084,19.22,2015,Not Hispanic or Latino: Black or African American alone
+51540,"Charlottesville city, Virginia",74,71,45084,0.16,2015,Not Hispanic or Latino: American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",2983,173,45084,6.62,2015,Not Hispanic or Latino: Asian alone
+51540,"Charlottesville city, Virginia",71,87,45084,0.16,2015,Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",20,23,45084,0.04,2015,Not Hispanic or Latino: Some other race alone
+51540,"Charlottesville city, Virginia",1091,236,45084,2.42,2015,Not Hispanic or Latino: Two or more races
+51540,"Charlottesville city, Virginia",2237,NA,45084,4.96,2015,Hispanic or Latino
+51540,"Charlottesville city, Virginia",29550,25,44505,66.4,2014,Not Hispanic or Latino: White alone
+51540,"Charlottesville city, Virginia",8680,185,44505,19.5,2014,Not Hispanic or Latino: Black or African American alone
+51540,"Charlottesville city, Virginia",80,75,44505,0.18,2014,Not Hispanic or Latino: American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",3011,150,44505,6.77,2014,Not Hispanic or Latino: Asian alone
+51540,"Charlottesville city, Virginia",59,68,44505,0.13,2014,Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",14,16,44505,0.03,2014,Not Hispanic or Latino: Some other race alone
+51540,"Charlottesville city, Virginia",918,226,44505,2.06,2014,Not Hispanic or Latino: Two or more races
+51540,"Charlottesville city, Virginia",2193,NA,44505,4.93,2014,Hispanic or Latino
+51540,"Charlottesville city, Virginia",29043,23,43663,66.52,2013,Not Hispanic or Latino: White alone
+51540,"Charlottesville city, Virginia",8502,173,43663,19.47,2013,Not Hispanic or Latino: Black or African American alone
+51540,"Charlottesville city, Virginia",103,50,43663,0.24,2013,Not Hispanic or Latino: American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",2933,140,43663,6.72,2013,Not Hispanic or Latino: Asian alone
+51540,"Charlottesville city, Virginia",37,44,43663,0.08,2013,Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",21,25,43663,0.05,2013,Not Hispanic or Latino: Some other race alone
+51540,"Charlottesville city, Virginia",847,234,43663,1.94,2013,Not Hispanic or Latino: Two or more races
+51540,"Charlottesville city, Virginia",2177,NA,43663,4.99,2013,Hispanic or Latino
+51540,"Charlottesville city, Virginia",28701,32,43223,66.4,2012,Not Hispanic or Latino: White alone
+51540,"Charlottesville city, Virginia",8511,281,43223,19.69,2012,Not Hispanic or Latino: Black or African American alone
+51540,"Charlottesville city, Virginia",92,53,43223,0.21,2012,Not Hispanic or Latino: American Indian and Alaska Native alone
+51540,"Charlottesville city, Virginia",2810,110,43223,6.5,2012,Not Hispanic or Latino: Asian alone
+51540,"Charlottesville city, Virginia",27,34,43223,0.06,2012,Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone
+51540,"Charlottesville city, Virginia",15,22,43223,0.03,2012,Not Hispanic or Latino: Some other race alone
+51540,"Charlottesville city, Virginia",933,295,43223,2.16,2012,Not Hispanic or Latino: Two or more races
+51540,"Charlottesville city, Virginia",2134,NA,43223,4.94,2012,Hispanic or Latino

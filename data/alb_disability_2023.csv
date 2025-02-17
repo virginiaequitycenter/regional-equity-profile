@@ -1,0 +1,17 @@
+GEOID,locality,estimate,moe,total_pop,percent,sex,age_group,disability_status,year
+51003,"Albemarle County, Virginia",10665,252.42028444639706,112163,9.51,Female,17 and under,No disability,2023
+51003,"Albemarle County, Virginia",261,126.64912159190051,112163,0.23,Female,17 and under,With a disability,2023
+51003,"Albemarle County, Virginia",13301,221,112163,11.86,Female,18 to 34 years,No disability,2023
+51003,"Albemarle County, Virginia",883,220,112163,0.79,Female,18 to 34 years,With a disability,2023
+51003,"Albemarle County, Virginia",19379,335,112163,17.28,Female,35 to 64 years,No disability,2023
+51003,"Albemarle County, Virginia",1677,330,112163,1.5,Female,35 to 64 years,With a disability,2023
+51003,"Albemarle County, Virginia",9141,335.67841753678476,112163,8.15,Female,65 and over,No disability,2023
+51003,"Albemarle County, Virginia",3216,329.1640928169414,112163,2.87,Female,65 and over,With a disability,2023
+51003,"Albemarle County, Virginia",11036,279.4512479843309,112163,9.84,Male,17 and under,No disability,2023
+51003,"Albemarle County, Virginia",440,212.042448580467,112163,0.39,Male,17 and under,With a disability,2023
+51003,"Albemarle County, Virginia",12305,235,112163,10.97,Male,18 to 34 years,No disability,2023
+51003,"Albemarle County, Virginia",635,171,112163,0.57,Male,18 to 34 years,With a disability,2023
+51003,"Albemarle County, Virginia",17794,361,112163,15.86,Male,35 to 64 years,No disability,2023
+51003,"Albemarle County, Virginia",1677,321,112163,1.5,Male,35 to 64 years,With a disability,2023
+51003,"Albemarle County, Virginia",7528,300.3747659175118,112163,6.71,Male,65 and over,No disability,2023
+51003,"Albemarle County, Virginia",2225,263.4274093559742,112163,1.98,Male,65 and over,With a disability,2023

@@ -1,0 +1,121 @@
+GEOID,locality,tract,label,group,estimate,moe,year,county,locality_num,tract_num,tractnames
+51540000201,Charlottesville city,Census Tract 2.01,Median Household Income,All Households,61923,19211,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,Median Household Income,White,68846,19011,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,Median Household Income,Black,NA,NA,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,Median Household Income,American Indian and Alaska Native,NA,NA,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,Median Household Income,Asian,101458,12695,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,Median Household Income,NHPI,NA,NA,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,Median Household Income,Other,NA,NA,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,Median Household Income,Multiracial,109250,52578,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,Median Household Income,"White, Not Hispanic or Latino",76369,11048,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,Median Household Income,Hispanic or Latino,36860,24443,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Median Household Income,All Households,19881,11014,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Median Household Income,White,18723,5377,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Median Household Income,Black,NA,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Median Household Income,American Indian and Alaska Native,NA,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Median Household Income,Asian,NA,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Median Household Income,NHPI,NA,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Median Household Income,Other,NA,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Median Household Income,Multiracial,NA,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Median Household Income,"White, Not Hispanic or Latino",18551,5164,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Median Household Income,Hispanic or Latino,NA,NA,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000302,Charlottesville city,Census Tract 3.02,Median Household Income,All Households,81250,11831,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,Median Household Income,White,80563,13368,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,Median Household Income,Black,34598,13513,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,Median Household Income,American Indian and Alaska Native,NA,NA,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,Median Household Income,Asian,81734,58431,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,Median Household Income,NHPI,NA,NA,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,Median Household Income,Other,NA,NA,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,Median Household Income,Multiracial,NA,NA,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,Median Household Income,"White, Not Hispanic or Latino",85240,12805,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,Median Household Income,Hispanic or Latino,NA,NA,2023,Charlottesville,540,000302,Woolen Mills
+51540000401,Charlottesville city,Census Tract 4.01,Median Household Income,All Households,63125,27983,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,Median Household Income,White,111477,34538,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,Median Household Income,Black,14894,6288,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,Median Household Income,American Indian and Alaska Native,NA,NA,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,Median Household Income,Asian,NA,NA,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,Median Household Income,NHPI,NA,NA,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,Median Household Income,Other,NA,NA,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,Median Household Income,Multiracial,101500,51143,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,Median Household Income,"White, Not Hispanic or Latino",123200,33293,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,Median Household Income,Hispanic or Latino,NA,NA,2023,Charlottesville,540,000401,Ridge St.
+51540000402,Charlottesville city,Census Tract 4.02,Median Household Income,All Households,101667,26043,2023,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,Median Household Income,White,108485,14786,2023,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,Median Household Income,Black,50795,20608,2023,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,Median Household Income,American Indian and Alaska Native,NA,NA,2023,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,Median Household Income,Asian,NA,NA,2023,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,Median Household Income,NHPI,NA,NA,2023,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,Median Household Income,Other,NA,NA,2023,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,Median Household Income,Multiracial,NA,NA,2023,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,Median Household Income,"White, Not Hispanic or Latino",104013,19799,2023,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,Median Household Income,Hispanic or Latino,NA,NA,2023,Charlottesville,540,000402,Belmont
+51540000501,Charlottesville city,Census Tract 5.01,Median Household Income,All Households,59808,13904,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,Median Household Income,White,76899,11581,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,Median Household Income,Black,50106,26646,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,Median Household Income,American Indian and Alaska Native,NA,NA,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,Median Household Income,Asian,NA,NA,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,Median Household Income,NHPI,NA,NA,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,Median Household Income,Other,NA,NA,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,Median Household Income,Multiracial,NA,NA,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,Median Household Income,"White, Not Hispanic or Latino",77091,12111,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,Median Household Income,Hispanic or Latino,NA,NA,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000502,Charlottesville city,Census Tract 5.02,Median Household Income,All Households,87859,30791,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,Median Household Income,White,88219,22339,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,Median Household Income,Black,NA,NA,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,Median Household Income,American Indian and Alaska Native,NA,NA,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,Median Household Income,Asian,NA,NA,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,Median Household Income,NHPI,NA,NA,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,Median Household Income,Other,124766,76565,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,Median Household Income,Multiracial,NA,NA,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,Median Household Income,"White, Not Hispanic or Latino",87984,24083,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,Median Household Income,Hispanic or Latino,116056,10241,2023,Charlottesville,540,000502,Fry's Springs
+51540000600,Charlottesville city,Census Tract 6,Median Household Income,All Households,30893,10823,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,Median Household Income,White,35139,8536,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,Median Household Income,Black,NA,NA,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,Median Household Income,American Indian and Alaska Native,NA,NA,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,Median Household Income,Asian,21734,8200,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,Median Household Income,NHPI,NA,NA,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,Median Household Income,Other,NA,NA,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,Median Household Income,Multiracial,NA,NA,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,Median Household Income,"White, Not Hispanic or Latino",36389,3966,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,Median Household Income,Hispanic or Latino,2499,NA,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000700,Charlottesville city,Census Tract 7,Median Household Income,All Households,83125,18590,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,Median Household Income,White,114196,40905,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,Median Household Income,Black,64036,15558,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,Median Household Income,American Indian and Alaska Native,NA,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,Median Household Income,Asian,NA,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,Median Household Income,NHPI,NA,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,Median Household Income,Other,NA,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,Median Household Income,Multiracial,26058,20584,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,Median Household Income,"White, Not Hispanic or Latino",117841,54217,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,Median Household Income,Hispanic or Latino,NA,NA,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000800,Charlottesville city,Census Tract 8,Median Household Income,All Households,113659,16316,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,Median Household Income,White,124280,13302,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,Median Household Income,Black,NA,NA,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,Median Household Income,American Indian and Alaska Native,NA,NA,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,Median Household Income,Asian,155729,126864,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,Median Household Income,NHPI,NA,NA,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,Median Household Income,Other,NA,NA,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,Median Household Income,Multiracial,NA,NA,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,Median Household Income,"White, Not Hispanic or Latino",125172,9094,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,Median Household Income,Hispanic or Latino,NA,NA,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000900,Charlottesville city,Census Tract 9,Median Household Income,All Households,89063,14473,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,Median Household Income,White,98393,23556,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,Median Household Income,Black,NA,NA,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,Median Household Income,American Indian and Alaska Native,NA,NA,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,Median Household Income,Asian,NA,NA,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,Median Household Income,NHPI,NA,NA,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,Median Household Income,Other,NA,NA,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,Median Household Income,Multiracial,NA,NA,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,Median Household Income,"White, Not Hispanic or Latino",98393,23556,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,Median Household Income,Hispanic or Latino,NA,NA,2023,Charlottesville,540,000900,Locust Grove
+51540001000,Charlottesville city,Census Tract 10,Median Household Income,All Households,99688,21662,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,Median Household Income,White,106300,26637,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,Median Household Income,Black,50784,10268,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,Median Household Income,American Indian and Alaska Native,NA,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,Median Household Income,Asian,NA,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,Median Household Income,NHPI,NA,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,Median Household Income,Other,NA,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,Median Household Income,Multiracial,2499,NA,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,Median Household Income,"White, Not Hispanic or Latino",106838,31188,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,Median Household Income,Hispanic or Latino,36047,22493,2023,Charlottesville,540,001000,Downtown Area

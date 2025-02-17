@@ -1,0 +1,5 @@
+GEOID,locality,disability_status,year,total_disability,total_dis_moe,total_pop,total_dis_per
+51003,"Albemarle County, Virginia",No disability,2023,101149,831.4601614028179,112163,90.18
+51003,"Albemarle County, Virginia",With a disability,2023,11014,726.8610596255655,112163,9.82
+51540,"Charlottesville city, Virginia",No disability,2023,41371,623.1805516862669,45545,90.84
+51540,"Charlottesville city, Virginia",With a disability,2023,4174,438.9863323612707,45545,9.16

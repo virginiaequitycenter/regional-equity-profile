@@ -1,0 +1,784 @@
+GEOID,tract,locality,race,group_total,group_total_moe,edu_level,estimate,percent,year,county,locality_num,tract_num,tractnames
+51003010100,Census Tract 101,Albemarle County,White,3233,389,less_than_hs,224,6.93,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,White,3233,389,hs_only,932,28.83,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,White,3233,389,bachelors_up,2077,64.24,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,White_non_hisp,3224,386,less_than_hs,224,6.95,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,White_non_hisp,3224,386,hs_only,923,28.63,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,White_non_hisp,3224,386,bachelors_up,2077,64.42,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Black,177,134,less_than_hs,5,2.82,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Black,177,134,hs_only,61,34.46,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Black,177,134,bachelors_up,111,62.71,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Asian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Asian,0,13,hs_only,0,NA,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Asian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Other,22,28,less_than_hs,8,36.36,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Other,22,28,hs_only,0,0,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Other,22,28,bachelors_up,14,63.64,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Multi,139,121,less_than_hs,0,0,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Multi,139,121,hs_only,48,34.53,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Multi,139,121,bachelors_up,91,65.47,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Hispanic,51,81,less_than_hs,8,15.69,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Hispanic,51,81,hs_only,9,17.65,2023,Albemarle,003,010100,Free Union
+51003010100,Census Tract 101,Albemarle County,Hispanic,51,81,bachelors_up,34,66.67,2023,Albemarle,003,010100,Free Union
+51003010201,Census Tract 102.01,Albemarle County,White,3015,467,less_than_hs,76,2.52,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,White,3015,467,hs_only,1141,37.84,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,White,3015,467,bachelors_up,1798,59.64,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,White_non_hisp,2997,477,less_than_hs,76,2.54,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,White_non_hisp,2997,477,hs_only,1141,38.07,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,White_non_hisp,2997,477,bachelors_up,1780,59.39,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Black,370,149,less_than_hs,0,0,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Black,370,149,hs_only,270,72.97,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Black,370,149,bachelors_up,100,27.03,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Amer_Indian,1,3,less_than_hs,0,0,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Amer_Indian,1,3,hs_only,1,100,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Amer_Indian,1,3,bachelors_up,0,0,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Asian,266,136,less_than_hs,70,26.32,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Asian,266,136,hs_only,35,13.16,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Asian,266,136,bachelors_up,161,60.53,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,NHPI,0,19,less_than_hs,0,NA,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,NHPI,0,19,hs_only,0,NA,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,NHPI,0,19,bachelors_up,0,NA,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Other,227,148,less_than_hs,0,0,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Other,227,148,hs_only,159,70.04,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Other,227,148,bachelors_up,68,29.96,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Multi,372,189,less_than_hs,3,0.81,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Multi,372,189,hs_only,74,19.89,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Multi,372,189,bachelors_up,295,79.3,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Hispanic,325,168,less_than_hs,0,0,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Hispanic,325,168,hs_only,159,48.92,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010201,Census Tract 102.01,Albemarle County,Hispanic,325,168,bachelors_up,166,51.08,2023,Albemarle,003,010201,Charlottesville-Albemarle Airport
+51003010202,Census Tract 102.02,Albemarle County,White,2074,245,less_than_hs,28,1.35,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,White,2074,245,hs_only,539,25.99,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,White,2074,245,bachelors_up,1507,72.66,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,White_non_hisp,2074,245,less_than_hs,28,1.35,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,White_non_hisp,2074,245,hs_only,539,25.99,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,White_non_hisp,2074,245,bachelors_up,1507,72.66,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Black,40,48,less_than_hs,0,0,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Black,40,48,hs_only,30,75,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Black,40,48,bachelors_up,10,25,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Asian,78,65,less_than_hs,0,0,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Asian,78,65,hs_only,0,0,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Asian,78,65,bachelors_up,78,100,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Other,15,24,less_than_hs,0,0,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Other,15,24,hs_only,0,0,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Other,15,24,bachelors_up,15,100,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Multi,123,109,less_than_hs,0,0,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Multi,123,109,hs_only,61,49.59,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Multi,123,109,bachelors_up,62,50.41,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Hispanic,84,101,less_than_hs,0,0,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Hispanic,84,101,hs_only,33,39.29,2023,Albemarle,003,010202,Earlysville
+51003010202,Census Tract 102.02,Albemarle County,Hispanic,84,101,bachelors_up,51,60.71,2023,Albemarle,003,010202,Earlysville
+51003010301,Census Tract 103.01,Albemarle County,White,1060,274,less_than_hs,29,2.74,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,White,1060,274,hs_only,483,45.57,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,White,1060,274,bachelors_up,548,51.7,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,White_non_hisp,1060,274,less_than_hs,29,2.74,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,White_non_hisp,1060,274,hs_only,483,45.57,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,White_non_hisp,1060,274,bachelors_up,548,51.7,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Black,189,112,less_than_hs,0,0,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Black,189,112,hs_only,45,23.81,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Black,189,112,bachelors_up,144,76.19,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Asian,88,90,less_than_hs,0,0,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Asian,88,90,hs_only,10,11.36,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Asian,88,90,bachelors_up,78,88.64,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Other,27,35,less_than_hs,8,29.63,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Other,27,35,hs_only,0,0,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Other,27,35,bachelors_up,19,70.37,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Multi,87,70,less_than_hs,0,0,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Multi,87,70,hs_only,31,35.63,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Multi,87,70,bachelors_up,56,64.37,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Hispanic,50,40,less_than_hs,8,16,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Hispanic,50,40,hs_only,23,46,2023,Albemarle,003,010301,Berkmar Drive
+51003010301,Census Tract 103.01,Albemarle County,Hispanic,50,40,bachelors_up,19,38,2023,Albemarle,003,010301,Berkmar Drive
+51003010302,Census Tract 103.02,Albemarle County,White,702,113,less_than_hs,34,4.84,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,White,702,113,hs_only,137,19.52,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,White,702,113,bachelors_up,531,75.64,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,White_non_hisp,678,100,less_than_hs,34,5.01,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,White_non_hisp,678,100,hs_only,113,16.67,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,White_non_hisp,678,100,bachelors_up,531,78.32,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Black,101,98,less_than_hs,0,0,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Black,101,98,hs_only,99,98.02,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Black,101,98,bachelors_up,2,1.98,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Asian,81,83,less_than_hs,0,0,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Asian,81,83,hs_only,0,0,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Asian,81,83,bachelors_up,81,100,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Other,0,13,less_than_hs,0,NA,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Other,0,13,hs_only,0,NA,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Other,0,13,bachelors_up,0,NA,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Multi,38,48,less_than_hs,0,0,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Multi,38,48,hs_only,0,0,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Multi,38,48,bachelors_up,38,100,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Hispanic,27,40,less_than_hs,0,0,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Hispanic,27,40,hs_only,24,88.89,2023,Albemarle,003,010302,Polo Grounds Road
+51003010302,Census Tract 103.02,Albemarle County,Hispanic,27,40,bachelors_up,3,11.11,2023,Albemarle,003,010302,Polo Grounds Road
+51003010303,Census Tract 103.03,Albemarle County,White,3406,422,less_than_hs,48,1.41,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,White,3406,422,hs_only,1610,47.27,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,White,3406,422,bachelors_up,1748,51.32,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,White_non_hisp,3319,399,less_than_hs,48,1.45,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,White_non_hisp,3319,399,hs_only,1590,47.91,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,White_non_hisp,3319,399,bachelors_up,1681,50.65,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Black,145,99,less_than_hs,33,22.76,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Black,145,99,hs_only,49,33.79,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Black,145,99,bachelors_up,63,43.45,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Amer_Indian,0,19,less_than_hs,0,NA,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Amer_Indian,0,19,hs_only,0,NA,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Amer_Indian,0,19,bachelors_up,0,NA,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Asian,208,123,less_than_hs,0,0,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Asian,208,123,hs_only,102,49.04,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Asian,208,123,bachelors_up,106,50.96,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,NHPI,0,19,less_than_hs,0,NA,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,NHPI,0,19,hs_only,0,NA,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,NHPI,0,19,bachelors_up,0,NA,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Other,0,19,less_than_hs,0,NA,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Other,0,19,hs_only,0,NA,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Other,0,19,bachelors_up,0,NA,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Multi,214,113,less_than_hs,25,11.68,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Multi,214,113,hs_only,66,30.84,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Multi,214,113,bachelors_up,123,57.48,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Hispanic,148,116,less_than_hs,0,0,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Hispanic,148,116,hs_only,54,36.49,2023,Albemarle,003,010303,Hollymead
+51003010303,Census Tract 103.03,Albemarle County,Hispanic,148,116,bachelors_up,94,63.51,2023,Albemarle,003,010303,Hollymead
+51003010401,Census Tract 104.01,Albemarle County,White,3004,515,less_than_hs,300,9.99,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,White,3004,515,hs_only,950,31.62,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,White,3004,515,bachelors_up,1754,58.39,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,White_non_hisp,2927,512,less_than_hs,300,10.25,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,White_non_hisp,2927,512,hs_only,950,32.46,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,White_non_hisp,2927,512,bachelors_up,1677,57.29,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Black,468,212,less_than_hs,54,11.54,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Black,468,212,hs_only,289,61.75,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Black,468,212,bachelors_up,125,26.71,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Asian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Asian,0,13,hs_only,0,NA,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Asian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Other,128,179,less_than_hs,0,0,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Other,128,179,hs_only,122,95.31,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Other,128,179,bachelors_up,6,4.69,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Multi,57,50,less_than_hs,0,0,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Multi,57,50,hs_only,30,52.63,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Multi,57,50,bachelors_up,27,47.37,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Hispanic,201,208,less_than_hs,0,0,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Hispanic,201,208,hs_only,114,56.72,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010401,Census Tract 104.01,Albemarle County,Hispanic,201,208,bachelors_up,87,43.28,2023,Albemarle,003,010401,Stony Point-Keswick
+51003010402,Census Tract 104.02,Albemarle County,White,2389,220,less_than_hs,67,2.8,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,White,2389,220,hs_only,639,26.75,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,White,2389,220,bachelors_up,1683,70.45,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,White_non_hisp,2389,220,less_than_hs,67,2.8,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,White_non_hisp,2389,220,hs_only,639,26.75,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,White_non_hisp,2389,220,bachelors_up,1683,70.45,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Black,144,93,less_than_hs,20,13.89,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Black,144,93,hs_only,23,15.97,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Black,144,93,bachelors_up,101,70.14,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Amer_Indian,3,6,less_than_hs,0,0,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Amer_Indian,3,6,hs_only,3,100,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Amer_Indian,3,6,bachelors_up,0,0,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Asian,36,41,less_than_hs,0,0,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Asian,36,41,hs_only,12,33.33,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Asian,36,41,bachelors_up,24,66.67,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Other,3,6,less_than_hs,0,0,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Other,3,6,hs_only,3,100,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Other,3,6,bachelors_up,0,0,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Multi,40,35,less_than_hs,0,0,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Multi,40,35,hs_only,7,17.5,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Multi,40,35,bachelors_up,33,82.5,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Hispanic,20,29,less_than_hs,0,0,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Hispanic,20,29,hs_only,3,15,2023,Albemarle,003,010402,Village of Rivanna
+51003010402,Census Tract 104.02,Albemarle County,Hispanic,20,29,bachelors_up,17,85,2023,Albemarle,003,010402,Village of Rivanna
+51003010501,Census Tract 105.01,Albemarle County,White,1893,329,less_than_hs,50,2.64,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,White,1893,329,hs_only,554,29.27,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,White,1893,329,bachelors_up,1289,68.09,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,White_non_hisp,1893,329,less_than_hs,50,2.64,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,White_non_hisp,1893,329,hs_only,554,29.27,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,White_non_hisp,1893,329,bachelors_up,1289,68.09,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Black,100,112,less_than_hs,0,0,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Black,100,112,hs_only,48,48,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Black,100,112,bachelors_up,52,52,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Asian,218,231,less_than_hs,28,12.84,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Asian,218,231,hs_only,0,0,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Asian,218,231,bachelors_up,190,87.16,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Other,2,3,less_than_hs,2,100,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Other,2,3,hs_only,0,0,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Other,2,3,bachelors_up,0,0,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Multi,62,56,less_than_hs,0,0,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Multi,62,56,hs_only,21,33.87,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Multi,62,56,bachelors_up,41,66.13,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Hispanic,5,10,less_than_hs,2,40,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Hispanic,5,10,hs_only,0,0,2023,Albemarle,003,010501,Darden-Key West
+51003010501,Census Tract 105.01,Albemarle County,Hispanic,5,10,bachelors_up,3,60,2023,Albemarle,003,010501,Darden-Key West
+51003010502,Census Tract 105.02,Albemarle County,White,1854,251,less_than_hs,55,2.97,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,White,1854,251,hs_only,313,16.88,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,White,1854,251,bachelors_up,1486,80.15,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,White_non_hisp,1783,265,less_than_hs,55,3.08,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,White_non_hisp,1783,265,hs_only,270,15.14,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,White_non_hisp,1783,265,bachelors_up,1458,81.77,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Black,226,133,less_than_hs,12,5.31,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Black,226,133,hs_only,176,77.88,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Black,226,133,bachelors_up,38,16.81,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Asian,81,70,less_than_hs,0,0,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Asian,81,70,hs_only,0,0,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Asian,81,70,bachelors_up,81,100,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Other,36,46,less_than_hs,0,0,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Other,36,46,hs_only,0,0,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Other,36,46,bachelors_up,36,100,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Multi,30,49,less_than_hs,0,0,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Multi,30,49,hs_only,0,0,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Multi,30,49,bachelors_up,30,100,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Hispanic,71,76,less_than_hs,0,0,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Hispanic,71,76,hs_only,43,60.56,2023,Albemarle,003,010502,Pantops
+51003010502,Census Tract 105.02,Albemarle County,Hispanic,71,76,bachelors_up,28,39.44,2023,Albemarle,003,010502,Pantops
+51003010602,Census Tract 106.02,Albemarle County,White,3089,342,less_than_hs,12,0.39,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,White,3089,342,hs_only,688,22.27,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,White,3089,342,bachelors_up,2389,77.34,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,White_non_hisp,3010,342,less_than_hs,12,0.4,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,White_non_hisp,3010,342,hs_only,688,22.86,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,White_non_hisp,3010,342,bachelors_up,2310,76.74,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Black,187,65,less_than_hs,0,0,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Black,187,65,hs_only,117,62.57,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Black,187,65,bachelors_up,70,37.43,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Asian,213,118,less_than_hs,24,11.27,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Asian,213,118,hs_only,19,8.92,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Asian,213,118,bachelors_up,170,79.81,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Other,56,74,less_than_hs,0,0,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Other,56,74,hs_only,45,80.36,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Other,56,74,bachelors_up,11,19.64,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Multi,106,81,less_than_hs,0,0,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Multi,106,81,hs_only,75,70.75,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Multi,106,81,bachelors_up,31,29.25,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Hispanic,157,115,less_than_hs,0,0,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Hispanic,157,115,hs_only,67,42.68,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010602,Census Tract 106.02,Albemarle County,Hispanic,157,115,bachelors_up,90,57.32,2023,Albemarle,003,010602,Dunlora-Stone Henge
+51003010603,Census Tract 106.03,Albemarle County,White,1251,238,less_than_hs,74,5.92,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,White,1251,238,hs_only,415,33.17,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,White,1251,238,bachelors_up,762,60.91,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,White_non_hisp,1217,231,less_than_hs,74,6.08,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,White_non_hisp,1217,231,hs_only,415,34.1,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,White_non_hisp,1217,231,bachelors_up,728,59.82,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Black,328,201,less_than_hs,124,37.8,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Black,328,201,hs_only,154,46.95,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Black,328,201,bachelors_up,50,15.24,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Amer_Indian,4,7,less_than_hs,0,0,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Amer_Indian,4,7,hs_only,4,100,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Amer_Indian,4,7,bachelors_up,0,0,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Asian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Asian,0,13,hs_only,0,NA,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Asian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Other,0,13,less_than_hs,0,NA,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Other,0,13,hs_only,0,NA,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Other,0,13,bachelors_up,0,NA,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Multi,15,22,less_than_hs,0,0,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Multi,15,22,hs_only,0,0,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Multi,15,22,bachelors_up,15,100,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Hispanic,35,59,less_than_hs,0,0,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Hispanic,35,59,hs_only,0,0,2023,Albemarle,003,010603,Branchland
+51003010603,Census Tract 106.03,Albemarle County,Hispanic,35,59,bachelors_up,35,100,2023,Albemarle,003,010603,Branchland
+51003010604,Census Tract 106.04,Albemarle County,White,2617,382,less_than_hs,59,2.25,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,White,2617,382,hs_only,587,22.43,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,White,2617,382,bachelors_up,1971,75.32,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,White_non_hisp,2562,397,less_than_hs,59,2.3,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,White_non_hisp,2562,397,hs_only,542,21.16,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,White_non_hisp,2562,397,bachelors_up,1961,76.54,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Black,191,112,less_than_hs,0,0,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Black,191,112,hs_only,144,75.39,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Black,191,112,bachelors_up,47,24.61,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Asian,148,91,less_than_hs,0,0,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Asian,148,91,hs_only,77,52.03,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Asian,148,91,bachelors_up,71,47.97,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Other,14,22,less_than_hs,0,0,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Other,14,22,hs_only,14,100,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Other,14,22,bachelors_up,0,0,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Multi,115,73,less_than_hs,3,2.61,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Multi,115,73,hs_only,71,61.74,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Multi,115,73,bachelors_up,41,35.65,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Hispanic,55,60,less_than_hs,0,0,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Hispanic,55,60,hs_only,45,81.82,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010604,Census Tract 106.04,Albemarle County,Hispanic,55,60,bachelors_up,10,18.18,2023,Albemarle,003,010604,Woodbrook-Carrsbrook
+51003010701,Census Tract 107.01,Albemarle County,White,991,294,less_than_hs,43,4.34,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,White,991,294,hs_only,583,58.83,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,White,991,294,bachelors_up,365,36.83,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,White_non_hisp,991,294,less_than_hs,43,4.34,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,White_non_hisp,991,294,hs_only,583,58.83,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,White_non_hisp,991,294,bachelors_up,365,36.83,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Black,473,217,less_than_hs,19,4.02,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Black,473,217,hs_only,245,51.8,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Black,473,217,bachelors_up,209,44.19,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Asian,318,173,less_than_hs,34,10.69,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Asian,318,173,hs_only,60,18.87,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Asian,318,173,bachelors_up,224,70.44,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Other,131,133,less_than_hs,28,21.37,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Other,131,133,hs_only,63,48.09,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Other,131,133,bachelors_up,40,30.53,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Multi,111,76,less_than_hs,0,0,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Multi,111,76,hs_only,48,43.24,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Multi,111,76,bachelors_up,63,56.76,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Hispanic,144,134,less_than_hs,28,19.44,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Hispanic,144,134,hs_only,76,52.78,2023,Albemarle,003,010701,Hydraulic
+51003010701,Census Tract 107.01,Albemarle County,Hispanic,144,134,bachelors_up,40,27.78,2023,Albemarle,003,010701,Hydraulic
+51003010702,Census Tract 107.02,Albemarle County,White,1588,348,less_than_hs,56,3.53,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,White,1588,348,hs_only,684,43.07,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,White,1588,348,bachelors_up,848,53.4,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,White_non_hisp,1551,330,less_than_hs,56,3.61,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,White_non_hisp,1551,330,hs_only,647,41.72,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,White_non_hisp,1551,330,bachelors_up,848,54.67,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Black,544,174,less_than_hs,114,20.96,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Black,544,174,hs_only,352,64.71,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Black,544,174,bachelors_up,78,14.34,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Asian,99,133,less_than_hs,58,58.59,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Asian,99,133,hs_only,37,37.37,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Asian,99,133,bachelors_up,4,4.04,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Other,253,292,less_than_hs,83,32.81,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Other,253,292,hs_only,147,58.1,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Other,253,292,bachelors_up,23,9.09,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Multi,134,105,less_than_hs,0,0,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Multi,134,105,hs_only,117,87.31,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Multi,134,105,bachelors_up,17,12.69,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Hispanic,388,289,less_than_hs,83,21.39,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Hispanic,388,289,hs_only,282,72.68,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010702,Census Tract 107.02,Albemarle County,Hispanic,388,289,bachelors_up,23,5.93,2023,Albemarle,003,010702,Commonwealth-Townwood-Berkmar
+51003010801,Census Tract 108.01,Albemarle County,White,1636,270,less_than_hs,80,4.89,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,White,1636,270,hs_only,489,29.89,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,White,1636,270,bachelors_up,1067,65.22,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,White_non_hisp,1617,273,less_than_hs,61,3.77,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,White_non_hisp,1617,273,hs_only,489,30.24,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,White_non_hisp,1617,273,bachelors_up,1067,65.99,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Black,504,197,less_than_hs,35,6.94,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Black,504,197,hs_only,352,69.84,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Black,504,197,bachelors_up,117,23.21,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Amer_Indian,10,16,less_than_hs,0,0,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Amer_Indian,10,16,hs_only,10,100,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Amer_Indian,10,16,bachelors_up,0,0,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Asian,238,154,less_than_hs,0,0,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Asian,238,154,hs_only,112,47.06,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Asian,238,154,bachelors_up,126,52.94,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Other,290,232,less_than_hs,143,49.31,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Other,290,232,hs_only,112,38.62,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Other,290,232,bachelors_up,35,12.07,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Multi,91,95,less_than_hs,47,51.65,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Multi,91,95,hs_only,38,41.76,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Multi,91,95,bachelors_up,6,6.59,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Hispanic,356,243,less_than_hs,209,58.71,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Hispanic,356,243,hs_only,112,31.46,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010801,Census Tract 108.01,Albemarle County,Hispanic,356,243,bachelors_up,35,9.83,2023,Albemarle,003,010801,Barracks-Hessian Hills
+51003010802,Census Tract 108.02,Albemarle County,White,897,200,less_than_hs,91,10.14,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,White,897,200,hs_only,319,35.56,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,White,897,200,bachelors_up,487,54.29,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,White_non_hisp,746,232,less_than_hs,32,4.29,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,White_non_hisp,746,232,hs_only,252,33.78,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,White_non_hisp,746,232,bachelors_up,462,61.93,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Black,511,210,less_than_hs,0,0,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Black,511,210,hs_only,404,79.06,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Black,511,210,bachelors_up,107,20.94,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Asian,83,69,less_than_hs,0,0,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Asian,83,69,hs_only,15,18.07,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Asian,83,69,bachelors_up,68,81.93,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Other,47,67,less_than_hs,0,0,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Other,47,67,hs_only,47,100,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Other,47,67,bachelors_up,0,0,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Multi,72,77,less_than_hs,0,0,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Multi,72,77,hs_only,0,0,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Multi,72,77,bachelors_up,72,100,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Hispanic,270,170,less_than_hs,59,21.85,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Hispanic,270,170,hs_only,114,42.22,2023,Albemarle,003,010802,Albemarle High School
+51003010802,Census Tract 108.02,Albemarle County,Hispanic,270,170,bachelors_up,97,35.93,2023,Albemarle,003,010802,Albemarle High School
+51003010901,Census Tract 109.01,Albemarle County,White,694,127,less_than_hs,6,0.86,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,White,694,127,hs_only,74,10.66,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,White,694,127,bachelors_up,614,88.47,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,White_non_hisp,673,120,less_than_hs,6,0.89,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,White_non_hisp,673,120,hs_only,74,11,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,White_non_hisp,673,120,bachelors_up,593,88.11,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Black,92,77,less_than_hs,0,0,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Black,92,77,hs_only,35,38.04,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Black,92,77,bachelors_up,57,61.96,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Amer_Indian,3,6,less_than_hs,0,0,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Amer_Indian,3,6,hs_only,3,100,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Amer_Indian,3,6,bachelors_up,0,0,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Asian,107,54,less_than_hs,0,0,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Asian,107,54,hs_only,0,0,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Asian,107,54,bachelors_up,107,100,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Other,0,13,less_than_hs,0,NA,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Other,0,13,hs_only,0,NA,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Other,0,13,bachelors_up,0,NA,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Multi,34,23,less_than_hs,0,0,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Multi,34,23,hs_only,8,23.53,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Multi,34,23,bachelors_up,26,76.47,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Hispanic,36,30,less_than_hs,0,0,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Hispanic,36,30,hs_only,8,22.22,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010901,Census Tract 109.01,Albemarle County,Hispanic,36,30,bachelors_up,28,77.78,2023,Albemarle,003,010901,Old Ivy-Darden School (UVA)
+51003010904,Census Tract 109.04,Albemarle County,White,343,127,less_than_hs,26,7.58,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,White,343,127,hs_only,182,53.06,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,White,343,127,bachelors_up,135,39.36,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,White_non_hisp,302,122,less_than_hs,26,8.61,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,White_non_hisp,302,122,hs_only,154,50.99,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,White_non_hisp,302,122,bachelors_up,122,40.4,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Black,137,113,less_than_hs,0,0,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Black,137,113,hs_only,124,90.51,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Black,137,113,bachelors_up,13,9.49,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Amer_Indian,0,19,less_than_hs,0,NA,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Amer_Indian,0,19,hs_only,0,NA,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Amer_Indian,0,19,bachelors_up,0,NA,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Asian,187,89,less_than_hs,56,29.95,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Asian,187,89,hs_only,5,2.67,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Asian,187,89,bachelors_up,126,67.38,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,NHPI,0,19,less_than_hs,0,NA,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,NHPI,0,19,hs_only,0,NA,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,NHPI,0,19,bachelors_up,0,NA,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Other,63,70,less_than_hs,58,92.06,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Other,63,70,hs_only,0,0,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Other,63,70,bachelors_up,5,7.94,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Multi,140,140,less_than_hs,11,7.86,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Multi,140,140,hs_only,65,46.43,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Multi,140,140,bachelors_up,64,45.71,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Hispanic,182,147,less_than_hs,69,37.91,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Hispanic,182,147,hs_only,79,43.41,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003010904,Census Tract 109.04,Albemarle County,Hispanic,182,147,bachelors_up,34,18.68,2023,Albemarle,003,010904,Carr's Hill-McCormick Road (UVA)
+51003011000,Census Tract 110,Albemarle County,White,4279,615,less_than_hs,41,0.96,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,White,4279,615,hs_only,678,15.84,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,White,4279,615,bachelors_up,3560,83.2,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,White_non_hisp,4238,613,less_than_hs,41,0.97,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,White_non_hisp,4238,613,hs_only,659,15.55,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,White_non_hisp,4238,613,bachelors_up,3538,83.48,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Black,48,46,less_than_hs,0,0,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Black,48,46,hs_only,21,43.75,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Black,48,46,bachelors_up,27,56.25,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Amer_Indian,6,10,less_than_hs,0,0,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Amer_Indian,6,10,hs_only,0,0,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Amer_Indian,6,10,bachelors_up,6,100,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Asian,89,77,less_than_hs,0,0,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Asian,89,77,hs_only,17,19.1,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Asian,89,77,bachelors_up,72,80.9,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,NHPI,0,19,less_than_hs,0,NA,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,NHPI,0,19,hs_only,0,NA,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,NHPI,0,19,bachelors_up,0,NA,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Other,20,30,less_than_hs,20,100,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Other,20,30,hs_only,0,0,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Other,20,30,bachelors_up,0,0,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Multi,296,202,less_than_hs,81,27.36,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Multi,296,202,hs_only,0,0,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Multi,296,202,bachelors_up,215,72.64,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Hispanic,255,200,less_than_hs,82,32.16,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Hispanic,255,200,hs_only,40,15.69,2023,Albemarle,003,011000,Ivy
+51003011000,Census Tract 110,Albemarle County,Hispanic,255,200,bachelors_up,133,52.16,2023,Albemarle,003,011000,Ivy
+51003011101,Census Tract 111.01,Albemarle County,White,1623,235,less_than_hs,71,4.37,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,White,1623,235,hs_only,529,32.59,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,White,1623,235,bachelors_up,1023,63.03,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,White_non_hisp,1603,240,less_than_hs,71,4.43,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,White_non_hisp,1603,240,hs_only,529,33,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,White_non_hisp,1603,240,bachelors_up,1003,62.57,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Black,140,135,less_than_hs,17,12.14,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Black,140,135,hs_only,34,24.29,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Black,140,135,bachelors_up,89,63.57,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Asian,0,13,less_than_hs,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Asian,0,13,hs_only,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Asian,0,13,bachelors_up,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Other,0,13,less_than_hs,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Other,0,13,hs_only,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Other,0,13,bachelors_up,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Multi,0,13,less_than_hs,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Multi,0,13,hs_only,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Multi,0,13,bachelors_up,0,NA,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Hispanic,20,28,less_than_hs,0,0,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Hispanic,20,28,hs_only,0,0,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011101,Census Tract 111.01,Albemarle County,Hispanic,20,28,bachelors_up,20,100,2023,Albemarle,003,011101,Crozet-Beaver Creek
+51003011102,Census Tract 111.02,Albemarle County,White,1959,293,less_than_hs,71,3.62,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,White,1959,293,hs_only,384,19.6,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,White,1959,293,bachelors_up,1504,76.77,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,White_non_hisp,1959,293,less_than_hs,71,3.62,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,White_non_hisp,1959,293,hs_only,384,19.6,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,White_non_hisp,1959,293,bachelors_up,1504,76.77,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Black,12,21,less_than_hs,0,0,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Black,12,21,hs_only,12,100,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Black,12,21,bachelors_up,0,0,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Asian,139,87,less_than_hs,0,0,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Asian,139,87,hs_only,11,7.91,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Asian,139,87,bachelors_up,128,92.09,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Other,0,13,less_than_hs,0,NA,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Other,0,13,hs_only,0,NA,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Other,0,13,bachelors_up,0,NA,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Multi,41,32,less_than_hs,0,0,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Multi,41,32,hs_only,0,0,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Multi,41,32,bachelors_up,41,100,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Hispanic,0,13,less_than_hs,0,NA,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Hispanic,0,13,hs_only,0,NA,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011102,Census Tract 111.02,Albemarle County,Hispanic,0,13,bachelors_up,0,NA,2023,Albemarle,003,011102,Western Ridge-Westhall
+51003011103,Census Tract 111.03,Albemarle County,White,2650,284,less_than_hs,86,3.25,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,White,2650,284,hs_only,592,22.34,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,White,2650,284,bachelors_up,1972,74.42,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,White_non_hisp,2614,289,less_than_hs,86,3.29,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,White_non_hisp,2614,289,hs_only,572,21.88,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,White_non_hisp,2614,289,bachelors_up,1956,74.83,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Black,53,57,less_than_hs,0,0,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Black,53,57,hs_only,53,100,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Black,53,57,bachelors_up,0,0,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Asian,124,123,less_than_hs,0,0,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Asian,124,123,hs_only,24,19.35,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Asian,124,123,bachelors_up,100,80.65,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Other,15,21,less_than_hs,0,0,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Other,15,21,hs_only,7,46.67,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Other,15,21,bachelors_up,8,53.33,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Multi,103,71,less_than_hs,0,0,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Multi,103,71,hs_only,64,62.14,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Multi,103,71,bachelors_up,39,37.86,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Hispanic,121,90,less_than_hs,0,0,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Hispanic,121,90,hs_only,84,69.42,2023,Albemarle,003,011103,Old Trail
+51003011103,Census Tract 111.03,Albemarle County,Hispanic,121,90,bachelors_up,37,30.58,2023,Albemarle,003,011103,Old Trail
+51003011201,Census Tract 112.01,Albemarle County,White,3072,310,less_than_hs,145,4.72,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,White,3072,310,hs_only,1158,37.7,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,White,3072,310,bachelors_up,1769,57.58,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,White_non_hisp,2880,337,less_than_hs,145,5.03,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,White_non_hisp,2880,337,hs_only,1046,36.32,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,White_non_hisp,2880,337,bachelors_up,1689,58.65,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Black,50,48,less_than_hs,0,0,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Black,50,48,hs_only,28,56,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Black,50,48,bachelors_up,22,44,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Amer_Indian,2,5,less_than_hs,0,0,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Amer_Indian,2,5,hs_only,2,100,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Amer_Indian,2,5,bachelors_up,0,0,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Asian,30,32,less_than_hs,0,0,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Asian,30,32,hs_only,5,16.67,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Asian,30,32,bachelors_up,25,83.33,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Other,9,15,less_than_hs,9,100,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Other,9,15,hs_only,0,0,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Other,9,15,bachelors_up,0,0,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Multi,103,63,less_than_hs,0,0,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Multi,103,63,hs_only,45,43.69,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Multi,103,63,bachelors_up,58,56.31,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Hispanic,253,129,less_than_hs,9,3.56,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Hispanic,253,129,hs_only,130,51.38,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011201,Census Tract 112.01,Albemarle County,Hispanic,253,129,bachelors_up,114,45.06,2023,Albemarle,003,011201,"Yancey Mills, Batesville"
+51003011202,Census Tract 112.02,Albemarle County,White,2430,280,less_than_hs,102,4.2,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,White,2430,280,hs_only,683,28.11,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,White,2430,280,bachelors_up,1645,67.7,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,White_non_hisp,2385,269,less_than_hs,98,4.11,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,White_non_hisp,2385,269,hs_only,665,27.88,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,White_non_hisp,2385,269,bachelors_up,1622,68.01,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Black,66,78,less_than_hs,26,39.39,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Black,66,78,hs_only,26,39.39,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Black,66,78,bachelors_up,14,21.21,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Amer_Indian,16,25,less_than_hs,16,100,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Amer_Indian,16,25,hs_only,0,0,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Amer_Indian,16,25,bachelors_up,0,0,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Asian,189,101,less_than_hs,0,0,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Asian,189,101,hs_only,26,13.76,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Asian,189,101,bachelors_up,163,86.24,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Other,13,22,less_than_hs,0,0,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Other,13,22,hs_only,0,0,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Other,13,22,bachelors_up,13,100,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Multi,26,39,less_than_hs,0,0,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Multi,26,39,hs_only,0,0,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Multi,26,39,bachelors_up,26,100,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Hispanic,61,46,less_than_hs,20,32.79,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Hispanic,61,46,hs_only,18,29.51,2023,Albemarle,003,011202,North Garden
+51003011202,Census Tract 112.02,Albemarle County,Hispanic,61,46,bachelors_up,23,37.7,2023,Albemarle,003,011202,North Garden
+51003011301,Census Tract 113.01,Albemarle County,White,3355,398,less_than_hs,147,4.38,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,White,3355,398,hs_only,1700,50.67,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,White,3355,398,bachelors_up,1508,44.95,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,White_non_hisp,3353,398,less_than_hs,147,4.38,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,White_non_hisp,3353,398,hs_only,1700,50.7,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,White_non_hisp,3353,398,bachelors_up,1506,44.92,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Black,307,225,less_than_hs,33,10.75,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Black,307,225,hs_only,135,43.97,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Black,307,225,bachelors_up,139,45.28,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Amer_Indian,9,17,less_than_hs,0,0,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Amer_Indian,9,17,hs_only,9,100,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Amer_Indian,9,17,bachelors_up,0,0,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Asian,206,193,less_than_hs,37,17.96,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Asian,206,193,hs_only,129,62.62,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Asian,206,193,bachelors_up,40,19.42,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Other,0,13,less_than_hs,0,NA,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Other,0,13,hs_only,0,NA,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Other,0,13,bachelors_up,0,NA,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Multi,100,98,less_than_hs,16,16,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Multi,100,98,hs_only,60,60,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Multi,100,98,bachelors_up,24,24,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Hispanic,53,79,less_than_hs,16,30.19,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Hispanic,53,79,hs_only,35,66.04,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011301,Census Tract 113.01,Albemarle County,Hispanic,53,79,bachelors_up,2,3.77,2023,Albemarle,003,011301,"Monticello, Carters Mountain"
+51003011302,Census Tract 113.02,Albemarle County,White,1911,357,less_than_hs,187,9.79,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,White,1911,357,hs_only,654,34.22,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,White,1911,357,bachelors_up,1070,55.99,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,White_non_hisp,1704,282,less_than_hs,41,2.41,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,White_non_hisp,1704,282,hs_only,601,35.27,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,White_non_hisp,1704,282,bachelors_up,1062,62.32,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Black,181,99,less_than_hs,25,13.81,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Black,181,99,hs_only,89,49.17,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Black,181,99,bachelors_up,67,37.02,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Amer_Indian,0,13,less_than_hs,0,NA,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Amer_Indian,0,13,hs_only,0,NA,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Amer_Indian,0,13,bachelors_up,0,NA,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Asian,492,324,less_than_hs,0,0,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Asian,492,324,hs_only,0,0,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Asian,492,324,bachelors_up,492,100,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Other,131,114,less_than_hs,44,33.59,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Other,131,114,hs_only,47,35.88,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Other,131,114,bachelors_up,40,30.53,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Multi,553,298,less_than_hs,97,17.54,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Multi,553,298,hs_only,194,35.08,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Multi,553,298,bachelors_up,262,47.38,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Hispanic,790,278,less_than_hs,287,36.33,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Hispanic,790,278,hs_only,261,33.04,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011302,Census Tract 113.02,Albemarle County,Hispanic,790,278,bachelors_up,242,30.63,2023,Albemarle,003,011302,"Oak Hill, Southwood"
+51003011303,Census Tract 113.03,Albemarle County,White,2279,297,less_than_hs,39,1.71,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,White,2279,297,hs_only,541,23.74,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,White,2279,297,bachelors_up,1699,74.55,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,White_non_hisp,2185,285,less_than_hs,39,1.78,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,White_non_hisp,2185,285,hs_only,502,22.97,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,White_non_hisp,2185,285,bachelors_up,1644,75.24,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Black,345,120,less_than_hs,46,13.33,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Black,345,120,hs_only,190,55.07,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Black,345,120,bachelors_up,109,31.59,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Amer_Indian,14,23,less_than_hs,0,0,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Amer_Indian,14,23,hs_only,0,0,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Amer_Indian,14,23,bachelors_up,14,100,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Asian,135,80,less_than_hs,13,9.63,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Asian,135,80,hs_only,13,9.63,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Asian,135,80,bachelors_up,109,80.74,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,NHPI,0,13,less_than_hs,0,NA,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,NHPI,0,13,hs_only,0,NA,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,NHPI,0,13,bachelors_up,0,NA,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Other,125,104,less_than_hs,0,0,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Other,125,104,hs_only,105,84,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Other,125,104,bachelors_up,20,16,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Multi,208,118,less_than_hs,42,20.19,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Multi,208,118,hs_only,101,48.56,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Multi,208,118,bachelors_up,65,31.25,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Hispanic,290,156,less_than_hs,19,6.55,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Hispanic,290,156,hs_only,138,47.59,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011303,Census Tract 113.03,Albemarle County,Hispanic,290,156,bachelors_up,133,45.86,2023,Albemarle,003,011303,Avon Street Ext.-Mill Creek
+51003011400,Census Tract 114,Albemarle County,White,2882,398,less_than_hs,336,11.66,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,White,2882,398,hs_only,1291,44.8,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,White,2882,398,bachelors_up,1255,43.55,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,White_non_hisp,2841,394,less_than_hs,327,11.51,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,White_non_hisp,2841,394,hs_only,1290,45.41,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,White_non_hisp,2841,394,bachelors_up,1224,43.08,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Black,574,260,less_than_hs,97,16.9,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Black,574,260,hs_only,380,66.2,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Black,574,260,bachelors_up,97,16.9,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Amer_Indian,1,3,less_than_hs,0,0,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Amer_Indian,1,3,hs_only,1,100,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Amer_Indian,1,3,bachelors_up,0,0,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Asian,13,15,less_than_hs,0,0,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Asian,13,15,hs_only,9,69.23,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Asian,13,15,bachelors_up,4,30.77,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,NHPI,34,49,less_than_hs,0,0,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,NHPI,34,49,hs_only,0,0,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,NHPI,34,49,bachelors_up,34,100,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Other,31,33,less_than_hs,12,38.71,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Other,31,33,hs_only,19,61.29,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Other,31,33,bachelors_up,0,0,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Multi,34,31,less_than_hs,8,23.53,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Multi,34,31,hs_only,6,17.65,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Multi,34,31,bachelors_up,20,58.82,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Hispanic,71,46,less_than_hs,21,29.58,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Hispanic,71,46,hs_only,19,26.76,2023,Albemarle,003,011400,Southern Albemarle-Scottsville
+51003011400,Census Tract 114,Albemarle County,Hispanic,71,46,bachelors_up,31,43.66,2023,Albemarle,003,011400,Southern Albemarle-Scottsville

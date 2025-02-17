@@ -1,0 +1,19 @@
+GEOID,locality,estimate,moe,total_foreign_born,percent,year,label
+51003,"Albemarle County, Virginia",469,146,11689,4.01,2023,Northern Europe
+51003,"Albemarle County, Virginia",509,200,11689,4.35,2023,Western Europe
+51003,"Albemarle County, Virginia",170,94,11689,1.45,2023,Southern Europe
+51003,"Albemarle County, Virginia",550,171,11689,4.71,2023,Eastern Europe
+51003,"Albemarle County, Virginia",1465,270,11689,12.53,2023,Eastern Asia
+51003,"Albemarle County, Virginia",2089,462,11689,17.87,2023,South Central Asia
+51003,"Albemarle County, Virginia",699,238,11689,5.98,2023,South Eastern Asia
+51003,"Albemarle County, Virginia",403,288,11689,3.45,2023,Western Asia
+51003,"Albemarle County, Virginia",52,39,11689,0.44,2023,Eastern Africa
+51003,"Albemarle County, Virginia",243,136,11689,2.08,2023,Middle Africa
+51003,"Albemarle County, Virginia",77,60,11689,0.66,2023,Northern Africa
+51003,"Albemarle County, Virginia",0,31,11689,0,2023,Southern Africa
+51003,"Albemarle County, Virginia",412,268,11689,3.52,2023,Western Africa
+51003,"Albemarle County, Virginia",98,100,11689,0.84,2023,Oceania
+51003,"Albemarle County, Virginia",183,118,11689,1.57,2023,"Latin America, Caribbean"
+51003,"Albemarle County, Virginia",3189,554,11689,27.28,2023,"Latin America, Central America"
+51003,"Albemarle County, Virginia",704,253,11689,6.02,2023,"Latin America, South America"
+51003,"Albemarle County, Virginia",377,174,11689,3.23,2023,Northern America

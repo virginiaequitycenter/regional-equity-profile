@@ -1,0 +1,37 @@
+region_fips,locality,group,label,estimate,moe,total_households,percent,year
+003;540,Charlottesville-Albemarle Region,American Indian/Native Alaskan,Owner occupied,27,41.012193308819754,167,16.17,2013
+003;540,Charlottesville-Albemarle Region,American Indian/Native Alaskan,Owner occupied,23,38.897300677553446,105,21.9,2023
+003;540,Charlottesville-Albemarle Region,American Indian/Native Alaskan,Renter occupied,140,72.20110802473879,167,83.83,2013
+003;540,Charlottesville-Albemarle Region,American Indian/Native Alaskan,Renter occupied,82,50.21951811795888,105,78.1,2023
+003;540,Charlottesville-Albemarle Region,Asian,Owner occupied,798,153.11760186209813,2229,35.8,2013
+003;540,Charlottesville-Albemarle Region,Asian,Owner occupied,1356,211.85136298829894,2811,48.24,2023
+003;540,Charlottesville-Albemarle Region,Asian,Renter occupied,1431,211.62466774929618,2229,64.2,2013
+003;540,Charlottesville-Albemarle Region,Asian,Renter occupied,1455,241.22396232547047,2811,51.76,2023
+003;540,Charlottesville-Albemarle Region,Black,Owner occupied,2279,237.49736840647307,6395,35.64,2013
+003;540,Charlottesville-Albemarle Region,Black,Owner occupied,2487,330.82019285406386,6875,36.17,2023
+003;540,Charlottesville-Albemarle Region,Black,Renter occupied,4116,362.49275854836054,6395,64.36,2013
+003;540,Charlottesville-Albemarle Region,Black,Renter occupied,4388,463.88145037282965,6875,63.83,2023
+003;540,Charlottesville-Albemarle Region,Hispanic or Latino,Owner occupied,765,176.36609651517495,1985,38.54,2013
+003;540,Charlottesville-Albemarle Region,Hispanic or Latino,Owner occupied,1300,320.4808886657674,3718,34.97,2023
+003;540,Charlottesville-Albemarle Region,Hispanic or Latino,Renter occupied,1220,191.60375779195982,1985,61.46,2013
+003;540,Charlottesville-Albemarle Region,Hispanic or Latino,Renter occupied,2418,348.4149824562658,3718,65.03,2023
+003;540,Charlottesville-Albemarle Region,Multiracial,Owner occupied,214,89.98888820293314,765,27.97,2013
+003;540,Charlottesville-Albemarle Region,Multiracial,Owner occupied,1296,302.51115681905026,2846,45.54,2023
+003;540,Charlottesville-Albemarle Region,Multiracial,Renter occupied,551,168.35973390332975,765,72.03,2013
+003;540,Charlottesville-Albemarle Region,Multiracial,Renter occupied,1550,305.30804116498473,2846,54.46,2023
+003;540,Charlottesville-Albemarle Region,Native Hawaiian/Pacific Islander,Owner occupied,14,34.058772731852805,25,56,2013
+003;540,Charlottesville-Albemarle Region,Native Hawaiian/Pacific Islander,Owner occupied,0,41.773197148410844,0,NA,2023
+003;540,Charlottesville-Albemarle Region,Native Hawaiian/Pacific Islander,Renter occupied,11,34.132096331752024,25,44,2013
+003;540,Charlottesville-Albemarle Region,Native Hawaiian/Pacific Islander,Renter occupied,0,41.773197148410844,0,NA,2023
+003;540,Charlottesville-Albemarle Region,Other,Owner occupied,118,65.29931086925804,361,32.69,2013
+003;540,Charlottesville-Albemarle Region,Other,Owner occupied,331,140.356688476182,1153,28.71,2023
+003;540,Charlottesville-Albemarle Region,Other,Renter occupied,243,124.39051410778879,361,67.31,2013
+003;540,Charlottesville-Albemarle Region,Other,Renter occupied,822,243.402958075698,1153,71.29,2023
+003;540,Charlottesville-Albemarle Region,White,Owner occupied,28699,658.3691973353552,45465,63.12,2013
+003;540,Charlottesville-Albemarle Region,White,Owner occupied,32841,802.133405363472,50973,64.43,2023
+003;540,Charlottesville-Albemarle Region,White,Renter occupied,16766,713.992997164538,45465,36.88,2013
+003;540,Charlottesville-Albemarle Region,White,Renter occupied,18132,850.8636788581352,50973,35.57,2023
+003;540,Charlottesville-Albemarle Region,"White, Not Hispanic or Latino",Owner occupied,28052,639.6069105317735,43891,63.91,2013
+003;540,Charlottesville-Albemarle Region,"White, Not Hispanic or Latino",Owner occupied,32315,766.6635507183056,49343,65.49,2023
+003;540,Charlottesville-Albemarle Region,"White, Not Hispanic or Latino",Renter occupied,15839,661.8436371228479,43891,36.09,2013
+003;540,Charlottesville-Albemarle Region,"White, Not Hispanic or Latino",Renter occupied,17028,788.835217266572,49343,34.51,2023

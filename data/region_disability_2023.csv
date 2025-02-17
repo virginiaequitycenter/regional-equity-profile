@@ -1,0 +1,17 @@
+region_fips,locality,estimate,moe,total_pop,percent,sex,age_group,disability_status,year
+003;540,Charlottesville-Albemarle Region,14180,331.5961399051563,157708,8.99,Female,17 and under,No disability,2023
+003;540,Charlottesville-Albemarle Region,351,145.53350129781114,157708,0.22,Female,17 and under,With a disability,2023
+003;540,Charlottesville-Albemarle Region,21844,269.3640659033792,157708,13.85,Female,18 to 34 years,No disability,2023
+003;540,Charlottesville-Albemarle Region,1190,248.70866490735702,157708,0.75,Female,18 to 34 years,With a disability,2023
+003;540,Charlottesville-Albemarle Region,26403,408.06126990931153,157708,16.74,Female,35 to 64 years,No disability,2023
+003;540,Charlottesville-Albemarle Region,2477,380.290678297536,157708,1.57,Female,35 to 64 years,With a disability,2023
+003;540,Charlottesville-Albemarle Region,11513,400.5558637693374,157708,7.3,Female,65 and over,No disability,2023
+003;540,Charlottesville-Albemarle Region,4127,385.2907992672548,157708,2.62,Female,65 and over,With a disability,2023
+003;540,Charlottesville-Albemarle Region,14773,420.6875324988845,157708,9.37,Male,17 and under,No disability,2023
+003;540,Charlottesville-Albemarle Region,495,218.36208462093413,157708,0.31,Male,17 and under,With a disability,2023
+003;540,Charlottesville-Albemarle Region,20252,291.8115830463212,157708,12.84,Male,18 to 34 years,No disability,2023
+003;540,Charlottesville-Albemarle Region,1015,222.91253890259293,157708,0.64,Male,18 to 34 years,With a disability,2023
+003;540,Charlottesville-Albemarle Region,24230,429.66265837282157,157708,15.36,Male,35 to 64 years,No disability,2023
+003;540,Charlottesville-Albemarle Region,2567,386.34958263210274,157708,1.63,Male,35 to 64 years,With a disability,2023
+003;540,Charlottesville-Albemarle Region,9325,351.3772901028181,157708,5.91,Male,65 and over,No disability,2023
+003;540,Charlottesville-Albemarle Region,2966,313.5155498535918,157708,1.88,Male,65 and over,With a disability,2023

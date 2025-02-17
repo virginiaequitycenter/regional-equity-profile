@@ -1,0 +1,85 @@
+region_fips,locality,estimate,moe,total_pop,percent,year,label
+003;540,Combined Region,499,194.83326204732086,142707,0.35,2012,American Indian and Alaska Native alone
+003;540,Combined Region,577,199.64969321288726,144299,0.4,2013,American Indian and Alaska Native alone
+003;540,Combined Region,388,188.95766721676048,146388,0.27,2014,American Indian and Alaska Native alone
+003;540,Combined Region,346,156.11854470241516,148192,0.23,2015,American Indian and Alaska Native alone
+003;540,Combined Region,413,134.6291201783626,149825,0.28,2016,American Indian and Alaska Native alone
+003;540,Combined Region,357,107.42439201596628,151592,0.24,2017,American Indian and Alaska Native alone
+003;540,Combined Region,354,118.43141475132347,153397,0.23,2018,American Indian and Alaska Native alone
+003;540,Combined Region,386,131.03434664239754,154501,0.25,2019,American Indian and Alaska Native alone
+003;540,Combined Region,462,124.16923934694937,156036,0.3,2020,American Indian and Alaska Native alone
+003;540,Combined Region,447,118.70130580579136,158035,0.28,2021,American Indian and Alaska Native alone
+003;540,Combined Region,195,95.70788891204319,158802,0.12,2022,American Indian and Alaska Native alone
+003;540,Combined Region,179,98.89893831583835,159546,0.11,2023,American Indian and Alaska Native alone
+003;540,Combined Region,7058,306.0669861321211,142707,4.95,2012,Asian alone
+003;540,Combined Region,7157,351.7740752244258,144299,4.96,2013,Asian alone
+003;540,Combined Region,7453,328.01371922527875,146388,5.09,2014,Asian alone
+003;540,Combined Region,7582,284.0070421662111,148192,5.12,2015,Asian alone
+003;540,Combined Region,7897,302.80026420067736,149825,5.27,2016,Asian alone
+003;540,Combined Region,8588,267.3200329193456,151592,5.67,2017,Asian alone
+003;540,Combined Region,8988,321.4747268448952,153397,5.86,2018,Asian alone
+003;540,Combined Region,8917,295.3252444339969,154501,5.77,2019,Asian alone
+003;540,Combined Region,9294,363.63718181726136,156036,5.96,2020,Asian alone
+003;540,Combined Region,9461,348.72625367184503,158035,5.99,2021,Asian alone
+003;540,Combined Region,9556,334.20053859920694,158802,6.02,2022,Asian alone
+003;540,Combined Region,9543,393.3764100705582,159546,5.98,2023,Asian alone
+003;540,Combined Region,18412,504.9059318328514,142707,12.9,2012,Black or African American alone
+003;540,Combined Region,18253,465.2418725781247,144299,12.65,2013,Black or African American alone
+003;540,Combined Region,18359,467.61629569552,146388,12.54,2014,Black or African American alone
+003;540,Combined Region,18331,476.1701376608995,148192,12.37,2015,Black or African American alone
+003;540,Combined Region,18248,438.693514882543,149825,12.18,2016,Black or African American alone
+003;540,Combined Region,18834,473.5197989524831,151592,12.42,2017,Black or African American alone
+003;540,Combined Region,19195,360.62445840513925,153397,12.51,2018,Black or African American alone
+003;540,Combined Region,19089,419.88688953097835,154501,12.36,2019,Black or African American alone
+003;540,Combined Region,18765,414.5407097017131,156036,12.03,2020,Black or African American alone
+003;540,Combined Region,18155,464.02155122364735,158035,11.49,2021,Black or African American alone
+003;540,Combined Region,17911,545.9496313763752,158802,11.28,2022,Black or African American alone
+003;540,Combined Region,17842,529.0935645044268,159546,11.18,2023,Black or African American alone
+003;540,Combined Region,27,44.68780594300866,142707,0.02,2012,Native Hawaiian and Other Pacific Islander alone
+003;540,Combined Region,51,49.193495504995376,144299,0.04,2013,Native Hawaiian and Other Pacific Islander alone
+003;540,Combined Region,79,72.11102550927978,146388,0.05,2014,Native Hawaiian and Other Pacific Islander alone
+003;540,Combined Region,86,88.64536084872124,148192,0.06,2015,Native Hawaiian and Other Pacific Islander alone
+003;540,Combined Region,100,89.15716460273958,149825,0.07,2016,Native Hawaiian and Other Pacific Islander alone
+003;540,Combined Region,59,50.15974481593781,151592,0.04,2017,Native Hawaiian and Other Pacific Islander alone
+003;540,Combined Region,53,46.400431032480725,153397,0.03,2018,Native Hawaiian and Other Pacific Islander alone
+003;540,Combined Region,72,63.7808748764079,154501,0.05,2019,Native Hawaiian and Other Pacific Islander alone
+003;540,Combined Region,53,29.120439557122072,156036,0.03,2020,Native Hawaiian and Other Pacific Islander alone
+003;540,Combined Region,66,88.45903006477066,158035,0.04,2021,Native Hawaiian and Other Pacific Islander alone
+003;540,Combined Region,34,55.569775957799216,158802,0.02,2022,Native Hawaiian and Other Pacific Islander alone
+003;540,Combined Region,34,56.43580423808985,159546,0.02,2023,Native Hawaiian and Other Pacific Islander alone
+003;540,Combined Region,1542,509.7842680977906,142707,1.08,2012,Some Other Race alone
+003;540,Combined Region,1421,471.8728642335772,144299,0.98,2013,Some Other Race alone
+003;540,Combined Region,1413,469.7030977117353,146388,0.97,2014,Some Other Race alone
+003;540,Combined Region,1529,486.13784053496596,148192,1.03,2015,Some Other Race alone
+003;540,Combined Region,1803,545.6418239101545,149825,1.2,2016,Some Other Race alone
+003;540,Combined Region,1526,466.56725131539184,151592,1.01,2017,Some Other Race alone
+003;540,Combined Region,1300,366.00683053735486,153397,0.85,2018,Some Other Race alone
+003;540,Combined Region,1008,375.04666376332426,154501,0.65,2019,Some Other Race alone
+003;540,Combined Region,1325,463.64318176804886,156036,0.85,2020,Some Other Race alone
+003;540,Combined Region,1663,469.1620189231008,158035,1.05,2021,Some Other Race alone
+003;540,Combined Region,2366,594.4282967692571,158802,1.49,2022,Some Other Race alone
+003;540,Combined Region,3400,761.2706483242343,159546,2.13,2023,Some Other Race alone
+003;540,Combined Region,3796,568.3836732349022,142707,2.66,2012,Two or More Races
+003;540,Combined Region,3879,663.8983355906234,144299,2.69,2013,Two or More Races
+003;540,Combined Region,4156,531.8740452400361,146388,2.84,2014,Two or More Races
+003;540,Combined Region,4372,528.577335874326,148192,2.95,2015,Two or More Races
+003;540,Combined Region,4408,576.2846518865482,149825,2.94,2016,Two or More Races
+003;540,Combined Region,4007,522.56674214879,151592,2.64,2017,Two or More Races
+003;540,Combined Region,3640,526.780789323225,153397,2.37,2018,Two or More Races
+003;540,Combined Region,3951,523.3278131343681,154501,2.56,2019,Two or More Races
+003;540,Combined Region,5220,607.4742792909013,156036,3.35,2020,Two or More Races
+003;540,Combined Region,6697,717.965180214194,158035,4.24,2021,Two or More Races
+003;540,Combined Region,8569,935.2566492679964,158802,5.4,2022,Two or More Races
+003;540,Combined Region,10306,1159.42916989353,159546,6.46,2023,Two or More Races
+003;540,Combined Region,111373,644.1777704950707,142707,78.04,2012,White alone
+003;540,Combined Region,112961,559.6606114423276,144299,78.28,2013,White alone
+003;540,Combined Region,114540,550.8475288135547,146388,78.24,2014,White alone
+003;540,Combined Region,115946,540.6459100002514,148192,78.24,2015,White alone
+003;540,Combined Region,116956,615.5647813187496,149825,78.06,2016,White alone
+003;540,Combined Region,118221,500.3528754788964,151592,77.99,2017,White alone
+003;540,Combined Region,119867,402.06094065452316,153397,78.14,2018,White alone
+003;540,Combined Region,121078,411.92839183528,154501,78.37,2019,White alone
+003;540,Combined Region,120917,493.74588605881064,156036,77.49,2020,White alone
+003;540,Combined Region,121546,592.8718242588359,158035,76.91,2021,White alone
+003;540,Combined Region,120171,770.5329324564915,158802,75.67,2022,White alone
+003;540,Combined Region,118242,769.8441400699235,159546,74.11,2023,White alone

@@ -1,0 +1,19 @@
+GEOID,locality,label,sex,race,estimate,moe,year
+51540,"Charlottesville city, Virginia",Median Earnings,All,White,46632,2972,2023
+51540,"Charlottesville city, Virginia",Median Earnings,Male,White,51268,3802,2023
+51540,"Charlottesville city, Virginia",Median Earnings,Female,White,40702,3916,2023
+51540,"Charlottesville city, Virginia",Median Earnings,All,Black,26384,1302,2023
+51540,"Charlottesville city, Virginia",Median Earnings,Male,Black,26275,1235,2023
+51540,"Charlottesville city, Virginia",Median Earnings,Female,Black,26694,5508,2023
+51540,"Charlottesville city, Virginia",Median Earnings,All,Asian,18250,8918,2023
+51540,"Charlottesville city, Virginia",Median Earnings,Male,Asian,21687,5270,2023
+51540,"Charlottesville city, Virginia",Median Earnings,Female,Asian,12366,7218,2023
+51540,"Charlottesville city, Virginia",Median Earnings,All,Mutiracial,37625,15123,2023
+51540,"Charlottesville city, Virginia",Median Earnings,Male,Mutiracial,47730,21413,2023
+51540,"Charlottesville city, Virginia",Median Earnings,Female,Mutiracial,36313,15448,2023
+51540,"Charlottesville city, Virginia",Median Earnings,All,"White, Not Hispanic or Latino",48242,3797,2023
+51540,"Charlottesville city, Virginia",Median Earnings,Male,"White, Not Hispanic or Latino",53400,3158,2023
+51540,"Charlottesville city, Virginia",Median Earnings,Female,"White, Not Hispanic or Latino",41603,4543,2023
+51540,"Charlottesville city, Virginia",Median Earnings,All,Hispanic or Latino,29340,8402,2023
+51540,"Charlottesville city, Virginia",Median Earnings,Male,Hispanic or Latino,29755,28213,2023
+51540,"Charlottesville city, Virginia",Median Earnings,Female,Hispanic or Latino,28888,4629,2023

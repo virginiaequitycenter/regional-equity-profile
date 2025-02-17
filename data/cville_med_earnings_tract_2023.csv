@@ -1,0 +1,37 @@
+GEOID,locality,tract,label,group,estimate,moe,year,county,locality_num,tract_num,tractnames
+51540000201,Charlottesville city,Census Tract 2.01,Median Earnings,All,36042,1551,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,Median Earnings,Male,36645,2892,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000201,Charlottesville city,Census Tract 2.01,Median Earnings,Female,35468,6566,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Median Earnings,All,7113,1150,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Median Earnings,Male,8036,5675,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000202,Charlottesville city,Census Tract 2.02,Median Earnings,Female,6843,1359,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000302,Charlottesville city,Census Tract 3.02,Median Earnings,All,47116,9236,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,Median Earnings,Male,45771,27010,2023,Charlottesville,540,000302,Woolen Mills
+51540000302,Charlottesville city,Census Tract 3.02,Median Earnings,Female,49531,9904,2023,Charlottesville,540,000302,Woolen Mills
+51540000401,Charlottesville city,Census Tract 4.01,Median Earnings,All,42778,11270,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,Median Earnings,Male,41925,13019,2023,Charlottesville,540,000401,Ridge St.
+51540000401,Charlottesville city,Census Tract 4.01,Median Earnings,Female,44120,14804,2023,Charlottesville,540,000401,Ridge St.
+51540000402,Charlottesville city,Census Tract 4.02,Median Earnings,All,50975,8342,2023,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,Median Earnings,Male,49347,11214,2023,Charlottesville,540,000402,Belmont
+51540000402,Charlottesville city,Census Tract 4.02,Median Earnings,Female,53667,11124,2023,Charlottesville,540,000402,Belmont
+51540000501,Charlottesville city,Census Tract 5.01,Median Earnings,All,40740,6475,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,Median Earnings,Male,37540,13148,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000501,Charlottesville city,Census Tract 5.01,Median Earnings,Female,42411,14376,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000502,Charlottesville city,Census Tract 5.02,Median Earnings,All,63182,9295,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,Median Earnings,Male,75372,11114,2023,Charlottesville,540,000502,Fry's Springs
+51540000502,Charlottesville city,Census Tract 5.02,Median Earnings,Female,52216,8319,2023,Charlottesville,540,000502,Fry's Springs
+51540000600,Charlottesville city,Census Tract 6,Median Earnings,All,9505,2845,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,Median Earnings,Male,10283,2378,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000600,Charlottesville city,Census Tract 6,Median Earnings,Female,8299,4541,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000700,Charlottesville city,Census Tract 7,Median Earnings,All,24955,5230,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,Median Earnings,Male,37330,6668,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000700,Charlottesville city,Census Tract 7,Median Earnings,Female,17762,5285,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000800,Charlottesville city,Census Tract 8,Median Earnings,All,70268,25732,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,Median Earnings,Male,70590,33994,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000800,Charlottesville city,Census Tract 8,Median Earnings,Female,68571,26794,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000900,Charlottesville city,Census Tract 9,Median Earnings,All,54477,7634,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,Median Earnings,Male,56635,18567,2023,Charlottesville,540,000900,Locust Grove
+51540000900,Charlottesville city,Census Tract 9,Median Earnings,Female,53488,11359,2023,Charlottesville,540,000900,Locust Grove
+51540001000,Charlottesville city,Census Tract 10,Median Earnings,All,56778,7296,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,Median Earnings,Male,56384,6126,2023,Charlottesville,540,001000,Downtown Area
+51540001000,Charlottesville city,Census Tract 10,Median Earnings,Female,57426,24637,2023,Charlottesville,540,001000,Downtown Area

@@ -1,0 +1,3 @@
+GEOID,locality,label,estimate,moe,total_households,percent,year
+51003,"Albemarle County, Virginia",Owner occupied,29720,696,45064,65.95,2023
+51003,"Albemarle County, Virginia",Renter occupied,15344,710,45064,34.05,2023

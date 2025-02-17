@@ -1,0 +1,11 @@
+GEOID,locality,group,estimate_insured,estimate_uninsured,moe_insured,moe_uninsured,total_est,total_moe,percent_insured,percent_uninsured,year
+51540,"Charlottesville city, Virginia",All,42893,2652,405,422,45545,71,94.18,5.82,2023
+51540,"Charlottesville city, Virginia",White alone,29517,1469,407,301,30986,370,95.26,4.74,2023
+51540,"Charlottesville city, Virginia",Black or African American alone,6889,846,456,336,7735,346,89.06,10.94,2023
+51540,"Charlottesville city, Virginia",American Indian and Alaska Native alone,56,0,41,28,56,41,100,0,2023
+51540,"Charlottesville city, Virginia",Asian alone,2969,250,233,87,3219,212,92.23,7.77,2023
+51540,"Charlottesville city, Virginia",Native Hawaiian and Other Pacific Islander alone,0,0,28,28,0,28,NA,NA,2023
+51540,"Charlottesville city, Virginia",Some other race alone,657,0,242,28,657,242,100,0,2023
+51540,"Charlottesville city, Virginia",Two or more races,2805,87,528,63,2892,540,96.99,3.01,2023
+51540,"Charlottesville city, Virginia",Hispanic or Latino,2575,491,197,221,3066,58,83.99,16.01,2023
+51540,"Charlottesville city, Virginia",White non Hispanic,28305,1014,329,228,29319,236,96.54,3.46,2023

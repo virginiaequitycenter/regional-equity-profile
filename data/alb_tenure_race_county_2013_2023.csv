@@ -1,0 +1,37 @@
+GEOID,locality,label,group,estimate,moe,total_households,percent,year
+51003,"Albemarle County, Virginia",Owner occupied,White,25860,697,36771,70.33,2023
+51003,"Albemarle County, Virginia",Renter occupied,White,10911,660,36771,29.67,2023
+51003,"Albemarle County, Virginia",Owner occupied,White,22777,557,32321,70.47,2013
+51003,"Albemarle County, Virginia",Renter occupied,White,9544,581,32321,29.53,2013
+51003,"Albemarle County, Virginia",Owner occupied,Black,1669,289,3724,44.82,2023
+51003,"Albemarle County, Virginia",Renter occupied,Black,2055,331,3724,55.18,2023
+51003,"Albemarle County, Virginia",Owner occupied,Black,1399,194,3353,41.72,2013
+51003,"Albemarle County, Virginia",Renter occupied,Black,1954,285,3353,58.28,2013
+51003,"Albemarle County, Virginia",Owner occupied,American Indian/Native Alaskan,23,27,49,46.94,2023
+51003,"Albemarle County, Virginia",Renter occupied,American Indian/Native Alaskan,26,29,49,53.06,2023
+51003,"Albemarle County, Virginia",Owner occupied,American Indian/Native Alaskan,0,29,79,0,2013
+51003,"Albemarle County, Virginia",Renter occupied,American Indian/Native Alaskan,79,62,79,100,2013
+51003,"Albemarle County, Virginia",Owner occupied,Asian,997,184,1748,57.04,2023
+51003,"Albemarle County, Virginia",Renter occupied,Asian,751,195,1748,42.96,2023
+51003,"Albemarle County, Virginia",Owner occupied,Asian,599,126,1337,44.8,2013
+51003,"Albemarle County, Virginia",Renter occupied,Asian,738,177,1337,55.2,2013
+51003,"Albemarle County, Virginia",Owner occupied,Native Hawaiian/Pacific Islander,0,31,0,NA,2023
+51003,"Albemarle County, Virginia",Renter occupied,Native Hawaiian/Pacific Islander,0,31,0,NA,2023
+51003,"Albemarle County, Virginia",Owner occupied,Native Hawaiian/Pacific Islander,14,22,14,100,2013
+51003,"Albemarle County, Virginia",Renter occupied,Native Hawaiian/Pacific Islander,0,29,14,0,2013
+51003,"Albemarle County, Virginia",Owner occupied,Other,262,118,854,30.68,2023
+51003,"Albemarle County, Virginia",Renter occupied,Other,592,186,854,69.32,2023
+51003,"Albemarle County, Virginia",Owner occupied,Other,92,58,279,32.97,2013
+51003,"Albemarle County, Virginia",Renter occupied,Other,187,113,279,67.03,2013
+51003,"Albemarle County, Virginia",Owner occupied,Multiracial,909,237,1918,47.39,2023
+51003,"Albemarle County, Virginia",Renter occupied,Multiracial,1009,282,1918,52.61,2023
+51003,"Albemarle County, Virginia",Owner occupied,Multiracial,197,87,581,33.91,2013
+51003,"Albemarle County, Virginia",Renter occupied,Multiracial,384,141,581,66.09,2013
+51003,"Albemarle County, Virginia",Owner occupied,"White, Not Hispanic or Latino",25526,667,35694,71.51,2023
+51003,"Albemarle County, Virginia",Renter occupied,"White, Not Hispanic or Latino",10168,615,35694,28.49,2023
+51003,"Albemarle County, Virginia",Owner occupied,"White, Not Hispanic or Latino",22265,536,31234,71.28,2013
+51003,"Albemarle County, Virginia",Renter occupied,"White, Not Hispanic or Latino",8969,534,31234,28.72,2013
+51003,"Albemarle County, Virginia",Owner occupied,Hispanic or Latino,969,252,2765,35.05,2023
+51003,"Albemarle County, Virginia",Renter occupied,Hispanic or Latino,1796,303,2765,64.95,2023
+51003,"Albemarle County, Virginia",Owner occupied,Hispanic or Latino,597,161,1349,44.26,2013
+51003,"Albemarle County, Virginia",Renter occupied,Hispanic or Latino,752,154,1349,55.74,2013

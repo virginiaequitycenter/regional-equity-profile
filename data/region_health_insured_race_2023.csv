@@ -1,0 +1,11 @@
+region_fips,locality,group,estimate_insured,moe_insured,estimate_uninsured,moe_uninsured,total_est,percent_insured,percent_uninsured,year
+003;540,Charlottesville-Albemarle Region,All,148944,912.7699600666095,8764,940.9383614243815,157708,94.44,5.56,2023
+003;540,Charlottesville-Albemarle Region,American Indian and Alaska Native alone,167,97.082439194738,11,32.2490309931942,178,93.82,6.18,2023
+003;540,Charlottesville-Albemarle Region,Asian alone,8850,427.14517438454106,682,218.10318658836692,9532,92.85,7.15,2023
+003;540,Charlottesville-Albemarle Region,Black or African American alone,15823,660.6209200441657,1587,420,17410,90.88,9.12,2023
+003;540,Charlottesville-Albemarle Region,Hispanic or Latino,8526,598.3594237579952,2713,610.4113367230331,11239,75.86,24.14,2023
+003;540,Charlottesville-Albemarle Region,Native Hawaiian and Other Pacific Islander alone,34,56.43580423808985,0,41.773197148410844,34,100,0,2023
+003;540,Charlottesville-Albemarle Region,Some other race alone,2406,542.918041696903,870,497.7881075317087,3276,73.44,26.56,2023
+003;540,Charlottesville-Albemarle Region,Two or more races,9323,1045.1736697793337,917,339.8896879871468,10240,91.04,8.96,2023
+003;540,Charlottesville-Albemarle Region,White alone,112341,895.7974101324473,4697,606.9019690197091,117038,95.99,4.01,2023
+003;540,Charlottesville-Albemarle Region,White non Hispanic,108960,694.827316676597,3556,514.3004958193216,112516,96.84,3.16,2023

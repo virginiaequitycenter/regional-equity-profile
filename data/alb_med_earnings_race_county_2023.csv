@@ -1,0 +1,19 @@
+GEOID,locality,label,sex,race,estimate,moe,year
+51003,"Albemarle County, Virginia",Median Earnings,All,White,55864,1752,2023
+51003,"Albemarle County, Virginia",Median Earnings,Male,White,65962,3424,2023
+51003,"Albemarle County, Virginia",Median Earnings,Female,White,46974,2205,2023
+51003,"Albemarle County, Virginia",Median Earnings,All,Black,37134,5033,2023
+51003,"Albemarle County, Virginia",Median Earnings,Male,Black,42607,7126,2023
+51003,"Albemarle County, Virginia",Median Earnings,Female,Black,36429,2101,2023
+51003,"Albemarle County, Virginia",Median Earnings,All,Asian,41335,6867,2023
+51003,"Albemarle County, Virginia",Median Earnings,Male,Asian,53611,17200,2023
+51003,"Albemarle County, Virginia",Median Earnings,Female,Asian,35806,7245,2023
+51003,"Albemarle County, Virginia",Median Earnings,All,Mutiracial,44461,4727,2023
+51003,"Albemarle County, Virginia",Median Earnings,Male,Mutiracial,43282,15258,2023
+51003,"Albemarle County, Virginia",Median Earnings,Female,Mutiracial,48363,9661,2023
+51003,"Albemarle County, Virginia",Median Earnings,All,"White, Not Hispanic or Latino",56542,1817,2023
+51003,"Albemarle County, Virginia",Median Earnings,Male,"White, Not Hispanic or Latino",67102,3355,2023
+51003,"Albemarle County, Virginia",Median Earnings,Female,"White, Not Hispanic or Latino",47914,2404,2023
+51003,"Albemarle County, Virginia",Median Earnings,All,Hispanic or Latino,35349,7920,2023
+51003,"Albemarle County, Virginia",Median Earnings,Male,Hispanic or Latino,36896,16513,2023
+51003,"Albemarle County, Virginia",Median Earnings,Female,Hispanic or Latino,30511,9177,2023

@@ -1,0 +1,61 @@
+GEOID,locality,group,year,estimate_insured,estimate_uninsured,moe_insured,moe_uninsured,total_est,total_moe,percent_insured,percent_uninsured
+51540,"Charlottesville city, Virginia",All,2022,43037,2877,521,532,45914,79,93.73,6.27
+51540,"Charlottesville city, Virginia",White alone,2022,29809,1629,428,336,31438,448,94.82,5.18
+51540,"Charlottesville city, Virginia",Black or African American alone,2022,6979,907,489,353,7886,358,88.5,11.5
+51540,"Charlottesville city, Virginia",American Indian and Alaska Native alone,2022,70,0,42,28,70,42,100,0
+51540,"Charlottesville city, Virginia",Asian alone,2022,2955,276,193,118,3231,201,91.46,8.54
+51540,"Charlottesville city, Virginia",Native Hawaiian and Other Pacific Islander alone,2022,0,0,28,28,0,28,NA,NA
+51540,"Charlottesville city, Virginia",Some other race alone,2022,547,0,244,28,547,244,100,0
+51540,"Charlottesville city, Virginia",Two or more races,2022,2677,65,471,57,2742,472,97.63,2.37
+51540,"Charlottesville city, Virginia",Hispanic or Latino,2022,2189,461,191,206,2650,62,82.6,17.4
+51540,"Charlottesville city, Virginia",White non Hispanic,2022,28756,1195,323,287,29951,231,96.01,3.99
+51540,"Charlottesville city, Virginia",All,2021,43010,3260,614,590,46270,130,92.95,7.05
+51540,"Charlottesville city, Virginia",White alone,2021,30344,1888,390,387,32232,308,94.14,5.86
+51540,"Charlottesville city, Virginia",Black or African American alone,2021,7280,1062,490,400,8342,297,87.27,12.73
+51540,"Charlottesville city, Virginia",American Indian and Alaska Native alone,2021,52,24,36,39,76,47,68.42,31.58
+51540,"Charlottesville city, Virginia",Asian alone,2021,3022,230,220,125,3252,229,92.93,7.07
+51540,"Charlottesville city, Virginia",Native Hawaiian and Other Pacific Islander alone,2021,5,0,9,28,5,9,100,0
+51540,"Charlottesville city, Virginia",Some other race alone,2021,402,0,180,28,402,180,100,0
+51540,"Charlottesville city, Virginia",Two or more races,2021,1905,56,440,45,1961,443,97.14,2.86
+51540,"Charlottesville city, Virginia",Hispanic or Latino,2021,2071,533,165,171,2604,51,79.53,20.47
+51540,"Charlottesville city, Virginia",White non Hispanic,2021,28893,1377,375,322,30270,201,95.45,4.55
+51540,"Charlottesville city, Virginia",All,2020,43041,3789,607,614,46830,107,91.91,8.09
+51540,"Charlottesville city, Virginia",White alone,2020,30693,2100,423,415,32793,284,93.6,6.4
+51540,"Charlottesville city, Virginia",Black or African American alone,2020,7313,1353,465,457,8666,239,84.39,15.61
+51540,"Charlottesville city, Virginia",American Indian and Alaska Native alone,2020,117,30,67,45,147,63,79.59,20.41
+51540,"Charlottesville city, Virginia",Asian alone,2020,3022,284,220,114,3306,215,91.41,8.59
+51540,"Charlottesville city, Virginia",Native Hawaiian and Other Pacific Islander alone,2020,5,0,8,27,5,8,100,0
+51540,"Charlottesville city, Virginia",Some other race alone,2020,306,0,174,27,306,174,100,0
+51540,"Charlottesville city, Virginia",Two or more races,2020,1585,22,343,21,1607,345,98.63,1.37
+51540,"Charlottesville city, Virginia",Hispanic or Latino,2020,1968,597,171,180,2565,63,76.73,23.27
+51540,"Charlottesville city, Virginia",White non Hispanic,2020,29234,1510,395,376,30744,155,95.09,4.91
+51540,"Charlottesville city, Virginia",All,2019,42742,3937,520,524,46679,105,91.57,8.43
+51540,"Charlottesville city, Virginia",White alone,2019,30791,2175,383,361,32966,210,93.4,6.6
+51540,"Charlottesville city, Virginia",Black or African American alone,2019,7366,1389,415,370,8755,282,84.13,15.87
+51540,"Charlottesville city, Virginia",American Indian and Alaska Native alone,2019,84,31,60,45,115,59,73.04,26.96
+51540,"Charlottesville city, Virginia",Asian alone,2019,2987,321,207,114,3308,186,90.3,9.7
+51540,"Charlottesville city, Virginia",Native Hawaiian and Other Pacific Islander alone,2019,31,0,42,26,31,42,100,0
+51540,"Charlottesville city, Virginia",Some other race alone,2019,165,0,111,26,165,111,100,0
+51540,"Charlottesville city, Virginia",Two or more races,2019,1318,21,358,25,1339,362,98.43,1.57
+51540,"Charlottesville city, Virginia",Hispanic or Latino,2019,2005,534,195,187,2539,56,78.97,21.03
+51540,"Charlottesville city, Virginia",White non Hispanic,2019,29065,1644,360,346,30709,91,94.65,5.35
+51540,"Charlottesville city, Virginia",All,2018,42373,4245,626,619,46618,148,90.89,9.11
+51540,"Charlottesville city, Virginia",White alone,2018,30363,2458,434,453,32821,208,92.51,7.49
+51540,"Charlottesville city, Virginia",Black or African American alone,2018,7390,1357,426,380,8747,215,84.49,15.51
+51540,"Charlottesville city, Virginia",American Indian and Alaska Native alone,2018,115,30,88,53,145,65,79.31,20.69
+51540,"Charlottesville city, Virginia",Asian alone,2018,3031,319,214,125,3350,235,90.48,9.52
+51540,"Charlottesville city, Virginia",Native Hawaiian and Other Pacific Islander alone,2018,23,0,28,25,23,28,100,0
+51540,"Charlottesville city, Virginia",Some other race alone,2018,150,0,83,25,150,83,100,0
+51540,"Charlottesville city, Virginia",Two or more races,2018,1301,81,330,66,1382,327,94.14,5.86
+51540,"Charlottesville city, Virginia",Hispanic or Latino,2018,1725,764,226,219,2489,45,69.3,30.7
+51540,"Charlottesville city, Virginia",White non Hispanic,2018,28944,1694,358,363,30638,139,94.47,5.53
+51540,"Charlottesville city, Virginia",All,2017,41861,4249,526,524,46110,133,90.79,9.21
+51540,"Charlottesville city, Virginia",White alone,2017,29926,2372,372,343,32298,213,92.66,7.34
+51540,"Charlottesville city, Virginia",Black or African American alone,2017,7263,1459,430,368,8722,270,83.27,16.73
+51540,"Charlottesville city, Virginia",American Indian and Alaska Native alone,2017,103,38,67,58,141,52,73.05,26.95
+51540,"Charlottesville city, Virginia",Asian alone,2017,3085,273,208,90,3358,190,91.87,8.13
+51540,"Charlottesville city, Virginia",Native Hawaiian and Other Pacific Islander alone,2017,17,0,20,25,17,20,100,0
+51540,"Charlottesville city, Virginia",Some other race alone,2017,136,9,81,14,145,82,93.79,6.21
+51540,"Charlottesville city, Virginia",Two or more races,2017,1331,98,306,68,1429,323,93.14,6.86
+51540,"Charlottesville city, Virginia",Hispanic or Latino,2017,1740,665,193,203,2405,40,72.35,27.65
+51540,"Charlottesville city, Virginia",White non Hispanic,2017,28543,1716,284,257,30259,126,94.33,5.67

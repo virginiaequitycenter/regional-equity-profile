@@ -1,0 +1,13 @@
+GEOID,NAME,tract,locality,state,summary_est,summary_moe,estimate_insured,estimate_uninsured,moe_insured,moe_uninsured,percent_insured,percent_uninsured,year,county,locality_num,tract_num,tractnames
+51540000201,Census Tract 2.01; Charlottesville city; Virginia,Census Tract 2.01,Charlottesville city,Virginia,2903,423,2634,269,383,234,90.73,9.27,2023,Charlottesville,540,000201,Rose Hill-Harris-Venable
+51540000202,Census Tract 2.02; Charlottesville city; Virginia,Census Tract 2.02,Charlottesville city,Virginia,4952,607,4632,320,626,251,93.54,6.46,2023,Charlottesville,540,000202,10th & Page-Venable
+51540000302,Census Tract 3.02; Charlottesville city; Virginia,Census Tract 3.02,Charlottesville city,Virginia,3193,484,2733,460,407,281,85.59,14.41,2023,Charlottesville,540,000302,Woolen Mills
+51540000401,Census Tract 4.01; Charlottesville city; Virginia,Census Tract 4.01,Charlottesville city,Virginia,3577,496,3162,415,452,162,88.4,11.6,2023,Charlottesville,540,000401,Ridge St.
+51540000402,Census Tract 4.02; Charlottesville city; Virginia,Census Tract 4.02,Charlottesville city,Virginia,4227,491,4160,67,504,63,98.41,1.59,2023,Charlottesville,540,000402,Belmont
+51540000501,Census Tract 5.01; Charlottesville city; Virginia,Census Tract 5.01,Charlottesville city,Virginia,4113,592,3745,368,577,183,91.05,8.95,2023,Charlottesville,540,000501,Fifeville-Cherry Avenue
+51540000502,Census Tract 5.02; Charlottesville city; Virginia,Census Tract 5.02,Charlottesville city,Virginia,5408,530,5148,260,533,160,95.19,4.81,2023,Charlottesville,540,000502,Fry's Springs
+51540000600,Census Tract 6; Charlottesville city; Virginia,Census Tract 6,Charlottesville city,Virginia,3151,347,3023,128,337,78,95.94,4.06,2023,Charlottesville,540,000600,JPA-Fontaine
+51540000700,Census Tract 7; Charlottesville city; Virginia,Census Tract 7,Charlottesville city,Virginia,4626,428,4471,155,442,99,96.65,3.35,2023,Charlottesville,540,000700,Barracks-Rugby
+51540000800,Census Tract 8; Charlottesville city; Virginia,Census Tract 8,Charlottesville city,Virginia,3423,438,3399,24,440,27,99.3,0.7,2023,Charlottesville,540,000800,Greenbrier-Meadows
+51540000900,Census Tract 9; Charlottesville city; Virginia,Census Tract 9,Charlottesville city,Virginia,2339,275,2275,64,274,70,97.26,2.74,2023,Charlottesville,540,000900,Locust Grove
+51540001000,Census Tract 10; Charlottesville city; Virginia,Census Tract 10,Charlottesville city,Virginia,3633,669,3511,122,686,79,96.64,3.36,2023,Charlottesville,540,001000,Downtown Area

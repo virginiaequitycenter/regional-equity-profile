@@ -1,0 +1,3 @@
+GEOID,locality,label,estimate,moe,total_households,percent,year
+51540,"Charlottesville city, Virginia",Owner occupied,8614,436,19699,43.73,2023
+51540,"Charlottesville city, Virginia",Renter occupied,11085,514,19699,56.27,2023

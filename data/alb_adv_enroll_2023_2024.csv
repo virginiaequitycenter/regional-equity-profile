@@ -1,0 +1,10 @@
+division_name,label,students_in_ap,students_in_dual_enrollment,school_year,total_10to12,total_11and12,total_allgrades,ap_percent,dual_percent
+Albemarle County,American Indian or Alaska Native,0,1,2023-2024,4,2,6,0,50
+Albemarle County,Asian,106,58,2023-2024,188,130,260,56.38,44.62
+Albemarle County,"Black, not of Hispanic origin",54,67,2023-2024,373,244,506,14.48,27.46
+Albemarle County,Hispanic,81,76,2023-2024,548,352,737,14.78,21.59
+Albemarle County,Native Hawaiian or Pacific Islander,0,0,2023-2024,3,3,4,0,0
+Albemarle County,"Non-Hispanic, two or more races",52,45,2023-2024,199,115,266,26.13,39.13
+Albemarle County,"White, not of Hispanic origin",696,611,2023-2024,2012,1348,2695,34.59,45.33
+Albemarle County,Economically Disadvantaged,117,141,2023-2024,922,585,1264,12.69,24.1
+Albemarle County,All Students,1609,1013,2023-2024,3327,2194,4474,48.36,46.17
