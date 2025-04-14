@@ -1,7 +1,7 @@
 # R Script for pulling and examining living standards data
 # Authors: Henry DeMarco, Beth Mitchell
 # Date Created: June 17, 2024
-# Last Updated: July 23, 2024
+# Last Updated: Jan 27, 2025 # ACS 2019-2023 updates
 
 ## County FIPS Codes
 # 003 -- Albemarle
@@ -9,13 +9,13 @@
 
 # Living Standards TOC ----
 # AHDI MEASURES, COUNTY & TRACT LEVEL
-# Median personal earnings, 2022 
+# Median personal earnings 
 # - Source: ACS Table B20002 (COUNTY & TRACT)
 # - Source: ACS Table B20001 (REGION)
 # OTHER MEASURES
-# Median personal earnings by sex and race, 2022 
+# Median personal earnings by sex and race 
 # - Source: ACS Table B20017A-I (COUNTY)
-# Median household income, 2022 
+# Median household income 
 # - Source: ACS Table B19013 (COUNTY & TRACT)
 # - Source: ACS Table B19013A-I (COUNTY ONLY)
 # - Source: B19001 & B19001A-I (REGION)
@@ -48,7 +48,7 @@ library(janitor)
 # Creating basic objects ----
 
 # Year for ACS data (single year)
-year <- 2022
+year <- 2023
 
 # County FIPS codes 
 county_codes <- c("003", "540") # Albemarle, Charlottesville FIPS Code
@@ -248,10 +248,10 @@ region_med_earnings <- data.frame(
 # Generating CSV:
 write_csv(region_med_earnings, paste0("data/region_med_earnings", "_", year, ".csv"))
 
-# Median Personal Earnings 2012-2022: Combined Region, B20001 ----
+# Median Personal Earnings 2012-2023: Combined Region, B20001 ----
 # ACS Table B20001 Sex by Earning
 # Get ACS data
-acs_B20001_county_2012_2022 <- map_df(2022:2012,
+acs_B20001_county_2012_2023 <- map_df(2023:2012,
                                    ~ get_acs(
                                      year = .x,
                                      geography = "county",
@@ -282,7 +282,7 @@ earning_ranges <- tibble::tibble(
 
 earnings_sex_df <- earning_ranges %>%
   pmap_dfr(function(earning_bin, male_var, female_var) {
-    acs_B20001_county_2012_2022 %>%
+    acs_B20001_county_2012_2023 %>%
       filter(variable %in% c(male_var, female_var))  %>%
       group_by(variable, GEOID, NAME, year) %>%
       mutate(earning_bin = as.factor(earning_bin),
@@ -373,28 +373,26 @@ med_earn_combined_2019 <- agg_earning_median(earnings_df, 2019, choose)
 med_earn_combined_2020 <- agg_earning_median(earnings_df, 2020, choose)
 med_earn_combined_2021 <- agg_earning_median(earnings_df, 2021, choose)
 med_earn_combined_2022 <- agg_earning_median(earnings_df, 2022, choose)
+med_earn_combined_2023 <- agg_earning_median(earnings_df, 2023, choose)
 
 
-# med_earn_combined_2012_2022 <- map_df(2022:2012,
-#                                       ~ agg_earning_median(earnings_df, .x, choose) %>%
-#                                         mutate(year = .x))
-
-# Used t oadjust for inflation (2022 dollars): https://www.bls.gov/data/inflation_calculator.htm
+# Used to adjust for inflation (2023 dollars): https://www.bls.gov/data/inflation_calculator.htm
 # Create data frame
-region_med_earnings_2012_2022 <- data.frame(
-  region_fips = rep(paste(choose, collapse = ","),11),
-  locality = rep(region_name,11),
-  med_earnings_est = c(med_earn_combined_2012,med_earn_combined_2013,med_earn_combined_2014,med_earn_combined_2015,
+region_med_earnings_2012_2023 <- data.frame(
+  region_fips = rep(paste(choose, collapse = ","),12),
+  locality = rep(region_name,12),
+  med_earnings_est = c(med_earn_combined_2012, med_earn_combined_2013, med_earn_combined_2014, med_earn_combined_2015,
                        med_earn_combined_2016, med_earn_combined_2017, med_earn_combined_2018, med_earn_combined_2019,
-                       med_earn_combined_2020, med_earn_combined_2021, med_earn_combined_2022),
-  med_earn_adjusted_2022 = c(37533.84, 39000.04, 39525.19, 39717.82, 39313.04, 39769.43, 40049.72,
-                             41782.95, 42626.59, 44681.05, 45837.85
+                       med_earn_combined_2020, med_earn_combined_2021, med_earn_combined_2022, med_earn_combined_2023),
+  med_earn_adjusted_2023 = c(39939.82, 41500.00, 42058.81, 42263.79, 
+                             41833.06, 42318.71, 42616.97, 44461.29, 
+                             45359.02, 47545.17, 48776.12, 48040.57
 ),
-  year = c(2012:2022)
+  year = c(2012:2023)
 )
 
 # Generating CSV:
-write_csv(region_med_earnings_2012_2022, paste0("data/region_med_earnings_2012_2022.csv"))
+write_csv(region_med_earnings_2012_2023, paste0("data/region_med_earnings_2012_2023.csv"))
 
 ## ....................................................
 # Median Personal Earnings by Sex and Race: B20017 ----
@@ -590,16 +588,16 @@ aggregate_median_hhinc <- function(df, loc){
 }
 
 # apply function 
-median_hhinc_overall <- aggregate_median(income_tables[[1]], choose)
-median_hhinc_whitealone <- aggregate_median(income_tables[[2]], choose)
-median_hhinc_blackalone <- aggregate_median(income_tables[[3]], choose)
-median_hhinc_aianalone <- aggregate_median(income_tables[[4]], choose)
-median_hhinc_asianalone <- aggregate_median(income_tables[[5]], choose)
-median_hhinc_nhpialone <- aggregate_median(income_tables[[6]], choose)
-median_hhinc_otheralone <- aggregate_median(income_tables[[7]], choose)
-median_hhinc_multialone <- aggregate_median(income_tables[[8]], choose)
-median_hhinc_whitenhalone <- aggregate_median(income_tables[[9]], choose)
-median_hhinc_hispanic <- aggregate_median(income_tables[[10]], choose)
+median_hhinc_overall <- aggregate_median_hhinc(income_tables[[1]], choose)
+median_hhinc_whitealone <- aggregate_median_hhinc(income_tables[[2]], choose)
+median_hhinc_blackalone <- aggregate_median_hhinc(income_tables[[3]], choose)
+median_hhinc_aianalone <- aggregate_median_hhinc(income_tables[[4]], choose)
+median_hhinc_asianalone <- aggregate_median_hhinc(income_tables[[5]], choose)
+median_hhinc_nhpialone <- aggregate_median_hhinc(income_tables[[6]], choose)
+median_hhinc_otheralone <- aggregate_median_hhinc(income_tables[[7]], choose)
+median_hhinc_multialone <- aggregate_median_hhinc(income_tables[[8]], choose)
+median_hhinc_whitenhalone <- aggregate_median_hhinc(income_tables[[9]], choose)
+median_hhinc_hispanic <- aggregate_median_hhinc(income_tables[[10]], choose)
 
 # why no nhpi?
 # income_tables[[6]] %>% view()
@@ -825,22 +823,22 @@ region_rent_burden <- rent_burden_county %>%
 write_csv(region_rent_burden, paste0("data/region_rent_burden", "_", year, ".csv"))
 
 ## ........................................
-# Median Gross Rent, 2012-2022: B25064 ----
+# Median Gross Rent: B25064 ----
 # Table: B25064 (Median Gross Rent (Dollars))
 
 # Get ACS
-# County 2012-2022
-acs_B25064_county <- map_df(2022:2012,
+# County 2012-2023
+acs_B25064_county <- map_df(2023:2012,
                             ~ get_acs(geography = "county",
                                       year = .x,
                                       state = "VA",
                                       county = county_codes,
                                       table = "B25064",
-                                      survey = "acs5", 
+                                      survey = "acs5",
                                       cache = TRUE) %>%
                               mutate(year = .x))
 
-# Tract 2022 only 
+# Tract  
 acs_B25064_tract <- get_acs(
   geography = "tract",
   state = "VA",
@@ -861,42 +859,42 @@ acs_B25064_tract <- get_acs(
 #                               mutate(year = .x))
 
 # Finalizing tables
-gross_rent_county_2012_2022 <- acs_B25064_county %>% 
+gross_rent_county_2012_2023 <- acs_B25064_county %>%
   mutate(label = case_when(variable == "B25064_001" ~ "Median Gross Rent"),
-         locality = NAME) %>% 
+         locality = NAME) %>%
   select(GEOID, locality, label, estimate, moe, year)
 
-gross_rent_tract_2022 <- acs_B25064_tract %>% 
+gross_rent_tract <- acs_B25064_tract %>% 
   mutate(label = case_when(variable == "B25064_001" ~ "Median Gross Rent"),
          year = year) %>% 
   separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE) %>%
   select(GEOID, locality, tract, label, estimate, moe, year)
 
 # Join tract names
-gross_rent_tract_2022 <- gross_rent_tract_2022 %>% 
+gross_rent_tract <- gross_rent_tract %>% 
   left_join(tract_names)
 
 # Median Gross Rent: Charlottesville, county (2012-2022) & tract (2022) ----
-cville_gross_rent_county_2012_2022 <- gross_rent_county_2012_2022 %>% 
+cville_gross_rent_county_2012_2023 <- gross_rent_county_2012_2023 %>% 
   filter(locality == "Charlottesville city, Virginia")
 
-write_csv(cville_gross_rent_county_2012_2022, paste0("data/cville_gross_rent_county_2012_2022.csv"))
+write_csv(cville_gross_rent_county_2012_2023, paste0("data/cville_gross_rent_county_2012_2023.csv"))
 
-cville_gross_rent_tract_2022 <- gross_rent_tract_2022 %>% 
+cville_gross_rent_tract <- gross_rent_tract %>% 
   filter(locality == "Charlottesville city")
 
-write_csv(cville_gross_rent_tract_2022, paste0("data/cville_gross_rent_tract_2022.csv"))
+write_csv(cville_gross_rent_tract, paste0("data/cville_gross_rent_tract", "_", year, ".csv"))
 
 # Median Gross Rent: Albemarle, county (2012-2022) & tract (2022) ----
-alb_gross_rent_county_2012_2022 <- gross_rent_county_2012_2022 %>% 
+alb_gross_rent_county_2012_2023 <- gross_rent_county_2012_2023 %>% 
   filter(locality == "Albemarle County, Virginia")
 
-write_csv(alb_gross_rent_county_2012_2022, paste0("data/alb_gross_rent_county_2012_2022.csv"))
+write_csv(alb_gross_rent_county_2012_2023, paste0("data/alb_gross_rent_county_2012_2023.csv"))
 
-alb_gross_rent_tract_2022 <- gross_rent_tract_2022 %>% 
+alb_gross_rent_tract <- gross_rent_tract %>% 
   filter(locality == "Albemarle County")
 
-write_csv(alb_gross_rent_tract_2022, paste0("data/alb_gross_rent_tract_2022.csv"))
+write_csv(alb_gross_rent_tract, paste0("data/alb_gross_rent_tract", "_", year, ".csv"))
 
 # # Median Gross Rent: Combined Region (2012-2022), B25063 (METHOD DOES NOT WORK) ----
 # # https://dof.ca.gov/wp-content/uploads/sites/352/Forecasting/Demographics/Documents/How_to_Recalculate_a_Median.pdf
@@ -1082,11 +1080,11 @@ write_csv(region_tenure, paste0("data/region_tenure", "_", year, ".csv"))
 
 ## ..........................................
 # Tenure (Own & Rent) by Race: B25003A-I ----
-# Tables: B25003A-B25003I, 2012 & 2022
+# Tables: B25003A-B25003I, 2013 & 2023
 
 # Get ACS Data - County by race
 # White Alone
-acs_B25003A_county <- map_df(c(2022, 2012),
+acs_B25003A_county <- map_df(c(2023, 2013),
                                   ~ get_acs(geography = "county",
                                             year = .x,
                                             state = "VA",
@@ -1098,7 +1096,7 @@ acs_B25003A_county <- map_df(c(2022, 2012),
                                     filter(variable %in% c("B25003A_002", "B25003A_003")))
 
 # Black Alone
-acs_B25003B_county <- map_df(c(2022, 2012),
+acs_B25003B_county <- map_df(c(2023, 2013),
                              ~ get_acs(geography = "county",
                                        year = .x,
                                        state = "VA",
@@ -1110,7 +1108,7 @@ acs_B25003B_county <- map_df(c(2022, 2012),
                                filter(variable %in% c("B25003B_002", "B25003B_003")))
 
 # American Indian/Native Alaskan
-acs_B25003C_county <- map_df(c(2022, 2012),
+acs_B25003C_county <- map_df(c(2023, 2013),
                              ~ get_acs(geography = "county",
                                        year = .x,
                                        state = "VA",
@@ -1122,7 +1120,7 @@ acs_B25003C_county <- map_df(c(2022, 2012),
                                filter(variable %in% c("B25003C_002", "B25003C_003")))
 
 # Asian
-acs_B25003D_county <- map_df(c(2022, 2012),
+acs_B25003D_county <- map_df(c(2023, 2013),
                              ~ get_acs(geography = "county",
                                        year = .x,
                                        state = "VA",
@@ -1134,7 +1132,7 @@ acs_B25003D_county <- map_df(c(2022, 2012),
                                filter(variable %in% c("B25003D_002", "B25003D_003")))
 
 # Native Hawaiian/Pacific Islander
-acs_B25003E_county <- map_df(c(2022, 2012),
+acs_B25003E_county <- map_df(c(2023, 2013),
                              ~ get_acs(geography = "county",
                                        year = .x,
                                        state = "VA",
@@ -1146,7 +1144,7 @@ acs_B25003E_county <- map_df(c(2022, 2012),
                                filter(variable %in% c("B25003E_002", "B25003E_003")))
 
 # Other Race
-acs_B25003F_county <- map_df(c(2022, 2012),
+acs_B25003F_county <- map_df(c(2023, 2013),
                              ~ get_acs(geography = "county",
                                        year = .x,
                                        state = "VA",
@@ -1158,7 +1156,7 @@ acs_B25003F_county <- map_df(c(2022, 2012),
                                filter(variable %in% c("B25003F_002", "B25003F_003")))
 
 # Multiracial
-acs_B25003G_county <- map_df(c(2022, 2012),
+acs_B25003G_county <- map_df(c(2023, 2013),
                              ~ get_acs(geography = "county",
                                        year = .x,
                                        state = "VA",
@@ -1171,7 +1169,7 @@ acs_B25003G_county <- map_df(c(2022, 2012),
 
 
 # White, Not Hispanic or Latino
-acs_B25003H_county <- map_df(c(2022, 2012),
+acs_B25003H_county <- map_df(c(2023, 2013),
                              ~ get_acs(geography = "county",
                                        year = .x,
                                        state = "VA",
@@ -1183,7 +1181,7 @@ acs_B25003H_county <- map_df(c(2022, 2012),
                                filter(variable %in% c("B25003H_002", "B25003H_003")))
 
 # Hispanic or Latino
-acs_B25003I_county <- map_df(c(2022, 2012),
+acs_B25003I_county <- map_df(c(2023, 2013),
                              ~ get_acs(geography = "county",
                                        year = .x,
                                        state = "VA",
@@ -1229,13 +1227,13 @@ tenure_race_county <- acs_B25003_race_county %>%
 cville_tenure_race_county <- tenure_race_county %>% 
   filter(locality == "Charlottesville city, Virginia")
 
-write_csv(cville_tenure_race_county, paste0("data/cville_tenure_race_county_2012_2022.csv"))
+write_csv(cville_tenure_race_county, paste0("data/cville_tenure_race_county_2013_2023.csv"))
 
 # Tenure (Own & Rent) by Race: Albemarle, county ----
 alb_tenure_race_county <- tenure_race_county %>% 
   filter(locality == "Albemarle County, Virginia")
 
-write_csv(alb_tenure_race_county, paste0("data/alb_tenure_race_county_2012_2022.csv"))
+write_csv(alb_tenure_race_county, paste0("data/alb_tenure_race_county_2013_2023.csv"))
 
 # Tenure (Own & Rent) by Race: Combined region ----
 region_tenure_race <- tenure_race_county %>% 
@@ -1249,7 +1247,7 @@ region_tenure_race <- tenure_race_county %>%
          region_fips = paste(county_codes, collapse = ";")) %>%
   select(region_fips, locality, group, label, estimate, moe, total_households, percent, year)
 
-write_csv(region_tenure_race, "data/region_tenure_race_2012_2022.csv")
+write_csv(region_tenure_race, "data/region_tenure_race_2013_2023.csv")
 
 ## ....................................................
 ## End

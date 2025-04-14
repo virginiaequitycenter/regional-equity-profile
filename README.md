@@ -2,4 +2,4 @@
 
 Code base for Regional Equity Profiles 
 
-[In progress data viz links](https://github.com/virginiaequitycenter/regional-equity-profile/tree/main/datacode#readme)
+[Locality and Area Report PDFs](https://github.com/virginiaequitycenter/regional-equity-profile/tree/main/report_pdfs#readme)

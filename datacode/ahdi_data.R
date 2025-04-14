@@ -1,6 +1,6 @@
 # Creating AHDI Measures
 # Author: Beth Mitchell
-# Last Updated: 8/29/2024
+# Last Updated: 1/27/2025 # updated for ACS 2019-2023
 
 # Load packages ----
 library(tidyverse)
@@ -39,11 +39,11 @@ cville_life_exp_tract <- tjhd_lifeexp %>%
 
 # Life Expectancy Region ----
 # get populations
-cville_pop <- read_csv("data/cville_sex_age_2022.csv") %>%
+cville_pop <- read_csv("data/cville_sex_age_2023.csv") %>%
   group_by(GEOID) %>% 
   summarise(total_pop = first(total_pop))
 
-alb_pop <- read_csv("data/alb_sex_age_2022.csv") %>%
+alb_pop <- read_csv("data/alb_sex_age_2023.csv") %>%
   group_by(GEOID) %>% 
   summarise(total_pop = first(total_pop))
 
@@ -60,37 +60,37 @@ region_life_exp <- region_life_exp %>%
 
 # School Enrollment (3-24yrs) by county and tract ----
 # Albemarle
-alb_enroll_county <- read_csv("data/alb_enroll_county_2022.csv")
+alb_enroll_county <- read_csv("data/alb_enroll_county_2023.csv")
 alb_enroll_county <- alb_enroll_county %>% 
   rename(enrollment_per = percent) %>% 
   select(GEOID, enrollment_per)
 
-alb_enroll_tract <- read_csv("data/alb_enroll_tract_2022.csv") %>%
+alb_enroll_tract <- read_csv("data/alb_enroll_tract_2023.csv") %>%
   mutate(GEOID = as.character(GEOID))
 alb_enroll_tract <- alb_enroll_tract %>% 
   select(GEOID, county, tractnames, percent) %>% 
   rename(enrollment_per = percent)
 
 # Charlottesville
-cville_enroll_county <- read_csv("data/cville_enroll_county_2022.csv")
+cville_enroll_county <- read_csv("data/cville_enroll_county_2023.csv")
 cville_enroll_county <- cville_enroll_county %>% 
   rename(enrollment_per = percent) %>% 
   select(GEOID, enrollment_per)
 
-cville_enroll_tract <- read_csv("data/cville_enroll_tract_2022.csv") %>%
+cville_enroll_tract <- read_csv("data/cville_enroll_tract_2023.csv") %>%
   mutate(GEOID = as.character(GEOID))
 cville_enroll_tract <- cville_enroll_tract %>% 
   select(GEOID, county, tractnames, percent) %>% 
   rename(enrollment_per = percent)
 
 # Region 
-region_enroll <- read_csv("data/region_enroll_2022.csv")%>% 
+region_enroll <- read_csv("data/region_enroll_2023.csv")%>% 
   rename(enrollment_per = percent) %>% 
   select(region_fips, enrollment_per)
 
 # Degree Attainment 25yrs+ by county and tract ----
 # Albemarle
-alb_edu_attain_county <- read_csv("data/alb_edu_attain_county_2022.csv")
+alb_edu_attain_county <- read_csv("data/alb_edu_attain_county_2023.csv")
 alb_edu_attain_county <- alb_edu_attain_county %>% 
   select(GEOID, percent, label) %>% 
   mutate(label = case_when(label == "High school graduate or higher" ~ "hs_grad_per",
@@ -98,7 +98,7 @@ alb_edu_attain_county <- alb_edu_attain_county %>%
                            label == "Graduate or professional degree" ~ "grad_deg_per")) %>% 
   pivot_wider(names_from = label, values_from = percent)
 
-alb_edu_attain_tract <- read_csv("data/alb_edu_attain_tract_2022.csv") %>% 
+alb_edu_attain_tract <- read_csv("data/alb_edu_attain_tract_2023.csv") %>% 
   mutate(GEOID = as.character(GEOID))
 alb_edu_attain_tract <- alb_edu_attain_tract %>% 
   select(GEOID, county, tractnames, percent, label) %>% 
@@ -108,7 +108,7 @@ alb_edu_attain_tract <- alb_edu_attain_tract %>%
   pivot_wider(names_from = label, values_from = percent)
 
 # Charlottesville
-cville_edu_attain_county <- read_csv("data/cville_edu_attain_county_2022.csv")
+cville_edu_attain_county <- read_csv("data/cville_edu_attain_county_2023.csv")
 cville_edu_attain_county <- cville_edu_attain_county %>% 
   select(GEOID, percent, label) %>% 
   mutate(label = case_when(label == "High school graduate or higher" ~ "hs_grad_per",
@@ -116,7 +116,7 @@ cville_edu_attain_county <- cville_edu_attain_county %>%
                            label == "Graduate or professional degree" ~ "grad_deg_per")) %>% 
   pivot_wider(names_from = label, values_from = percent)
 
-cville_edu_attain_tract <- read_csv("data/cville_edu_attain_tract_2022.csv") %>% 
+cville_edu_attain_tract <- read_csv("data/cville_edu_attain_tract_2023.csv") %>% 
   mutate(GEOID = as.character(GEOID))
 cville_edu_attain_tract <- cville_edu_attain_tract %>% 
   select(GEOID, county, tractnames, percent, label) %>% 
@@ -126,7 +126,7 @@ cville_edu_attain_tract <- cville_edu_attain_tract %>%
   pivot_wider(names_from = label, values_from = percent)
 
 # Region
-region_edu_attain <- read_csv("data/region_edu_attain_2022.csv")%>% 
+region_edu_attain <- read_csv("data/region_edu_attain_2023.csv")%>% 
   select(region_fips, percent, label) %>% 
   mutate(label = case_when(label == "High school graduate or higher" ~ "hs_grad_per",
                            label == "Bachelor's degree or higher" ~ "bac_deg_per",
@@ -135,31 +135,31 @@ region_edu_attain <- read_csv("data/region_edu_attain_2022.csv")%>%
 
 # Median personal earnings by county and tract ----
 # Albemarle
-alb_med_earnings_county <- read_csv("data/alb_med_earnings_county_2022.csv") %>% 
+alb_med_earnings_county <- read_csv("data/alb_med_earnings_county_2023.csv") %>% 
   filter(group == "All") %>% 
   rename(med_earnings = estimate) %>% 
   select(GEOID, med_earnings)
 
-alb_med_earnings_tract <- read_csv("data/alb_med_earnings_tract_2022.csv") %>% 
+alb_med_earnings_tract <- read_csv("data/alb_med_earnings_tract_2023.csv") %>% 
   mutate(GEOID = as.character(GEOID)) %>% 
   filter(group == "All") %>% 
   rename(med_earnings = estimate) %>% 
   select(GEOID, county, tractnames, med_earnings)
 
 # Charlottesville
-cville_med_earnings_county <- read_csv("data/cville_med_earnings_county_2022.csv") %>% 
+cville_med_earnings_county <- read_csv("data/cville_med_earnings_county_2023.csv") %>% 
   filter(group == "All") %>% 
   rename(med_earnings = estimate) %>% 
   select(GEOID, med_earnings)
 
-cville_med_earnings_tract <- read_csv("data/cville_med_earnings_tract_2022.csv") %>% 
+cville_med_earnings_tract <- read_csv("data/cville_med_earnings_tract_2023.csv") %>% 
   mutate(GEOID = as.character(GEOID)) %>% 
   filter(group == "All") %>% 
   rename(med_earnings = estimate) %>% 
   select(GEOID, county, tractnames, med_earnings)
 
 # Region
-region_med_earnings <- read_csv("data/region_med_earnings_2022.csv") %>% 
+region_med_earnings <- read_csv("data/region_med_earnings_2023.csv") %>% 
   rename(med_earnings = med_earnings_est) %>% 
   mutate(region_fips = "003;540") %>% 
   select(region_fips, med_earnings)
@@ -261,10 +261,10 @@ ahdi_region_counties <- ahdi_region_counties %>%
   relocate(hs_grad_per:bac_deg_per, .after=lifeexp_est)
 
 # Write AHDI CSVs ----
-write_csv(ahdi_county, "data/ahdi_county.csv")
-write_csv(ahdi_tract_alb, "data/ahdi_tract_alb.csv")
-write_csv(ahdi_tract_cville, "data/ahdi_tract_cville.csv")
-write_csv(ahdi_region_counties, "data/ahdi_region_counties.csv")
+write_csv(ahdi_county, "data/ahdi_county_2023.csv")
+write_csv(ahdi_tract_alb, "data/ahdi_tract_alb_2023.csv")
+write_csv(ahdi_tract_cville, "data/ahdi_tract_cville_2023.csv")
+write_csv(ahdi_region_counties, "data/ahdi_region_counties_2023.csv")
 
 # Benchmark Data - State & Localities ----
 # 000 -- Virginia (state)
@@ -305,7 +305,7 @@ benchmark_fips <- c("000", "510", "013", "087", "680", "760", "770", "830", "015
                     "550", "650", "660", "810")
 
 # Year for ACS data (single year)
-year <- 2022
+year <- 2023
 
 # Life Expectancy: Benchmark Cities/Counties & State ----
 # Read data
@@ -537,9 +537,9 @@ ahdi_county <- ahdi_county %>%
 
 ahdi_all <- rbind(ahdi_county, ahdi_benchmarks)
 
-write_csv(ahdi_all, "data/ahdi_benchmarks.csv")
+write_csv(ahdi_all, "data/ahdi_benchmarks_2023.csv")
 
-# Comparing 2019 and 2022 AHDI ----
+# Comparing 2019 and 2023 AHDI ----
 ahdi_tract_alb_2019 <- read_csv("data/data_2019/tract_ahdi.csv")%>% 
   mutate(GEOID_TRACT_10 = as.character(GEOID),
          ahdi_2019 = round(ahdi, digits = 1)) %>% 
@@ -622,7 +622,7 @@ alb_tracts_crosswalk <- alb_tracts_crosswalk %>%
 #                                           tractnames_2019 == "Southern Albemarle" ~ "Southern Albemarle (Southern Albemarle-Scottsville)",
 #                                           .default = tractnames_2019))
 
-ahdi_tract_alb_2022 <- read_csv("data/ahdi_tract_alb.csv") %>% 
+ahdi_tract_alb_2023 <- read_csv("data/ahdi_tract_alb_2023.csv") %>% 
   mutate(GEOID = as.character(GEOID),
          ahdi = round(ahdi, digits = 1)) %>% 
   rename(GEOID_TRACT_20 = GEOID) %>% 
@@ -630,9 +630,9 @@ ahdi_tract_alb_2022 <- read_csv("data/ahdi_tract_alb.csv") %>%
 
 ahdi_tract_combined <- ahdi_tract_alb_2019 %>%
   left_join(alb_tracts_crosswalk) %>% 
-  left_join(ahdi_tract_alb_2022)
+  left_join(ahdi_tract_alb_2023)
 
-write_csv(ahdi_tract_combined, "data/ahdi_tract_combined.csv")
+write_csv(ahdi_tract_combined, "data/ahdi_tract_combined_2023.csv")
 # ahdi_tract_alb_2019 <- ahdi_tract_alb_2019 %>% 
 #   left_join(tract_names_2019, join_by(GEOID == GEOID_TRACT_10))
 

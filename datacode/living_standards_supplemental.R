@@ -1,31 +1,16 @@
 # R Script for pulling and examining supplemental living standards data
-# Author: Henry DeMarco
+# Author: Henry DeMarco, Beth Mitchell
 # Date Created: October 24, 2024
-# Last Updated: October 29, 2024
-
-# Description: this analysis is intended to help answer questions about living standards data in Cville/Albemarle tracts with large UVA student populations.
-
-## ACS Tables Used:
-# B01001 (Sex by Age)
-# B01001B (Sex by Age, Black Alone)
-# B01001A (Sex by Age, White Alone)
-# B22003 (Receipt of Food Stamps/SNAP in the Past 12 Months by Poverty Status)
-
-## County FIPS Codes
-# 003 -- Albemarle
-# 540 -- Charlottesville
+# Last Updated: January 2025
 
 # Load packages
 library(tidyverse)
 library(tidycensus)
 
-# Census API Key
-# census_api_key("YOUR KEY GOES HERE", install = TRUE)
-
 # Creating basic objects ----
 
 # Year for ACS data (single year)
-year <- 2022
+year <- 2023
 
 # County FIPS codes 
 county_codes <- c("003", "540") # Albemarle, Charlottesville FIPS Code
@@ -66,6 +51,284 @@ meta_table <- all_acs_meta()
 
 # Opens the newly made table
 # View(meta_table)
+
+# Overall Poverty Rate by tract ----
+# ACS Table B17001: Poverty Status in Past 12 months by sex and age
+# Get ACS data
+acs_B17001_county <- get_acs(geography = "county",
+                            state = "51",
+                            county = county_codes,
+                            variables = c("Income in the past 12 months below poverty level" = "B17001_002"), 
+                            summary_var = "B17001_001",
+                            year = year,
+                            survey = "acs5",
+                            cache_table = TRUE) 
+
+acs_B17001_tract <- get_acs(geography = "tract",
+                             state = "51",
+                             county = county_codes,
+                             variables = c("Income in the past 12 months below poverty level" = "B17001_002"), 
+                             summary_var = "B17001_001",
+                             year = year,
+                             survey = "acs5",
+                             cache_table = TRUE) 
+
+# Wrangle tables:
+poverty_county <- acs_B17001_county %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         label = variable,
+         year = year) %>% 
+  rename(c("total_population" = "summary_est",
+           "locality" = "NAME")) %>% 
+  select(GEOID, locality, estimate, moe, total_population, percent, year, label)
+
+poverty_tract <- acs_B17001_tract %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         label = variable,
+         year = year) %>% 
+  rename(c("total_population" = "summary_est")) %>% 
+  separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE) %>%
+  select(GEOID, locality, tract, estimate, moe, total_population, percent, year, label)
+
+# Join tract names
+poverty_tract <- poverty_tract %>% 
+  left_join(tract_names)
+
+# SNAP Benefits ----
+# ACS Table B22003: Receipt of Food Stamps/SNAP in the Past 12 Months by Poverty Status in the Past 12 Months for Households
+# Get ACS data
+acs_B22003_county <- get_acs(geography = "county",
+                             state = "51",
+                             county = county_codes,
+                             variables = c("Household received Food Stamps/SNAP in the past 12 months" = "B22003_002"), 
+                             summary_var = "B22003_001",
+                             year = year,
+                             survey = "acs5",
+                             cache_table = TRUE) 
+
+acs_B22003_tract <- get_acs(geography = "tract",
+                            state = "51",
+                            county = county_codes,
+                            variables = c("Household received Food Stamps/SNAP in the past 12 months" = "B22003_002"), 
+                            summary_var = "B22003_001",
+                            year = year,
+                            survey = "acs5",
+                            cache_table = TRUE) 
+
+# Wrangle tables:
+snap_county <- acs_B22003_county %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         label = variable,
+         year = year) %>% 
+  rename(c("total_population" = "summary_est",
+           "locality" = "NAME")) %>% 
+  select(GEOID, locality, estimate, moe, total_population, percent, year, label)
+
+snap_tract <- acs_B22003_tract %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         label = variable,
+         year = year) %>% 
+  rename(c("total_population" = "summary_est")) %>% 
+  separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE) %>%
+  select(GEOID, locality, tract, estimate, moe, total_population, percent, year, label)
+
+# Join tract names
+snap_tract <- snap_tract %>% 
+  left_join(tract_names)
+
+# Age
+# Table: B01001 ----
+
+# Get ACS Data
+acs_B01001_county <-  get_acs(
+           year = year,
+           geography = "county",
+           state = "VA",
+           county = county_codes,
+           table = "B01001",
+           summary_var = "B01001_001",
+           survey = "acs5", 
+           cache = TRUE)
+
+acs_B01001_tract <-  get_acs(year = year,
+                             geography = "tract",
+                             state = "VA",
+                             county = county_codes,
+                             table = "B01001",
+                             summary_var = "B01001_001",
+                             survey = "acs5", 
+                             cache = TRUE)
+
+# Wrangle data
+ages_county <- acs_B01001_county %>% 
+  filter(variable %in% c("B01001_007", "B01001_008", "B01001_009", "B01001_010", 
+                         "B01001_031", "B01001_032", "B01001_033", "B01001_034")) %>% 
+  group_by(GEOID, NAME) %>% 
+  summarise(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            total_population = first(summary_est)) %>% 
+  ungroup() %>% 
+  mutate(percent = round(100 * (estimate / total_population), digits = 2),
+         label = "Population 18-24 years",
+         year = year) %>% 
+  rename(c("locality" = "NAME")) %>% 
+  select(GEOID, locality, estimate, moe, total_population, percent, year, label)
+
+ages_tract <- acs_B01001_tract %>% 
+  filter(variable %in% c("B01001_007", "B01001_008", "B01001_009", "B01001_010", 
+                         "B01001_031", "B01001_032", "B01001_033", "B01001_034")) %>% 
+  group_by(GEOID, NAME) %>% 
+  summarise(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            total_population = first(summary_est)) %>% 
+  ungroup() %>% 
+  mutate(percent = round(100 * (estimate / total_population), digits = 2),
+         label = "Population 18-24 years",
+         year = year) %>% 
+  separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE) %>% 
+  select(GEOID, locality, tract, estimate, moe, total_population, percent, year, label)
+
+# Join tract names
+ages_tract <- ages_tract %>% 
+  left_join(tract_names)
+
+# Calculate Non-Student Poverty Rate
+# https://www.coopercenter.org/research/how-modify-poverty-calculations-college-towns
+
+# Get poverty by school enrollment
+# ACS Table B14006: Poverty Status in the Past 12 Months by School Enrollment by Level of School for the Population 3 Years and Over
+# Get ACS Data
+acs_vars_B14006 <- c(
+  "Non-students below the poverty level; Enrolled in nursery school, preschool" = "B14006_004",
+  "Non-students below the poverty level; Enrolled in kindergarten" = "B14006_005",
+  "Non-students below the poverty level; Enrolled in grade 1 to grade 4" = "B14006_006",
+  "Non-students below the poverty level; Enrolled in grade 5 to grade 8" = "B14006_007",
+  "Non-students below the poverty level; Enrolled in grade 9 to grade 12" = "B14006_008",
+  "Non-students below the poverty level; Not enrolled in school" = "B14006_011",
+  "Non-students at or above the poverty level; Enrolled in nursery school, preschool" = "B14006_014",
+  "Non-students at or above the poverty level; Enrolled in kindergarten" = "B14006_015",
+  "Non-students at or above the poverty level; Enrolled in grade 1 to grade 4" = "B14006_016",
+  "Non-students at or above the poverty level; Enrolled in grade 5 to grade 8" = "B14006_017",
+  "Non-students at or above the poverty level; Enrolled in grade 9 to grade 12" = "B14006_018",
+  "Non-students at or above the poverty level; Not enrolled in school" = "B14006_021"
+)
+
+acs_B14006_county <-  get_acs(year = year,
+                              geography = "county",
+                              state = "VA",
+                              county = county_codes,
+                              variables = acs_vars_B14006,
+                              summary_var = "B14006_001",
+                              survey = "acs5", 
+                              cache = TRUE)
+
+acs_B14006_tract <-  get_acs(year = year,
+                             geography = "tract",
+                             state = "VA",
+                             county = county_codes,
+                             variables = acs_vars_B14006,
+                             summary_var = "B14006_001",
+                             survey = "acs5", 
+                             cache = TRUE)
+# Wrangle Data
+nonstudent_county <- acs_B14006_county %>% 
+  separate(variable, into=c("label","group"), sep="; ", remove=FALSE) %>% 
+  group_by(GEOID, NAME, label) %>% 
+  summarise(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate)) %>% 
+  ungroup()
+
+nonstudent_tract <- acs_B14006_tract %>% 
+  separate(variable, into=c("label","group"), sep="; ", remove=FALSE) %>% 
+  group_by(GEOID, NAME, label) %>% 
+  summarise(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate)) %>% 
+  ungroup()
+
+# Get totals for non-student population
+nonstudent_county_total <- acs_B14006_county %>% 
+  group_by(GEOID, NAME) %>% 
+  summarise(total_nonstudent = sum(estimate),
+            moe_nonstudent = moe_sum(moe = moe, estimate = estimate)) %>% 
+  ungroup()
+
+nonstudent_tract_total <- acs_B14006_tract %>% 
+  group_by(GEOID, NAME) %>% 
+  summarise(total_nonstudent = sum(estimate),
+            moe_nonstudent = moe_sum(moe = moe, estimate = estimate)) %>% 
+  ungroup()
+
+# Add totals and create percents
+nonstudent_county <- nonstudent_county %>% 
+  left_join(nonstudent_county_total) %>% 
+  mutate(percent = round(100 * (estimate / total_nonstudent), digits = 2),
+         year = year) %>% 
+  rename(c("locality" = "NAME")) %>% 
+  select(GEOID, locality, estimate, moe, total_nonstudent, percent, year, label)
+
+nonstudent_tract <- nonstudent_tract %>% 
+  left_join(nonstudent_tract_total) %>% 
+  mutate(percent = round(100 * (estimate / total_nonstudent), digits = 2),
+         year = year) %>% 
+  separate(NAME, into=c("tract","locality", "state"), sep="; ", remove=FALSE) %>% 
+  select(GEOID, locality, tract, estimate, moe, total_nonstudent, percent, year, label)
+
+# Join tract names
+nonstudent_tract <- nonstudent_tract %>% 
+  left_join(tract_names)
+
+# Create data for supplemental table
+tbl_pov_county <- poverty_county %>% 
+  mutate(name = locality,
+         tract = "") %>%
+  select(locality, tract, name, label, percent)
+tbl_pov_tract <- poverty_tract %>% 
+  rename("name" = "tractnames") %>% 
+  select(locality, tract, name, label, percent)
+tbl_nonstudent_pov_county <- nonstudent_county %>% 
+  mutate(name = locality,
+         tract = "") %>%
+  select(locality, tract, name, label, percent)
+tbl_nonstudent_pov_tract <- nonstudent_tract %>% 
+  rename("name" = "tractnames") %>% 
+  select(locality, tract, name, label, percent)
+tbl_snap_county <- snap_county %>% 
+  mutate(name = locality,
+         tract = "") %>%
+  select(locality, tract, name, label, percent)
+tbl_snap_tract <- snap_tract %>% 
+  rename("name" = "tractnames") %>% 
+  select(locality, tract, name, label, percent)
+tbl_age_county <- ages_county %>% 
+  mutate(name = locality,
+         tract = "") %>%
+  select(locality, tract, name, label, percent)
+tbl_age_tract <- ages_tract %>% 
+  rename("name" = "tractnames") %>% 
+  select(locality, tract, name, label, percent)
+
+supplement_table <- rbind(tbl_pov_tract, tbl_pov_county, tbl_nonstudent_pov_tract, tbl_nonstudent_pov_county, tbl_snap_tract, tbl_snap_county, tbl_age_tract, tbl_age_county)
+
+supplement_table <- supplement_table %>% 
+  pivot_wider(names_from = label, values_from = percent)
+
+write_csv(supplement_table, paste0("data/supplement_table", "_", year, ".csv"))
+
+## ............................................................
+# Sandbox ----
+# Description: this analysis is intended to help answer questions about living standards data in Cville/Albemarle tracts with large UVA student populations.
+
+## ACS Tables Used:
+# B01001 (Sex by Age)
+# B01001B (Sex by Age, Black Alone)
+# B01001A (Sex by Age, White Alone)
+# B22003 (Receipt of Food Stamps/SNAP in the Past 12 Months by Poverty Status)
+
+## County FIPS Codes
+# 003 -- Albemarle
+# 540 -- Charlottesville
+
+
 
 # Get GEOID for all Census tracts in Charlottesville and Albemarle
 tracts_cville_albemarle <- get_acs(

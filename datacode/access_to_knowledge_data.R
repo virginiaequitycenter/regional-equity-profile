@@ -1,7 +1,7 @@
 # R Script for pulling and examining access to knowledge data
 # Authors: Henry DeMarco, Beth Mitchell
 # Date Created: June 17, 2024
-# Last Updated: July 17, 2024
+# Last Updated: January 2025 # ACS 2019-2023  updates
 
 # County FIPS Codes
 # 003 -- Albemarle
@@ -43,7 +43,7 @@ library(janitor)
 # Creating basic objects ----
 
 # Year for ACS data (single year)
-year <- 2022
+year <- 2023
 
 # County FIPS codes 
 county_codes <- c("003", "540") # Albemarle, Charlottesville FIPS Code
@@ -169,13 +169,13 @@ region_edu_attain <- edu_attain_county %>%
 
 write_csv(region_edu_attain, paste0("data/region_edu_attain", "_", year, ".csv"))
 
-# Educational Attainment 2012-2022: County & Region ----
+# Educational Attainment 2012-2023: County & Region ----
 # Get ACS data
 AHDI_vars_S1501 <- c("High school graduate or higher" = "S1501_C01_014",
                      "Bachelor's degree or higher" = "S1501_C01_015",
                      "Graduate or professional degree" = "S1501_C01_013")
 
-vars_S1501_2018_2022 <- map_df(2022:2018,
+vars_S1501_2018_2023 <- map_df(2023:2018,
                                    ~ get_acs(
                                      year = .x,
                                      geography = "county",
@@ -188,28 +188,48 @@ vars_S1501_2018_2022 <- map_df(2022:2018,
                                      mutate(year = .x)
 )
 
+vars_S1501_state_2018_2023 <- map_df(2023:2018,
+                               ~ get_acs(
+                                 year = .x,
+                                 geography = "state",
+                                 state = "VA",
+                                 var = AHDI_vars_S1501,
+                                 summary_var = "S1501_C01_006",
+                                 survey = "acs5", 
+                                 cache = TRUE) %>%
+                                 mutate(year = .x)
+)
+
 # Wrangle tables:
-edu_attain_county_2018_2022 <- vars_S1501_2018_2022 %>% 
+edu_attain_county_2018_2023 <- vars_S1501_2018_2023 %>% 
   mutate(percent = round(100 * (estimate / summary_est), digits = 2),
          label = variable) %>% 
   rename(c("pop_25_over" = "summary_est",
            "locality" = "NAME")) %>% 
   select(GEOID, locality, estimate, moe, pop_25_over, percent, label, year)
 
+edu_attain_state_2018_2023 <- vars_S1501_state_2018_2023 %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         label = variable) %>% 
+  rename(c("pop_25_over" = "summary_est",
+           "locality" = "NAME")) %>% 
+  select(GEOID, locality, estimate, moe, pop_25_over, percent, label, year)
+
+
 # Educational Attainment 2012-2022: Charlottesville, county  ----
-cville_edu_attain_county_2018_2022 <- edu_attain_county_2018_2022 %>% 
+cville_edu_attain_county_2018_2023 <- edu_attain_county_2018_2023 %>% 
   filter(locality == "Charlottesville city, Virginia")
 
-write_csv(cville_edu_attain_county_2018_2022, paste0("data/cville_edu_attain_county_2018_2022.csv"))
+write_csv(cville_edu_attain_county_2018_2023, paste0("data/cville_edu_attain_county_2018_2023.csv"))
 
 # Educational Attainment 2012-2022: Albemarle, county & tract ----
-alb_edu_attain_county_2018_2022 <- edu_attain_county_2018_2022 %>% 
+alb_edu_attain_county_2018_2023 <- edu_attain_county_2018_2023 %>% 
   filter(locality == "Albemarle County, Virginia")
 
-write_csv(alb_edu_attain_county_2018_2022, paste0("data/alb_edu_attain_county_2018_2022.csv"))
+write_csv(alb_edu_attain_county_2018_2023, paste0("data/alb_edu_attain_county_2018_2023.csv"))
 
 # Educational Attainment 2012-2022: Charlottesville, Albemarle Combined Table ----
-region_edu_attain_county_2018_2022 <- edu_attain_county_2018_2022 %>% 
+region_edu_attain_county_2018_2023 <- edu_attain_county_2018_2023 %>% 
   group_by(label, year) %>% 
   summarize(estimate = sum(estimate),
             moe = moe_sum(moe = moe, estimate = estimate),
@@ -220,7 +240,7 @@ region_edu_attain_county_2018_2022 <- edu_attain_county_2018_2022 %>%
          region_fips = paste(county_codes, collapse = ";")) %>% 
   select(region_fips, locality, estimate, moe, pop_25_over, percent, label, year)
 
-write_csv(region_edu_attain_county_2018_2022, paste0("data/region_edu_attain_county_2018_2022.csv"))
+write_csv(region_edu_attain_county_2018_2023, paste0("data/region_edu_attain_county_2018_2023.csv"))
 
 ## ...........................................................
 # School Enrollment, Ages 3-24 (AHDI MEASURE): S1401 ----
@@ -252,6 +272,19 @@ acs_S1401_tract <- get_acs(
   geography = "tract",
   state = "VA",
   county = county_codes,
+  var = AHDI_vars_S1401,
+  year = year, 
+  survey = "acs5")
+
+acs_S1401_state <- get_acs(
+  geography = "state",
+  state = "VA",
+  var = AHDI_vars_S1401,
+  year = year, 
+  survey = "acs5")
+
+acs_S1401_us <- get_acs(
+  geography = "us",
   var = AHDI_vars_S1401,
   year = year, 
   survey = "acs5")
@@ -295,6 +328,41 @@ enroll_tract <- acs_S1401_tract %>%
 enroll_tract <- enroll_tract %>% 
   left_join(tract_names)
 
+# state wide
+enroll_state <- acs_S1401_state %>% 
+  mutate(cat = case_when(str_detect(variable, "enrolled in school") ~ "enrolled",
+                         str_detect(variable, "Population") ~ "pop")) %>% 
+  group_by(GEOID, NAME, cat) %>% 
+  summarise(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            .groups = 'drop') %>% 
+  pivot_wider(names_from = cat, values_from = c(estimate, moe)) %>% 
+  mutate(percent = round(100 * (estimate_enrolled / estimate_pop), digits = 2),
+         label = "3 to 24 year olds enrolled in school",
+         year = year) %>% 
+  rename(locality = NAME,
+         estimate = estimate_enrolled,
+         moe = moe_enrolled,
+         pop_3_to_24yr = estimate_pop) %>% 
+  select(GEOID, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
+
+enroll_us <- acs_S1401_us %>% 
+  mutate(cat = case_when(str_detect(variable, "enrolled in school") ~ "enrolled",
+                         str_detect(variable, "Population") ~ "pop")) %>% 
+  group_by(GEOID, NAME, cat) %>% 
+  summarise(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            .groups = 'drop') %>% 
+  pivot_wider(names_from = cat, values_from = c(estimate, moe)) %>% 
+  mutate(percent = round(100 * (estimate_enrolled / estimate_pop), digits = 2),
+         label = "3 to 24 year olds enrolled in school",
+         year = year) %>% 
+  rename(locality = NAME,
+         estimate = estimate_enrolled,
+         moe = moe_enrolled,
+         pop_3_to_24yr = estimate_pop) %>% 
+  select(GEOID, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
+
 # School Enrollment: Charlottesville, county & tract ----
 cville_enroll_county <- enroll_county %>% 
   filter(locality == "Charlottesville city, Virginia")
@@ -331,7 +399,7 @@ region_enroll <- enroll_county %>%
 
 write_csv(region_enroll, paste0("data/region_enroll", "_", year, ".csv"))
 
-# School Enrollment 2018-2022: County & Region ----
+# School Enrollment 2018-2023: County & Region ----
 # Get ACS data
 AHDI_vars_S1401 <- c("3 to 4 year olds enrolled in school" = "S1401_C01_014", 
                      "5 to 9 year olds enrolled in school" = "S1401_C01_016",  
@@ -346,7 +414,7 @@ AHDI_vars_S1401 <- c("3 to 4 year olds enrolled in school" = "S1401_C01_014",
                      "Population 18 and 19 years" = "S1401_C01_021", 
                      "Population 20 to 24 years" = "S1401_C01_023")
 
-acs_S1401_county_2018_2022 <- map_df(2022:2018,
+acs_S1401_county_2018_2023 <- map_df(2023:2018,
                                ~ get_acs(
                                  year = .x,
                                  geography = "county",
@@ -357,10 +425,63 @@ acs_S1401_county_2018_2022 <- map_df(2022:2018,
                                  cache = TRUE) %>%
                                  mutate(year = .x))
 
+acs_S1401_state_2018_2023 <- map_df(2023:2018,
+                                     ~ get_acs(
+                                       year = .x,
+                                       geography = "state",
+                                       state = "VA",
+                                       var = AHDI_vars_S1401,
+                                       survey = "acs5", 
+                                       cache = TRUE) %>%
+                                       mutate(year = .x))
+
+acs_S1401_US_2018_2023 <- map_df(2023:2018,
+                                    ~ get_acs(
+                                      year = .x,
+                                      geography = "us",
+                                      var = AHDI_vars_S1401,
+                                      survey = "acs5", 
+                                      cache = TRUE) %>%
+                                      mutate(year = .x))
+
 
 
 # Wrangle data
-enroll_county_2018_2022 <- acs_S1401_county_2018_2022 %>% 
+enroll_county_2018_2023 <- acs_S1401_county_2018_2023 %>% 
+  mutate(cat = case_when(str_detect(variable, "enrolled in school") ~ "enrolled",
+                         str_detect(variable, "Population") ~ "pop")) %>% 
+  group_by(GEOID, NAME, year, cat) %>% 
+  summarise(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            .groups = 'drop') %>% 
+  pivot_wider(names_from = cat, values_from = c(estimate, moe)) %>% 
+  mutate(percent = round(100 * (estimate_enrolled / estimate_pop), digits = 2),
+         label = "3 to 24 year olds enrolled in school") %>% 
+  rename(locality = NAME,
+         estimate = estimate_enrolled,
+         moe = moe_enrolled,
+         pop_3_to_24yr = estimate_pop) %>% 
+  select(GEOID, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
+
+enroll_state_2018_2023 <- acs_S1401_state_2018_2023 %>% 
+  mutate(cat = case_when(str_detect(variable, "enrolled in school") ~ "enrolled",
+                         str_detect(variable, "Population") ~ "pop")) %>% 
+  group_by(GEOID, NAME, year, cat) %>% 
+  summarise(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            .groups = 'drop') %>% 
+  pivot_wider(names_from = cat, values_from = c(estimate, moe)) %>% 
+  mutate(percent = round(100 * (estimate_enrolled / estimate_pop), digits = 2),
+         label = "3 to 24 year olds enrolled in school") %>% 
+  rename(locality = NAME,
+         estimate = estimate_enrolled,
+         moe = moe_enrolled,
+         pop_3_to_24yr = estimate_pop) %>% 
+  select(GEOID, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
+
+write_csv(enroll_state_2018_2023, paste0("data/enroll_state_2018_2023.csv"))
+
+enroll_US_2018_2023 <- acs_S1401_US_2018_2023 %>% 
   mutate(cat = case_when(str_detect(variable, "enrolled in school") ~ "enrolled",
                          str_detect(variable, "Population") ~ "pop")) %>% 
   group_by(GEOID, NAME, year, cat) %>% 
@@ -377,8 +498,8 @@ enroll_county_2018_2022 <- acs_S1401_county_2018_2022 %>%
   select(GEOID, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
 
 
-# School Enrollment 2018-2022: Charlottesville, Albemarle Combined Table ----
-region_enroll_county_2018_2022 <- enroll_county_2018_2022 %>% 
+# School Enrollment 2018-2023: Charlottesville, Albemarle Combined Table ----
+region_enroll_county_2018_2023 <- enroll_county_2018_2023 %>% 
   group_by(label, year) %>% 
   summarize(estimate = sum(estimate),
             moe = moe_sum(moe = moe, estimate = estimate),
@@ -389,8 +510,36 @@ region_enroll_county_2018_2022 <- enroll_county_2018_2022 %>%
          region_fips = paste(county_codes, collapse = ";")) %>% 
   select(region_fips, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
 
-write_csv(region_enroll_county_2018_2022, paste0("data/region_enroll_county_2018_2022.csv"))
+write_csv(region_enroll_county_2018_2023, paste0("data/region_enroll_county_2018_2023.csv"))
 
+# different age groups
+enroll_county_ages_2018_2023 <- acs_S1401_county_2018_2023 %>% 
+  pivot_wider(names_from = variable, values_from = c(estimate, moe)) %>% 
+  clean_names() 
+
+region_enroll_ages_2018_2023 <- enroll_county_ages_2018_2023 %>% 
+  group_by(year) %>% 
+  summarize(estimate_population_3_to_4_years = sum(estimate_population_3_to_4_years),
+            estimate_population_5_to_9_years = sum(estimate_population_5_to_9_years),
+            estimate_population_10_to_14_years = sum(estimate_population_10_to_14_years),
+            estimate_population_15_to_17_years = sum(estimate_population_15_to_17_years),
+            estimate_population_18_and_19_years = sum(estimate_population_18_and_19_years),
+            estimate_population_20_to_24_years = sum(estimate_population_20_to_24_years),
+            estimate_3_to_4_year_olds_enrolled_in_school = sum(estimate_3_to_4_year_olds_enrolled_in_school),
+            estimate_5_to_9_year_olds_enrolled_in_school = sum(estimate_5_to_9_year_olds_enrolled_in_school),
+            estimate_10_to_14_year_olds_enrolled_in_school = sum(estimate_10_to_14_year_olds_enrolled_in_school),
+            estimate_15_to_17_year_olds_enrolled_in_school = sum(estimate_15_to_17_year_olds_enrolled_in_school),
+            estimate_18_and_19_year_olds_enrolled_in_school = sum(estimate_18_and_19_year_olds_enrolled_in_school),
+            estimate_20_to_24_year_olds_enrolled_in_school = sum(estimate_20_to_24_year_olds_enrolled_in_school),
+            .groups = 'drop') %>% 
+  mutate(percent_3_to_4_year_olds_enrolled = round(100 * (estimate_3_to_4_year_olds_enrolled_in_school / estimate_population_3_to_4_years), digits = 2),
+         percent_5_to_9_year_olds_enrolled = round(100 * (estimate_5_to_9_year_olds_enrolled_in_school / estimate_population_5_to_9_years), digits = 2),
+         percent_10_to_14_year_olds_enrolled = round(100 * (estimate_10_to_14_year_olds_enrolled_in_school / estimate_population_10_to_14_years), digits = 2),
+         percent_15_to_17_year_olds_enrolled = round(100 * (estimate_15_to_17_year_olds_enrolled_in_school / estimate_population_15_to_17_years), digits = 2),
+         percent_18_and_19_year_olds_enrolled = round(100 * (estimate_18_and_19_year_olds_enrolled_in_school / estimate_population_18_and_19_years), digits = 2),
+         percent_20_to_24_year_olds_enrolled = round(100 * (estimate_20_to_24_year_olds_enrolled_in_school / estimate_population_20_to_24_years), digits = 2)) 
+
+write_csv(region_enroll_ages_2018_2023, paste0("data/region_enroll_ages_2018_2023.csv"))
 ## .....................................................
 # Educational Attainment by Race/Ethnicity: S1501 ----
 
@@ -528,10 +677,11 @@ write_csv(region_edu_attain_race, paste0("data/region_edu_attain_race", "_", yea
 # AP & Dual Enrollment by Race/Ethnicity & Disadvantaged ----
 # Source: https://www.doe.virginia.gov/data-policy-funding/data-reports/program-participation-data/advanced-programs
 # Downloaded 2022-2023.xlsx to tempdata
+# Downloaded 2023-2024.xlsx to tempdata (Jan 2025 updates)
 
 # Get total for all students enrolled in AP
 # Read excel
-adv_sheet_1 <- read_xlsx("data/tempdata/2022-2023.xlsx", sheet = "Adv Programs", skip = 3) %>% 
+adv_sheet_1 <- read_xlsx("data/tempdata/2023-2024.xlsx", sheet = "Adv Programs", skip = 3) %>% 
   clean_names()
 adv_sheet_1 <- adv_sheet_1[-c(1), ]
 # Filter for divisions
@@ -588,14 +738,15 @@ adv_enroll_disadv <- adv_sheet_3 %>%
 
 # Merge Race and disadvantage tables
 adv_enroll <- rbind(adv_enroll_race, adv_enroll_disadv, adv_enroll_all) %>% 
-  mutate(school_year = "2022-2023")
+  mutate(school_year = "2023-2024") # Updated Jan 2025
 
 # Get School Enrollment, Fall-Membership numbers
 # Using 10th-12th grade enrollment for AP / 11th & 12th grade for Dual Enrollment
 # All potential AP students vs students most likely to be enrolled in AP
 # Source: https://p1pe.doe.virginia.gov/apex_captcha/home.do?apexTypeId=304
+#  Updated Jan 2025 with 2023-2024 data
 
-fall_membership_race <- read_csv("data/tempdata/fall_membership_race_2022_2023.csv") %>% 
+fall_membership_race <- read_csv("data/tempdata/fall_membership_race_2023_2024.csv") %>% 
   clean_names()
 
 fall_membership_race <- fall_membership_race %>%
@@ -608,7 +759,7 @@ fall_membership_race <- fall_membership_race %>%
          label = str_replace(label,"Native Hawaiian  or Pacific Islander", "Native Hawaiian or Pacific Islander")) %>%
   select(division_name, label, total_10to12, total_11and12, total_allgrades, school_year)
 
-fall_membership_disadv <- read_csv("data/tempdata/fall_membership_disadv_2022_2023.csv") %>% 
+fall_membership_disadv <- read_csv("data/tempdata/fall_membership_disadv_2023_2024.csv") %>% 
   clean_names()
 
 fall_membership_disadv <- fall_membership_disadv %>%
@@ -620,7 +771,7 @@ fall_membership_disadv <- fall_membership_disadv %>%
   mutate(label = "Economically Disadvantaged") %>% 
   select(division_name, label, total_10to12, total_11and12, total_allgrades, school_year)
 
-fall_membership_total <- read_csv("data/tempdata/fall_membership_total_2022_2023.csv") %>% 
+fall_membership_total <- read_csv("data/tempdata/fall_membership_total_2023_2024.csv") %>% 
   clean_names()
 
 fall_membership_total <- fall_membership_total %>%
@@ -648,13 +799,13 @@ adv_enroll <- adv_enroll %>%
 cville_adv_enroll <- adv_enroll %>% 
   filter(division_name == "Charlottesville City")
 
-write_csv(cville_adv_enroll, "data/cville_adv_enroll_2022_2023.csv")
+write_csv(cville_adv_enroll, "data/cville_adv_enroll_2023_2024.csv")
 
 # AP & Dual Enrollment: Albemarle ----
 alb_adv_enroll <- adv_enroll %>% 
   filter(division_name == "Albemarle County")
 
-write_csv(alb_adv_enroll, "data/alb_adv_enroll_2022_2023.csv")
+write_csv(alb_adv_enroll, "data/alb_adv_enroll_2023_2024.csv")
 
 # AP & Dual Enrollment: Charlottesville, Albemarle Combined Table ----
 region_adv_enroll <- adv_enroll %>% 
@@ -670,7 +821,7 @@ region_adv_enroll <- adv_enroll %>%
          division = "CCS + ACPS Combined") %>% 
   select(division, label, students_in_ap, ap_percent, students_in_dual_enrollment, dual_percent, total_10to12, total_11and12, total_allgrades, school_year)
 
-write_csv(region_adv_enroll, "data/region_adv_enroll_2022_2023.csv")
+write_csv(region_adv_enroll, "data/region_adv_enroll_2023_2024.csv")
 
 ## .......................................................
 # Suspensions by Race/Ethnicity & Chronic Absenteeism ----
@@ -711,7 +862,7 @@ region_st_suspensions <- st_suspensions %>%
          division = "CCS + ACPS Combined") 
 
 # District wide fall membership totals 
-school_comp_race <- read_csv("data/tempdata/fall_membership_district_race_2022_2023.csv") %>% 
+school_comp_race <- read_csv("data/tempdata/fall_membership_district_race_2023_2024.csv") %>% 
   clean_names()
 
 school_comp_race <- school_comp_race %>% 
@@ -725,7 +876,7 @@ school_comp_race <- school_comp_race %>%
                           race == "White, not of Hispanic origin" ~ "White",
                           .default = race))
 
-school_comp_total <- read_csv("data/tempdata/fall_membership_division_all_2022_2023.csv") %>% 
+school_comp_total <- read_csv("data/tempdata/fall_membership_division_all_2023_2024.csv") %>% 
   clean_names()
 
 school_comp_total <- school_comp_total %>% 
@@ -745,7 +896,7 @@ region_st_suspensions <- region_st_suspensions %>%
   select(division, school_year, subgroup, number_suspended_short_term, number_of_short_term_suspendable_incidents, percent_of_short_term_suspensions, div_count, div_total, div_percent)
 
 # Save 
-write_csv(region_st_suspensions, "data/region_st_suspensions_2022_2023.csv")
+write_csv(region_st_suspensions, "data/region_st_suspensions_2023_2024.csv")
 
 # Long Term Suspensions - Not using ----
 # lt_suspensions <- read_csv("data/tempdata/vdoe_data/Long Term Suspensions.csv", skip = 3) %>% 
@@ -784,7 +935,7 @@ region_absenteeism <- absent %>%
          division = "ACPS & CCS") %>% 
   select(year, division, subgroup, count_below_10:percent_above_10)
 
-write_csv(region_absenteeism, paste0("data/region_absenteeism_2022_2023.csv"))
+write_csv(region_absenteeism, paste0("data/region_absenteeism_2023_2024.csv"))
 
 ## .....................................................
 ## End

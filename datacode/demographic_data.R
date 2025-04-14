@@ -1,7 +1,7 @@
 # R Script for pulling and examining demographic data
 # Authors: Henry DeMarco, Beth Mitchell
 # Date Created: June 4, 2024
-# Last Updated: July 24, 2024
+# Last Updated: January 27, 2025 # ACS 2019-2023 updates
 
 ## County FIPS Codes
 # 003 -- Albemarle
@@ -49,7 +49,7 @@ library(tidycensus)
 # Creating basic objects ----
 
 # Year for ACS data (single year)
-year <- 2022
+year <- 2023
   
 # County FIPS codes 
 county_codes <- c("003", "540") # Albemarle, Charlottesville FIPS Code
@@ -84,10 +84,10 @@ meta_table <- all_acs_meta()
 # View(meta_table)
 
 ## .................................
-# Race: Table B02001, 2012-2022 ----
+# Race: Table B02001, 2012-2023 ----
 
-# Race: Charlottesville, 2012-2022 ----
-cville_vars_B02001 <- map_df(2022:2012,
+# Race: Charlottesville, 2012-2023 ----
+cville_vars_B02001 <- map_df(2023:2012,
                              ~ get_acs(
                                year = .x,
                                geography = "county",
@@ -108,7 +108,7 @@ cville_vars_B02001 <- map_df(2022:2012,
                              )
 
 # Finalizing table:
-cville_race_2012_2022 <- cville_vars_B02001 %>% 
+cville_race_2012_2023 <- cville_vars_B02001 %>% 
   mutate(percent = round(100 * (estimate / summary_est), digits = 2),
          label = case_when(
            variable == "B02001_002" ~ "White alone",
@@ -123,11 +123,11 @@ cville_race_2012_2022 <- cville_vars_B02001 %>%
   select(GEOID, locality, estimate, moe, total_pop, percent, year, label)
 
 # Generating CSV:
-write_csv(cville_race_2012_2022, "data/cville_race_2012_2022.csv")
+write_csv(cville_race_2012_2023, "data/cville_race_2012_2023.csv")
 
 ## ..............................
-# Race: Albemarle, 2012-2022 ----
-alb_vars_B02001 <- map_df(2022:2012,
+# Race: Albemarle, 2012-2023 ----
+alb_vars_B02001 <- map_df(2023:2012,
                           ~ get_acs(
                             year = .x,
                             geography = "county",
@@ -148,7 +148,7 @@ alb_vars_B02001 <- map_df(2022:2012,
                           )
 
 # Finalizing table:
-alb_race_2012_2022 <- alb_vars_B02001 %>% 
+alb_race_2012_2023 <- alb_vars_B02001 %>% 
   mutate(percent = round(100 * (estimate / summary_est), digits = 2),
          label = case_when(
            variable == "B02001_002" ~ "White alone",
@@ -163,36 +163,36 @@ alb_race_2012_2022 <- alb_vars_B02001 %>%
   select(GEOID, locality, estimate, moe, total_pop, percent, year, label)
 
 # Generating CSV:
-write_csv(alb_race_2012_2022, "data/alb_race_2012_2022.csv")
+write_csv(alb_race_2012_2023, "data/alb_race_2012_2023.csv")
 
 ## ..............................................................
 # Race: Charlottesville, Albemarle Combined Table, 2012-2022 ----
-combined_race_2012_2022 <- rbind(alb_race_2012_2022, cville_race_2012_2022)
+combined_race_2012_2023 <- rbind(alb_race_2012_2023, cville_race_2012_2023)
 
 # Create summary variables for the combined counties
-combined_race_summarize <- combined_race_2012_2022 %>% 
+combined_race_summarize <- combined_race_2012_2023 %>% 
   group_by(label, year) %>% 
   summarize(estimate = sum(estimate),
             moe = moe_sum(moe = moe, estimate = estimate),
             total_pop = sum(total_pop))
 
 # Create percentages from estimates
-region_race_2012_2022 <- combined_race_summarize %>% 
+region_race_2012_2023 <- combined_race_summarize %>% 
   mutate(percent = round(((estimate / total_pop) * 100), digits = 2),
          locality = "Combined Region",
          region_fips = paste(county_codes, collapse = ";")) %>% 
   select(region_fips, locality, estimate, moe, total_pop, percent, year, label)
 
 # Generating CSV:
-write_csv(region_race_2012_2022, "data/region_race_2012_2022.csv")
+write_csv(region_race_2012_2023, "data/region_race_2012_2023.csv")
 
 ## ..................................................................................
-# Ethnicity by Race: Table B03002 (Hispanic or Latino Origin by Race), 2012-2022 ----
+# Ethnicity by Race: Table B03002 (Hispanic or Latino Origin by Race), 2012-2023 ----
 # Rows match up for 2012 and 2022 (!)
 
 # Ethnicity by Race: Charlottesville, 2012-2022 ----
 cville_vars_B03002 <- 
-  map_df(2022:2012,
+  map_df(2023:2012,
          ~ get_acs(
            year = .x,
            geography = "county",
@@ -214,7 +214,7 @@ cville_vars_B03002 <-
          )
 
 # Finalizing table:
-cville_ethn_race_2012_2022 <- cville_vars_B03002 %>% 
+cville_ethn_race_2012_2023 <- cville_vars_B03002 %>% 
   mutate(percent = round(100 * (estimate / summary_est), digits = 2),
          label = case_when(
            variable == "B03002_003" ~ "Not Hispanic or Latino: White alone",
@@ -230,12 +230,12 @@ cville_ethn_race_2012_2022 <- cville_vars_B03002 %>%
   select(GEOID, locality, estimate, moe, total_pop, percent, year, label)
 
 # Generating CSV:
-write_csv(cville_ethn_race_2012_2022, "data/cville_ethn_race_2012_2022.csv")
+write_csv(cville_ethn_race_2012_2023, "data/cville_ethn_race_2012_2023.csv")
 
 ## ............................................................
-# Ethnicity by Race: Albemarle, 2012-2022 ----
+# Ethnicity by Race: Albemarle, 2012-2023 ----
 alb_vars_B03002 <- 
-  map_df(2022:2012,
+  map_df(2023:2012,
          ~ get_acs(
            year = .x,
            geography = "county",
@@ -258,7 +258,7 @@ alb_vars_B03002 <-
       )
 
 # Finalizing table:
-alb_ethn_race_2012_2022 <- alb_vars_B03002 %>% 
+alb_ethn_race_2012_2023 <- alb_vars_B03002 %>% 
   mutate(percent = round(100 * (estimate / summary_est), digits = 2),
          label = case_when(
            variable == "B03002_003" ~ "Not Hispanic or Latino: White alone",
@@ -274,36 +274,36 @@ alb_ethn_race_2012_2022 <- alb_vars_B03002 %>%
   select(GEOID, locality, estimate, moe, total_pop, percent, year, label)
 
 # Generating CSV:
-write_csv(alb_ethn_race_2012_2022, "data/alb_ethn_race_2012_2022.csv")
+write_csv(alb_ethn_race_2012_2023, "data/alb_ethn_race_2012_2023.csv")
 
 ## ..............................................................
-# Ethnicity by Race: Charlottesville, Albemarle Combined Table, 2012-2022 ----
-combined_ethn_race_2012_2022 <- rbind(alb_ethn_race_2012_2022, cville_ethn_race_2012_2022)
+# Ethnicity by Race: Charlottesville, Albemarle Combined Table, 2012-2023 ----
+combined_ethn_race_2012_2023 <- rbind(alb_ethn_race_2012_2023, cville_ethn_race_2012_2023)
 
 # Create summary variables for the combined counties
-combined_ethn_race_summarize <- combined_ethn_race_2012_2022 %>% 
+combined_ethn_race_summarize <- combined_ethn_race_2012_2023 %>% 
   group_by(label, year) %>% 
   summarize(estimate = sum(estimate),
             moe = moe_sum(moe = moe, estimate = estimate),
             total_pop = sum(total_pop))
 
 # Create percentages from estimates
-region_ethn_race_2012_2022 <- combined_ethn_race_summarize %>% 
+region_ethn_race_2012_2023 <- combined_ethn_race_summarize %>% 
   mutate(percent = round(((estimate / total_pop) * 100), digits = 2),
          locality = "Combined Region",
          region_fips = paste(county_codes, collapse = ";")) %>% 
   select(region_fips, locality, estimate, moe, total_pop, percent, year, label)
 
 # Generating CSV:
-write_csv(region_ethn_race_2012_2022, "data/region_ethn_race_2012_2022.csv")
+write_csv(region_ethn_race_2012_2023, "data/region_ethn_race_2012_2023.csv")
 
 ## ......................................
-# Ethnicity: Table B03003, 2012-2022 ----
+# Ethnicity: Table B03003, 2012-2023 ----
 # Rows match up for 2012 and 2022 (!)
 
-# Ethnicity: Charlottesville, 2012-2022 ----
+# Ethnicity: Charlottesville, 2012-2023 ----
 cville_vars_B03003 <- 
-  map_df(2022:2012,
+  map_df(2023:2012,
          ~ get_acs(
            year = .x,
            geography = "county",
@@ -319,7 +319,7 @@ cville_vars_B03003 <-
          )
 
 # Finalizing table:
-cville_ethn_2012_2022 <- cville_vars_B03003 %>% 
+cville_ethn_2012_2023 <- cville_vars_B03003 %>% 
   mutate(percent = round(100 * (estimate / summary_est), digits = 2),
          label = case_when(
            variable == "B03003_002" ~ "Not Hispanic or Latino",
@@ -330,12 +330,12 @@ cville_ethn_2012_2022 <- cville_vars_B03003 %>%
   select(GEOID, locality, estimate, moe, total_pop, percent, year, label)
 
 # Generating CSV:
-write_csv(cville_ethn_2012_2022, "data/cville_ethn_2012_2022.csv")
+write_csv(cville_ethn_2012_2023, "data/cville_ethn_2012_2023.csv")
 
 ## ...................................
-# Ethnicity: Albemarle, 2012-2022 ----
+# Ethnicity: Albemarle, 2012-2023 ----
 alb_vars_B03003 <- 
-  map_df(2022:2012,
+  map_df(2023:2012,
          ~ get_acs(
            year = .x,
            geography = "county",
@@ -351,7 +351,7 @@ alb_vars_B03003 <-
          )
 
 # Finalizing table:
-alb_ethn_2012_2022 <- alb_vars_B03003 %>% 
+alb_ethn_2012_2023 <- alb_vars_B03003 %>% 
   mutate(percent = round(100 * (estimate / summary_est), digits = 2),
          label = case_when(
            variable == "B03003_002" ~ "Not Hispanic or Latino",
@@ -362,36 +362,36 @@ alb_ethn_2012_2022 <- alb_vars_B03003 %>%
   select(GEOID, locality, estimate, moe, total_pop, percent, year, label)
 
 # Generating CSV:
-write_csv(alb_ethn_2012_2022, "data/alb_ethn_2012_2022.csv")
+write_csv(alb_ethn_2012_2023, "data/alb_ethn_2012_2023.csv")
 
 ## ..............................................................
-# Ethnicity: Charlottesville, Albemarle Combined Table, 2012-2022 ----
-combined_ethn_2012_2022 <- rbind(alb_ethn_2012_2022, cville_ethn_2012_2022)
+# Ethnicity: Charlottesville, Albemarle Combined Table, 2012-2023 ----
+combined_ethn_2012_2023 <- rbind(alb_ethn_2012_2023, cville_ethn_2012_2023)
 
 # Create summary variables for the combined counties
-combined_ethn_summarize <- combined_ethn_2012_2022 %>% 
+combined_ethn_summarize <- combined_ethn_2012_2023 %>% 
   group_by(label, year) %>% 
   summarize(estimate = sum(estimate),
             moe = moe_sum(moe = moe, estimate = estimate),
             total_pop = sum(total_pop))
 
 # Create percentages from estimates
-region_ethn_2012_2022 <- combined_ethn_summarize %>% 
+region_ethn_2012_2023 <- combined_ethn_summarize %>% 
   mutate(percent = round(((estimate / total_pop) * 100), digits = 2),
          locality = region_name,
          region_fips = paste(county_codes, collapse = ";")) %>% 
   select(region_fips, locality, estimate, moe, total_pop, percent, year, label)
 
 # Generating CSV:
-write_csv(region_ethn_2012_2022, "data/region_ethn_2012_2022.csv")
+write_csv(region_ethn_2012_2023, "data/region_ethn_2012_2023.csv")
 
 ## ............................................
-# Sex by Age: Table: B01001, 2012 and 2022 ----
+# Sex by Age: Table: B01001, 2013 and 2023 ----
 # Rows match up for 2012 and 2022 (!)
 
-# Get Sex by Age table for Charlottesville and Albermale, 2012 and 2022
+# Get Sex by Age table for Charlottesville and Albemarle, 2013 and 2023
 vars_B01001 <- 
-  map_df(c(2022, 2012),
+  map_df(c(2023, 2013),
          ~ get_acs(
            year = .x,
            geography = "county",
@@ -446,33 +446,33 @@ sex_age_groups_df <- sex_ages_df %>%
     summary_est = first(summary_est),
     .groups = 'drop')
 
-# Sex by Age: Charlottesville, Albemarle, and Combined tables, 2022 ----
-sex_ages_2022 <- sex_age_groups_df %>% 
-  filter(year == 2022) %>% 
+# Sex by Age: Charlottesville, Albemarle, and Combined tables, 2023 ----
+sex_ages_2023 <- sex_age_groups_df %>% 
+  filter(year == 2023) %>% 
   mutate(percent = round(100 * (estimate / summary_est), digits = 2),
          total_pop = summary_est,
          locality = NAME,
          label = age_group) %>% 
   select(GEOID, locality, estimate, moe, total_pop, percent, sex, label, year)
 
-# Sex by Age: Charlottesville, 2022
-cville_sex_age_2022 <- sex_ages_2022 %>% 
+# Sex by Age: Charlottesville, 2023
+cville_sex_age_2023 <- sex_ages_2023 %>% 
   filter(locality == "Charlottesville city, Virginia")
 
 # Generating CSV:
-write_csv(cville_sex_age_2022, "data/cville_sex_age_2022.csv")
+write_csv(cville_sex_age_2023, "data/cville_sex_age_2023.csv")
 
-# Sex by Age: Albemarle, 2022
-alb_sex_age_2022 <- sex_ages_2022 %>% 
+# Sex by Age: Albemarle, 2023
+alb_sex_age_2023 <- sex_ages_2023 %>% 
   filter(locality == "Albemarle County, Virginia")
 
 # Generating CSV:
-write_csv(alb_sex_age_2022, "data/alb_sex_age_2022.csv")
+write_csv(alb_sex_age_2023, "data/alb_sex_age_2023.csv")
 
-# Sex by Age: Charlottesville, Albemarle Combined Table, 2022
+# Sex by Age: Charlottesville, Albemarle Combined Table, 2023
 # Create summary variables and percents for the combined counties
-combined_sex_age_2022 <- sex_age_groups_df %>% 
-  filter(year == 2022) %>% 
+combined_sex_age_2023 <- sex_age_groups_df %>% 
+  filter(year == 2023) %>% 
   group_by(sex, age_group, year) %>% 
   summarize(estimate = sum(estimate),
             moe = moe_sum(moe = moe, estimate = estimate),
@@ -485,11 +485,11 @@ combined_sex_age_2022 <- sex_age_groups_df %>%
   select(region_fips, locality, estimate, moe, total_pop, percent, sex, age_group, year)
 
 # Generating CSV:
-write_csv(combined_sex_age_2022, "data/region_sex_age_2022.csv")
+write_csv(combined_sex_age_2023, "data/region_sex_age_2023.csv")
 
 ## ............................................
-# Age: Albemarle, Charlottesville, and Combined tables, 2012 and 2022 ----
-age_2012_2022 <- sex_age_groups_df %>% 
+# Age: Albemarle, Charlottesville, and Combined tables, 2013 and 2023 ----
+age_2013_2023 <- sex_age_groups_df %>% 
   group_by(GEOID, NAME, year, age_group) %>% 
   summarize(estimate = sum(estimate),
             moe = moe_sum(moe = moe, estimate = estimate),
@@ -502,22 +502,22 @@ age_2012_2022 <- sex_age_groups_df %>%
          label = age_group) %>%
   select(GEOID, locality, estimate, moe, total_pop, percent, year, label)
 
-# Age: Charlottesville, 2012 and 2022
-cville_age_2012_2022 <- age_2012_2022 %>% 
+# Age: Charlottesville, 2013 and 2023
+cville_age_2013_2023 <- age_2013_2023 %>% 
   filter(locality == "Charlottesville city, Virginia")
 
 # Generating CSV:
-write_csv(cville_age_2012_2022, "data/cville_age_2012_2022.csv")
+write_csv(cville_age_2013_2023, "data/cville_age_2013_2023.csv")
 
 # Age: Albemarle, 2012 and 2022
-alb_age_2012_2022 <- age_2012_2022 %>% 
+alb_age_2013_2023 <- age_2013_2023 %>% 
   filter(locality == "Albemarle County, Virginia")
 
 # Generating CSV:
-write_csv(alb_age_2012_2022, "data/alb_age_2012_2022.csv")
+write_csv(alb_age_2013_2023, "data/alb_age_2013_2023.csv")
 
 # Age: Combined Region, 2012 and 2022
-combined_age_2012_2022 <- sex_age_groups_df %>% 
+combined_age_2013_2023 <- sex_age_groups_df %>% 
   group_by(year, age_group) %>% 
   summarize(estimate = sum(estimate),
             moe = moe_sum(moe = moe, estimate = estimate),
@@ -532,10 +532,10 @@ combined_age_2012_2022 <- sex_age_groups_df %>%
   select(region_fips, locality, estimate, moe, total_pop, percent, year, label)
 
 # Generating CSV:
-write_csv(combined_age_2012_2022, "data/region_age_2012_2022.csv")
+write_csv(combined_age_2013_2023, "data/region_age_2013_2023.csv")
 
 ## ............................................
-# Nativity and Citizenship Status: Table: B05001, 2022 ----
+# Nativity and Citizenship Status: Table: B05001 ----
 
 # Get ACS data
 vars_B05001 <- get_acs(
@@ -546,7 +546,7 @@ vars_B05001 <- get_acs(
   table = "B05001",
   summary_var = "B05001_001",
   survey = "acs5",
-  year = 2022) %>% 
+  year = year) %>% 
   filter(variable %in% c("B05001_002", # U.S. citizen, born in the United States
                          "B05001_003", # U.S. citizen, born in Puerto Rico or U.S. Island Areas
                          "B05001_004", # U.S. citizen, born abroad of American parent(s)
@@ -554,7 +554,7 @@ vars_B05001 <- get_acs(
                          "B05001_006")) # Not a U.S. citizen
 
 # Finalizing table:
-nativity_2022 <- vars_B05001 %>% 
+nativity <- vars_B05001 %>% 
   mutate(percent = round(100 * (estimate / summary_est), digits = 2),
          label = case_when(
            variable == "B05001_002" ~ "U.S. citizen, born in the United States",
@@ -562,27 +562,27 @@ nativity_2022 <- vars_B05001 %>%
            variable == "B05001_004" ~ "U.S. citizen, born abroad of American parent(s)",
            variable == "B05001_005" ~ "U.S. citizen by naturalization",
            variable == "B05001_006" ~ "Not a U.S. citizen"),
-         year = 2022) %>% 
+         year = year) %>% 
   rename(c("total_pop" = "summary_est",
            "locality" = "NAME")) %>% 
   select(GEOID, locality, estimate, moe, total_pop, percent, year, label)
 
-# Nativity and Citizenship Status: Charlottesville, 2022
-cville_nativity_2022 <- nativity_2022 %>% 
+# Nativity and Citizenship Status: Charlottesville
+cville_nativity <- nativity %>% 
   filter(locality == "Charlottesville city, Virginia")
 
 # Generating CSV:
-write_csv(cville_nativity_2022, "data/cville_nativity_2022.csv")
+write_csv(cville_nativity, paste0("data/cville_nativity", "_", year, ".csv"))
 
 # Nativity and Citizenship Status: Albemarle, 2022
-alb_nativity_2022 <- nativity_2022 %>% 
+alb_nativity <- nativity %>% 
   filter(locality == "Albemarle County, Virginia")
 
 # Generating CSV:
-write_csv(alb_nativity_2022, "data/alb_nativity_2022.csv")
+write_csv(alb_nativity, paste0("data/alb_nativity", "_", year, ".csv"))
 
-# Nativity and Citizenship Status: Combined Region, 2022
-combined_nativity_2022 <- nativity_2022 %>% 
+# Nativity and Citizenship Status: Combined Region
+combined_nativity <- nativity %>% 
   group_by(year, label) %>% 
   summarize(estimate = sum(estimate),
             moe = moe_sum(moe = moe, estimate = estimate),
@@ -594,10 +594,10 @@ combined_nativity_2022 <- nativity_2022 %>%
   select(region_fips, locality, estimate, moe, total_pop, percent, year, label)
 
 # Generating CSV:
-write_csv(combined_nativity_2022, "data/region_nativity_2022.csv")
+write_csv(combined_nativity, paste0("data/region_nativity", "_", year, ".csv"))
 
 ## ............................................
-# Place of Birth for Foreign-Born Population: Table: B05006, 2022 ----
+# Place of Birth for Foreign-Born Population: Table: B05006 ----
 
 # Get ACS data
 acs_vars_B05006 <- c(
@@ -632,7 +632,7 @@ vars_B05006 <- get_acs(
   survey = "acs5")
   
 # Finalizing table:
-birth_place_foreign_2022 <- vars_B05006 %>% 
+birth_place_foreign <- vars_B05006 %>% 
   mutate(percent = round(100 * (estimate / summary_est), digits = 2),
          label = variable,
          year = year) %>% 
@@ -640,22 +640,22 @@ birth_place_foreign_2022 <- vars_B05006 %>%
            "locality" = "NAME")) %>% 
   select(GEOID, locality, estimate, moe, total_foreign_born, percent, year, label)
 
-# Place of Birth for Foreign-Born Population: Charlottesville, 2022
-cville_birth_place_foreign_2022 <- birth_place_foreign_2022 %>% 
+# Place of Birth for Foreign-Born Population: Charlottesville
+cville_birth_place_foreign <- birth_place_foreign %>% 
   filter(locality == "Charlottesville city, Virginia")
 
 # Generating CSV:
-write_csv(cville_birth_place_foreign_2022, "data/cville_birth_place_foreign_2022.csv")
+write_csv(cville_birth_place_foreign, paste0("data/cville_birth_place_foreign", "_", year, ".csv"))
 
-# Place of Birth for Foreign-Born Population: Albemarle, 2022
-alb_birth_place_foreign_2022 <- birth_place_foreign_2022 %>% 
+# Place of Birth for Foreign-Born Population: Albemarle
+alb_birth_place_foreign <- birth_place_foreign %>% 
   filter(locality == "Albemarle County, Virginia")
 
 # Generating CSV:
-write_csv(alb_birth_place_foreign_2022, "data/alb_birth_place_foreign_2022.csv")
+write_csv(alb_birth_place_foreign, paste0("data/alb_birth_place_foreign", "_", year, ".csv"))
 
-# Place of Birth for Foreign-Born Population: Combined Region, 2022
-combined_birth_place_foreign_2022 <- birth_place_foreign_2022 %>% 
+# Place of Birth for Foreign-Born Population: Combined Region
+combined_birth_place_foreign <- birth_place_foreign %>% 
   group_by(year, label) %>% 
   summarize(estimate = sum(estimate),
             moe = moe_sum(moe = moe, estimate = estimate),
@@ -667,10 +667,10 @@ combined_birth_place_foreign_2022 <- birth_place_foreign_2022 %>%
   select(region_fips, locality, estimate, moe, total_foreign_born, percent, year, label)
 
 # Generating CSV:
-write_csv(combined_birth_place_foreign_2022, "data/region_birth_place_foreign_2022.csv")
+write_csv(combined_birth_place_foreign, paste0("data/region_birth_place_foreign", "_", year, ".csv"))
 
 ## ............................................
-# Household Language, Limited and Non-limited English: Table: B16002, 2022 ----
+# Household Language, Limited and Non-limited English: Table: B16002 ----
 
 # Get ACS data
 acs_vars_B16002 <- c("English only" = "B16002_002", 
@@ -710,7 +710,7 @@ vars_B16002 <- get_acs(
   year = year)
 
 # Finalizing table:
-language_2022 <- vars_B16002 %>% 
+language <- vars_B16002 %>% 
   mutate(percent = round(100 * (estimate / summary_est), digits = 2),
          label = variable,
          year = year) %>% 
@@ -718,22 +718,22 @@ language_2022 <- vars_B16002 %>%
            "locality" = "NAME")) %>% 
   select(GEOID, locality, estimate, moe, total_households, percent, year, label)
 
-# Household Language: Charlottesville, 2022
-cville_language_2022 <- language_2022 %>% 
+# Household Language: Charlottesville
+cville_language <- language %>% 
   filter(locality == "Charlottesville city, Virginia")
 
 # Generating CSV:
-write_csv(cville_language_2022, "data/cville_language_2022.csv")
+write_csv(cville_language, paste0("data/cville_language", "_", year, ".csv"))
 
-# Household Language: Albemarle, 2022
-alb_language_2022 <- language_2022 %>% 
+# Household Language: Albemarle
+alb_language <- language %>% 
   filter(locality == "Albemarle County, Virginia")
 
 # Generating CSV:
-write_csv(alb_language_2022, "data/alb_language_2022.csv")
+write_csv(alb_language, paste0("data/alb_language", "_", year, ".csv"))
 
-# Household Language: Combined Region, 2022
-combined_language_2022 <- language_2022 %>% 
+# Household Language: Combined Region
+combined_language <- language %>% 
   group_by(year, label) %>% 
   summarize(estimate = sum(estimate),
             moe = moe_sum(moe = moe, estimate = estimate),
@@ -745,10 +745,10 @@ combined_language_2022 <- language_2022 %>%
   select(region_fips, locality, estimate, moe, total_households, percent, year, label)
 
 # Generating CSV:
-write_csv(combined_language_2022, "data/region_language_2022.csv")
+write_csv(combined_language, paste0("data/region_language", "_", year, ".csv"))
 
 ## ............................................
-# Disability Status, by Sex and Age: Table: B18101, 2022 ----
+# Disability Status, by Sex and Age: Table: B18101 ----
 
 # Get ACS data
 vars_B18101 <- get_acs(
@@ -764,7 +764,7 @@ vars_B18101 <- get_acs(
   )
 
 # Wrangle data:
-disability_2022 <- vars_B18101 %>% 
+disability <- vars_B18101 %>% 
   mutate(age_sex_category = case_when(
            variable %in% c("B18101_004", "B18101_007") ~ "Male; 17 and under; With a disability",
            variable %in% c("B18101_005", "B18101_008") ~ "Male; 17 and under; No disability",
@@ -798,22 +798,22 @@ disability_2022 <- vars_B18101 %>%
            "locality" = "NAME")) %>% 
   select(GEOID, locality, estimate, moe, total_pop, percent, sex, age_group, disability_status, year)
 
-# Disability Status: Charlottesville, 2022
-cville_disability_2022 <- disability_2022 %>% 
+# Disability Status: Charlottesville
+cville_disability <- disability %>% 
   filter(locality == "Charlottesville city, Virginia")
 
 # Generating CSV:
-write_csv(cville_disability_2022, "data/cville_disability_2022.csv")
+write_csv(cville_disability, paste0("data/cville_disability", "_", year, ".csv"))
 
-# Disability Status: Albemarle, 2022
-alb_disability_2022 <- disability_2022 %>% 
+# Disability Status: Albemarle
+alb_disability <- disability %>% 
   filter(locality == "Albemarle County, Virginia")
 
 # Generating CSV:
-write_csv(alb_disability_2022, "data/alb_disability_2022.csv")
+write_csv(alb_disability, paste0("data/alb_disability", "_", year, ".csv"))
 
-# Disability Status: Combined Region, 2022
-combined_disability_2022 <- disability_2022 %>% 
+# Disability Status: Combined Region
+combined_disability <- disability %>% 
   group_by(sex, age_group, disability_status, year) %>% 
   summarize(estimate = sum(estimate),
             moe = moe_sum(moe = moe, estimate = estimate),
@@ -825,11 +825,11 @@ combined_disability_2022 <- disability_2022 %>%
   select(region_fips, locality, estimate, moe, total_pop, percent, sex, age_group, disability_status, year)
 
 # Generating CSV:
-write_csv(combined_disability_2022, "data/region_disability_2022.csv")
+write_csv(combined_disability, paste0("data/region_disability", "_", year, ".csv"))
 
-# Total with/without Disability, for Charlottesville, Albermarle, 2022 ----
+# Total with/without Disability, for Charlottesville, Albermarle ----
 # Get total with disability from above table
-disability_total <- disability_2022 %>% 
+disability_total <- disability %>% 
   group_by(GEOID, locality, disability_status, year) %>% 
   summarize(total_disability = sum(estimate),
             total_dis_moe = moe_sum(moe = moe, estimate = estimate),
@@ -837,11 +837,11 @@ disability_total <- disability_2022 %>%
   mutate(total_dis_per = round(100 * (total_disability / total_pop), digits = 2))
 
 # Generating CSV:
-write_csv(disability_total, "data/disability_total_2022.csv")
+write_csv(disability_total, paste0("data/disability_total", "_", year, ".csv"))
 
 ## ............................................
 # Disability by Category
-# Disability, Hearing Difficulty: Table: B18102, 2022 ----
+# Disability, Hearing Difficulty: Table: B18102 ----
 # Get ACS data:
 vars_B18102 <- get_acs(
   geography = "county",
@@ -864,7 +864,7 @@ disability_hearing <- vars_B18102 %>%
          year = year) %>% 
   rename("locality" = "NAME")
 
-# Disability, Vision Difficulty: Table: B18103, 2022 ----
+# Disability, Vision Difficulty: Table: B18103 ----
 # Get ACS data:
 vars_B18103 <- get_acs(
   geography = "county",
@@ -886,7 +886,7 @@ disability_vision <- vars_B18103 %>%
          year = year) %>% 
   rename("locality" = "NAME")
 
-# Disability, Cognitive Difficulty: Table: B18104, 2022 ----
+# Disability, Cognitive Difficulty: Table: B18104 ----
 # Get ACS data:
 vars_B18104 <- get_acs(
   geography = "county",
@@ -908,7 +908,7 @@ disability_cognitive <- vars_B18104 %>%
          year = year) %>% 
   rename("locality" = "NAME")
 
-# Disability, Ambulatory Difficulty: Table: B18105, 2022 ----
+# Disability, Ambulatory Difficulty: Table: B18105 ----
 # Get ACS data:
 vars_B18105 <- get_acs(
   geography = "county",
@@ -930,7 +930,7 @@ disability_ambulatory <- vars_B18105 %>%
          year = year) %>% 
   rename("locality" = "NAME")
 
-# Disability, Self-care Difficulty: Table: B18106, 2022 ----
+# Disability, Self-care Difficulty: Table: B18106 ----
 # Get ACS data:
 vars_B18106 <- get_acs(
   geography = "county",
@@ -952,7 +952,7 @@ disability_self_care <- vars_B18106 %>%
          year = year) %>% 
   rename("locality" = "NAME")
 
-# Disability, Independent Living Difficulty: Table: B18107, 2022 ----
+# Disability, Independent Living Difficulty: Table: B18107 ----
 # Get ACS data:
 vars_B18107 <- get_acs(
   geography = "county",
@@ -990,22 +990,22 @@ disability_all <- disability_all %>%
          percent = round(100 * (estimate / total_count_disabled), digits = 2)) %>% 
   select(GEOID, locality, estimate, moe, total_count_disabled, percent, label, year)
 
-# Disability Categories: Charlottesville, 2022 ----
-cville_disability_cat_2022 <- disability_all %>% 
+# Disability Categories: Charlottesville ----
+cville_disability_cat <- disability_all %>% 
   filter(locality == "Charlottesville city, Virginia")
 
 # Generating CSV:
-write_csv(cville_disability_cat_2022, "data/cville_disability_cat_2022.csv")
+write_csv(cville_disability_cat, paste0("data/cville_disability_cat", "_", year, ".csv"))
 
-# Disability Categories: Albemarle, 2022 ----
-alb_disability_cat_2022 <- disability_all %>% 
+# Disability Categories: Albemarle ----
+alb_disability_cat <- disability_all %>% 
   filter(locality == "Albemarle County, Virginia")
 
 # Generating CSV:
-write_csv(alb_disability_cat_2022, "data/alb_disability_cat_2022.csv")
+write_csv(alb_disability_cat, paste0("data/alb_disability_cat", "_", year, ".csv"))
 
-# Disability Categories: Combined Region, 2022 ----
-combined_disability_cat_2022 <- disability_all %>% 
+# Disability Categories: Combined Region ----
+combined_disability_cat <- disability_all %>% 
   group_by(label, year) %>% 
   summarize(estimate = sum(estimate),
             moe = moe_sum(moe = moe, estimate = estimate),
@@ -1017,4 +1017,7 @@ combined_disability_cat_2022 <- disability_all %>%
   select(region_fips, locality, estimate, moe, total_count_disabled, percent, label, year)
 
 # Generating CSV:
-write_csv(combined_disability_cat_2022, "data/region_disability_cat_2022.csv")
+write_csv(combined_disability_cat, paste0("data/region_disability_cat", "_", year, ".csv"))
+
+## .....................................................
+## End

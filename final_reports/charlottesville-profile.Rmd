@@ -1,24 +1,19 @@
 ---
-title: "Charlottesville Inclusive Community Profile - DRAFT"
-output:
-  bookdown::html_document2:
-    number_sections: true
+title: "Draft Charlottesville City Inclusive Community Profile"
 # output:
-#   bookdown::word_document2:
-#     reference_docx: "styles.docx"
+#   bookdown::html_document2:
 #     number_sections: true
-#     toc: true
-#     toc_depth: 4
-# output:
-#   word_document:
-#     reference_docx: "styles.docx"
-#     toc: true
-#     toc_depth: 4
+output:
+  bookdown::word_document2:
+    reference_docx: "styles.docx"
+    number_sections: true
+    toc: true
+    toc_depth: 4
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, 
-                      dev = "png")
+                      dev = "png", dpi=300)
 
 # Load packages ----
 library(tidycensus)
@@ -53,11 +48,10 @@ pal_inc <- carto_pal(7, "Emrld")
 # Common Items ----
 locality_name <- "City of Charlottesville"
 school_district <- "Charlottesville City Schools (CCS)"
-source_acs <- "Data Source: U.S. Census Bureau, American Community Survey 5-year estimates, 2018-2022"
-source_vdoe <- "Data Source: Virginia Department of Education, 2023-2024" # for short term suspensions and absenteeism
+source_acs <- "Data Source: U.S. Census Bureau, American Community Survey 5-year estimates, 2023"
+source_vdoe <- "Data Source: Virginia Department of Education, 2023-2024"
 
 ```
-
 # Demographic Profile
 
 ### Race and Ethnicity
@@ -100,7 +94,8 @@ cville_1900_2020 %>%
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
-        axis.text.x = element_text(color = "black", size = 13),
+        legend.text = element_text(size = 14),
+        axis.text.x = element_text(color = "black", size = 15),
         axis.ticks = element_blank(),
         panel.grid.minor = element_blank(),
         plot.title.position= "plot",
@@ -108,19 +103,20 @@ cville_1900_2020 %>%
         axis.text.y = element_text(size = 13),
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12))
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14))
 
 
 ```
 
-```{r race-ethn-2012-2022, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="Population Composition by Race & Ethnicity, 2012-2022. According to US Census data, in 2022 65% of residents identified as White, 17% as Black or African American, 7% as Asian, 6% as Hispanic or Latino, and 4% as Multiracial. The remaining 1% identified as American Indian/Alaskan Native, Native Hawaiian/Pacific Islander, or an Other Racial Identity."}
-# Ethnicity by Race, 2012-2022 ----
+```{r race-ethn-2013-2022, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="Population Composition by Race & Ethnicity, 2013-2023. According to US Census data, in 2023 64% of residents identified as White, 17% as Black or African American, 7% as Asian, 7% as Hispanic or Latino, and 4% as Multiracial. The remaining 1% identified as American Indian/Alaskan Native, Native Hawaiian/Pacific Islander, or an other racial identity."}
+# Ethnicity by Race, 2012-2023 ----
 # "#88CCEE" "#CC6677" "#DDCC77" "#117733" "#332288" "#AA4499" "#44AA99" "#999933" "#882255" "#661100" "#6699CC" "#888888"
 
-cville_ethn_race_2012_2022 <- read_csv("../data/cville_ethn_race_2012_2022.csv")
-cville_ethn_race_2012_2022 <- cville_ethn_race_2012_2022 %>% 
+cville_ethn_race_2012_2023 <- read_csv("../data/cville_ethn_race_2012_2023.csv")
+cville_ethn_race_2012_2023 <- cville_ethn_race_2012_2023 %>% 
   mutate(year = factor(year, levels = c("2012","2013","2014","2015","2016",
-                                        "2017","2018","2019","2020","2021","2022")),
+                                        "2017","2018","2019","2020","2021","2022", "2023")),
          label = factor(label, 
                         levels = c("Not Hispanic or Latino: White alone", "Not Hispanic or Latino: Black or African American alone", "Hispanic or Latino", "Not Hispanic or Latino: Two or more races", "Not Hispanic or Latino: Asian alone", "Not Hispanic or Latino: American Indian and Alaska Native alone", "Not Hispanic or Latino: Native Hawaiian and Other Pacific Islander alone", "Not Hispanic or Latino: Some other race alone"), 
                         labels = c("White", "Black", "Hispanic", "Multiracial",  "Asian", "American Indian/Alaskan Native", "Native Hawaiian/Pacific Islander", "Other Racial Identities")),
@@ -131,7 +127,8 @@ cville_ethn_race_2012_2022 <- cville_ethn_race_2012_2022 %>%
 
 
 # Stacked bar
-cville_ethn_race_2012_2022 %>% 
+cville_ethn_race_2012_2023 %>% 
+  filter(year != "2012") %>% 
   ggplot(aes(x = year, y = percent, group = year, fill = label, 
              label = text)) +
   geom_bar(stat = "identity", width = 0.8) +
@@ -141,30 +138,32 @@ cville_ethn_race_2012_2022 %>%
                      name = "") +
   scale_fill_manual(values = c("#b2b8be", "#ff641e", "#b4cd23", "#ee2b75","#009ddc", "#fbb12d", "#b69cfd", "#43daed")) +
   theme_minimal() +
-  labs(title = "Population Composition by Race & Ethnicity, 2012-2022", 
+  labs(title = "Population Composition by Race & Ethnicity, 2013-2023", 
        subtitle = locality_name, 
-       caption = source_acs) +
+       caption = "Data Source: U.S. Census Bureau, American Community Survey 5-year estimates, 2013-2023") +
   theme(legend.title=element_blank(),
         legend.position = "top",
+        legend.text = element_text(size = 13),
         panel.grid.minor = element_blank(),
         panel.grid.major.x = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
         # axis.text.y = element_text(color = "black", size = 14),
-        axis.text.x = element_text(color = "black", size = 14),
+        axis.text.x = element_text(color = "black", size = 15),
         axis.ticks = element_blank(),
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12))
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14))
 
 ```
 
 ### Age & Sex
 
-```{r age-groups, fig.width = 10.5, fig.height=6, fig.retina = 2, fig.cap="Age of Residents: 2012 vs 2022. In 2022, 20% of city residents were under 20 years, 48% were between 20 and 44 years, 20% were 45-64 years, and 12% were 65 years and older."}
-# Age Groups: 2012 and 2022 ----
-cville_age_2012_2022 <- read_csv("../data/cville_age_2012_2022.csv")
-cville_age_2012_2022 <- cville_age_2012_2022 %>% 
+```{r age-groups, fig.width = 10.5, fig.height=6.5, fig.retina = 2, fig.cap="Age of Residents: 2013 vs 2023. In 2023, 19% of city residents were under 20 years, 46% were between 20 and 44 years, 20% were 45-64 years, and 12% were 65 years and older."}
+# Age Groups: 2013 and 2023 ----
+cville_age_2013_2023 <- read_csv("../data/cville_age_2013_2023.csv")
+cville_age_2013_2023 <- cville_age_2013_2023 %>% 
   mutate(label = factor(label,
                         levels = c("Under 5 years", "5 to 9 years", "10 to 14 years", "15 to 19 years",
                                    "20 to 24 years", "25 to 34 years", "35 to 44 years", "45 to 54 years",
@@ -173,12 +172,12 @@ cville_age_2012_2022 <- cville_age_2012_2022 %>%
          percent = round(percent, 0))
 
 dummy_data = tibble(y = c(-25, 0, 0, 25),
-                    year = c(2012, 2012, 2022, 2022))
+                    year = c(2013, 2013, 2023, 2023))
 
-dat <- cville_age_2012_2022 %>% 
+dat <- cville_age_2013_2023 %>% 
     group_by(percent, year) %>%
     # mutate(x = sequence(n())) %>%
-    mutate(y = ifelse(year == 2012, -percent, percent)) %>%
+    mutate(y = ifelse(year == 2013, -percent, percent)) %>%
     ungroup() 
 
 ggplot() +
@@ -192,10 +191,10 @@ ggplot() +
              mapping = aes(y = y)) +
   geom_text(data = dat, 
             mapping = aes(x = label, 
-                          y = case_when(year == 2012 ~  y-1.5,
-                                        year == 2022 ~  y+1.5),
+                          y = case_when(year == 2013 ~  y-1.65,
+                                        year == 2023 ~  y+1.65),
                           label = scales::percent(percent / 100, accuracy = 1)), 
-            size = 4.5
+            size = 5
             ) +
   scale_x_discrete(name = "") +
   scale_y_continuous(
@@ -209,30 +208,32 @@ ggplot() +
               reverse_num = TRUE) +
   coord_flip() +
   theme_light() +
-  labs(title = "Age of Residents: 2012 vs 2022", 
+  labs(title = "Age of Residents: 2013 vs 2023", 
        subtitle = locality_name, 
        caption = source_acs) +
   theme(legend.position = "none",
         panel.grid.minor.x = element_blank(),
         panel.border = element_blank(),
-        strip.text = element_text(size = rel(1.2), 
+        strip.text = element_text(size = rel(1.3), 
                                   # face = "bold", 
                                   color = "black"),
         strip.background = element_rect(fill = "white", colour = "black", size = 0),
         # plot.title.position= "plot",
         # plot.caption.position = "plot",
-        axis.text.y = element_text(hjust = 0.5, color = "black", size = 14),
+        axis.text.y = element_text(hjust = 0.5, color = "black", size = 15),
         text = element_text(size = 14),
-        axis.title.x = element_text(size=13),
+        axis.title.x = element_text(size=15),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12)
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14)
         )
 
 ```
-```{r age-by-sex, fig.width = 10.5, fig.height=4, fig.retina = 2, fig.cap="Sex by Age Group. In the US Census American Community Survey, 2022, 51% of residents identified as female and 49% identified as male."}
-# Age by Sex, 2022 ----
-cville_sex_age_2022 <- read_csv("../data/cville_sex_age_2022.csv")
-cville_sex_age_2022 <- cville_sex_age_2022 %>% 
+
+```{r age-by-sex, fig.width = 10.5, fig.height=4, fig.retina = 2, fig.cap="Sex by Age Group. In the US Census American Community Survey, 2023, 52% of residents identified as female and 48% identified as male."}
+# Age by Sex, 2023 ----
+cville_sex_age_2023 <- read_csv("../data/cville_sex_age_2023.csv")
+cville_sex_age_2023 <- cville_sex_age_2023 %>% 
   mutate(age_group = case_when(
     label %in% c("Under 5 years", "5 to 9 years") ~ "Under 10 years",
     label %in% c("10 to 14 years", "15 to 19 years") ~ "10 to 19 years",
@@ -246,10 +247,15 @@ cville_sex_age_2022 <- cville_sex_age_2022 %>%
                                                       "35 to 54 years", "55 to 64 years", "65 years and over")),
          percent_rnd = round(percent, 0))
 
+# For caption
+sex_totals <- cville_sex_age_2023 %>% group_by(sex) %>% summarise(percent = sum(percent))
+
+# build plot
+
 dummy_sex = tibble(y = c(-20.5, 0, 0, 20.5),
                     sex = c("Female", "Female", "Male", "Male"))
 
-dat_sex <- cville_sex_age_2022 %>% 
+dat_sex <- cville_sex_age_2023 %>% 
     group_by(percent_rnd, sex) %>%
     # mutate(x = sequence(n())) %>%
     mutate(y = ifelse(sex == "Female", -percent_rnd, percent_rnd)) %>%
@@ -269,7 +275,7 @@ ggplot() +
                           y = case_when(sex == "Female" ~  y-1.5,
                                         sex == "Male" ~  y+1.5),
                           label = scales::percent(percent / 100, accuracy = 1)), 
-            size = 4.5
+            size = 5
             ) +
   scale_x_discrete(name = "") +
   scale_y_continuous(
@@ -283,23 +289,24 @@ ggplot() +
               reverse_num = TRUE) +
   coord_flip() +
   theme_light() +
-  labs(title = "Sex by Age Group, 2022", 
+  labs(title = "Sex by Age Group, 2023", 
        subtitle = locality_name, 
        caption = source_acs) +
   theme(legend.position = "none",
         panel.grid.minor.x = element_blank(),
         panel.border = element_blank(),
-        strip.text = element_text(size = rel(1.2), 
+        strip.text = element_text(size = rel(1.3), 
                                   # face = "bold", 
                                   color = "black"),
         strip.background = element_rect(fill = "white", colour = "black", size = 0),
         # plot.title.position= "plot",
         # plot.caption.position = "plot",
-        axis.text.y = element_text(hjust = 0.5, color = "black", size = 14),
+        axis.text.y = element_text(hjust = 0.5, color = "black", size = 15),
         text = element_text(size = 14),
-        axis.title.x = element_text(size=13),
+        axis.title.x = element_text(size=15),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12)
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14)
         )
 
 
@@ -308,10 +315,10 @@ ggplot() +
 
 ### Nativity & Language
 
-```{r nativity, fig.width=6, fig.height=4, fig.cap="Nativity of Residents. In 2022, 10% of residents were born outside of the United States, including naturalized citizens. 90% of residents were born in the US, in US territories, or born abroad of American parents." }
-# Charlottesville, Resident Status & Foreign Born, 2022 ----
-cville_nativity_2022 <- read_csv("../data/cville_nativity_2022.csv")
-cville_nativity_2022 <- cville_nativity_2022 %>% 
+```{r nativity, fig.width=6.5, fig.height=4, fig.cap="Nativity of Residents. In 2023, 10% of residents were born outside of the United States, including naturalized citizens. 90% of residents were born in the US, in US territories, or born abroad of American parents." }
+# Charlottesville, Resident Status & Foreign Born, 2023 ----
+cville_nativity_2023 <- read_csv("../data/cville_nativity_2023.csv")
+cville_nativity_2023 <- cville_nativity_2023 %>% 
   mutate(status = case_when(
     label == "U.S. citizen, born in the United States" ~ "US-born",
     label == "U.S. citizen, born in Puerto Rico or U.S. Island Areas" ~ "US-born",
@@ -322,7 +329,7 @@ cville_nativity_2022 <- cville_nativity_2022 %>%
   group_by(GEOID, locality, status, total_pop, year) %>% 
   summarise(estimate = sum(estimate))
 
-cville_nativity_2022 %>% 
+cville_nativity_2023 %>% 
   mutate(percent = round(estimate/total_pop *100, 0),
          text = paste0(round(percent, 0), "%"),
          status = factor(status, levels = c("US-born","Foreign-born"))) %>% 
@@ -340,7 +347,7 @@ cville_nativity_2022 %>%
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.position = "top",
-        panel.grid.minor.y = element_blank(),
+        panel.grid.minor = element_blank(),
         panel.grid.major.y = element_blank(),
         axis.text.y = element_blank(),
         axis.text.x = element_text(size = 13),
@@ -349,14 +356,14 @@ cville_nativity_2022 %>%
         plot.caption.position = "plot",
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12))
+        plot.caption = element_text(size = 11))
 ```
 
-```{r nativity-place, fig.width = 10.5, fig.height=7, fig.retina = 2, fig.cap="Residents Born Outside the US by Place of Birth, 2022. Of foreign-born residents, 54% were born in Asia, 19% Latin America, including Mexico as part of Central America, 16% Europe, 5% Northern America, and 6% Africa."}
+```{r nativity-place, fig.width = 10.5, fig.height=7, fig.retina = 2, fig.cap="Residents Born Outside the US by Place of Birth, 2023. Of foreign-born residents, 50% were born in Asia, 20% Latin America, including Mexico as part of Central America, 17% Europe, 5% Northern America, and 8% Africa."}
 pal_6 <- c("#BFD3E6", "#9EBCDA", "#8C96C6", "#8C6BB1", "#88419D", "#6E016B")
 
 # Charlottesville, Foreign-born by location, 2022 ----
-cville_foreign_born <- read_csv("../data/cville_birth_place_foreign_2022.csv")
+cville_foreign_born <- read_csv("../data/cville_birth_place_foreign_2023.csv")
 cville_foreign_born <- cville_foreign_born %>% 
   mutate(region = case_when(str_detect(label, "Europe") ~ "Europe",
                             str_detect(label, "Asia") ~ "Asia",
@@ -365,6 +372,10 @@ cville_foreign_born <- cville_foreign_born %>%
                             .default = label),
          percent_rnd = round(percent,0))
 
+# For caption
+region_totals <- cville_foreign_born %>% group_by(region) %>% summarise(percent = sum(percent)) %>% mutate(percent_rnd = round(percent,0))
+
+# Build plot
 cville_foreign_born %>% 
   mutate(percent = round(percent, 0),
          label = factor(label,
@@ -408,12 +419,13 @@ cville_foreign_born %>%
         plot.caption.position = "plot",
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12))
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14))
 ```
 
-```{r language-all, fig.width=8.5, fig.height=4, fig.cap="Limited & Non-Limited English Speaking Households, 2022. 84% of households speak only English, 14% of households are multilingual including English, and 2% are limited English speaking households."}
+```{r language-all, fig.width=8.5, fig.height=4, fig.cap="Limited & Non-Limited English Speaking Households, 2023. 84% of households speak only English, 14% of households are multilingual including English, and 2% are limited English speaking households."}
 # Household Language, Limited English Speaking Status ----
-cville_language <- read.csv("../data/cville_language_2022.csv")
+cville_language <- read.csv("../data/cville_language_2023.csv")
 
 # All households summarized
 cville_lang_all <- cville_language %>% 
@@ -455,6 +467,7 @@ cville_lang_all %>%
         legend.position = "top",
         legend.location = "plot",
         legend.justification.top = "left",
+        legend.text = element_text(size = 13),
         panel.grid.minor.y = element_blank(),
         panel.grid.major.y = element_blank(),
         panel.grid.minor.x = element_blank(),
@@ -465,11 +478,12 @@ cville_lang_all %>%
         plot.caption.position = "plot",
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12)
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14)
     )
 ```
 
-```{r languages, fig.width = 10.5, fig.height=6, fig.retina = 2, fig.cap="Limited & Non-Limited English Speaking Households by Language, 2022. Of the approximately 283 linguistically isolated households, 119 speak Spanish, 61 Arabic, 24 Korean, 24 Other Asian and Pacific Island languages, 18 Other Indo-European languages, 12 Chinese (incl. Mandarin, Cantonese), 25 Other and unspecified languages."}
+```{r languages, fig.width = 10.5, fig.height=6, fig.retina = 2, fig.cap="Limited & Non-Limited English Speaking Households by Language, 2023. Of the approximately 395 linguistically isolated households, 137 speak Spanish, 51 French, Haitian or Cajun, 49 Arabic, 33 Korean, 17 Other Asian and Pacific Island languages, 76 Other Indo-European languages, 9 Chinese (incl. Mandarin, Cantonese), 23 other and unspecified languages."}
 # Household, by language and status ---
 cville_lang_stat <- cville_language %>% 
   filter(label != "English only") %>% 
@@ -528,14 +542,16 @@ cville_lang_stat %>%
         panel.grid.minor.y = element_blank(),
         panel.grid.major.y = element_blank(),
         panel.grid.minor.x = element_blank(),
-        axis.text.x = element_text(size = 13),
+        axis.text.x = element_text(size = 14),
+        axis.title.x = element_text(size = 16),
         axis.text.y = element_text(color = "black", size = 14),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12)
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14)
         )
 
 ```
@@ -543,10 +559,10 @@ cville_lang_stat %>%
 
 ### Disability
 
-```{r disability-status, fig.width = 7.5, fig.height=6, fig.retina = 2, fig.cap="Disability Status by Age Group, 2022. Approximately 4,138 people identify as having a disability, with near half of those aged 65 and older (1,817 people)."}
+```{r disability-status, fig.width = 7, fig.height=5.5, fig.retina = 2, fig.cap="Disability Status by Age Group, 2023. Approximately 4,174 people identify as having a disability, with near half of those aged 65 and older (1,652 people)."}
 # Disability Status ----
-# Charlottesville, 2022
-cville_disability_age <- read_csv("../data/cville_disability_2022.csv")
+# Charlottesville, 2023
+cville_disability_age <- read_csv("../data/cville_disability_2023.csv")
 
 # Wrangle by age groups
 cville_disability_dat <- cville_disability_age %>% 
@@ -561,6 +577,10 @@ cville_disability_stat <- cville_disability_age %>%
 cville_dis <- cville_disability_dat %>% left_join(cville_disability_stat) %>% 
   mutate(per_age_group = round(estimate/total_age * 100, 2))
 
+# For caption
+total_dis <- cville_dis %>% group_by(disability_status) %>% summarise(estimate = sum(estimate))
+
+# Build plot
 cville_dis %>% 
   mutate(label = paste0(scales::percent(per_age_group / 100, accuracy = 1), "\n(",
                         scales::comma(estimate), ")"),
@@ -600,13 +620,14 @@ cville_dis %>%
         plot.caption.position = "plot",
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
+        plot.subtitle = element_text(size = 16),
         plot.caption = element_text(size = 12))
 
 ```
 
-```{r disability-categories, fig.width = 8.5, fig.height=6, fig.retina = 2, fig.cap="Number of people identifying as having a particular disability. Census-defined categories and the number of people include hearing difficulties (829), vision difficulties (477), cognitive difficulties (1,561), ambulatory difficulties (2,008), self-care difficulties (812), and independent living difficulties (1,743)."}
+```{r disability-categories, fig.width = 8, fig.height=5.5, fig.retina = 2, fig.cap="Number of people identifying as having a particular disability. Census-defined categories and the number of people include hearing difficulties (779), vision difficulties (444), cognitive difficulties (1,718), ambulatory difficulties (1,848), self-care difficulties (711), and independent living difficulties (1,731)."}
 # Disability categories ----
-cville_disability_cat <- read_csv("../data/cville_disability_cat_2022.csv")
+cville_disability_cat <- read_csv("../data/cville_disability_cat_2023.csv")
 cville_disability_cat <- cville_disability_cat %>% 
   mutate(label = str_remove(label, "With a "),
          label = str_remove(label, "With an "),
@@ -647,6 +668,7 @@ cville_disability_cat %>%
         plot.caption.position = "plot",
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
+        plot.subtitle = element_text(size = 16),
         plot.caption = element_text(size = 12))
 ```
 
@@ -656,9 +678,13 @@ cville_disability_cat %>%
 
 # Human Development Framework
 
+### The Human Development Index
+
+### AHDI and the City of Charlottesville
+
 ```{r ahdi-benchmarks, fig.width=9}
 # AHDI Benchmarks ----
-ahdi_benchmarks <- read_csv("../data/ahdi_benchmarks.csv")
+ahdi_benchmarks <- read_csv("../data/ahdi_benchmarks_2023.csv")
 
 cville_bench <- c("51","51003","51540","51510","51013","51680","51760","51770","51830")
 
@@ -675,10 +701,10 @@ ahdi_table_cville <- ahdi_benchmarks %>%
          `At Least Bachelor’s Degree` = bac_deg_per,
          `Graduate Degree` = grad_deg_per,
          `School Enrollment` = enrollment_per, 
-         `Median Earnings (2022 $)` = med_earnings)
+         `Median Earnings (2023 $)` = med_earnings)
   
 ahdi_table_cville %>%
-  select(name:`Median Earnings (2022 $)`) %>% 
+  select(name:`Median Earnings (2023 $)`) %>% 
   mutate(across(`At Least High School Diploma`:`School Enrollment`, ~ (as.numeric(.x)/100))) %>%
   gt(rowname_col = "name") %>%
   tab_row_group(label = "Local",
@@ -702,10 +728,10 @@ ahdi_table_cville %>%
   ) %>% 
   tab_spanner(
     label = "Living Standards",
-    columns = c(`Median Earnings (2022 $)`)
+    columns = c(`Median Earnings (2023 $)`)
   ) %>% 
   fmt_currency(
-    columns = `Median Earnings (2022 $)`,
+    columns = `Median Earnings (2023 $)`,
     currency = currency(
       html = "&#36;",
       default = "$"
@@ -721,7 +747,7 @@ ahdi_table_cville %>%
     direction = "column",
     # domain = c(0, 50),
     method = "numeric",
-    palette = c("#D1EEEA", "#3B738F")
+    palette = c("#D1EEEA", "#769DB1")
     # palette = pal_health
     # reverse = TRUE
     # na_color = "white"
@@ -730,37 +756,37 @@ ahdi_table_cville %>%
     columns = `At Least High School Diploma`:`School Enrollment`,
     direction = "column",
     method = "numeric",
-    palette = c("#FAF0F1", "#CC6677")
+    palette = c("#FAF0F1", "#DB94A0")
     # palette = pal_edu
   ) %>% 
   data_color(
-    columns = `Median Earnings (2022 $)`,
+    columns = `Median Earnings (2023 $)`,
     direction = "column",
     method = "numeric",
-    palette = c("#E7F1EB", "#117733")
+    palette = c("#E7F1EB", "#58A070")
     # palette = pal_inc
   ) %>% 
   data_color(
     columns = `American HD Index`,
     direction = "column",
     method = "numeric",
-    palette = c("#EBE9F3", "#332288")
+    palette = c("#EBE9F3", "#7064AC")
     # palette = pal_ahdi
   ) %>% 
   tab_header(
-    title = md("**American Human Developement Index: Comparison Across Benchmark Localities**")
+    title = md("**American Human Development Index: Comparison Across Benchmark Localities**")
   ) %>% 
   tab_source_note(
-    source_note = md("Data Sources: *Life Expectancy:* County Health Rankings, 2024. *Education and Earnings:* US Census ACS, 2022.")
+    source_note = md("Data Sources: *Life Expectancy:* County Health Rankings, 2024. *Education and Earnings:* U.S. Census Bureau, American Community Survey 5-year estimates, 2023.")
   )
 
 
 ```
 
 
-```{r, echo=FALSE, fig.width=9, fig.height=7.5, fig.cap="American Human Development Index by Census Tract. In Charlottesville, the AHDI varies significantly across different neighborhoods, ranging from 2.4 to 8.2."}
+```{r ahdi-tract, fig.width=9, fig.height=7.5, fig.cap="American Human Development Index by Census Tract. In Charlottesville, the AHDI varies significantly across different neighborhoods, ranging from 2 to 7.8."}
 # AHDI Charlottesville tracts, geospatial ----
-ahdi_tract_cville <- read_csv("../data/ahdi_tract_cville.csv") %>% 
+ahdi_tract_cville <- read_csv("../data/ahdi_tract_cville_2023.csv") %>% 
   mutate(GEOID = as.character(GEOID),
          ahdi = round(ahdi, digits = 1))
 ahdi_tract_cville <- ahdi_tract_cville[order(ahdi_tract_cville$tractnames, decreasing=FALSE),]
@@ -808,14 +834,17 @@ cville_ahdi_rank <-  ggplot(cville_rank_data, aes(x = 0, y = ahdi, label = names
     geom_line(color = "grey", size = 1)+
     geom_point(aes(color=as.factor(ahdi)), size=5)+
     geom_text(label = names, hjust = 0, nudge_x = 0.005, 
-              nudge_y = 0.01,
+              nudge_y = case_when(cville_rank_data$ahdi %in% c(7.7) ~ -0.04,
+                                  cville_rank_data$ahdi %in% c(7.8) ~ 0.1,
+                             .default = 0),
+              # nudge_y = 0.01,
               size = 3.5, 
               # angle=55, 
               lineheight = 0.8) +
    scale_color_carto_d(name = "American HD Index: ",
                            type = "diverging", palette = "Purp", direction = 1) +
     scale_x_continuous(limits = c(0,.1),
-                       expand = c(0.03, 0.001))+
+                       expand = c(0.05, 0))+
     scale_y_continuous(
                        breaks = ahdi_label,
                        labels = ahdi_label
@@ -837,16 +866,16 @@ cville_ahdi_rank <-  ggplot(cville_rank_data, aes(x = 0, y = ahdi, label = names
           legend.position="none")
   
   (ahdi_cville_map + patchwork::free(cville_ahdi_rank)) +
-  plot_layout(widths = c(2, 1)) +
+  plot_layout(widths = c(2, .75)) +
   plot_annotation(title = 'American HD Index by Census Tract',
                   subtitle = locality_name,
                   caption = "",
                   theme = theme(plot.title = element_text(size = 18),
-                                plot.subtitle = element_text(size = 14)))
+                                plot.subtitle = element_text(size = 16)))
 
 ```
 
-```{r, fig.height=6, fig.width=9.5, fig.cap="Dimensions of the American Human Development Index by Census Tract. The health, education, and income indices are averaged to make the AHDI. In Charlottesville, the education index is relatively high across tracts while the income and health indices are lower."}
+```{r ahdi-dimensions, fig.height=6, fig.width=9.5, fig.cap="Dimensions of the American Human Development Index by Census Tract. The health, education, and income indices are averaged to make the AHDI. In Charlottesville, the education index is relatively high across tracts while the income and health indices are lower."}
 # AHDI Charlottesville tracts, gap chart ----
 cville_ahdi_gap <- ahdi_tract_cville %>% 
   select(tractnames, health_index, education_index, income_index, ahdi) %>% 
@@ -904,7 +933,7 @@ cville_ahdi_na <- ggplot(cville_ahdi_gap %>% filter(isna == TRUE),
               ) +
   plot_annotation(title = 'Dimensions of the American Human Development Index by Census Tract',
                   subtitle = locality_name,
-                  caption = "Note: The income index for JPA-Fontaine and 10th & Page-Venable are not shown due to negative values. Negative values in the\nincome index means that the median earnings for these tracts is lower than the minimun earnings goalpost used in calculating \nthe AHDI ($19,711 in 2022 dollars).") &
+                  caption = "Note: The income index for JPA-Fontaine and 10th & Page-Venable are not shown due to negative values.\nNegative values in the income index means that the median earnings for these tracts is lower than the\nminimun earnings goalpost used in calculating the AHDI ($20,394 in 2023 dollars).") &
   theme(legend.title=element_blank(),
         legend.position = "top",
         legend.location = "plot",
@@ -919,12 +948,45 @@ cville_ahdi_na <- ggplot(cville_ahdi_gap %>% filter(isna == TRUE),
         plot.caption.position = "plot",
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 11))
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 12))
   
 
 ```
 
-# Long and Health Life
+```{r supplemental-table}
+neighborhood_supplement <- read_csv("../data/supplement_table_2023.csv")
+
+neighborhood_supplement <- neighborhood_supplement %>% 
+  filter(name %in% c("10th & Page-Venable", "Barracks-Rugby", "JPA-Fontaine", "Charlottesville city, Virginia")) %>% 
+  rename("Overall Poverty Rate" = "Income in the past 12 months below poverty level",
+         "Non-Student Poverty Rate" = "Non-students below the poverty level",
+         "Received SNAP benefits" = "Household received Food Stamps/SNAP in the past 12 months",
+         "Residents 18-24 yrs." = "Population 18-24 years") %>% 
+  mutate(name = case_when(name == "Charlottesville city, Virginia" ~ "Charlottesville Overall",
+                          .default = name)) %>% 
+  select(-c("locality", "tract", "Non-students at or above the poverty level"))
+
+neighborhood_supplement %>%
+  mutate(across(`Overall Poverty Rate`:`Residents 18-24 yrs.`, ~ (as.numeric(.x)/100))) %>%
+  gt(rowname_col = "name") %>%
+  fmt_percent(
+    columns = `Overall Poverty Rate`:`Residents 18-24 yrs.`,
+    decimals = 0
+  ) %>% 
+  tab_style(
+    style = cell_text(align = "center", v_align = "middle"),
+    locations = list(cells_column_labels(), cells_body())
+  ) %>%
+  tab_header(
+    title = md("**Student and non-student residents in neighborhoods surrounding the University**")
+  ) %>%
+  tab_source_note(
+    source_note = md(source_acs)
+  )
+
+```
+# A Long and Healthy Life: Health Profile
 
 ### Life Expectancy
 
@@ -955,20 +1017,21 @@ cville_life_exp_county %>%
   labs(fill = "",
        title = "Life Expectancy by Race", 
       subtitle = locality_name, 
-      caption = "Note: The bars in this figure represent the confidence interval, or the range of values that most likely contain the\nestimated life expectancy for each group. Data Source: County Health Rankings, 2024") +
+      caption = "Note: The bars in this figure represent the confidence interval, or the range of values that most likely\ncontain the estimated life expectancy for each group. Data Source: County Health Rankings, 2024") +
   theme_minimal() +
   theme(legend.position = "none",
         panel.grid.minor.x = element_blank(),
         legend.text = element_text(size = 12),
         panel.grid.minor.y = element_blank(),
-        axis.text.x = element_text(size = 12),
+        axis.text.x = element_text(size = 14),
         axis.text.y = element_text(color = "black", size = 14),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12))
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 13))
 
 
 ```
@@ -1055,7 +1118,7 @@ cville_lifeexp_gap <-  ggplot(cville_life, aes(x = 0, y = life_exp, label = name
                   caption = "Data Source: MAPP2Health, 2008-2012 Life Expectancy Estimates",
                   theme = theme(plot.title = element_text(size = 18),
                                 plot.subtitle = element_text(size = 14),
-                                plot.caption = element_text(size = 12)))
+                                plot.caption = element_text(size = 14)))
 
 ```
 
@@ -1147,7 +1210,7 @@ Child Food Insecurity Rate
 2 in 10
 children
 experience food insecurity (`r round(child$value * 100, 0)`%)
-```{r food-child, fig.width=12, fig.height=2}
+```{r food-child, fig.width=12, fig.height=2, fig.cap="Food Insecurity Rates in the City of Charlottesville, 2022."}
 personograph(child, 
              icon.style=6,
              n.icons=10,
@@ -1243,16 +1306,16 @@ cville_cdc_prevent %>%
 ```
 
 ### Health Insurance
-```{r health-insure-race, fig.width = 8.5, fig.height=6, fig.retina = 2, fig.cap="Residents with No Health Insurance by Race. Overall, approximately 6% of residents do not have health insurance. This value is higher for Black residents, at 12% and Hispanic residents, at 17%."}
-# Health Insurance by Race: Charlottesville, 2022 ----
-cville_health_insured_county <- read_csv("../data/cville_health_insured_county_race_2022.csv")
+```{r health-insure-race, fig.width = 8, fig.height=5, fig.retina = 2, fig.cap="Residents with No Health Insurance by Race, 2023. Overall, approximately 6% of residents do not have health insurance. This value is 8% for Asian residents, 11% for Black residents, 16% for Hispanic residents, 3% for multiracial and 3% white."}
+# Health Insurance by Race: Charlottesville, 2023 ----
+cville_health_insured_county <- read_csv("../data/cville_health_insured_county_race_2023.csv")
   
 cville_health_insured_county %>%
   filter(!group %in% c("White alone", "American Indian and Alaska Native alone", "Native Hawaiian and Other Pacific Islander alone", "Some other race alone")) %>% 
   mutate(group = factor(group, levels = c("White non Hispanic", "Two or more races", "Hispanic or Latino", "Black or African American alone", "Asian alone", "All"),
                        labels = c("White", "Multiracial", "Hispanic", "Black", "Asian", "All Residents")),
          text = paste0(round(percent_uninsured,0), "%")) %>%
-  ggplot(aes(x = group, y = percent_uninsured, fill = group)) +
+  ggplot(aes(x = group, y = round(percent_uninsured,0), fill = group)) +
   coord_flip() +
   geom_bar(stat = "identity", width = 0.8) +
   geom_text(aes(label = text), 
@@ -1285,13 +1348,14 @@ cville_health_insured_county %>%
         plot.caption.position = "plot",
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12))
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 13))
 
 ```
 
-```{r insurance-tract, fig.width=9, fig.height=7, fig.cap="Residents with No Health Insurance by Census Tract. The percent of residents without health insurance ranges from 1% in Greenbrier-Meadows to 13% in Woolen Mills."}
-# Health Insurance by tract: Charlottesville, 2022 ----
-cville_health_insured_tract <- read_csv("../data/cville_health_insured_tract_2022.csv") %>%
+```{r insurance-tract, fig.width=9, fig.height=7, fig.cap="Residents with No Health Insurance by Census Tract. The percent of residents without health insurance ranges from 1% in Greenbrier-Meadows to 14% in Woolen Mills."}
+# Health Insurance by tract: Charlottesville ----
+cville_health_insured_tract <- read_csv("../data/cville_health_insured_tract_2023.csv") %>%
   mutate(GEOID = as.character(GEOID),
          per_uninsured_rounded = round(percent_uninsured,0))
 
@@ -1368,7 +1432,7 @@ cville_insured_gap <-  ggplot(cville_insured, aes(x = 0, y = per_uninsured_round
                   caption = source_acs,
                   theme = theme(plot.title = element_text(size = 18),
                                 plot.subtitle = element_text(size = 14),
-                                plot.caption = element_text(size = 12)))
+                                plot.caption = element_text(size = 14)))
 
 
 
@@ -1421,7 +1485,7 @@ labs(color = "",
 
 ```
 
-```{r opioid-race, fig.width = 7.5, fig.height = 6, fig.retina = 2, fig.cap="Rate of EMS Responses to Opioid Overdose by Race: 12/1/16-7/10/24"}
+```{r opioid-race, fig.width = 7.5, fig.height = 4, fig.retina = 2, fig.cap="Rate of EMS Responses to Opioid Overdose by Race: 12/1/16-7/10/24"}
 # Charlottesville Opioid Data - by race ----
 cville_opioid_race <- read_excel("../data/Charlottesville_Opioid_Data.xlsx", sheet = "By Race")%>%
   filter(`Patient Race` %in% c("Black or African American", "White")) %>% 
@@ -1446,34 +1510,36 @@ cville_opioid_race <- cville_opioid_race %>%
          rate_rounded = round(rate_per_1000, 0))
 
 cville_opioid_race %>% 
-  ggplot(aes(x = `Patient Race`, y = rate_rounded, fill = `Patient Race`)) +
+  ggplot(aes(y = `Patient Race`, x = rate_rounded, fill = `Patient Race`)) +
   geom_bar(stat = "identity", width = 0.8) +
   geom_text(aes(label = rate_rounded), 
-            vjust = -1,
-            hjust = 0.5,
+            # vjust = -1,
+            hjust = -1,
             size = 5,
             color = "black") +
-  scale_y_continuous(limits = c(0,25)) +
+  scale_x_continuous(limits = c(0,30),
+                     position = "top") +
   scale_fill_manual(values = c("#3B8EA5","#b2b8be"))+
   labs(
-    x = "",
-    y = "Rate per 1,000 people",
+    y = "",
+    x = "Rate per 1,000 people",
     title = "Rate of Opioid Overdose Related EMS Calls by Race: 12/1/16-7/10/24",
     subtitle = locality_name, 
-    caption = "Data prepared by the Charlottesville Fire Department including responses from the Charlottesville-Albemarle Rescue\nSquad over the period 12/1/16-7/10/24. Data on population counts by race from the U.S. Census Bureau,\nAmerican Community Survey, 2017-2022."
+    caption = "Data prepared by the Charlottesville Fire Department including responses from the\n Charlottesville-Albemarle Rescue Squad over the period 12/1/16-7/10/24. Data on\npopulation counts by race from the U.S. Census Bureau, American Community Survey."
   ) +
+  # coord_flip() +
   theme_minimal() +
   theme(legend.position = "none",
         axis.text.x = element_text(color = "black", size = 14),
         axis.ticks = element_blank(),
         panel.grid.minor = element_blank(),
-        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
         axis.text.y = element_text(color = "black", size = 14),
         text = element_text(size = 14),
         plot.title = element_text(size = 16),
-        plot.caption = element_text(size = 10))
+        plot.caption = element_text(size = 12))
 
 ```
 
@@ -1521,12 +1587,12 @@ cville_opioid_tract %>%
 
 ```
 
-# Access to Knowledge
+# Access to Knowledge: Education Profile
 
 ### Degree Attainment
-```{r degree-attain-race, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="Educational Attainment by Race/Ethnicity for the population 25 years and over, 2022. While 59% of residents overall have a bachelor's degree or higher, 17% of Black residents, 48% of Hispanic residents, and 70% of white residents have BA's or higher."}
+```{r degree-attain-race, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="Educational Attainment by Race/Ethnicity for the population 25 years and over, 2023. While 61% of residents overall have a bachelor's degree or higher, 21% of Black residents, 53% of Hispanic residents, and 71% of white residents have BA's or higher."}
 # Educational Attainment by Race (25 Years and Over) Charlottesville, 2022 ----
-cville_edu_attain <- read_csv("../data/cville_edu_attain_county_2022.csv") %>% 
+cville_edu_attain <- read_csv("../data/cville_edu_attain_county_2023.csv") %>% 
   select(-percent) %>% 
   mutate(label = case_when(label == "High school graduate or higher" ~ "high_school_up",
                      label == "Bachelor's degree or higher" ~ "bachelors_up",
@@ -1546,7 +1612,7 @@ cville_edu_attain <- cville_edu_attain %>%
          estimate = value) %>% 
   select(GEOID, locality, group, group_total, edu_level, estimate, percent, year)
 
-cville_edu_attain_race <- read_csv("../data/cville_edu_attain_race_county_2022.csv") %>% 
+cville_edu_attain_race <- read_csv("../data/cville_edu_attain_race_county_2023.csv") %>% 
   select(-group_total_moe) %>% 
   rename(group = race)
 
@@ -1594,14 +1660,15 @@ cville_edu_attain_race_plot %>%
         axis.text.x = element_text(color = "black", size = 14),
         axis.ticks = element_blank(),
         text = element_text(size = 14),
-        plot.title = element_text(size = 16),
-        plot.caption = element_text(size = 12))
+        plot.title = element_text(size = 18),
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14))
 
 ```
 
-```{r degree-attain-tract, fig.width=9, fig.height=7.5, fig.cap="Education Level: Bachelor's Degree or Higher by Census Tract for the population 25 years and older. Bachelor's degree attainment ranges from 36% in the Fifeville-Cherry Avenue tract to 82% in the Barracks-Rugby area."}
-# Educational Attainment, with BA's by tract, Charlottesville, 2022 ----
-cville_edu_attain_tract <- read_csv("../data/cville_edu_attain_tract_2022.csv") %>%
+```{r degree-attain-tract, fig.width=9, fig.height=7.5, fig.cap="Education Level: Bachelor's Degree or Higher by Census Tract for the population 25 years and older, 2023. Bachelor's degree attainment ranges from 36% in the Fifeville-Cherry Avenue tract to 78% in the Downtown area."}
+# Educational Attainment, with BA's by tract, Charlottesville, 2023 ----
+cville_edu_attain_tract <- read_csv("../data/cville_edu_attain_tract_2023.csv") %>%
   mutate(GEOID = as.character(GEOID),
          percent = round(percent, 0))
 
@@ -1687,16 +1754,16 @@ cville_educ_attain_rank <- ggplot(cville_BA_data, aes(x = 0, y = percent, label 
       subtitle = locality_name, 
       caption = source_acs,
       theme = theme(plot.title = element_text(size = 18),
-                    plot.subtitle = element_text(size = 14),
-                    plot.caption = element_text(size = 12)))
+                    plot.subtitle = element_text(size = 16),
+                    plot.caption = element_text(size = 14)))
 
 
 ```
 
 ### School Enrollment
-```{r school-enroll, fig.width=9, fig.height=7.5, fig.cap="School Enrollment (Ages 3-24) by Census Tract, 2022. School enrollment ranges from 67% in Fry's Spring to 97% in the Locust Grove tract."}
-# School Enrollment: Charlottesville, 2022 ----
-cville_enroll_tract <- read_csv("../data/cville_enroll_tract_2022.csv") %>%
+```{r school-enroll, fig.width=9, fig.height=7.5, fig.cap="School Enrollment (Ages 3-24) by Census Tract, 2023. School enrollment ranges from 76% in Fry's Spring and Downtown to 94% in the Locust Grove tract."}
+# School Enrollment: Charlottesville ----
+cville_enroll_tract <- read_csv("../data/cville_enroll_tract_2023.csv") %>%
   mutate(GEOID = as.character(GEOID),
          percent = round(percent, 0))
 
@@ -1753,7 +1820,7 @@ cville_enroll_rank <- ggplot(cville_enroll_data, aes(x = 0, y = percent, label =
    scale_color_carto_d(name = "Percent Enrolled: ",
                            type = "diverging", palette = "PinkYl", direction = 1) +
     scale_x_continuous(limits = c(0,.1),
-                       expand = c(0.03, 0.003))+
+                       expand = c(0.03, 0))+
     scale_y_continuous(
                        breaks = enrollment,
                        labels = paste0(enrollment, "%")
@@ -1780,15 +1847,15 @@ cville_enroll_rank <- ggplot(cville_enroll_data, aes(x = 0, y = percent, label =
       subtitle = locality_name, 
       caption = source_acs,
       theme = theme(plot.title = element_text(size = 18),
-                    plot.subtitle = element_text(size = 14),
-                    plot.caption = element_text(size = 12)))
+                    plot.subtitle = element_text(size = 16),
+                    plot.caption = element_text(size = 14)))
 
 ```
 
 ### AP & Dual Enrollment
-```{r ap-enroll, fig.width = 10, fig.height = 6, fig.retina = 2, fig.cap="AP & Dual Enrollment in CCS, 2022. "}
+```{r ap-enroll, fig.width = 10, fig.height = 6, fig.retina = 2, fig.cap="AP & Dual Enrollment in CCS, 2023-2024. For all students, 10th-12th grades, 56% are taking 1 or more AP courses. For students 11th-12th grades, 32% are enrolled in 1 or more Dual Enrollment courses."}
 # Advanced Courses, AP & Dual Enrollment: Charlottesville ----
-cville_adv_enroll <- read_csv("../data/cville_adv_enroll_2022_2023.csv")  
+cville_adv_enroll <- read_csv("../data/cville_adv_enroll_2023_2024.csv")  
 
 # AP & Dual Enrollment
 cville_adv_enroll %>% 
@@ -1821,7 +1888,7 @@ cville_adv_enroll %>%
   scale_fill_manual(values = c("#3B8EA5", "#8C96C6")) +
   labs(title = "AP & Dual Enrollment",
        subtitle = school_district, 
-       caption = "Data Source: Virginia Department of Education, 2022-2023") +
+       caption = "Data Source: Virginia Department of Education, 2023-2024") +
   theme_minimal() +
   theme(legend.position = "top",
         legend.location = "plot",
@@ -1834,12 +1901,13 @@ cville_adv_enroll %>%
         axis.text.x = element_text(color = "black", size = 14),
         axis.ticks = element_blank(),
         text = element_text(size = 14),
-        plot.title = element_text(size = 16),
-        plot.caption = element_text(size = 12))
+        plot.title = element_text(size = 18),
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14))
 ```
 
 ### Suspensions
-```{r suspensions, fig.width = 8.5, fig.height=6, fig.retina = 2, fig.cap="Short Term Suspension Incidents by Race/Ethnicity"}
+```{r suspensions, fig.width = 8.5, fig.height=6, fig.retina = 2, fig.cap="Short Term Suspension Incidents by Race/Ethnicity in CCS, 2023-2024. While 14% of short-term suspensions are given to white students and 58% to Black students, white students account for 40% of the student body and Black students account for 26%."}
 # Short Term Suspensions: Charlottesville ----
 cville_suspensions <- read_csv("../data/cville_st_suspensions_2023_2024.csv")  
 
@@ -1888,13 +1956,14 @@ cville_suspensions %>%
         plot.caption.position = "plot",
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12))
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14))
 
 ```
 
 
 ### Chronic Absenteeism
-```{r absenteesism, fig.width = 13, fig.height = 7, fig.retina = 2, fig.cap="Chronic Absenteeism in CCS"}
+```{r absenteesism, fig.width = 13, fig.height = 7, fig.retina = 2, fig.cap="Chronic Absenteeism in CCS, 2023-2024. The rate of chronic absenteeism for all students is 26%. This is higher for Black, Hispanic, and Multiracial students, as well as economically disadvantaged students and students with disabilities."}
 # Chronic Absenteeism: Charlottesville ----
 cville_absent <- read_csv("../data/cville_absenteeism_2023_2024.csv")  
 
@@ -1936,8 +2005,8 @@ cville_absent %>%
         axis.ticks = element_blank(),
         text = element_text(size = 14),
         plot.title = element_text(size = 20),
-        plot.subtitle = element_text(size = 16),
-        plot.caption = element_text(size = 12))
+        plot.subtitle = element_text(size = 18),
+        plot.caption = element_text(size = 14))
 
 
 ```
@@ -1945,9 +2014,9 @@ cville_absent %>%
 # Decent Standard of Living: Economic Security and Housing Profile
 
 ### Earnings and Income
-```{r earnings-race, fig.width = 8.5, fig.height=6, fig.cap="Median Personal Earnings by Sex and Race"}
-# Median personal earnings, by sex and race: Charlottesville, 2022 ----
-cville_med_earnings_race_county <- read_csv("../data/cville_med_earnings_race_county_2022.csv") %>%
+```{r earnings-race, fig.width = 8.5, fig.height=6, fig.cap="Median Personal Earnings by Sex and Race, 2023. The overall median personal earnings is $38,285. White and multiracial men earn more, at $53,400 and $47,700 respectively, as do white women at $41,600. Black men and women earn around $26,400, and both Hispanic men and women earn around $29,300. Asian men and women earn the least, on average $18,200."}
+# Median personal earnings, by sex and race: Charlottesville ----
+cville_med_earnings_race_county <- read_csv("../data/cville_med_earnings_race_county_2023.csv") %>%
   mutate(estimate = round(estimate, -2))
 
 
@@ -1982,13 +2051,13 @@ cville_med_earnings_race_county %>%
                      limits = c(0,65000),
                      expand = expansion(mult = c(0, 0)),
                      name = "") +
-  geom_vline(xintercept = 36222, color = "black", linetype = "dashed",
+  geom_vline(xintercept = 38285, color = "black", linetype = "dashed",
                size = .2) +
-  annotate("text", x = 36222, y = 5,
-             label = "Overall Median Personal Earnings\n for Charlottesville: $36,222",
+  annotate("text", x = 38285, y = 5,
+             label = "Overall Median Personal Earnings\n for Charlottesville: $38,285",
              hjust = -0.05,
              color = "black",
-             size = 4 ) +
+             size = 4.5 ) +
   theme_minimal() +
   labs(color = "",
        title = "Median Personal Earnings by Sex and Race", 
@@ -2002,20 +2071,21 @@ cville_med_earnings_race_county %>%
         panel.grid.minor.y = element_blank(),
         panel.grid.major.y = element_blank(),
         axis.text.x = element_text(size = 13),
-        axis.text.y = element_text(color = "black", size = 14),
+        axis.text.y = element_text(color = "black", size = 15),
         axis.ticks = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot",
-        text = element_text(size = 14),
+        text = element_text(size = 15),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12))
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14))
 
 
 ```
 
-```{r income-tract, fig.width=9, fig.height=7.5, fig.cap="Median Household Income by Census Tract."}
-# Median household income by tract: Charlottesville, 2022 ----
-cville_med_hhinc_tract <- read_csv("../data/cville_med_hhinc_tract_2022.csv") %>%
+```{r income-tract, fig.width=9, fig.height=8, fig.cap="Median Household Income by Census Tract, 2023. Annual household income ranges from $19,900 to $113,700 in the City of Charlottesville."}
+# Median household income by tract: Charlottesville ----
+cville_med_hhinc_tract <- read_csv("../data/cville_med_hhinc_tract_2023.csv") %>%
   mutate(GEOID = as.character(GEOID),
          estimate = round(estimate, -2))
 
@@ -2064,13 +2134,15 @@ cville_inc_rank <- ggplot(cville_inc_data, aes(x = 0, y = estimate, label = name
     geom_line(color = "grey", size = 1)+
     geom_point(aes(color=as.factor(estimate)), size=5)+
     geom_text(label = names, hjust = 0, nudge_x = 0.006, 
-              nudge_y = 0.03,
+              # nudge_y = case_when(alb_inc_data$estimate %in% c(102000, 182000, 97000, 58000) ~ -500,
+              #                .default = 0.02),
+              # nudge_y = 0.03,
               size = 4,
               lineheight = 0.8) +
    scale_color_carto_d(name = "Median Household Income: ",
                            type = "diverging", palette = "Emrld", direction = 1) +
     scale_x_continuous(limits = c(0,.1),
-                       expand = c(0.03, 0.003))+
+                       expand = c(0.05, 0))+
     scale_y_continuous(
                        breaks = estimate_label,
                        labels = paste0("$",prettyNum(estimate_label, big.mark=",", preserve.width="none"))
@@ -2092,20 +2164,20 @@ cville_inc_rank <- ggplot(cville_inc_data, aes(x = 0, y = estimate, label = name
           legend.position="none")
   
   (cville_inc_map + patchwork::free(cville_inc_rank)) +
-  plot_layout(widths = c(2, 1)) +
+  plot_layout(widths = c(2, .9)) +
   plot_annotation(title = "Median Household Income by Census Tract", 
       subtitle = locality_name, 
       caption = source_acs,
       theme = theme(plot.title = element_text(size = 18),
-                    plot.subtitle = element_text(size = 14),
-                    plot.caption = element_text(size = 12)))
+                    plot.subtitle = element_text(size = 16),
+                    plot.caption = element_text(size = 14)))
 
 
 ```
 
-```{r income-race, fig.width = 8.5, fig.height=6, fig.retina = 2, fig.cap="Median Household Income by Race/Ethnicity"}
-# Median household income by Race: Charlottesville, 2022 ----
-cville_med_hhinc_county <- read_csv("../data/cville_med_hhinc_county_2022.csv") %>%
+```{r income-race, fig.width = 8, fig.height=5, fig.retina = 2, fig.cap="Median Household Income by Race/Ethnicity, 2023. Median annual income for all households in Charlottesville is $69,800. For white households, this income is $87,700/year, and $36,500/year for Black households."}
+# Median household income by Race: Charlottesville ----
+cville_med_hhinc_county <- read_csv("../data/cville_med_hhinc_county_2023.csv") %>%
   mutate(estimate = round(estimate, -2))
 
 cville_med_hhinc_county %>%
@@ -2147,12 +2219,13 @@ cville_med_hhinc_county %>%
         plot.caption.position = "plot",
         text = element_text(size = 14),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 12))
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14))
 
 ```
 
 ### Struggling Families: Asset Limited, Income Constrained, Employed (ALICE)
-```{r alice-threshold, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Thresholds 2010-2022"}
+```{r alice-threshold, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Thresholds 2010-2022. The ALICE threshold for households under 65 years old was $70,000 in 2022 and $66,000 for 65 years and older."}
 # ALICE thresholds: Charlottesville, 2010-2022 ----
 cville_ALICE_threshold <- read_csv("../data/cville_ALICE_threshold_2010_2022.csv")
 
@@ -2192,14 +2265,15 @@ labs(color = "",
         text = element_text(size = 14),
         axis.text.x = element_text(size=14, color = "black"),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 11),
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14),
         panel.grid.minor = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot")
 ```
 
 
-```{r alice-race, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Households by Race/Ethnicity"}
+```{r alice-race, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Households by Race/Ethnicity, 2022"}
 # ALICE households by race/ethnicity: Charlottesville, 2022 ----
 cville_ALICE_households_by_race <- read_csv("../data/cville_ALICE_households_by_race_2022.csv")
 
@@ -2247,13 +2321,14 @@ cville_ALICE_households_by_race %>%
         axis.text.x = element_text(color = "black", size = 14),
         axis.ticks = element_blank(),
         text = element_text(size = 14),
-        plot.title = element_text(size = 16),
-        plot.caption = element_text(size = 12))
+        plot.title = element_text(size = 18),
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14))
 
 ```
 
 ### Housing: Renters and Owners
-```{r zillow-rent, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="Zillow Observed Rent Index (ZORI): 2015-2024"}
+```{r zillow-rent, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="Zillow Observed Rent Index (ZORI): 2015-2024. Monthly rent has steadily increased from $1,120 in 2015 to $1,900 in 2024."}
 # Zillow Observed Rent Index (ZORI), 2015-2024 ----
 zillow_rent <- read_csv("../data/zillow_rent_2015_2024.csv") %>% 
   filter(RegionName == "Charlottesville City") %>% 
@@ -2286,15 +2361,16 @@ zillow_rent %>%
         text = element_text(size = 14),
         axis.text.x = element_text(size=14, color = "black"),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 11),
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14),
         panel.grid.minor = element_blank(),
         plot.title.position= "plot",
         plot.caption.position = "plot")
 
 ```
-```{r rent-tract, fig.width=9, fig.height=7.5, fig.cap="Gross Rent by Census Tract"}
-# Gross Rent by tract: Charlottesville, 2022 ----
-cville_gross_rent_tract <- read_csv("../data/cville_gross_rent_tract_2022.csv") %>%
+```{r rent-tract, fig.width=9, fig.height=7.5, fig.cap="Gross Rent by Census Tract, 2023. Monthly rents vary in the city from $1,060 to $1,760."}
+# Gross Rent by tract: Charlottesville ----
+cville_gross_rent_tract <- read_csv("../data/cville_gross_rent_tract_2023.csv") %>%
   mutate(GEOID = as.character(GEOID),
          estimate = round(estimate, -1))
 
@@ -2370,21 +2446,21 @@ cville_rent_rank <- ggplot(cville_rent_data, aes(x = 0, y = estimate, label = na
           legend.position="none")
   
   (cville_rent_map + patchwork::free(cville_rent_rank)) +
-  plot_layout(widths = c(2, 1)) +
+  plot_layout(widths = c(2, .85)) +
   plot_annotation(title = "Gross Rent by Census Tract", 
       subtitle = locality_name, 
       caption = source_acs,
       theme = theme(plot.title = element_text(size = 18),
                     plot.subtitle = element_text(size = 14),
-                    plot.caption = element_text(size = 12)))
+                    plot.caption = element_text(size = 14)))
 
 ```
 
-```{r rent-burden, fig.height=7, fig.width=9.5, fig.cap="Rent Burdened Households by Census Tract"}
-# Rent Burdened Households: Charlottesville, 2022 ----
+```{r rent-burden, fig.height=7, fig.width=9.5, fig.cap="Rent Burdened Households by Census Tract, 2023. The percent of households that are rent burdened ranges from 37% in Woolen Mills to 74% in 10th & Page-Venable."}
+# Rent Burdened Households: Charlottesville ----
 
-cville_rent_burden_county <- read_csv("../data/cville_rent_burden_county_2022.csv")  
-cville_rent_burden_tract <- read_csv("../data/cville_rent_burden_tract_2022.csv")  
+cville_rent_burden_county <- read_csv("../data/cville_rent_burden_county_2023.csv")  
+cville_rent_burden_tract <- read_csv("../data/cville_rent_burden_tract_2023.csv")  
 
 cville_rent_burden_tract <- cville_rent_burden_tract %>% 
   mutate(label = paste0(level, "\n", rent_burden),
@@ -2416,13 +2492,13 @@ unburdened_plot <- cville_rent_burden_tract %>%
   theme_minimal() +
   theme(legend.title=element_blank(),
         legend.justification="right",
-        legend.position = c(0.6, 1.08),
+        legend.position = c(0.45, 1.08),
         legend.direction = 'horizontal',
         panel.grid.minor.x = element_blank(),
         plot.margin = unit(c(0,0,0,0), "line"),
         axis.text.y = element_text(color = "black", size = 12),
         axis.text.x = element_text(size = 10),
-        legend.text = element_text(size = 12))
+        legend.text = element_text(size = 13))
 
 total_burden <- cville_rent_burden_tract %>% 
   filter(level %in% c("Burdened", "Severely Burdened")) %>% 
@@ -2465,7 +2541,7 @@ burdened_plot <- cville_rent_burden_tract %>%
         axis.text.y.right = element_text(margin = margin(0,0,0,0)),
         axis.title.y.right = element_text(size = 12),
         axis.text.x = element_text(size = 10),
-        legend.text = element_text(size = 12))
+        legend.text = element_text(size = 13))
 
 
 (unburdened_plot + burdened_plot) + 
@@ -2473,21 +2549,21 @@ burdened_plot <- cville_rent_burden_tract %>%
                   subtitle = locality_name,
                   caption = source_acs,
       theme = theme(plot.title = element_text(size = 18),
-                    plot.subtitle = element_text(size = 14),
-                    plot.caption = element_text(size = 12)))
+                    plot.subtitle = element_text(size = 16),
+                    plot.caption = element_text(size = 14)))
 ```
 
-```{r home-race, fig.width=8, fig.height=6, fig.cap="Home Ownership by Race: 2012 & 2022"}
-# Home Ownership by Race, Charlottesville 2012 & 2022 ----
-cville_tenure_race_county <- read_csv("../data/cville_tenure_race_county_2012_2022.csv")
+```{r home-race, fig.width=8, fig.height=6, fig.cap="Home Ownership by Race: 2013 & 2023."}
+# Home Ownership by Race, Charlottesville 2013 & 2023 ----
+cville_tenure_race_county <- read_csv("../data/cville_tenure_race_county_2013_2023.csv")
 
 cville_homeowner_race <- cville_tenure_race_county %>% 
   filter(label == "Owner occupied") %>% 
   filter(!group %in% c("White", "American Indian/Native Alaskan", "Native Hawaiian/Pacific Islander", "Other")) %>% 
   select(group, percent, year) %>% 
   pivot_wider(names_from = year, values_from = percent) %>% 
-  mutate(difference = `2022` - `2012`) %>% 
-  pivot_longer(`2022`:`2012`) %>% 
+  mutate(difference = `2023` - `2013`) %>% 
+  pivot_longer(`2023`:`2013`) %>% 
   mutate(year = as.numeric(name))
 
 anno_list = as.list(cville_homeowner_race$difference) %>% unique()
@@ -2502,7 +2578,7 @@ cville_homeowner_race %>%
   geom_text(size = 4.5, nudge_y = 15, color = "#3B8EA5", fontface = "bold") +
   # geom_text(data = annot_list, size = 4, nudge_y = -25, color = "#3B8EA5", fontface = "bold") +
   # annotate("text", x = 2017, y = 25, label = c("1", "2", "3", "4", "5"), color = "#3B8EA5", fontface = "bold") +
-  scale_x_continuous(breaks = c(2012,2022),
+  scale_x_continuous(breaks = c(2013,2023),
                      expand = expansion(mult = c(0.1, .1)),
                      name = "") +
   scale_y_continuous(labels = scales::label_percent(scale = 1),
@@ -2511,9 +2587,9 @@ cville_homeowner_race %>%
                      name = "") + 
   facet_wrap(~group, scales = "free") +
   labs(color = "", 
-       title = "Home Ownership by Race: 2012 & 2022", 
+       title = "Home Ownership by Race: 2013 & 2023", 
       subtitle = locality_name, 
-      caption = "Data Source: U.S. Census Bureau, American Community Survey, 2012, 2022") +  
+      caption = "Data Source: U.S. Census Bureau, American Community Survey, 2013, 2023") +  
   theme_minimal() +
   theme(panel.grid.minor = element_blank(),
         panel.grid.major.x = element_blank(),
@@ -2521,15 +2597,16 @@ cville_homeowner_race %>%
         text = element_text(size = 14),
         axis.text.x = element_text(size=13, color = "black"),
         plot.title = element_text(size = 18),
-        plot.caption = element_text(size = 11),
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14),
         plot.title.position= "plot",
         plot.caption.position = "plot")
 
 ```
 
-```{r home-tract, fig.width=9, fig.height=7.5, fig.cap="Home Ownership by Census Tract"}
-# Home Ownership by tract: Charlottesville, 2022 ----
-cville_tenure_tract <- read_csv("../data/cville_tenure_tract_2022.csv") %>%
+```{r home-tract, fig.width=9, fig.height=8, fig.cap="Home Ownership by Census Tract, 2023. Homeownership ranges significantly in Charlottesville, from 8% in 10th & Page-Venable and JPA-Fontaine to 74% in Greenbrier-Meadows."}
+# Home Ownership by tract: Charlottesville ----
+cville_tenure_tract <- read_csv("../data/cville_tenure_tract_2023.csv") %>%
   mutate(GEOID = as.character(GEOID),
          percent = round(percent,0))
 
@@ -2584,7 +2661,7 @@ cville_homeowner_rank <- ggplot(cville_tenure_data, aes(x = 0, y = percent, labe
    scale_color_carto_d(name = "Percent Home Ownership: ",
                            type = "diverging", palette = "Emrld", direction = 1) +
     scale_x_continuous(limits = c(0,.1),
-                       expand = c(0.03, 0.003))+
+                       expand = c(0.06, 0))+
     scale_y_continuous(
                        breaks = homeowner,
                        labels = paste0(homeowner, "%")
@@ -2606,11 +2683,39 @@ cville_homeowner_rank <- ggplot(cville_tenure_data, aes(x = 0, y = percent, labe
           legend.position="none")
   
   (cville_homeowner_map + cville_homeowner_rank) +
-  plot_layout(widths = c(2, 1)) +
+  plot_layout(widths = c(2, .85)) +
   plot_annotation(title = "Home Ownership by Census Tract", 
       subtitle = locality_name,
       caption = source_acs,
       theme = theme(plot.title = element_text(size = 18),
-                    plot.subtitle = element_text(size = 14),
-                    plot.caption = element_text(size = 12)))
+                    plot.subtitle = element_text(size = 16),
+                    plot.caption = element_text(size = 14)))
+```
+
+## Appendix
+
+### Data Sources by Figure/Table
+```{r data-sources, fig.width=9}
+# Data Sources for Figures/Tables ----
+figure_sources_cville <- read_xlsx("../data/figure_sources.xlsx", sheet = "Charlottesville Profile")
+
+figure_sources_cville %>% 
+  gt() %>%
+  tab_row_group(label = "Demographic Profile",
+                rows = 1:10) %>% 
+  tab_row_group(label = "AHDI",
+                rows = 11:14) %>%
+  tab_row_group(label = "Health Profile",
+                rows = 15:24) %>%
+    tab_row_group(label = "Education Profile",
+                rows = 25:30) %>% 
+  tab_row_group(label = "Living Standards and Housing Profile",
+                rows = 31:40) %>%
+    row_group_order(groups = c("Demographic Profile", "AHDI", "Health Profile", "Education Profile", "Living Standards and Housing Profile")) %>%
+  tab_style(
+    style = cell_text(v_align = "middle"),
+    locations = list(cells_column_labels(), cells_body())
+  ) %>% 
+  cols_width(everything() ~ pct(50))
+
 ```
