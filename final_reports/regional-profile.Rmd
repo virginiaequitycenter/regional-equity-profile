@@ -441,21 +441,13 @@ ahdi_region <- read_csv("../data/ahdi_region_counties_2023.csv") %>%
 
 ahdi_table <- rbind(ahdi_region, ahdi_benchmarks)
 
-# 059 -- Fairfax County
-# 061 -- Fauquier County
-# 085 -- Hanover County
-# 107 -- Loudoun County
-# 121 -- Montgomery County
-# 153 -- Prince William County
-# 161 -- Roanoke County
-
-region_bench <- c("003;540","51","51003","51540")
+region_bench <- c("003;540","1","51","51003","51540")
 
 # AHDI Benchmarks: Region ----
 ahdi_table_region <- ahdi_table %>%
   filter(GEOID %in% region_bench) %>%
-  # mutate(name_order = fct_relevel(name, c("Albemarle", "Charlottesville", "Virginia", "Fairfax", "Fauquier", "Hanover", "Loudoun", "Montgomery", "Prince William", "Roanoke"))) %>%
-  # arrange(name_order) %>%
+  mutate(name_order = fct_relevel(name, c("Charlottesville & Albemarle Combined", "Albemarle", "Charlottesville", "Virginia", "United States"))) %>%
+  arrange(name_order) %>%
   mutate(`American HD Index` = round(ahdi, 1),
          across(lifeexp_est:enrollment_per, ~ round(.x, 0))) %>%
   select(name, `American HD Index`, lifeexp_est:med_earnings) %>%

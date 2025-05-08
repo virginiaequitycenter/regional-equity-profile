@@ -686,12 +686,12 @@ cville_disability_cat %>%
 # AHDI Benchmarks ----
 ahdi_benchmarks <- read_csv("../data/ahdi_benchmarks_2023.csv")
 
-cville_bench <- c("51","51003","51540","51510","51013","51680","51760","51770","51830")
+cville_bench <- c("1","51","51003","51540","51510","51013","51680","51760","51770","51830")
 
 # AHDI Benchmarks: Charlottesville ----
 ahdi_table_cville <- ahdi_benchmarks %>% 
   filter(GEOID %in% cville_bench) %>% 
-  mutate(name_order = fct_relevel(name, c("Charlottesville", "Albemarle","Virginia", "Alexandria City", "Lynchburg City", "Richmond City", "Roanoke City", "Williamsburg City", "Arlington"))) %>%
+  mutate(name_order = fct_relevel(name, c("Charlottesville", "Albemarle","Virginia", "United States", "Alexandria City", "Lynchburg City", "Richmond City", "Roanoke City", "Williamsburg City", "Arlington"))) %>%
   arrange(name_order) %>%
   mutate(`American HD Index` = round(ahdi, 1),
          across(lifeexp_est:enrollment_per, ~ round(.x, 0))) %>% 
@@ -709,11 +709,11 @@ ahdi_table_cville %>%
   gt(rowname_col = "name") %>%
   tab_row_group(label = "Local",
                 rows = c("Charlottesville", "Albemarle")) %>% 
-  tab_row_group(label = "State",
-                rows = c("Virginia")) %>% 
+  tab_row_group(label = "State & US",
+                rows = c("Virginia", "United States")) %>%
   tab_row_group(label = "Benchmark Localities",
-                rows = 4:9) %>%
-    row_group_order(groups = c("Local", "State", "Benchmark Localities")) %>% 
+                rows = 5:10) %>%
+    row_group_order(groups = c("Local", "State & US", "Benchmark Localities")) %>% 
   tab_spanner(
     label = "Health",
     columns = c(`Life Expectancy (years)`)

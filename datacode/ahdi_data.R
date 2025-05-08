@@ -1,6 +1,6 @@
 # Creating AHDI Measures
 # Author: Beth Mitchell
-# Last Updated: 1/27/2025 # updated for ACS 2019-2023
+# Last Updated: 5/8/2025 # updated to add national benchmark
 
 # Load packages ----
 library(tidyverse)
@@ -266,7 +266,8 @@ write_csv(ahdi_tract_alb, "data/ahdi_tract_alb_2023.csv")
 write_csv(ahdi_tract_cville, "data/ahdi_tract_cville_2023.csv")
 write_csv(ahdi_region_counties, "data/ahdi_region_counties_2023.csv")
 
-# Benchmark Data - State & Localities ----
+# Benchmark Data - National, State & Localities ----
+# National (US)
 # 000 -- Virginia (state)
 # Charlottesville Benchmarks:
 # 510 -- Alexandria City
@@ -344,13 +345,30 @@ life_exp_benchmarks <- life_exp_sheet %>%
 
 names(life_exp_benchmarks) <- c("GEOID", "fips", "locality", "group", "lifeexp_est", "lower_bound", "upper_bound", "lifeexp_moe", "year")
 
-benchmark_health <- life_exp_benchmarks %>% 
+benchmark_health_va <- life_exp_benchmarks %>% 
   filter(group=="all") %>% 
   mutate(name = case_when(GEOID == "51000" ~ "Virginia",
                           .default = locality),
          GEOID = case_when(GEOID == "51000" ~ "51",
                            .default = GEOID)) %>% 
   select(GEOID, name, lifeexp_est)
+
+# Get National Life expectancy
+## US Level Life Expectancy: https://www.countyhealthrankings.org/health-data/methodology-and-sources/data-documentation
+# url <- "https://www.countyhealthrankings.org/sites/default/files/media/document/analytic_data2024.csv"
+# destfile <- "data/tempdata/analytic_data2024.csv"
+# download.file(url, destfile)
+
+us_life_exp_csv <- read_csv("data/tempdata/analytic_data2024.csv", skip = 1)
+
+us_life_exp <- us_life_exp_csv %>% 
+  filter(county == "United States") %>% 
+  mutate(lifeexp_est = round(v147_rawvalue, 1), # v147_rawvalue = Life Expectancy raw value
+         GEOID = "1") %>% 
+  rename(name = county) %>% 
+  select(GEOID, name, lifeexp_est) 
+  
+benchmark_health <- rbind(us_life_exp, benchmark_health_va)
 
 # Educational Attainment: Benchmark Cities/Counties & State ----
 # Get ACS data
@@ -375,6 +393,13 @@ acs_S1501_state <- get_acs(
   year = year, 
   survey = "acs5")
 
+acs_S1501_us <- get_acs(
+  geography = "us",
+  var = AHDI_vars_S1501,
+  summary_var = "S1501_C01_006", 
+  year = year, 
+  survey = "acs5")
+
 # Wrangle tables:
 edu_attain_county <- acs_S1501_county %>% 
   mutate(percent = round(100 * (estimate / summary_est), digits = 2),
@@ -392,7 +417,15 @@ edu_attain_state <- acs_S1501_state %>%
            "locality" = "NAME")) %>% 
   select(GEOID, locality, estimate, moe, pop_25_over, percent, label, year)
 
-edu_attain_benchmarks <- rbind(edu_attain_state, edu_attain_county)
+edu_attain_us <- acs_S1501_us %>% 
+  mutate(percent = round(100 * (estimate / summary_est), digits = 2),
+         label = variable,
+         year = year) %>% 
+  rename(c("pop_25_over" = "summary_est",
+           "locality" = "NAME")) %>% 
+  select(GEOID, locality, estimate, moe, pop_25_over, percent, label, year)
+
+edu_attain_benchmarks <- rbind(edu_attain_us, edu_attain_state, edu_attain_county)
 
 edu_attain_benchmarks <- edu_attain_benchmarks %>% 
   select(GEOID, percent, label) %>% 
@@ -427,6 +460,12 @@ acs_S1401_county <- get_acs(
 acs_S1401_state <- get_acs(
   geography = "state",
   state = "VA",
+  var = AHDI_vars_S1401,
+  year = year, 
+  survey = "acs5")
+
+acs_S1401_us <- get_acs(
+  geography = "us",
   var = AHDI_vars_S1401,
   year = year, 
   survey = "acs5")
@@ -466,7 +505,24 @@ enroll_state <- acs_S1401_state %>%
          pop_3_to_24yr = estimate_pop) %>% 
   select(GEOID, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
 
-edu_enroll_benchmarks <- rbind(enroll_state, enroll_county)
+enroll_us <- acs_S1401_us %>% 
+  mutate(cat = case_when(str_detect(variable, "enrolled in school") ~ "enrolled",
+                         str_detect(variable, "Population") ~ "pop")) %>% 
+  group_by(GEOID, NAME, cat) %>% 
+  summarise(estimate = sum(estimate),
+            moe = moe_sum(moe = moe, estimate = estimate),
+            .groups = 'drop') %>% 
+  pivot_wider(names_from = cat, values_from = c(estimate, moe)) %>% 
+  mutate(percent = round(100 * (estimate_enrolled / estimate_pop), digits = 2),
+         label = "3 to 24 year olds enrolled in school",
+         year = year) %>% 
+  rename(locality = NAME,
+         estimate = estimate_enrolled,
+         moe = moe_enrolled,
+         pop_3_to_24yr = estimate_pop) %>% 
+  select(GEOID, locality, estimate, moe, pop_3_to_24yr, percent, label, year)
+
+edu_enroll_benchmarks <- rbind(enroll_us, enroll_state, enroll_county)
 
 edu_enroll_benchmarks <- edu_enroll_benchmarks %>% 
   rename(enrollment_per = percent) %>% 
@@ -493,6 +549,12 @@ acs_B20002_state <- get_acs(
   year = year, 
   survey = "acs5")
 
+acs_B20002_us <- get_acs(
+  geography = "us",
+  var = AHDI_vars_B20002,
+  year = year, 
+  survey = "acs5")
+
 # Wrangle tables:
 med_earnings_county <- acs_B20002_county %>% 
   separate(variable, into=c("label","group"), sep="; ", remove=FALSE) %>% 
@@ -506,7 +568,13 @@ med_earnings_state <- acs_B20002_state %>%
   rename("locality" = "NAME") %>% 
   select(GEOID, locality, label, group, estimate, moe, year)
 
-benchmark_earnings <- rbind(med_earnings_state, med_earnings_county)
+med_earnings_us <- acs_B20002_us %>% 
+  separate(variable, into=c("label","group"), sep="; ", remove=FALSE) %>% 
+  mutate(year = year) %>% 
+  rename("locality" = "NAME") %>% 
+  select(GEOID, locality, label, group, estimate, moe, year)
+
+benchmark_earnings <- rbind(med_earnings_us, med_earnings_state, med_earnings_county)
 
 benchmark_earnings <- benchmark_earnings %>% 
   filter(group == "All") %>% 
