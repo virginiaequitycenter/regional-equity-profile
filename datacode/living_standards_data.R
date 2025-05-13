@@ -976,7 +976,7 @@ write_csv(alb_gross_rent_tract, paste0("data/alb_gross_rent_tract", "_", year, "
 # (1) Scroll to RENTALS: Zillow Observed Rent Index (ZORI)
 # (2) Select: 
 #  - Data Source: ZORI (Smoothed): All Homes Plus Multifamily Time Series ($)
-#  - Geography: County
+#  - Geography: County, Metro & US
 
 # Get data & filter for June rent data
 # Albemarle & Charlottesville
@@ -984,13 +984,24 @@ zillow_rent_county <- read_csv("data/tempdata/County_zori_uc_sfrcondomfr_sm_mont
   filter(StateCodeFIPS == 51 & MunicipalCodeFIPS %in% county_codes) %>% 
   select(RegionName, RegionType, contains("06-30"))
 
-# Charlottesville MSA
+# Charlottesville MSA & US
 zillow_rent_metro <- read_csv("data/tempdata/Metro_zori_uc_sfrcondomfr_sm_month.csv") %>% 
   filter(RegionName %in% c("Charlottesville, VA","United States")) %>% 
   select(RegionName, RegionType, contains("06-30"))
 
+# Virginia Rough Average
+zillow_rent_va <- read_csv("data/tempdata/County_zori_uc_sfrcondomfr_sm_month.csv") %>% 
+  filter(StateCodeFIPS == 51) %>% 
+  select(RegionName, RegionType, contains("06-30")) %>% 
+  pivot_longer(cols = contains("06-30"), names_to = "month") %>% 
+  group_by(month) %>% 
+  summarise(RegionName = "Virginia",
+            RegionType = "state",
+            value = mean(value, na.rm = TRUE)) %>% 
+  pivot_wider(names_from = month, values_from = value)
+
 # Join tables
-zillow_rent_2015_2024 <- rbind(zillow_rent_metro, zillow_rent_county)
+zillow_rent_2015_2024 <- rbind(zillow_rent_metro, zillow_rent_va, zillow_rent_county)
 
 # Save CSV
 write_csv(zillow_rent_2015_2024, "data/zillow_rent_2015_2024.csv")

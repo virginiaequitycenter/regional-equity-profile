@@ -26,6 +26,7 @@ library("ggspatial")
 library(tigris)
 library(sf)
 library(ggrepel)
+library(ggpp) 
 library(ggpubr)
 library(readxl)
 library(ggpol)
@@ -2467,35 +2468,42 @@ alb_ALICE_households_by_race %>%
 ```{r zillow-rent, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="Zillow Observed Rent Index (ZORI): 2015-2024. Monthly rent has steadily increased from $1,160 in 2015 to $1,910 in 2024."}
 # Zillow Observed Rent Index (ZORI), 2015-2024 ----
 zillow_rent <- read_csv("../data/zillow_rent_2015_2024.csv") %>% 
-  filter(RegionName == "Albemarle County") %>% 
+  filter(RegionName %in% c("Albemarle County", "United States", "Virginia")) %>% 
   rename_with(~ substr(.x, start = 1, stop = 4), ends_with("06-30")) %>% 
   pivot_longer(cols = "2015":"2024") %>% 
   mutate(name = as.numeric(name)) %>% 
   rename(year = name, rent = value)
 
 zillow_rent %>% 
-  mutate(text = paste0("$", prettyNum(round(rent, -1), big.mark=",", preserve.width="none"))) %>% 
+  mutate(text = case_when(RegionName == "Albemarle County" ~ paste0("$", prettyNum(round(rent, -1), big.mark=",", preserve.width="none"))),
+                          .default = "") %>% 
   ggplot(aes(x = year, y = round(rent, -1), color = RegionName, label = text)) +
   stat_xspline(size=1) +
   geom_point() +
-  geom_text(size = 5, hjust=0.5, vjust=-1.15, color="black") +
+  coord_cartesian(clip = "off") +
+  geom_text_repel(size = 5, color="black", 
+                  box.padding = 1.15, 
+                  xlim = c(-Inf, Inf), ylim = c(-Inf, Inf),
+                  position = position_nudge_keep(x = rep_len(c(0.2, -0.2), 6), y = 1)) +
   scale_x_continuous(breaks = seq(from = 2015, to = 2024, by = 1),
                      name = "") +
-  scale_y_continuous(limits = c(800,2000),
+  scale_y_continuous(limits = c(750,2000),
+                     breaks = seq(750, 2000, by = 250),
                      labels = scales::label_currency(scale = 1),
                      name = "") +
-  scale_color_manual(values = c("#3B8EA5")) +
+  scale_color_manual(values = c("United States" = "#b2b8be", "Virginia" = "#3B8EA5", "Albemarle County" = "#005191")) +
   labs(color = "",
        title = "Zillow Observed Rent Index (ZORI): 2015-2024", 
        subtitle = locality_name, 
        caption = "Data Source: Zillow Observed Rent Index (ZORI), 2015-2024") +
   theme_minimal() +
  theme(legend.title=element_blank(),
-        legend.position = "none",
+       legend.position = "top",
+        legend.text = element_text(size = 14),
         axis.ticks = element_blank(),
         axis.text.y = element_text(size = 14),
         text = element_text(size = 14),
-        axis.text.x = element_text(size=14, color = "black"),
+        axis.text.x = element_text(size=15, color = "black"),
         plot.title = element_text(size = 18),
         plot.subtitle = element_text(size = 16),
         plot.caption = element_text(size = 14),
