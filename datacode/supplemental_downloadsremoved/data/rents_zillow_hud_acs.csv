@@ -1,0 +1,33 @@
+name,year,rent,source
+"Charlottesville, VA MSA",2025,1729,hud_fmr
+"Charlottesville, VA MSA",2024,1678,hud_fmr
+"Charlottesville, VA MSA",2023,1401,hud_fmr
+"Charlottesville, VA MSA",2022,1264,hud_fmr
+"Charlottesville, VA MSA",2021,1266,hud_fmr
+"Charlottesville, VA MSA",2020,1262,hud_fmr
+"Charlottesville, VA MSA",2019,1325,hud_fmr
+"Charlottesville, VA MSA",2018,1179,hud_fmr
+"Charlottesville, VA MSA",2017,1126,hud_fmr
+"Charlottesville, VA MSA",2016,1171,hud_fmr
+"Charlottesville, VA MSA",2015,1038,hud_fmr
+"Charlottesville, VA MSA",2014,1008,hud_fmr
+"Charlottesville, VA MSA",2013,1099,hud_fmr
+"Charlottesville, VA MSA",2012,1029,hud_fmr
+"Charlottesville, VA Metro Area",2015,1141,acs_gmr
+"Charlottesville, VA Metro Area",2016,1161,acs_gmr
+"Charlottesville, VA Metro Area",2017,1065,acs_gmr
+"Charlottesville, VA Metro Area",2018,1169,acs_gmr
+"Charlottesville, VA Metro Area",2019,1190,acs_gmr
+"Charlottesville, VA Metro Area",2021,1372,acs_gmr
+"Charlottesville, VA Metro Area",2022,1432,acs_gmr
+"Charlottesville, VA Metro Area",2023,1593,acs_gmr
+"Charlottesville, VA",2015,1154.0090404555422,zil_zor
+"Charlottesville, VA",2016,1198.1408983224148,zil_zor
+"Charlottesville, VA",2017,1252.7945674641414,zil_zor
+"Charlottesville, VA",2018,1309.3702788015048,zil_zor
+"Charlottesville, VA",2019,1361.2240663218358,zil_zor
+"Charlottesville, VA",2020,1404.801827441377,zil_zor
+"Charlottesville, VA",2021,1517.843932272425,zil_zor
+"Charlottesville, VA",2022,1671.6858746421053,zil_zor
+"Charlottesville, VA",2023,1765.8951899147564,zil_zor
+"Charlottesville, VA",2024,1879.8228888098351,zil_zor
