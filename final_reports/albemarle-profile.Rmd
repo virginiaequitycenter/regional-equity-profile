@@ -1,19 +1,21 @@
 ---
 title: "Draft Albemarle Inclusive Community Profile"
-# output:
-#   bookdown::html_document2:
-#     number_sections: true
 output:
-  bookdown::word_document2:
-    reference_docx: "styles.docx"
+  bookdown::html_document2:
     number_sections: true
-    toc: true
-    toc_depth: 4
+# output:
+#   bookdown::word_document2:
+#     reference_docx: "styles.docx"
+#     number_sections: true
+#     toc: true
+#     toc_depth: 4
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, 
-                      dev = "png", dpi=300)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE 
+                      # dev = "png", 
+                      # dpi=300
+                      )
 
 # Load packages ----
 library(tidycensus)
@@ -1582,7 +1584,7 @@ alb_health_insured_county %>%
 
 ```
 
-```{r insurance-tract, fig.width=11.25, fig.height=9.75, fig.cap="Residents with No Health Insurance by Census Tract. The percent of residents without health insurance ranges from lows between 0%-4% in many tracts to a high of 31% in the Albemarle HS area."}
+```{r insurance-tract, fig.width=12, fig.height=10.25, fig.cap="Residents with No Health Insurance by Census Tract. The percent of residents without health insurance ranges from lows between 0%-4% in many tracts to a high of 31% in the Albemarle HS area."}
 # Health Insurance by tract: Albemarle ----
 alb_health_insured_tract <- read_csv("../data/alb_health_insured_tract_2023.csv") %>%
   mutate(GEOID = as.character(GEOID),
@@ -1661,8 +1663,8 @@ alb_insured_gap <-  ggplot(alb_insured, aes(x = 0, y = per_uninsured_rounded, la
           plot.caption = element_text(hjust = 0),
           legend.position="none")
   
-  (alb_insured_map + alb_insured_gap) +
-  plot_layout(widths = c(1.5, 1)) +
+  (alb_insured_map + patchwork::free(alb_insured_gap)) +
+  plot_layout(widths = c(1.75, 1)) +
   plot_annotation(title = 'Residents with No Health Insurance by Census Tract',
                   subtitle = locality_name,
                   caption = source_acs,
@@ -2700,6 +2702,105 @@ burdened_plot <- alb_rent_burden_tract %>%
       theme = theme(plot.title = element_text(size = 18),
                     plot.subtitle = element_text(size = 16),
                     plot.caption = element_text(size = 14)))
+```
+
+```{r rent-burden-tract, fig.height=10.5, fig.width=12}
+alb_rent_burden_tract <- read_csv("../data/alb_rent_burden_tract_2023.csv") %>%
+  mutate(GEOID = as.character(GEOID),
+         level_combined = case_when(level %in% c("Burdened", "Severely Burdened") ~ "Burdened",
+                                    .default = level)) %>% 
+  group_by(GEOID, locality, tract, tractnames, level_combined) %>% 
+  summarise(estimate = sum(estimate),
+            total_units = first(total_units)) %>% 
+  ungroup() %>% 
+  mutate(percent = round(estimate/total_units *100, 0),
+         text_color = case_when(percent >= 65 ~ "white",
+                                percent <65 ~ "black"))
+
+alb_rent_burden_tract <- alb_rent_burden_tract %>%
+  left_join(alb_geo, by = "GEOID") %>% 
+  st_as_sf()
+
+# Geospatial visualization
+alb_rent_burden_map <- alb_rent_burden_tract %>%
+  filter(level_combined == "Burdened") %>%
+  mutate(text = paste0(round(percent,0), "%")) %>%
+  ggplot() +
+  annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
+  geom_sf(aes(fill = percent), color = "white") +
+  geom_sf_text(aes(label = text, color = text_color), size = 3.25, show.legend = FALSE) +
+  scale_color_manual(values = c("black", "white")) +
+  scale_fill_stepsn(colors = pal_inc,
+                    labels = scales::label_percent(scale = 1),
+                    n.breaks = 7,
+                    guide = guide_colourbar(title = "Percent Rent Burdened",
+                                            title.position = "top",
+                                            direction = "horizontal",
+                                            title.hjust = 0.5,
+                                            # nbin = 6,
+                                            theme = theme(legend.key.height  = unit(0.5, "lines"),
+                                                          legend.key.width = unit(18, "lines"),
+                                                          text = element_text(size = 11)) 
+                                            )
+                    )+
+  theme_map()+
+  theme(legend.position.inside=c(1, 1.06),
+        legend.justification="right",
+        plot.title = element_text(size = 14),
+        plot.subtitle = element_text(size = 14))
+
+# Rank plot
+alb_rent_burden_data <- alb_rent_burden_tract %>% 
+  filter(level_combined == "Burdened") %>%
+  group_by(percent) %>% 
+  summarise(tractnames = paste(tractnames, collapse = "; ")) %>% 
+  na.exclude() 
+
+names <- alb_rent_burden_data$tractnames
+homeowner <- alb_rent_burden_data$percent
+
+alb_rent_burden_data_rank <- ggplot(alb_rent_burden_data, aes(x = 0, y = percent, label = names)) +
+    geom_line(color = "grey", linewidth = 1)+
+    geom_point(aes(color=as.factor(percent)), size=5)+
+    geom_text(label = str_wrap(names, width = 48), hjust = 0, nudge_x = 0.006, 
+              nudge_y = case_when(alb_rent_burden_data$percent %in% c(35,36,46,47,67) ~ 0.3,
+                                  alb_rent_burden_data$percent %in% c(34,44,66) ~ -0.3,
+                             .default = 0.01),
+              size = 4,
+              lineheight = 0.7) +
+   scale_color_carto_d(name = "Percent Rent Burdened: ",
+                           type = "diverging", palette = "Emrld", direction = 1) +
+    scale_x_continuous(limits = c(0,.1),
+                       expand = c(0.03, 0.003))+
+    scale_y_continuous(
+                       breaks = homeowner,
+                       labels = paste0(homeowner, "%")
+                       ) +
+  theme_minimal()+
+    theme(axis.line.x = element_blank(),
+          axis.ticks.x = element_blank(),
+          axis.text.x = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          axis.text.y = element_text(size = 11),
+          axis.ticks = element_line(linewidth = .5),
+          axis.ticks.length.y = unit(.25, "cm"),
+          plot.title.position= "plot",
+          plot.caption.position = "plot",
+          plot.caption = element_text(hjust = 0),
+          legend.position="none")
+  
+  (alb_rent_burden_map + patchwork::free(alb_rent_burden_data_rank)) +
+  plot_layout(widths = c(1.75, 1)) +
+  plot_annotation(title = "Rent Burdened Households by Census Tract (30% or more household income spent on housing)", 
+      subtitle = locality_name,
+      caption = source_acs,
+      theme = theme(plot.title = element_text(size = 18),
+                    plot.subtitle = element_text(size = 16),
+                    plot.caption = element_text(size = 14)))
+
 ```
 
 
