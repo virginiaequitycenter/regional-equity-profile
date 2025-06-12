@@ -54,6 +54,4 @@ rsconnect/
 # Other files
 .DS_Store
 images/
-datacode/test.R
-datacode/rosm.cache/
 */test_files/
