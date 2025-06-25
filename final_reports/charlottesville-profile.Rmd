@@ -1,19 +1,20 @@
 ---
 title: "Draft Charlottesville City Inclusive Community Profile"
-# output:
-#   bookdown::html_document2:
-#     number_sections: true
 output:
-  bookdown::word_document2:
-    reference_docx: "styles.docx"
+  bookdown::html_document2:
     number_sections: true
-    toc: true
-    toc_depth: 4
+# output:
+#   bookdown::word_document2:
+#     reference_docx: "styles.docx"
+#     number_sections: true
+#     toc: true
+#     toc_depth: 4
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, 
-                      dev = "png", dpi=300)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE 
+                      # dev = "png", dpi=300
+                      )
 
 # Load packages ----
 library(tidycensus)
@@ -2226,9 +2227,9 @@ cville_med_hhinc_county %>%
 ```
 
 ### Struggling Families: Asset Limited, Income Constrained, Employed (ALICE)
-```{r alice-threshold, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Thresholds 2010-2022. The ALICE threshold for households under 65 years old was $70,000 in 2022 and $66,000 for 65 years and older."}
-# ALICE thresholds: Charlottesville, 2010-2022 ----
-cville_ALICE_threshold <- read_csv("../data/cville_ALICE_threshold_2010_2022.csv")
+```{r alice-threshold, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Thresholds 2010-2023. The ALICE threshold for households under 65 years old was $69,000 in 2023 and $66,000 for 65 years and older."}
+# ALICE thresholds: Charlottesville ----
+cville_ALICE_threshold <- read_csv("../data/cville_ALICE_threshold_2010_2023.csv")
 
 cville_ALICE_threshold %>% 
   pivot_longer(alice_threshold_hh_under_65:alice_threshold_hh_65_years_and_over, names_to = "level", values_to = "threshold") %>% 
@@ -2243,7 +2244,7 @@ cville_ALICE_threshold %>%
   geom_point() +
   geom_text(aes(y = (threshold + sign(pos)*6000)), size = 5, show.legend = FALSE, color = "black") +
   scale_x_continuous(
-    breaks = seq(from = 2010, to = 2022, by = 1),
+    breaks = seq(from = 2010, to = 2023, by = 1),
                      name = "") +
   scale_y_continuous(labels = label_currency(scale = 1, scale_cut = cut_short_scale()),
                      breaks = c(0, 20000, 40000, 60000, 80000, 100000),
@@ -2252,9 +2253,9 @@ cville_ALICE_threshold %>%
     scale_color_manual(values = c("#b2b8be", "#3B8EA5")) +
     guides(color = guide_legend(reverse = TRUE)) +
 labs(color = "", 
-       title = "ALICE Thresholds 2010-2022", 
+       title = "ALICE Thresholds 2010-2023", 
       subtitle = locality_name, 
-      caption = "Data Sources: ALICE Threshold, 2010–2022; U.S. Census Bureau, American Community Survey, 2010–2022") +  
+      caption = "Data Sources: ALICE Threshold, 2010–2023; U.S. Census Bureau, American Community Survey, 2010–2023") +  
   theme_minimal() +
   theme(legend.position = "top",
         legend.justification.top = "left",
@@ -2274,9 +2275,9 @@ labs(color = "",
 ```
 
 
-```{r alice-race, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Households by Race/Ethnicity, 2022"}
-# ALICE households by race/ethnicity: Charlottesville, 2022 ----
-cville_ALICE_households_by_race <- read_csv("../data/cville_ALICE_households_by_race_2022.csv")
+```{r alice-race, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Households by Race/Ethnicity, 2023"}
+# ALICE households by race/ethnicity: Charlottesville ----
+cville_ALICE_households_by_race <- read_csv("../data/cville_ALICE_households_by_race_2023.csv")
 
 cville_ALICE_households_by_race <- cville_ALICE_households_by_race %>% 
   mutate(level = case_when(level == "above_alice_households" ~ "above",
@@ -2309,7 +2310,7 @@ cville_ALICE_households_by_race %>%
   labs(color = "", 
        title = "ALICE Households by Race/Ethnicity", 
       subtitle = locality_name, 
-      caption = "Data Sources: ALICE Threshold, 2022; U.S. Census Bureau, American Community Survey, 2022") +
+      caption = "Data Sources: ALICE Threshold, 2023; U.S. Census Bureau, American Community Survey, 2023") +
   theme_minimal() +
   theme(legend.position = "top",
         legend.location = "plot",

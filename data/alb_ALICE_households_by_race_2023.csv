@@ -1,0 +1,19 @@
+GEOID,locality,level,group,number,households,percent,year
+51003,"Albemarle County, Virginia",poverty_households,All,3886,46900,8.29,2023
+51003,"Albemarle County, Virginia",alice_households,All,13426,46900,28.63,2023
+51003,"Albemarle County, Virginia",above_alice_households,All,29588,46900,63.09,2023
+51003,"Albemarle County, Virginia",above,Asian,1339,1748,76.6,2023
+51003,"Albemarle County, Virginia",above,Black,1648,3724,44.25,2023
+51003,"Albemarle County, Virginia",above,Hispanic,1545,2765,55.88,2023
+51003,"Albemarle County, Virginia",above,White,24625,35867,68.66,2023
+51003,"Albemarle County, Virginia",above,2+ Races,1226,1918,63.92,2023
+51003,"Albemarle County, Virginia",alice,Asian,325,1748,18.59,2023
+51003,"Albemarle County, Virginia",alice,Black,1571,3724,42.19,2023
+51003,"Albemarle County, Virginia",alice,Hispanic,1123,2765,40.61,2023
+51003,"Albemarle County, Virginia",alice,White,9314,35867,25.97,2023
+51003,"Albemarle County, Virginia",alice,2+ Races,532,1918,27.74,2023
+51003,"Albemarle County, Virginia",poverty,Asian,84,1748,4.81,2023
+51003,"Albemarle County, Virginia",poverty,Black,505,3724,13.56,2023
+51003,"Albemarle County, Virginia",poverty,Hispanic,97,2765,3.51,2023
+51003,"Albemarle County, Virginia",poverty,White,1928,35867,5.38,2023
+51003,"Albemarle County, Virginia",poverty,2+ Races,160,1918,8.34,2023

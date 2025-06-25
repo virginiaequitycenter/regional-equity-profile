@@ -22,6 +22,7 @@
 # ALICE Households  
 # - ALICE Thresholds over time 2012-2022 (COUNTY)
 # - ALICE households, all and by race/ethnicity 2022 (COUNTY & REGION)
+# - ALICE households by magesterial district (Albemarle)
 # - Source: https://www.unitedforalice.org/state-overview/Virginia
 # Rent-burdened households, 2022 
 # - Source: ACS Table B25070 (COUNTY, TRACT, REGION)
@@ -617,41 +618,41 @@ region_med_hhinc <- region_med_hhinc %>%
 write_csv(region_med_hhinc, paste0("data/region_med_hhinc", "_", year, ".csv"))
 
 ## ...........................................
-# ALICE Households & Threshold 2010-2022 -----
-# Get ALICE Data (2010-2022): https://www.unitedforalice.org/state-overview/Virginia
+# ALICE Households & Threshold -----
+# Get ALICE Data: https://www.unitedforalice.org/state-overview/Virginia
 
-url <- "https://www.unitedforalice.org/Attachments/StateDataSheet/2024%20ALICE%20-%20Virginia%20Data%20Sheet.xlsx"
+# url <- "https://www.unitedforalice.org/Attachments/StateDataSheet/2024%20ALICE%20-%20Virginia%20Data%20Sheet.xlsx"
 
 # Download file
-download.file(url, destfile="data/tempdata/2024_ALICE_Virginia_Data_Sheet.xlsx", method="libcurl")
+# download.file(url, destfile="data/tempdata/2024_ALICE_Virginia_Data_Sheet.xlsx", method="libcurl")
 
-# Read data - County (2010-2022)
-ALICE_sheet_county <- read_excel("data/tempdata/2024_ALICE_Virginia_Data_Sheet.xlsx", sheet = "County 2010-2022") %>% 
+# Read data - County 
+ALICE_sheet_county <- read_excel("data/tempdata/2025_ALICE_Virginia_Data_Sheet.xlsx", sheet = "County") %>% 
   clean_names()
 
-# ALICE Thresholds, 2010-2022
+# ALICE Thresholds
 ALICE_threshold_county <- ALICE_sheet_county %>% 
   filter(str_detect(geo_id2, paste0("51", county_codes, collapse = '|'))) %>% 
   rename(GEOID = geo_id2,
          locality = geo_display_label) %>% 
   select(GEOID, locality, year, alice_threshold_hh_under_65, alice_threshold_hh_65_years_and_over, source_american_community_survey, county )
 
-# ALICE Thresholds, 2010-2022: Charlottesville ----
-cville_ALICE_threshold_2010_2022 <- ALICE_threshold_county %>% 
+# ALICE Thresholds: Charlottesville ----
+cville_ALICE_threshold <- ALICE_threshold_county %>% 
   filter(locality == "Charlottesville city, Virginia")
 
-write_csv(cville_ALICE_threshold_2010_2022, paste0("data/cville_ALICE_threshold_2010_2022.csv"))
+write_csv(cville_ALICE_threshold, paste0("data/cville_ALICE_threshold_2010_2023.csv"))
 
-# ALICE Thresholds, 2010-2022: Albemarle ----
-alb_ALICE_threshold_2010_2022 <- ALICE_threshold_county %>% 
+# ALICE Thresholds: Albemarle ----
+alb_ALICE_threshold <- ALICE_threshold_county %>% 
   filter(locality == "Albemarle County, Virginia")
 
-write_csv(alb_ALICE_threshold_2010_2022, paste0("data/alb_ALICE_threshold_2010_2022.csv"))
+write_csv(alb_ALICE_threshold, paste0("data/alb_ALICE_threshold_2010_2023.csv"))
 
-# ALICE households, 2022 ----
+# ALICE households, 2023 ----
 ALICE_households_county <- ALICE_sheet_county %>% 
   filter(str_detect(geo_id2, paste0("51", county_codes, collapse = '|')) &
-           year == 2022) %>% 
+           year == 2023) %>% 
   rename(GEOID = geo_id2,
          locality = geo_display_label) %>% 
   gather(level, number, poverty_households:above_alice_households) %>% 
@@ -661,24 +662,24 @@ ALICE_households_county <- ALICE_sheet_county %>%
 
 # Read in ALICE Race/Ethnicity 
 # CSV downloaded after filtering for each county
-ALICE_sheet_race_cville <- read_excel("data/tempdata/households-by-race-cville-2022.xlsx") %>% 
+ALICE_sheet_race_cville <- read_excel("data/tempdata/households-by-race-ethnicity-charlottesville-2023.xlsx") %>% 
   clean_names() %>% 
   gather(level, number, above:poverty) %>% 
   mutate(percent = round(100 * (number / number_households), digits = 2),
          GEOID = "51540",
          locality = "Charlottesville city, Virginia",
-         year = 2022) %>% 
+         year = 2023) %>% 
   rename(group = name,
          households = number_households) %>% 
   select(GEOID, locality, level, group, number, households, percent, year)
 
-ALICE_sheet_race_alb <- read_excel("data/tempdata/households-by-race-albemarle.xlsx") %>% 
+ALICE_sheet_race_alb <- read_excel("data/tempdata/households-by-race-ethnicity-albemarle-2023.xlsx") %>% 
   clean_names() %>% 
   gather(level, number, above:poverty) %>% 
   mutate(percent = round(100 * (number / number_households), digits = 2),
          GEOID = "51003",
          locality = "Albemarle County, Virginia",
-         year = 2022) %>% 
+         year = 2023) %>% 
   rename(group = name,
          households = number_households) %>% 
   select(GEOID, locality, level, group, number, households, percent, year)
@@ -687,21 +688,21 @@ ALICE_sheet_race_alb <- read_excel("data/tempdata/households-by-race-albemarle.x
 ALICE_households_by_race <- rbind(ALICE_households_county, ALICE_sheet_race_cville, ALICE_sheet_race_alb)
 
 # ALICE household by Race: Charlottesville ----
-cville_ALICE_households_by_race_2022 <- ALICE_households_by_race %>% 
+cville_ALICE_households_by_race <- ALICE_households_by_race %>% 
   filter(locality == "Charlottesville city, Virginia")
 
-write_csv(cville_ALICE_households_by_race_2022, paste0("data/cville_ALICE_households_by_race_2022.csv"))
+write_csv(cville_ALICE_households_by_race, paste0("data/cville_ALICE_households_by_race_2023.csv"))
 
 # ALICE household by Race: Albemarle ----
-alb_ALICE_households_by_race_2022 <- ALICE_households_by_race %>% 
+alb_ALICE_households_by_race <- ALICE_households_by_race %>% 
   filter(locality == "Albemarle County, Virginia")
 
-write_csv(alb_ALICE_households_by_race_2022, paste0("data/alb_ALICE_households_by_race_2022.csv"))
+write_csv(alb_ALICE_households_by_race, paste0("data/alb_ALICE_households_by_race_2023.csv"))
 
 # ALICE household by Race: Combined Region ----
 region_fips <- as.list(unique(ALICE_households_by_race$GEOID))
 
-region_ALICE_households_by_race_2022 <- ALICE_households_by_race %>% 
+region_ALICE_households_by_race <- ALICE_households_by_race %>% 
   group_by(group, level, year) %>% 
   summarize(number = sum(number),
             households = sum(households),
@@ -711,19 +712,20 @@ region_ALICE_households_by_race_2022 <- ALICE_households_by_race %>%
          region_fips = paste(region_fips, collapse = ";")) %>% 
   select(region_fips, locality, group, level, number, households, percent, year)
 
-write_csv(region_ALICE_households_by_race_2022, "data/region_ALICE_households_by_race_2022.csv")
+write_csv(region_ALICE_households_by_race, "data/region_ALICE_households_by_race_2023.csv")
 
-# Read data - Subcounty (2022) - NOT USED
-# ALICE_sheet_subcounty <- read_excel("data/tempdata/2024_ALICE_Virginia_Data_Sheet.xlsx", sheet = "Subcounty, Places, Zip Codes") %>% 
-#   clean_names()
+# ALICE Households by Subcounty: Albemarle Districts ----
+# Read data - Subcounty (2022)
+ALICE_sheet_subcounty <- read_excel("data/tempdata/2025_ALICE_Virginia_Data_Sheet.xlsx", sheet = "Subcounty") %>%
+  clean_names()
 
-# ALICE_data_subcounty <- ALICE_sheet_subcounty %>% 
-#   filter(str_detect(geo_id2, paste0("51", county_codes, collapse = '|'))) %>% 
-#   separate(geo_display_label, into=c("sub_county","locality", "state"), sep=", ", remove=FALSE) %>% 
-#   rename(GEOID = geo_id2) %>% 
-#   gather(level, number, poverty_households:above_alice_households) %>% 
-#   mutate(percent = round(100 * (number / households), digits = 2)) %>% 
-#   select(GEOID, locality, sub_county, year, level, number, households, percent, source_american_community_survey)
+alb_ALICE_households_district <- ALICE_sheet_subcounty %>%
+  filter(type == "Sub_County" & county == "Albemarle County, Virginia") %>% 
+  pivot_longer(poverty_households:above_alice_households) %>% 
+  mutate(percent = round(value/households *100, 2)) %>% 
+  select(geo_id2, county, type, geo_display_label, households, name, value, percent, year, source_american_community_survey)
+
+write_csv(alb_ALICE_households_district, "data/alb_ALICE_households_district_2023.csv")
 
 ## ....................................
 # Rent-burdened households: B25070 ----

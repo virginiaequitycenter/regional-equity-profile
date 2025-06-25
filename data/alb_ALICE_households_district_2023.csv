@@ -1,0 +1,19 @@
+geo_id2,county,type,geo_display_label,households,name,value,percent,year,source_american_community_survey
+5100393983,"Albemarle County, Virginia",Sub_County,"Jack Jouett district, Albemarle County, Virginia",6156,poverty_households,753,12.23,2023,5-Year
+5100393983,"Albemarle County, Virginia",Sub_County,"Jack Jouett district, Albemarle County, Virginia",6156,alice_households,2753,44.72,2023,5-Year
+5100393983,"Albemarle County, Virginia",Sub_County,"Jack Jouett district, Albemarle County, Virginia",6156,above_alice_households,2650,43.05,2023,5-Year
+5100395311,"Albemarle County, Virginia",Sub_County,"Rio district, Albemarle County, Virginia",8633,poverty_households,773,8.95,2023,5-Year
+5100395311,"Albemarle County, Virginia",Sub_County,"Rio district, Albemarle County, Virginia",8633,alice_households,2517,29.16,2023,5-Year
+5100395311,"Albemarle County, Virginia",Sub_County,"Rio district, Albemarle County, Virginia",8633,above_alice_households,5343,61.89,2023,5-Year
+5100395319,"Albemarle County, Virginia",Sub_County,"Rivanna district, Albemarle County, Virginia",7837,poverty_households,277,3.53,2023,5-Year
+5100395319,"Albemarle County, Virginia",Sub_County,"Rivanna district, Albemarle County, Virginia",7837,alice_households,1787,22.8,2023,5-Year
+5100395319,"Albemarle County, Virginia",Sub_County,"Rivanna district, Albemarle County, Virginia",7837,above_alice_households,5773,73.66,2023,5-Year
+5100395567,"Albemarle County, Virginia",Sub_County,"Samuel Miller district, Albemarle County, Virginia",7151,poverty_households,459,6.42,2023,5-Year
+5100395567,"Albemarle County, Virginia",Sub_County,"Samuel Miller district, Albemarle County, Virginia",7151,alice_households,1883,26.33,2023,5-Year
+5100395567,"Albemarle County, Virginia",Sub_County,"Samuel Miller district, Albemarle County, Virginia",7151,above_alice_households,4809,67.25,2023,5-Year
+5100395607,"Albemarle County, Virginia",Sub_County,"Scottsville district, Albemarle County, Virginia",7922,poverty_households,586,7.4,2023,5-Year
+5100395607,"Albemarle County, Virginia",Sub_County,"Scottsville district, Albemarle County, Virginia",7922,alice_households,2336,29.49,2023,5-Year
+5100395607,"Albemarle County, Virginia",Sub_County,"Scottsville district, Albemarle County, Virginia",7922,above_alice_households,5000,63.12,2023,5-Year
+5100396359,"Albemarle County, Virginia",Sub_County,"White Hall district, Albemarle County, Virginia",7365,poverty_households,544,7.39,2023,5-Year
+5100396359,"Albemarle County, Virginia",Sub_County,"White Hall district, Albemarle County, Virginia",7365,alice_households,1635,22.2,2023,5-Year
+5100396359,"Albemarle County, Virginia",Sub_County,"White Hall district, Albemarle County, Virginia",7365,above_alice_households,5186,70.41,2023,5-Year

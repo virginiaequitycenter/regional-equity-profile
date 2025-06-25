@@ -1,0 +1,19 @@
+region_fips,locality,group,level,number,households,percent,year
+51003;51540,Charlottesville-Albemarle Region,2+ Races,above,1708,2846,60.01,2023
+51003;51540,Charlottesville-Albemarle Region,2+ Races,alice,845,2846,29.69,2023
+51003;51540,Charlottesville-Albemarle Region,2+ Races,poverty,293,2846,10.3,2023
+51003;51540,Charlottesville-Albemarle Region,All,above_alice_households,39698,66599,59.61,2023
+51003;51540,Charlottesville-Albemarle Region,All,alice_households,18981,66599,28.5,2023
+51003;51540,Charlottesville-Albemarle Region,All,poverty_households,7920,66599,11.89,2023
+51003;51540,Charlottesville-Albemarle Region,Asian,above,1733,2811,61.65,2023
+51003;51540,Charlottesville-Albemarle Region,Asian,alice,735,2811,26.15,2023
+51003;51540,Charlottesville-Albemarle Region,Asian,poverty,343,2811,12.2,2023
+51003;51540,Charlottesville-Albemarle Region,Black,above,2369,6875,34.46,2023
+51003;51540,Charlottesville-Albemarle Region,Black,alice,3034,6875,44.13,2023
+51003;51540,Charlottesville-Albemarle Region,Black,poverty,1472,6875,21.41,2023
+51003;51540,Charlottesville-Albemarle Region,Hispanic,above,1999,3718,53.77,2023
+51003;51540,Charlottesville-Albemarle Region,Hispanic,alice,1540,3718,41.42,2023
+51003;51540,Charlottesville-Albemarle Region,Hispanic,poverty,179,3718,4.81,2023
+51003;51540,Charlottesville-Albemarle Region,White,above,32742,49516,66.12,2023
+51003;51540,Charlottesville-Albemarle Region,White,alice,13336,49516,26.93,2023
+51003;51540,Charlottesville-Albemarle Region,White,poverty,3438,49516,6.94,2023

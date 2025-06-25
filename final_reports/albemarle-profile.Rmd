@@ -1,14 +1,14 @@
 ---
 title: "Draft Albemarle Inclusive Community Profile"
-output:
-  bookdown::html_document2:
-    number_sections: true
 # output:
-#   bookdown::word_document2:
-#     reference_docx: "styles.docx"
+#   bookdown::html_document2:
 #     number_sections: true
-#     toc: true
-#     toc_depth: 4
+output:
+  bookdown::word_document2:
+    reference_docx: "styles.docx"
+    number_sections: true
+    toc: true
+    toc_depth: 4
 ---
 
 ```{r setup, include=FALSE}
@@ -2364,9 +2364,9 @@ alb_med_hhinc_county %>%
 ```
 
 ### Struggling Families: Asset Limited, Income Constrained, Employed (ALICE)
-```{r alice-threshold, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Thresholds 2010-2022. The ALICE threshold for households under 65 years old was $78,000 in 2022 and $68,000 for 65 years and older."}
-# ALICE thresholds: Albemarle, 2010-2022 ----
-alb_ALICE_threshold <- read_csv("../data/alb_ALICE_threshold_2010_2022.csv")
+```{r alice-threshold, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Thresholds 2010-2023. The ALICE threshold for households under 65 years old was $75,000 in 2023 and $65,000 for 65 years and older."}
+# ALICE thresholds: Albemarle ----
+alb_ALICE_threshold <- read_csv("../data/alb_ALICE_threshold_2010_2023.csv")
 
 alb_ALICE_threshold %>% 
   pivot_longer(alice_threshold_hh_under_65:alice_threshold_hh_65_years_and_over, names_to = "level", values_to = "threshold") %>% 
@@ -2377,11 +2377,11 @@ alb_ALICE_threshold %>%
          level = factor(level, levels = c("alice_threshold_hh_65_years_and_over", "alice_threshold_hh_under_65"),
                         labels = c("ALICE threshold for households 65 years & over", "ALICE threshold for households under 65 years"))) %>% 
   ggplot(aes(x = year, y = threshold, color = level, label = text)) +
-  stat_xspline(size=1) +
+  stat_xspline(linewidth=1) +
   geom_point() +
   geom_text(aes(y = (threshold + sign(pos)*6000)), size = 5, show.legend = FALSE, color = "black") +
   scale_x_continuous(
-    breaks = seq(from = 2010, to = 2022, by = 1),
+    breaks = seq(from = 2010, to = 2023, by = 1),
                      name = "") +
   scale_y_continuous(labels = label_currency(scale = 1, scale_cut = cut_short_scale()),
                      breaks = c(0, 20000, 40000, 60000, 80000, 100000),
@@ -2390,9 +2390,9 @@ alb_ALICE_threshold %>%
     scale_color_manual(values = c("#b2b8be", "#3B8EA5")) +
     guides(color = guide_legend(reverse = TRUE)) +
 labs(color = "", 
-       title = "ALICE Thresholds 2010-2022", 
+       title = "ALICE Thresholds 2010-2023", 
       subtitle = locality_name, 
-      caption = "Data Sources: ALICE Threshold, 2010–2022; U.S. Census Bureau, American Community Survey, 2010–2022") +  
+      caption = "Data Sources: ALICE Threshold, 2010–2023; U.S. Census Bureau, American Community Survey, 2010–2023") +  
   theme_minimal() +
    theme(legend.position = "top",
         legend.justification.top = "left",
@@ -2412,9 +2412,9 @@ labs(color = "",
 ```
 
 
-```{r alice-race, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Households by Race/Ethnicity, 2022."}
+```{r alice-race, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Households by Race/Ethnicity, 2023."}
 # ALICE households by race/ethnicity: Albemarle, 2022 ----
-alb_ALICE_households_by_race <- read_csv("../data/alb_ALICE_households_by_race_2022.csv")
+alb_ALICE_households_by_race <- read_csv("../data/alb_ALICE_households_by_race_2023.csv")
 
 alb_ALICE_households_by_race <- alb_ALICE_households_by_race %>% 
   mutate(level = case_when(level == "above_alice_households" ~ "above",
@@ -2439,7 +2439,7 @@ alb_ALICE_households_by_race %>%
   scale_fill_manual(values = c("#b2b8be", "#3B8EA5", "#005191")) +
   # scale_fill_manual(values = c("#e9e9e9","#70bed6","#5d6895")) +
   geom_text(aes(color = level), size = 4.5, position = position_stack(vjust = 0.5), show.legend = FALSE) +
-  scale_color_manual(values = c("black", "black", "black")) +
+  scale_color_manual(values = c("black", "black", "white")) +
   scale_x_discrete(name = "") +
   scale_y_continuous(labels = label_percent(scale = 1),
                      name = "") +
@@ -2447,7 +2447,7 @@ alb_ALICE_households_by_race %>%
   labs(color = "", 
        title = "ALICE Households by Race/Ethnicity", 
       subtitle = locality_name, 
-      caption = "Data Sources: ALICE Threshold, 2022; U.S. Census Bureau, American Community Survey, 2022") +
+      caption = "Data Sources: ALICE Threshold, 2023; U.S. Census Bureau, American Community Survey, 2023") +
   theme_minimal() +
  theme(legend.position = "top",
         legend.location = "plot",
@@ -2466,6 +2466,69 @@ alb_ALICE_households_by_race %>%
 
 ```
 
+
+```{r alice-district, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="ALICE Households by District, 2023."}
+# ALICE households by District: Albemarle ----
+alb_ALICE_households_district <- read_csv("../data/alb_ALICE_households_district_2023.csv")
+
+alb_ALICE_households_district <- alb_ALICE_households_district %>%
+  rename(GEOID = geo_id2, locality = county, number = value, ) %>% 
+  mutate(level = case_when(name == "above_alice_households" ~ "above",
+                           name == "alice_households" ~ "alice",
+                           name == "poverty_households" ~ "poverty",
+                           .default = name),
+         group = str_remove(geo_display_label, ", Albemarle County, Virginia")) %>% 
+  select(GEOID, locality, level, group, number, households, percent, year)
+
+alb_ALICE_all <- alb_ALICE_households_by_race %>% 
+  filter(group == "All")
+
+alb_ALICE_households_district <- rbind(alb_ALICE_households_district, alb_ALICE_all)
+
+alb_ALICE_households_district <- alb_ALICE_households_district[order(alb_ALICE_households_district$level),]
+
+alb_ALICE_households_district %>% 
+  arrange(desc(level)) %>% 
+  mutate(group = factor(group,
+                       levels = c("White Hall district", "Scottsville district", "Samuel Miller district", "Rivanna district", "Rio district", "Jack Jouett district", "All"),
+                       labels = c("White Hall District", "Scottsville District", "Samuel Miller District", "Rivanna District", "Rio District", "Jack Jouett District", "Albemarle County")),
+         level = factor(level, levels = c("above", "alice", "poverty"),
+                        labels = c("Above ALICE", "ALICE", "Poverty")),
+  text = case_when(percent >= 1 ~ paste0(round(percent, 0), "%"),
+                   percent < 1 ~ paste0(round(percent, 1), "%"))) %>%
+  ggplot(aes(x = group, y = percent, group = group, fill = level, 
+             label = text)) +
+  geom_bar(stat = "identity", color = "white") + 
+  scale_fill_manual(values = c("#b2b8be", "#3B8EA5", "#005191")) +
+  # scale_fill_manual(values = c("#e9e9e9","#70bed6","#5d6895")) +
+  geom_text(aes(color = level), size = 4.5, position = position_stack(vjust = 0.5), show.legend = FALSE) +
+  scale_color_manual(values = c("black", "black", "white")) +
+  scale_x_discrete(name = "") +
+  scale_y_continuous(labels = label_percent(scale = 1),
+                     name = "") +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  coord_flip() +
+  labs(color = "", 
+       title = "ALICE Households by District", 
+      subtitle = locality_name, 
+      caption = "Data Sources: ALICE Threshold, 2023; U.S. Census Bureau, American Community Survey, 2023") +
+  theme_minimal() +
+ theme(legend.position = "top",
+        legend.location = "plot",
+        legend.title=element_blank(),
+        legend.text = element_text(size = 14),
+        panel.grid.minor = element_blank(),
+        panel.grid.major.x = element_blank(),
+        plot.title.position= "plot",
+        plot.caption.position = "plot",
+        axis.text.y = element_text(color = "black", size = 14),
+        axis.ticks = element_blank(),
+        text = element_text(size = 14),
+        plot.title = element_text(size = 18),
+        plot.subtitle = element_text(size = 16),
+        plot.caption = element_text(size = 14))
+
+```
 ### Housing: Renters and Owners
 ```{r zillow-rent, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="Zillow Observed Rent Index (ZORI): 2015-2024. Monthly rent has steadily increased from $1,160 in 2015 to $1,910 in 2024."}
 # Zillow Observed Rent Index (ZORI), 2015-2024 ----

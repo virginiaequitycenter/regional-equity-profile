@@ -55,3 +55,9 @@ rsconnect/
 .DS_Store
 images/
 */test_files/
+
+# Don't track knit .docx files
+final_reports/albemarle-profile.docx
+final_reports/charlottesville-profile.docx
+final_reports/regional-profile.docx
+
