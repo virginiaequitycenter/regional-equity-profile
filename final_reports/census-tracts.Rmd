@@ -53,20 +53,21 @@ ahdi_alb_map <- ahdi_tract_alb %>%
   ggplot() +
   annotation_map_tile(zoomin = 1, progress = "none", cachedir = "../data/tempdata/") +
   geom_sf(color = "black", fill = NA, linewidth = 0.5) +
-  geom_sf(data = selection, color = "blue", fill = NA, linewidth = 0.75) +
-  geom_point(data = d, aes(x = lon, y = lat), size = 5, color = "firebrick") +
-  geom_text(data = d, aes(x = lon, y = lat), label = "Yancey Community Center", size = 3.5, color = "black", fontface = "bold", 
-               # nudge_y = 0.001, 
-               nudge_x = 0.1
-               ) +
-  geom_sf_text(aes(label = row_num), size = 3.5, 
-               # nudge_y = 0.001, 
-               nudge_y = case_when(ahdi_tract_alb$row_num == 29 ~ 0.02,
-                                   .default = 0),
-               color = case_when(ahdi_tract_alb$row_num == 29 ~ "blue",
-                                   .default = "black"),
-              fontface = case_when(ahdi_tract_alb$row_num == 29 ~ "bold",
-                                   .default = "plain")
+  # geom_sf(data = selection, color = "blue", fill = NA, linewidth = 0.75) +
+  # geom_point(data = d, aes(x = lon, y = lat), size = 5, color = "firebrick") +
+  # geom_text(data = d, aes(x = lon, y = lat), label = "Yancey Community Center", size = 3.5, color = "black", fontface = "bold", 
+  #              # nudge_y = 0.001, 
+  #              nudge_x = 0.1
+  #              ) +
+  geom_sf_text(aes(label = row_num), size = 3.5,
+               fontface = "bold"
+               # nudge_y = 0.001,
+               # nudge_y = case_when(ahdi_tract_alb$row_num == 29 ~ 0.02,
+               #                     .default = 0),
+               # color = case_when(ahdi_tract_alb$row_num == 29 ~ "blue",
+               #                     .default = "black"),
+              # fontface = case_when(ahdi_tract_alb$row_num == 29 ~ "bold",
+              #                      .default = "plain")
                ) +
   theme_map()+
   theme(
@@ -84,11 +85,11 @@ alb_ahdi_rank <-  ggplot(ahdi_tract_alb, aes(x = 0, y = row_num, label = names))
     geom_text(label = names, hjust = 0, 
               # nudge_x = 0.005, 
               # nudge_y = 0.01,
-              size = 5,
-              color = case_when(ahdi_tract_alb$row_num == 29 ~ "blue",
-                                   .default = "black"),
-              fontface = case_when(ahdi_tract_alb$row_num == 29 ~ "bold",
-                                   .default = "plain")
+              size = 5
+              # color = case_when(ahdi_tract_alb$row_num == 29 ~ "blue",
+              #                      .default = "black"),
+              # fontface = case_when(ahdi_tract_alb$row_num == 29 ~ "bold",
+              #                      .default = "plain")
               # angle=55, 
               # lineheight = 0.8
               ) +

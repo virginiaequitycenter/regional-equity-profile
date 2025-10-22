@@ -1,5 +1,5 @@
 ---
-title: "Draft Albemarle Inclusive Community Profile"
+title: "Albemarle Inclusive Community Profile"
 # output:
 #   bookdown::html_document2:
 #     number_sections: true
@@ -13,7 +13,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE 
-                      # dev = "png", 
+                      # dev = "png",
                       # dpi=300
                       )
 

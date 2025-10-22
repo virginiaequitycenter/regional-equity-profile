@@ -1,16 +1,16 @@
 ---
 title: "Draft Charlottesville & Albemarle Area Inclusive Community Profile"
-# output:
-#   bookdown::html_document2:
-#     number_sections: true
+output:
+  bookdown::html_document2:
+    number_sections: true
 #     toc: true
 #     toc_float: true
-output:
-  bookdown::word_document2:
-    reference_docx: "styles.docx"
-    number_sections: true
-    toc: true
-    toc_depth: 4
+# output:
+#   bookdown::word_document2:
+#     reference_docx: "styles.docx"
+#     number_sections: true
+#     toc: true
+#     toc_depth: 4
 
 ---
 ```{css, echo=FALSE}
@@ -69,7 +69,7 @@ source_acs_range <- "Data Source: U.S. Census Bureau, American Community Survey 
 source_vdoe <- "Data Source: Virginia Department of Education, 2023-2024" 
 
 # County Health Ranking data
-chr_region <- read_csv("../supplemental_downloadsremoved/data/chr_regional_measures.csv")
+chr_region <- read_csv("../datacode/supplemental_downloadsremoved/data/chr_regional_measures.csv")
 
 ```
 
@@ -548,7 +548,7 @@ ahdi_table_region %>%
 
 ```{r life-exp-time, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="Average Life Expectancy, 2019-2024. Life expectancy in 2024 is 79 years for Charlottesville, 82 years for Albemarle, and 78 years for Virginia."}
 # Life Expectancy by Race ----
-chr_locality <- read_csv("../supplemental_downloadsremoved/data/chr_locality_measures.csv")
+chr_locality <- read_csv("../datacode/supplemental_downloadsremoved//data/chr_locality_measures.csv")
 
 chr_locality %>% 
   na.omit() %>% 
@@ -984,8 +984,8 @@ enroll_age %>%
 
 ### Child Care
 ```{r child-care}
-child_care_loc <- read_csv("../supplemental_downloadsremoved/data/child_care_supply_locality.csv")
-child_care_region <- read_csv("../supplemental_downloadsremoved/data/child_care_supply_region.csv") %>% 
+child_care_loc <- read_csv("../datacode/supplemental_downloadsremoved//data/child_care_supply_locality.csv")
+child_care_region <- read_csv("../datacode/supplemental_downloadsremoved//data/child_care_supply_region.csv") %>% 
   mutate(location = locality_name)
 
 child_care <- rbind(child_care_loc, child_care_region) %>% 
@@ -1202,7 +1202,7 @@ region_med_hhinc %>%
 ### Where People Live and Work
 ```{r commute-time, fig.width = 9.5, fig.height = 7, fig.retina = 2, fig.cap="Trends in Work and Living Locations in Charlottesville and Albemarle for 2002, 2012, 2022."}
 ## Inflow/outflow ----
-region_commute <- read_csv("../supplemental_downloadsremoved/data/inflow_outflow_region.csv") %>%
+region_commute <- read_csv("../datacode/supplemental_downloadsremoved//data/inflow_outflow_region.csv") %>%
   pivot_wider(names_from = worker_type, values_from = number) %>%
   mutate(total_ages = (younger + middle_age + older),
          total_wages = (low_wage + mid_wage + hi_wage))
@@ -1269,7 +1269,7 @@ region_commute_dat %>%
 # fig.width = 11.5, fig.height = 5,
 
 # ## Three region inflow/outflow ----
-# threeregion_commute <- read_csv("../supplemental_downloadsremoved/data/inflow_outflow_threeregion.csv")
+# threeregion_commute <- read_csv("../datacode/supplemental_downloadsremoved//data/inflow_outflow_threeregion.csv")
 # 
 # threeregion_commute <- threeregion_commute %>% 
 #   mutate(worker_type = paste0("live_", live, "_work_", work))
@@ -1512,7 +1512,7 @@ region_tenure %>%
         plot.caption = element_text(size = 12))
 ```
 
-```{r rent-burden, fig.width=9.5, fig.height=5, fig.retina = 2, fig.cap="Rent Burdened Households, 2023. In Charlottesville and Albemarle County, 49% of renters are not burdened, 24% are rent burdened and 27% are severely burdened."}
+```{r rent-burden, fig.width=9.5, fig.height=3.5, fig.retina = 2, fig.cap="Rent Burdened Households, 2023. In Charlottesville and Albemarle County, 49% of renters are not burdened, 24% are rent burdened and 27% are severely burdened."}
 # Rent Burdened Households ----
 
 region_rent_burden <- read_csv("../data/region_rent_burden_2023.csv") 
@@ -1637,9 +1637,9 @@ evictions %>%
 
 
 ### People Experiencing Homelessness
-```{r pit-count, fig.width = 9.5, fig.height = 6.5, fig.retina = 2, fig.cap="Point-in-Time Count of People Experiencing Homelessness in the Blue Ridge Area Continuum of Care (CoC) including the City of Charlottesville and Counties of Albemarle, Fluvanna, Greene, Louisa, and Nelson, 2007-2024. In 2024, the Blue Ridge Area Coalition for the Homeless (BRACH) identified 125 people experiencing homelessness in the PIT count."}
+```{r pit-count, fig.width = 8, fig.height = 6.5, fig.retina = 2, fig.cap="Point-in-Time Count of People Experiencing Homelessness in the Blue Ridge Area Continuum of Care (CoC) including the City of Charlottesville and Counties of Albemarle, Fluvanna, Greene, Louisa, and Nelson, 2007-2024. In 2024, the Blue Ridge Area Coalition for the Homeless (BRACH) identified 125 people experiencing homelessness in the PIT count."}
 
-pitcount_2007_2024 <- read_csv("../supplemental_downloadsremoved/data/pitcount_2007_2024.csv")
+pitcount_2007_2024 <- read_csv("../datacode/supplemental_downloadsremoved//data/pitcount_2007_2024.csv")
 pitcount_2007_2024 <- pitcount_2007_2024 %>% 
   select(co_c_name, sheltered_total_homeless, unsheltered_homeless, overall_homeless, year) %>% 
   pivot_longer(sheltered_total_homeless:overall_homeless)
@@ -1706,7 +1706,7 @@ Counties of Albemarle, Fluvanna, Greene, Louisa, and Nelson",
 ```{r mckinney-vento, fig.width = 9.5, fig.height = 6, fig.retina = 2, fig.cap="McKinney-Vento: Students Experiencing Homelessness Enrolled in Charlottesville City Schools and Albemarle County Public Schools, 2010-11 through 2022-23 school years. In the 2022-23 school year, there were 281 students identified as experiencing homelessness."}
 # McKinney Vento
 
-mvcounts_dat <- read_csv("../supplemental_downloadsremoved/data/mvcounts_2011_2023.csv") %>% 
+mvcounts_dat <- read_csv("../datacode/supplemental_downloadsremoved//data/mvcounts_2011_2023.csv") %>% 
   clean_names()
 mvcounts <- mvcounts_dat %>% 
   group_by(school_year, data_description) %>% 
@@ -1749,7 +1749,7 @@ mvcounts %>%
 
 ### Bed Capacity Among Organizations Serving Unhoused Residents
 ```{r hic-count, fig.width = 9.5, fig.height = 7, fig.retina = 2, fig.cap="Housing Inventory Count: Year-Round, Seasonal Beds and Permanent Housing Available for People Experiencing Homelessness in the Blue Ridge Area Continuum of Care (CoC) including the City of Charlottesville and Counties of Albemarle, Fluvanna, Greene, Louisa, and Nelson, 2009-2024. In 2024, the Blue Ridge Area Coalition for the Homeless (BRACH) identified 80 year-round beds, 55 seasonal beds, and 211 permanent housing units in the annual Housing Inventory Count (HIC)."}
-hiccount_2007_2024 <- read_csv("../supplemental_downloadsremoved/data/hiccount_2007_2024.csv")
+hiccount_2007_2024 <- read_csv("../datacode/supplemental_downloadsremoved//data/hiccount_2007_2024.csv")
 
 hicount <- hiccount_2007_2024 %>% 
   filter(bedtype %in% c("total_seasonal_beds", "total_yearround_beds", "total_psh_beds", "total_oph_beds")) %>% 
